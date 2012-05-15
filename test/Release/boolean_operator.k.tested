@@ -1,0 +1,9 @@
+ - (boolean_operator.k:9) false
+ - (boolean_operator.k:10) true
+ - (boolean_operator.k:11) true
+ - (boolean_operator.k:12) false
+ - (boolean_operator.k:17) false
+ - (boolean_operator.k:18) true
+ - (boolean_operator.k:19) true
+ - (boolean_operator.k:20) false
+Q.E.D.

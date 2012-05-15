@@ -1,0 +1,7 @@
+ - (Block3.k:4) a=1
+ - (Block3.k:5) b=130
+ - (Block3.k:13) 131
+ - (Block3.k:4) a=0
+ - (Block3.k:5) b=4296032408
+ - (Block3.k:14) (error) Assert!!
+Q.E.D.
