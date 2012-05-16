@@ -12,7 +12,7 @@ POST_COMPILER = ${JS_ENGINE} ${BUILD_DIR}/post-compile.js
 
 BASE_FILES = \
 	${SRC_DIR}/sugar/token.js\
-	${SRC_DIR}/sugar/asm.js
+	${SRC_DIR}/sugar/ast.js
 
 JSKONOHA = ${BUILD_DIR}/jskonoha.js
 JSKONOHA_VER = $(shell cat version.txt)
