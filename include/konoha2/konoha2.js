@@ -635,26 +635,25 @@ function _kclass ( ) {
 //#define KNH_MAGICFLAG(f)         (K_OBJECT_MAGIC | ((kmagicflag_t)(f) & K_CFLAGMASK))
 //#define DBG_ASSERT_ISOBJECT(o)   DBG_ASSERT(TFLAG_is(uintptr_t,(o)->h.magicflag, K_OBJECT_MAGIC))
 //
-//typedef struct kObjectHeader {
-//	kmagicflag_t magicflag;
-//	kclass_t *ct;  //@RENAME
+function kObjectHeader ( ) {
+	this.magicflag;				//kmagicflag_t
+	this.ct;					//kclass_t
 //	union {
-//		uintptr_t refc;  // RCGC
-//		void *gcinfo;
-//		uintptr_t hashcode; // reserved
+		this.refc;				//uintptr_t
+		this.gcinfo;			//void *
+		this.hashcode;			//uintptr_t
 //	};
-//	karray_t *kvproto;
-//} kObjectHeader ;
-//
-//typedef const struct _kObject kObject;
-//
-//struct _kObject {
-//	kObjectHeader h;
+	this.kvproto;				//karray_t *
+} kObjectHeader ;
+
+
+function _kObject ( ) {
+	this.h;						//kObjectHeader
 //	union {
-//		const struct _kObject *fields[4];
-//		uintptr_t ndata[4];
+		this.fields[4];			//const struct _kObject
+		this.ndata[4];			//uintptr_t
 //	};
-//};
+};
 //
 //typedef struct kvs_t {
 //	ksymbol_t key;

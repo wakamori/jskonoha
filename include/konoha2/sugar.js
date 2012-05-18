@@ -309,27 +309,27 @@ function _kToken ( ) {
 //#define Expr_setTerm(o,B)   TFLAG_set(uintptr_t,(o)->h.magicflag,kObject_Local1,B)
 //#define kExpr_at(E,N)        ((E)->cons->exprs[(N)])
 //
-//typedef const struct _kExpr kExpr;
-//struct _kExpr {
-//	kObjectHeader h;
-//	ktype_t ty; kexpr_t build;
-//	kToken *tk;     // Term
+function _kExpr ( ) {
+	this.h;				//kObjectHeader
+	this.ty;			//ktype_t
+	this.build;			//kexpr_t
+	this.tk;			//kToken
 //	union {
-//		kObject* data;
-//		kArray*  cons;  // Cons
-//		kExpr*   single;
-//		const struct _kBlock* block;
+		this.data;		//kObject*
+		this.cons;		//kArray *
+		this.single;	//kExpr *
+		this.block;		//const struct _kBlock *
 //	};
 //	union {
-//		ksyntax_t *syn;
-//		kint_t     ivalue;
-//		kfloat_t   fvalue;
-//		uintptr_t  ndata;
-//		intptr_t   index;
-//		uintptr_t  cid;
-////		uintptr_t	   mn;
+		this.syn;		//ksyntax_t *
+		this.ivalue;	//kint_t
+		this.fvalue;	//kfloat_t
+		this.ndata;		//uintptr_t
+		this.index;		//intptr_t
+		this.cid;		//uintptr_t
+		this.mh;		//uintptr_t
 //	};
-//};
+};
 //
 //#define TSTMT_UNDEFINED      0
 //#define TSTMT_ERR            1
