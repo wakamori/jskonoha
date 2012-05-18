@@ -136,19 +136,19 @@
 //#define SYN_isExpr(syn)   TFLAG_is(kflag_t, syn->flag, SYN_ExprFlag)
 
 
-function _ksyntax ( ) {
-	this.kw;				//keyword_t
-	this.flag;				//kflag_t
-	this.syntaxRuleNULL;	//kArray *
-	this.ParseStmtNULL;		//Method *
-	this.ParseExpr;			//kMethod *
-	this.TopStmtTyCheck;	//kMethod *
-	this.StmtTyCheck;		//kMethod *
-	this.ExprTyCheck;		//kMethod *
-	this.ty;				//ktype_t
-	this.priority;			//kshort_t
-	this.op2;				//kmethodn_t
-	this.op1;				//kmethodn_t
+konoha.ksyntax = function() {
+	this.kw = null;				//keyword_t
+	this.flag = null;				//kflag_t
+	this.syntaxRuleNULL = null;	//kArray *
+	this.ParseStmtNULL = null;		//Method *
+	this.ParseExpr = null;			//kMethod *
+	this.TopStmtTyCheck = null;	//kMethod *
+	this.StmtTyCheck = null;		//kMethod *
+	this.ExprTyCheck = null;		//kMethod *
+	this.ty = null;				//ktype_t
+	this.priority = null;			//kshort_t
+	this.op2 = null;				//kmethodn_t
+	this.op1 = null;				//kmethodn_t
 //	//kshort_t dummy;
 };
 //
@@ -208,19 +208,19 @@ function _ksyntax ( ) {
 //	}while(0)\
 //
 //
-function _kKonohaSpace ( ) {
-	this.h;				//	kObjectHeader
-	this.packid;		//	kpack_t
-	this.pakdom;		//kpack_t
-	this.parentNULL;	//const struct _kKonohaSpace *
-	this.fmat;			//const Ftokenizer *
-	this.syntaxMapNN;	//struct kmap_t *
-	this.gluehdr;		//void *
-	this.scrNUL;		//kObject *
-	this.static_cid;	//kcid_t
-	this.function_cid;	//kcid_t
-	this.methods;		//kArray *
-	this.cl;			//	karray_t
+konoha.kKonohaSpace = function() {
+	this.h = null;				//	kObjectHeader
+	this.packid = null;		//	kpack_t
+	this.pakdom = null;		//kpack_t
+	this.parentNULL = null;	//const struct _kKonohaSpace *
+	this.fmat = null;			//const Ftokenizer *
+	this.syntaxMapNN = null;	//struct kmap_t *
+	this.gluehdr = null;		//void *
+	this.scrNUL = null;		//kObject *
+	this.static_cid = null;	//kcid_t
+	this.function_cid = null;	//kcid_t
+	this.methods = null;		//kArray *
+	this.cl = null;			//	karray_t
 };
 //
 //typedef kshort_t    ksugar_t;
@@ -249,25 +249,25 @@ function _kKonohaSpace ( ) {
 //	AST_OPTIONAL      // for syntax sugar
 //} ktoken_t ;
 //
-function _kToken ( ) {
-	this.h;				//kObjectHeader
-	this.tt;			//kushort_t
-	this.kw;			//ksymbol_t
+konoha.kToken = function() {
+	this.h = null;				//kObjectHeader
+	this.tt = null;			//kushort_t
+	this.kw = null;			//ksymbol_t
 //	union {
-		this.text;		//kString *
-		this.sub;		//kArray *
+		this.text = null;		//kString *
+		this.sub = null;		//kArray *
 //	};
-	this.uline;			//kline_t
+	this.uline = null;			//kline_t
 //	union {
-		this.lpos;		//kushort_t
-		this.closech;	//kshort_t  // ast
-		this.nameid;	//ksymbol_t   // sugar rule    in sugar
-		this.mn_type;	//kshort_t    // method type   if tt == TK_MN
+		this.lpos = null;		//kushort_t
+		this.closech = null;	//kshort_t  // ast
+		this.nameid = null;	//ksymbol_t   // sugar rule    in sugar
+		this.mn_type = null;	//kshort_t    // method type   if tt == TK_MN
 //	};
 //	union {
-		this.topch;		//kshort_t
-		this.ty;		//ktype_t       // if kw == KW_Type
-		this.mn;		//kmethodn_t	     // if tt == TK_MN
+		this.topch = null;		//kshort_t
+		this.ty = null;		//ktype_t       // if kw == KW_Type
+		this.mn = null;		//kmethodn_t	     // if tt == TK_MN
 //	};
 };
 //
@@ -309,25 +309,25 @@ function _kToken ( ) {
 //#define Expr_setTerm(o,B)   TFLAG_set(uintptr_t,(o)->h.magicflag,kObject_Local1,B)
 //#define kExpr_at(E,N)        ((E)->cons->exprs[(N)])
 //
-function _kExpr ( ) {
-	this.h;				//kObjectHeader
-	this.ty;			//ktype_t
-	this.build;			//kexpr_t
-	this.tk;			//kToken
+konoha.kExpr = function() {
+	this.h = null;				//kObjectHeader
+	this.ty = null;			//ktype_t
+	this.build = null;			//kexpr_t
+	this.tk = null;			//kToken
 //	union {
-		this.data;		//kObject*
-		this.cons;		//kArray *
-		this.single;	//kExpr *
-		this.block;		//const struct _kBlock *
+		this.data = null;		//kObject*
+		this.cons = null;		//kArray *
+		this.single = null;	//kExpr *
+		this.block = null;		//const struct _kBlock *
 //	};
 //	union {
-		this.syn;		//ksyntax_t *
-		this.ivalue;	//kint_t
-		this.fvalue;	//kfloat_t
-		this.ndata;		//uintptr_t
-		this.index;		//intptr_t
-		this.cid;		//uintptr_t
-		this.mh;		//uintptr_t
+		this.syn = null;		//ksyntax_t *
+		this.ivalue = null;	//kint_t
+		this.fvalue = null;	//kfloat_t
+		this.ndata = null;		//uintptr_t
+		this.index = null;		//intptr_t
+		this.cid = null;		//uintptr_t
+		this.mh = null;		//uintptr_t
 //	};
 };
 //
@@ -340,21 +340,21 @@ function _kExpr ( ) {
 //#define TSTMT_LOOP           6
 //#define TSTMT_JUMP           7
 //
-function _kStmt( ) {
-	this.h;				//	kObjectHeader;
-	this.uline;			//	kline_t;
-	this.syn;			//	ksyntax_t *;
-	this.parentNULL;	//	const struct _kBlock *;
-	this.build;			//	kushort_t;
-//};
+konoha.kStmt = function() {
+	this.h = null;				//	kObjectHeader;
+	this.uline = null;			//	kline_t;
+	this.syn = null;			//	ksyntax_t *;
+	this.parentNULL = null	//	const struct _kBlock *;
+	this.build = null;			//	kushort_t;
+};
 
-function _kBlock( ) {
-	this.h;				//kObjectHeader
-	this.ks;			//kKonohaSpace *
-	this.parentNULL;	//kStmt *
-	this.blocks;		//kArray *
-	this.esp;			//kExpr *
-}
+konoha.kBlock = function() {
+	this.h = null;				//kObjectHeader
+	this.ks = null;			//kKonohaSpace *
+	this.parentNULL = null;	//kStmt *
+	this.blocks = null;		//kArray *
+	this.esp = null;			//kExpr *
+};
 
 //typedef struct _kGamma kGamma;
 //
@@ -467,7 +467,7 @@ function _kBlock( ) {
 //
 //#define KW_void      (18+KW_DOT)
 //#define KW_StmtMethodDecl          KW_void
-//#define KW_boolean   (1+KW_void)
+//#define KW_boolean   (1+KW_void) kObjectHeader ;
 //#define KW_int       (2+KW_void)
 ////#define KW_null      (3+KW_void)
 //#define KW_true      (3+KW_void)
@@ -586,7 +586,7 @@ function _kBlock( ) {
 //} ctxsugar_t;
 //
 //#define TPOL_NOCHECK              1
-//#define TPOL_ALLOWVOID      (1 << 1)
+//#define TPOL_ALLOWVOID      (1 << 1 kObjectHeader ;)
 //#define TPOL_COERCION       (1 << 2)
 //
 //#ifdef USING_SUGAR_AS_BUILTIN
@@ -619,7 +619,7 @@ function _kBlock( ) {
 //#define TY_Expr                              _e->cExpr->cid
 //#define TY_Gamma                             _e->cGamma->cid
 //#define TY_TokenArray                        _e->cTokenArray->cid
-//
+// kObjectHeader ;
 //#define KW_(T)                               _e->keyword(_ctx, T, sizeof(T)-1, FN_NONAME)
 //#define SYN_(KS, KW)                         _e->KonohaSpace_syntax(_ctx, KS, KW, 0)
 //#define NEWSYN_(KS, KW)                      (struct _ksyntax*)_e->KonohaSpace_syntax(_ctx, KS, KW, 1)

@@ -493,34 +493,34 @@ var konoha = {};
 ////struct _kclass;
 //typedef uintptr_t kmagicflag_t;
 //
-function _kclass ( ) {
+konoha.kclass = function() {
 //	KCLASSSPI;
-	this.packid;			//kpack_t
-	this.packdom;			//kpack_t
-	this.cid;				//kcid_t
-	this.cflag;				//kflag_t
-	this.bcid;				//kcid_t
-	this.supcid;			//kcid_t
-	this.magicflag;			//magicflag_t
-	this.cstruct_size;		//size_t
-	this.fields;			//kfield_t *
-	this.fsize;				//kushort_t
-	this.fallocsize;		//kushort_t
-	this.DBG_NAME;			//const char *
-	this.nameid;			//kuname_t
-	this.optvalue;			//kushort_t
+	this.packid = null;			//kpack_t
+	this.packdom = null;			//kpack_t
+	this.cid = null;				//kcid_t
+	this.cflag = null;				//kflag_t
+	this.bcid = null;				//kcid_t
+	this.supcid = null;			//kcid_t
+	this.magicflag = null;			//magicflag_t
+	this.cstruct_size = null;		//size_t
+	this.fields = null;			//kfield_t *
+	this.fsize = null;				//kushort_t
+	this.fallocsize = null;		//kushort_t
+	this.DBG_NAME = null;			//const char *
+	this.nameid = null;			//kuname_t
+	this.optvalue = null;			//kushort_t
 //
-	this.cparam;			//const struct _kParam *
-	this.methods;			//const struct _kArray *
-	this.shortNameNULL;		//const struct _kString *
+	this.cparam = null;			//const struct _kParam *
+	this.methods = null;			//const struct _kArray *
+	this.shortNameNULL = null;		//const struct _kString *
 //	union {   // default value
-		this.nulvalNUL;		//const struct _kObject *
-		this.WnulvalNUl;	//struct _kObject *
+		this.nulvalNUL = null;		//const struct _kObject *
+		this.WnulvalNUl = null;	//struct _kObject *
 //	};
-	this.constPoolMapNO;	//struct kmap_t *
-	this.searchSimilarClassNULL;	//kclass_t
-	this.searchSuperMethodClassNULL;//kclass_t *
-} ;
+	this.constPoolMapNO = null;	//struct kmap_t *
+	this.searchSimilarClassNULL = null;	//kclass_t
+	this.searchSuperMethodClassNULL = null;//kclass_t *
+};
 //
 ///* ----------------------------------------------------------------------- */
 ///* CLASS */
@@ -635,23 +635,23 @@ function _kclass ( ) {
 //#define KNH_MAGICFLAG(f)         (K_OBJECT_MAGIC | ((kmagicflag_t)(f) & K_CFLAGMASK))
 //#define DBG_ASSERT_ISOBJECT(o)   DBG_ASSERT(TFLAG_is(uintptr_t,(o)->h.magicflag, K_OBJECT_MAGIC))
 //
-function kObjectHeader ( ) {
-	this.magicflag;				//kmagicflag_t
-	this.ct;					//kclass_t
+konoha.kObjectHeader = function() {
+	this.magicflag = null;				//kmagicflag_t
+	this.ct = null;					//kclass_t
 //	union {
-		this.refc;				//uintptr_t
-		this.gcinfo;			//void *
-		this.hashcode;			//uintptr_t
+		this.refc = null;				//uintptr_t
+		this.gcinfo = null;			//void *
+		this.hashcode = null;			//uintptr_t
 //	};
-	this.kvproto;				//karray_t *
-} kObjectHeader ;
+	this.kvproto = null;				//karray_t *
+};
 
 
-function _kObject ( ) {
-	this.h;						//kObjectHeader
+konoha.kObject = function( ) {
+	this.h = null;						//kObjectHeader
 //	union {
-		this.fields[4];			//const struct _kObject
-		this.ndata[4];			//uintptr_t
+		this.fields[4] = null;			//const struct _kObject
+		this.ndata[4] = null;			//uintptr_t
 //	};
 };
 //
@@ -806,24 +806,24 @@ function _kObject ( ) {
 //
 //
 
-function _kArray ( ) {
-	this.h;				//ObjectHeader
-	this.bytesize;		//size_t
+konoha.kArray = function() {
+	this.h = null;				//ObjectHeader
+	this.bytesize = null;		//size_t
 //	union {
-	this.ndata;			//uintptr_t *
-	this.ilist;			//kint_t *
-	this.flist;			//kfloat_t *
-	this.list;			//const struct _kObject **
-	this.strings;		//const struct _kString **
-	this.methods;		//const struct _kMethod **
-	this.toks;			//const struct _kToken  **
-	this.Wtoks;			//struct _kToken **
-	this.kExpr;			//const struct _kExpr **
-	this.Wexprs;		//struct _kExpr **
-	this.stmts;			//const struct _kStmt **
-	this.Wstmts;		//struct _kStmt **
+	this.ndata = null;			//uintptr_t *
+	this.ilist = null;			//kint_t *
+	this.flist = null;			//kfloat_t *
+	this.list = null;			//const struct _kObject **
+	this.strings = null;		//const struct _kString **
+	this.methods = null;		//const struct _kMethod **
+	this.toks = null;			//const struct _kToken  **
+	this.Wtoks = null;			//struct _kToken **
+	this.kExpr = null;			//const struct _kExpr **
+	this.Wexprs = null;		//struct _kExpr **
+	this.stmts = null;			//const struct _kStmt **
+	this.Wstmts = null;		//struct _kStmt **
 //	};
-	this.btyemax;		//size_t
+	this.btyemax = null;		//size_t
 };
 //
 ///* ------------------------------------------------------------------------ */
@@ -836,16 +836,16 @@ function _kArray ( ) {
 //#define TY_Param                 CLASS_Param
 //#define IS_Param(o)              (O_bcid(o) == CLASS_Param)
 //
-function kparam_t ( ) {
-	this.ty;			//ktype_t
-	this.fn;			//ksymbol_t
+konoha.kparam_t = function() {
+	this.ty = null;			//ktype_t
+	this.fn = null;			//ksymbol_t
 };
 //
-function _kParam ( ) {
-	this.h;				//kObjectHeader
-	this.rtype;			//ktype_t
-	this.psize;			//kushort_t
-	this.p[3];			//kparam_t
+konoha.kParam = function() {
+	this.h = null;				//kObjectHeader
+	this.rtype = null;			//ktype_t
+	this.psize = null;			//kushort_t
+	this.p[3] = null;			//kparam_t
 };
 //
 ///* ------------------------------------------------------------------------ */
