@@ -87,6 +87,14 @@
 //	int           indent_tab;
 //	const Ftokenizer *fmat;
 //} tenv_t;
+konoha.tenv_t = function() {
+	this.source = null; //const char* => String
+	this.uline = null; //kline_t
+	this.list = null; //kArray*
+	this.bol = null; //const char* => Number
+	this.indent_tab = null; //int => Number
+	this.fmat = null; //Ftokenizer*
+}
 //
 //// ParseToken
 //#define VAR_ParseToken(TK, STR, UL) \
@@ -149,7 +157,7 @@ konoha.ksyntax = function() {
 	this.priority = null;			//kshort_t
 	this.op2 = null;				//kmethodn_t
 	this.op1 = null;				//kmethodn_t
-//	//kshort_t dummy;
+	//	//kshort_t dummy;
 };
 //
 //#define TOKEN(T)  .name = T
@@ -253,22 +261,22 @@ konoha.kToken = function() {
 	this.h = null;				//kObjectHeader
 	this.tt = null;			//kushort_t
 	this.kw = null;			//ksymbol_t
-//	union {
-		this.text = null;		//kString *
-		this.sub = null;		//kArray *
-//	};
+	//	union {
+	this.text = null;		//kString *
+	this.sub = null;		//kArray *
+	//	};
 	this.uline = null;			//kline_t
-//	union {
-		this.lpos = null;		//kushort_t
-		this.closech = null;	//kshort_t  // ast
-		this.nameid = null;	//ksymbol_t   // sugar rule    in sugar
-		this.mn_type = null;	//kshort_t    // method type   if tt == TK_MN
-//	};
-//	union {
-		this.topch = null;		//kshort_t
-		this.ty = null;		//ktype_t       // if kw == KW_Type
-		this.mn = null;		//kmethodn_t	     // if tt == TK_MN
-//	};
+	//	union {
+	this.lpos = null;		//kushort_t
+	this.closech = null;	//kshort_t  // ast
+	this.nameid = null;	//ksymbol_t   // sugar rule    in sugar
+	this.mn_type = null;	//kshort_t    // method type   if tt == TK_MN
+	//	};
+	//	union {
+	this.topch = null;		//kshort_t
+	this.ty = null;		//ktype_t       // if kw == KW_Type
+	this.mn = null;		//kmethodn_t	     // if tt == TK_MN
+	//	};
 };
 //
 //typedef enum {
@@ -314,21 +322,21 @@ konoha.kExpr = function() {
 	this.ty = null;			//ktype_t
 	this.build = null;			//kexpr_t
 	this.tk = null;			//kToken
-//	union {
-		this.data = null;		//kObject*
-		this.cons = null;		//kArray *
-		this.single = null;	//kExpr *
-		this.block = null;		//const struct _kBlock *
-//	};
-//	union {
-		this.syn = null;		//ksyntax_t *
-		this.ivalue = null;	//kint_t
-		this.fvalue = null;	//kfloat_t
-		this.ndata = null;		//uintptr_t
-		this.index = null;		//intptr_t
-		this.cid = null;		//uintptr_t
-		this.mh = null;		//uintptr_t
-//	};
+	//	union {
+	this.data = null;		//kObject*
+	this.cons = null;		//kArray *
+	this.single = null;	//kExpr *
+	this.block = null;		//const struct _kBlock *
+	//	};
+	//	union {
+	this.syn = null;		//ksyntax_t *
+	this.ivalue = null;	//kint_t
+	this.fvalue = null;	//kfloat_t
+	this.ndata = null;		//uintptr_t
+	this.index = null;		//intptr_t
+	this.cid = null;		//uintptr_t
+	this.mh = null;		//uintptr_t
+	//	};
 };
 //
 //#define TSTMT_UNDEFINED      0
