@@ -403,7 +403,7 @@ konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
 			level++; pos++;
 		}
 		else {
-			pos = fmat[ch](_ctx, (struct _kToken*)K_NULLTOKEN, tenv, pos, NULL);
+			pos = fmat[ch](_ctx, K_NULLTOKEN, tenv, pos, NULL);
 		}
 	}
 	if(IS_NOTNULL(tk)) {
@@ -413,7 +413,7 @@ konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
 	return pos-1;
 }
 
-konoha.tokenize = function(_ctx, tenv_t *tenv)
+konoha.tokenize = function(_ctx, tenv)
 {
 	var ch, pos = 0;
 	var fmat = tenv.fmat;
@@ -470,9 +470,9 @@ konoha.KonohaSpace_tokenize = function(_ctx, ks, source, uline, a)
 		.list   = a,
 		.bol    = source,
 		.indent_tab = 4,
-		.fmat   = ks == NULL ? MiniKonohaTokenMatrix : KonohaSpace_tokenizerMatrix(_ctx, ks),
+		.fmat   = ks == NULL ? MiniKonohaTokenMatrix : KonohaSpace_tokenizerMatrix(_ctx, ks)
 	};
-	tokenize(_ctx, &tenv);
+	tokenize(_ctx, tenv);
 	if(uline == 0) {
 		for(i = pos; i < kArray_size(a); i++) {
 			a.Wtoks[i].uline = 0;
@@ -480,9 +480,8 @@ konoha.KonohaSpace_tokenize = function(_ctx, ks, source, uline, a)
 	}
 }
 
- --------------------------------------------------------------------------
-
 konoha.findTopCh = function(_ctx, tls, s, e, tt, closech)
+}
 {
 	var i;
 	for(i = s; i < e; i++) {
@@ -551,7 +550,7 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 			}
 		}
 		if(tk.tt == TK_OPERATOR) {
-			if(checkNestedSyntax(_ctx, tls, &i, e, AST_OPTIONAL, '[', ']')) {
+			if(checkNestedSyntax(_ctx, tls, i, e, AST_OPTIONAL, '[', ']')) {
 				kArray_add(adst, tk);
 				continue;
 			}

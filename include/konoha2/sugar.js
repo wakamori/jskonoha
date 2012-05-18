@@ -134,21 +134,23 @@
 //
 ////#define SYN_ExprFlag      1
 //#define SYN_isExpr(syn)   TFLAG_is(kflag_t, syn->flag, SYN_ExprFlag)
-//
-//typedef const struct _ksyntax ksyntax_t;
-//struct _ksyntax {
-//	keyword_t kw;  kflag_t flag;
-//	kArray   *syntaxRuleNULL;
-//	kMethod  *ParseStmtNULL;
-//	kMethod  *ParseExpr;
-//	kMethod  *TopStmtTyCheck;
-//	kMethod  *StmtTyCheck;
-//	kMethod  *ExprTyCheck;
-//	// binary
-//	ktype_t    ty;   kshort_t priority;
-//	kmethodn_t op2;  kmethodn_t op1;      // & a
+
+
+function _ksyntax ( ) {
+	this.kw;				//keyword_t
+	this.flag;				//kflag_t
+	this.syntaxRuleNULL;	//kArray *
+	this.ParseStmtNULL;		//Method *
+	this.ParseExpr;			//kMethod *
+	this.TopStmtTyCheck;	//kMethod *
+	this.StmtTyCheck;		//kMethod *
+	this.ExprTyCheck;		//kMethod *
+	this.ty;				//ktype_t
+	this.priority;			//kshort_t
+	this.op2;				//kmethodn_t
+	this.op1;				//kmethodn_t
 //	//kshort_t dummy;
-//};
+};
 //
 //#define TOKEN(T)  .name = T
 //#define ParseStmt_(NAME)  .ParseStmt = ParseStmt_##NAME
@@ -206,20 +208,20 @@
 //	}while(0)\
 //
 //
-//typedef const struct _kKonohaSpace kKonohaSpace;
-//struct _kKonohaSpace {
-//	kObjectHeader h;
-//	kpack_t packid;  kpack_t packdom;
-//	const struct _kKonohaSpace   *parentNULL;
-//	const Ftokenizer *fmat;
-//	struct kmap_t   *syntaxMapNN;
-//	//
-//	void         *gluehdr;
-//	kObject      *scrNUL;
-//	kcid_t static_cid;   kcid_t function_cid;
-//	kArray*       methods;  // default K_EMPTYARRAY
-//	karray_t      cl;
-//};
+function _kKonohaSpace ( ) {
+	this.h;				//	kObjectHeader
+	this.packid;		//	kpack_t
+	this.pakdom;		//kpack_t
+	this.parentNULL;	//const struct _kKonohaSpace *
+	this.fmat;			//const Ftokenizer *
+	this.syntaxMapNN;	//struct kmap_t *
+	this.gluehdr;		//void *
+	this.scrNUL;		//kObject *
+	this.static_cid;	//kcid_t
+	this.function_cid;	//kcid_t
+	this.methods;		//kArray *
+	this.cl;			//	karray_t
+};
 //
 //typedef kshort_t    ksugar_t;
 //typedef kshort_t    kexpr_t;
@@ -247,27 +249,27 @@
 //	AST_OPTIONAL      // for syntax sugar
 //} ktoken_t ;
 //
-//typedef const struct _kToken kToken;
-//struct _kToken {
-//	kObjectHeader h;
-//	kushort_t tt;   ksymbol_t kw;
+function _kToken ( ) {
+	this.h;				//kObjectHeader
+	this.tt;			//kushort_t
+	this.kw;			//ksymbol_t
 //	union {
-//		kString *text;
-//		kArray  *sub;
+		this.text;		//kString *
+		this.sub;		//kArray *
 //	};
-//	kline_t     uline;
+	this.uline;			//kline_t
 //	union {
-//		kushort_t lpos;
-//		kshort_t  closech;  // ast
-//		ksymbol_t nameid;   // sugar rule    in sugar
-//		kshort_t  mn_type;  // method type   if tt == TK_MN
+		this.lpos;		//kushort_t
+		this.closech;	//kshort_t  // ast
+		this.nameid;	//ksymbol_t   // sugar rule    in sugar
+		this.mn_type;	//kshort_t    // method type   if tt == TK_MN
 //	};
 //	union {
-//		kshort_t   topch;
-//		ktype_t    ty;       // if kw == KW_Type
-//		kmethodn_t mn;	     // if tt == TK_MN
+		this.topch;		//kshort_t
+		this.ty;		//ktype_t       // if kw == KW_Type
+		this.mn;		//kmethodn_t	     // if tt == TK_MN
 //	};
-//};
+};
 //
 //typedef enum {
 //	MNTYPE_method, MNTYPE_unary, MNTYPE_binary
@@ -338,24 +340,22 @@
 //#define TSTMT_LOOP           6
 //#define TSTMT_JUMP           7
 //
-//typedef const struct _kStmt kStmt;
-//struct _kStmt {
-//	kObjectHeader h;
-//	kline_t uline;
-//	ksyntax_t *syn;
-//	const struct _kBlock *parentNULL;
-//	kushort_t build;
+function _kStmt( ) {
+	this.h;				//	kObjectHeader;
+	this.uline;			//	kline_t;
+	this.syn;			//	ksyntax_t *;
+	this.parentNULL;	//	const struct _kBlock *;
+	this.build;			//	kushort_t;
 //};
-//
-//typedef const struct _kBlock kBlock;
-//struct _kBlock {
-//	kObjectHeader h;
-//	kKonohaSpace        *ks;
-//	kStmt               *parentNULL;
-//	kArray              *blocks;
-//	kExpr               *esp;
-//};
-//
+
+function _kBlock( ) {
+	this.h;				//kObjectHeader
+	this.ks;			//kKonohaSpace *
+	this.parentNULL;	//kStmt *
+	this.blocks;		//kArray *
+	this.esp;			//kExpr *
+}
+
 //typedef struct _kGamma kGamma;
 //
 //typedef struct {

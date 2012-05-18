@@ -493,31 +493,34 @@ var konoha = {};
 ////struct _kclass;
 //typedef uintptr_t kmagicflag_t;
 //
-//typedef const struct _kclass kclass_t;
-//struct _kclass {
+function _kclass ( ) {
 //	KCLASSSPI;
-//	kpack_t   packid;       kpack_t   packdom;
-//	kcid_t   cid;           kflag_t  cflag;
-//	kcid_t   bcid;          kcid_t   supcid;
-//	kmagicflag_t magicflag;
-//	size_t     cstruct_size;
-//	kfield_t  *fields;
-//	kushort_t  fsize;         kushort_t fallocsize;
-//	const char               *DBG_NAME;
-//	kuname_t                  nameid;
-//	kushort_t                 optvalue;
+	this.packid;			//kpack_t
+	this.packdom;			//kpack_t
+	this.cid;				//kcid_t
+	this.cflag;				//kflag_t
+	this.bcid;				//kcid_t
+	this.supcid;			//kcid_t
+	this.magicflag;			//magicflag_t
+	this.cstruct_size;		//size_t
+	this.fields;			//kfield_t *
+	this.fsize;				//kushort_t
+	this.fallocsize;		//kushort_t
+	this.DBG_NAME;			//const char *
+	this.nameid;			//kuname_t
+	this.optvalue;			//kushort_t
 //
-//	const struct _kParam     *cparam;
-//	const struct _kArray     *methods;
-//	const struct _kString    *shortNameNULL;
+	this.cparam;			//const struct _kParam *
+	this.methods;			//const struct _kArray *
+	this.shortNameNULL;		//const struct _kString *
 //	union {   // default value
-//		const struct _kObject  *nulvalNUL;
-//		struct _kObject        *WnulvalNUL;
+		this.nulvalNUL;		//const struct _kObject *
+		this.WnulvalNUl;	//struct _kObject *
 //	};
-//	struct kmap_t            *constPoolMapNO;
-//	kclass_t                 *searchSimilarClassNULL;
-//	kclass_t                 *searchSuperMethodClassNULL;
-//} ;
+	this.constPoolMapNO;	//struct kmap_t *
+	this.searchSimilarClassNULL;	//kclass_t
+	this.searchSuperMethodClassNULL;//kclass_t *
+} ;
 //
 ///* ----------------------------------------------------------------------- */
 ///* CLASS */
@@ -802,28 +805,27 @@ var konoha = {};
 //#define kArray_isUnboxData(o)    (TFLAG_is(uintptr_t,(o)->h.magicflag,kObject_Local1))
 //#define kArray_setUnboxData(o,b) TFLAG_set(uintptr_t,(o)->h.magicflag,kObject_Local1,b)
 //
-//typedef const struct _kArray kArray;
-//struct _kArray {
-//	kObjectHeader h;
-//	size_t bytesize;
+//
+
+function _kArray ( ) {
+	this.h;				//ObjectHeader
+	this.bytesize;		//size_t
 //	union {
-//		uintptr_t              *ndata;
-//		kint_t                 *ilist;
-//#ifdef K_USING_FLOAT
-//		kfloat_t               *flist;
-//#endif
-//		const struct _kObject        **list;
-//		const struct _kString        **strings;
-//		const struct _kMethod        **methods;
-//		const struct _kToken         **toks;
-//		struct _kToken        **Wtoks;
-//		const struct _kExpr          **exprs;
-//		struct _kExpr         **Wexprs;
-//		const struct _kStmt          **stmts;
-//		struct _kStmt         **Wstmts;
+	this.ndata;			//uintptr_t *
+	this.ilist;			//kint_t *
+	this.flist;			//kfloat_t *
+	this.list;			//const struct _kObject **
+	this.strings;		//const struct _kString **
+	this.methods;		//const struct _kMethod **
+	this.toks;			//const struct _kToken  **
+	this.Wtoks;			//struct _kToken **
+	this.kExpr;			//const struct _kExpr **
+	this.Wexprs;		//struct _kExpr **
+	this.stmts;			//const struct _kStmt **
+	this.Wstmts;		//struct _kStmt **
 //	};
-//	size_t bytemax;
-//};
+	this.btyemax;		//size_t
+};
 //
 ///* ------------------------------------------------------------------------ */
 ////## @Private @Immutable class Param Object;
@@ -835,16 +837,17 @@ var konoha = {};
 //#define TY_Param                 CLASS_Param
 //#define IS_Param(o)              (O_bcid(o) == CLASS_Param)
 //
-//typedef struct kparam_t {
-//	ktype_t    ty;  ksymbol_t  fn;
-//} kparam_t;
+function kparam_t ( ) {
+	this.ty;			//ktype_t
+	this.fn;			//ksymbol_t
+};
 //
-//typedef const struct _kParam kParam;
-//struct _kParam {
-//	kObjectHeader h;
-//	ktype_t rtype; kushort_t psize;
-//	kparam_t p[3];
-//};
+function _kParam ( ) {
+	this.h;				//kObjectHeader
+	this.rtype;			//ktype_t
+	this.psize;			//kushort_t
+	this.p[3];			//kparam_t
+};
 //
 ///* ------------------------------------------------------------------------ */
 ////## class Method Object;
