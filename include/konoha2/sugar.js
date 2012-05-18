@@ -79,14 +79,6 @@
 //struct tenv_t;
 //typedef int (*Ftokenizer)(CTX, struct _kToken *, struct tenv_t *, int, kMethod *thunk);
 //
-//typedef struct tenv_t {
-//	const char   *source;
-//	kline_t       uline;
-//	kArray       *list;
-//	const char   *bol;     // begin of line
-//	int           indent_tab;
-//	const Ftokenizer *fmat;
-//} tenv_t;
 konoha.tenv_t = function() {
 	this.source = null; //const char* => String
 	this.uline = null; //kline_t
@@ -234,7 +226,7 @@ konoha.kKonohaSpace = function() {
 //typedef kshort_t    ksugar_t;
 //typedef kshort_t    kexpr_t;
 //
-konoha.ktoken_t = new konoha.Enum (
+konoha.ktoken_t = new konoha.Enum(
 	"TK_NONE",          // KW_Err
 	"TK_INDENT",        // KW_Expr
 	"TK_SYMBOL",        // KW_Symbol

@@ -11,6 +11,7 @@ COMPILER = ${JS_ENGINE} ${BUILD_DIR}/uglify.js --unsafe
 POST_COMPILER = ${JS_ENGINE} ${BUILD_DIR}/post-compile.js
 
 BASE_FILES = \
+	${SRC_DIR}/konoha_namespace.js\
 	${SRC_DIR}/sugar/token.js\
 	${SRC_DIR}/sugar/ast.js
 
