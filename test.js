@@ -1,6 +1,10 @@
-var add = function(a, b) {
-	return a + b;
-};
+function hoge(VAR, VAL) {
+	if (null) {
+		return VAR + VAL;
+	}
+	else {
+		return 0;
+	}
+}
 
-print('1 + 2 = ' + add(1, 2));
-print('4 + 5 = ' + add(4, 5));
+console.log(hoge(1, 2));

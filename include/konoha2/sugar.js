@@ -226,28 +226,28 @@ function _kKonohaSpace ( ) {
 //typedef kshort_t    ksugar_t;
 //typedef kshort_t    kexpr_t;
 //
-//typedef enum {
-//	TK_NONE,          // KW_Err
-//	TK_INDENT,        // KW_Expr
-//	TK_SYMBOL,        // KW_Symbol
-//	TK_USYMBOL,       // KW_Usymbol
-//	TK_TEXT,          // KW_Text
-//	TK_INT,           // KW_Int
-//	TK_FLOAT,         // KW_Float
-//	TK_TYPE,          // KW_Type
-//	AST_PARENTHESIS,  // KW_Parenthesis
-//	AST_BRANCET,      // KW_Brancet
-//	AST_BRACE,        // KW_Brace
-//
-//	TK_OPERATOR,
-//	TK_MSYMBOL,       //
-//	TK_ERR,           //
-//	TK_CODE,          //
-//	TK_WHITESPACE,    //
-//	TK_METANAME,
-//	TK_MN,
-//	AST_OPTIONAL      // for syntax sugar
-//} ktoken_t ;
+konoha.ktoken_t = new konoha.Enum (
+	"TK_NONE",          // KW_Err
+	"TK_INDENT",        // KW_Expr
+	"TK_SYMBOL",        // KW_Symbol
+	"TK_USYMBOL",       // KW_Usymbol
+	"TK_TEXT",          // KW_Text
+	"TK_INT",           // KW_Int
+	"TK_FLOAT",         // KW_Float
+	"TK_TYPE",          // KW_Type
+	"AST_PARENTHESIS",  // KW_Parenthesis
+	"AST_BRANCET",      // KW_Brancet
+	"AST_BRACE",        // KW_Brace
+
+	"TK_OPERATOR",
+	"TK_MSYMBOL",       //
+	"TK_ERR",           //
+	"TK_CODE",          //
+	"TK_WHITESPACE",    //
+	"TK_METANAME",
+	"TK_MN",
+	"AST_OPTIONAL"      // for syntax sugar
+);
 //
 function _kToken ( ) {
 	this.h;				//kObjectHeader

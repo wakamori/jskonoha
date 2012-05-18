@@ -24,7 +24,6 @@
 //
 //#ifndef KONOHA2_H_
 //#define KONOHA2_H_
-var konoha = {};
 //
 //#ifdef HAVE_CONFIG_H
 //#include "config.h"
@@ -1297,6 +1296,9 @@ function _kParam ( ) {
 //
 //#define KINITv(VAR, VAL)   OBJECT_SET(VAR, VAL)
 //#define KSETv(VAR, VAL)    OBJECT_SET(VAR, VAL)
+konoha.KSETv = function(VAR, VAL) {
+	VAR = VAL;
+}
 //#define KINITp(parent, v, o) KINITv(v, o)
 //#define KSETp(parent,  v, o) KSETv(v, o)
 //#define KUNUSEv(V)  (V)->h.ct->free(_ctx, (V))

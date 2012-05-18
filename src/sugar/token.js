@@ -21,26 +21,16 @@
 // * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ***************************************************************************/
-//
-///* ************************************************************************ */
-//
-//#ifdef __cplusplus
-//extern "C" {
-//#endif
-//
-/* ------------------------------------------------------------------------ */
-
-konoha = {};
 
 konoha.Token_toERR = function(_ctx, tk, errref)
 {
-	tk.tt = TK_ERR;
-	KSETv(tk.text, ctxsugar.errors.strings[errref]);
+	tk.tt = konoha.ktoken_t.TK_ERR;
+	konoha.KSETv(tk.text, ctxsugar.errors.strings[errref]);
 }
 
 konoha.lpos = function(tenv, s)
 {
-	return (tenv.bol == NULL) ? -1 : s - tenv.bol;
+	return (tenv.bol == null) ? -1 : s - tenv.bol;
 }
 
 konoha.parseINDENT = function(_ctx, tk, tenv, pos, thunk)
