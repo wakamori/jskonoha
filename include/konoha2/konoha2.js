@@ -769,13 +769,21 @@ konoha.kObject = function() {
 ////} kbytes_t;
 //
 //
-//typedef const struct _kString kString;
-//struct _kString /* extends _Bytes */ {
-//	kObjectHeader h;
-//	COMMON_BYTEARRAY;
-////	kuint_t hashCode;
+typedef const struct _kString kString;
+konoha.kString = function()/* extends _Bytes */ {
+	this.h = null;        // kObjectHeader => kObjectHeader
+	this.bytesize = null; // size_t => Number
+	// union {
+	// 	   const char *byteptr;
+	// 	   const char *text;
+	// 	   const unsigned char *utext;
+	// 	   char *buf;
+	// 	   unsigned char *ubuf;
+	// }
+	this.text = null;     // union => String
+	this.hashCode = null; // kuint_t => Number
 //	const char inline_text[SIZEOF_INLINETEXT];
-//};
+};
 //
 //#define SPOL_TEXT          (1<<0)
 //#define SPOL_ASCII         (1<<1)
