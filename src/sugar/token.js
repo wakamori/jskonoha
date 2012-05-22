@@ -68,7 +68,7 @@ konoha.parseNUM = function(_ctx, tk, tenv, tok_start, thunk)
 	while((ch = ts[pos++]) != 0) {
 		if(ch == '_') continue;
 		if(ch == '.') {
-			if(!isdigit(ts[pos])) {
+			if(isNaN(Number(ts[pos]))) {
 				break;
 			}
 			dot++;
@@ -78,12 +78,12 @@ konoha.parseNUM = function(_ctx, tk, tenv, tok_start, thunk)
 			pos++;
 			continue;
 		}
-		if(!isalnum(ch)) break;
+		if(isNaN(Number(ch))) break;
 	}
-	if(IS_NOTNULL(tk)) {
-		KSETv(tk.text, new_kString(ts + tok_start, (pos-1)-tok_start, SPOL_ASCII));
-		tk.tt = (dot == 0) ? TK_INT : TK_FLOAT;
-	}
+//	if(IS_NOTNULL(tk)) {
+	konoha.KSETv(tk.text, new_kString(ts + tok_start, (pos-1)-tok_start, SPOL_ASCII));
+	tk.tt = (dot == 0) ? TK_INT : TK_FLOAT;
+//	}
 	return pos - 1;
 }
 

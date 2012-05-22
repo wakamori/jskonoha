@@ -807,43 +807,11 @@ konoha.kObject = function() {
 
 konoha.kArray = function() {
 	this.h = null;				//ObjectHeader
-	this.bytesize = null;		//size_t
-<<<<<<< HEAD
-//	union {
-	this.ndata = null;			//uintptr_t *
-	this.ilist = null;			//kint_t *
-	this.flist = null;			//kfloat_t *
-	this.list = null;			//const struct _kObject **
-	this.strings = null;		//const struct _kString **
-	this.methods = null;		//const struct _kMethod **
-	this.toks = null;			//const struct _kToken  **
-	this.Wtoks = null;			//struct _kToken **
-	this.kExpr = null;			//const struct _kExpr **
-	this.Wexprs = null;		//struct _kExpr **
-	this.stmts = null;			//const struct _kStmt **
-	this.Wstmts = null;		//struct _kStmt **
-	this.data = null;
-//	};
-=======
+	this.bytesize = null;		//size_t => Number
 
-// //	union {
-// 	this.ndata = null;			//uintptr_t *
-// 	this.ilist = null;			//kint_t *
-// 	this.flist = null;			//kfloat_t *
-// 	this.list = null;			//const struct _kObject **
-// 	this.strings = null;		//const struct _kString **
-// 	this.methods = null;		//const struct _kMethod **
-// 	this.toks = null;			//const struct _kToken  **
-// 	this.Wtoks = null;			//struct _kToken **
-// 	this.kExpr = null;			//const struct _kExpr **
-// 	this.Wexprs = null;		//struct _kExpr **
-// 	this.stmts = null;			//const struct _kStmt **
-// 	this.Wstmts = null;		//struct _kStmt **
-// //	};
-	this.data = null; //union => Array
+	this.data = null;           //union => Array
 
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
-	this.btyemax = null;		//size_t
+	this.btyemax = null;		//size_t => Number
 };
 
 
