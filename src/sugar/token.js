@@ -197,13 +197,8 @@ konoha.parseCOMMENT = function(_ctx, tk, tenv, tok_start, thunk)
 		prev = ch;
 	}
 	if(IS_NOTNULL(tk)) {
-<<<<<<< HEAD
-		size_t errref = SUGAR_P(ERR_, tk.uline, tk.lpos, "must close with */");
-		token_toERR(_ctx, tk, errref);
-=======
 		var errref = SUGAR_P(ERR_, tk.uline, tk.lpos, "must close with */");
 		Token_toERR(_ctx, tk, errref);
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
 	}
 	return pos-1;/*EOF*/
 }
@@ -390,9 +385,6 @@ konoha.mkTM_type = new konoha.Enum(
 		"KCHAR_MAX"
 		);
 
-
-
-
 konoha.cmatrix = new Array{
 	0/*nul*/, 1/*soh*/, 1/*stx*/, 1/*etx*/, 1/*eot*/, 1/*enq*/, 1/*ack*/, 1/*bel*/,
 	1/*bs*/, konoha.MKTM_type._TAB/*ht*/, konoha.MKTM_type. _NL/*nl*/, 1/*vt*/, 1/*np*/, 1/*cr*/, 1/*so*/, 1/*si*/,
@@ -425,173 +417,6 @@ konoha.cmatrix = new Array{
 //	/*170  x   171  y   172  z   173  {   174  |   175  }   176  ~   177 del*/
 	konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LBR, konoha.MKTM_type._VAR, konoha.MKTM_type._RBR, konoha.MKTM_type._CHILDER, 1
 };
-=======
-// konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk);
-
-konoha.MiniKonohaTokenMatrix = new Array(
-// _NULL      0
-	konoha.parseSKIP,
-// _UNDEF     1
-	konoha.parseSKIP,
-// _DIGIT     2
-	konoha.parseNUM,
-// _UALPHA    3
-	konoha.parseUSYMBOL,
-// _LALPHA    4
-	konoha.parseSYMBOL,
-// _MULTI     5
-	konoha.parseMSYMBOL,
-// _NL        6
-	konoha.parseNL,
-// _TAB       7
-	konoha.parseSKIP,
-// _SP        8
-	konoha.parseSKIP,
-// _LPAR      9
-	konoha.parseOP1,
-// _RPAR      10
-	konoha.parseOP1,
-// _LSQ       11
-	konoha.parseOP1,
-// _RSQ       12
-	konoha.parseOP1,
-// _LBR       13
-	konoha.parseBLOCK,
-// _RBR       14
-	konoha.parseOP1,
-// _LT        15
-	konoha.parseOP,
-// _GT        16
-	konoha.parseOP,
-// _QUOTE     17
-	konoha.parseUNDEF,
-// _DQUOTE    18
-	konoha.parseDQUOTE,
-// _BKQUOTE   19
-	konoha.parseUNDEF,
-// _OKIDOKI   20
-	konoha.parseOP,
-// _SHARP     21
-	konoha.parseOP,
-// _DOLLAR    22
-	konoha.parseOP,
-// _PER       23
-	konoha.parseOP,
-// _AND       24
-	konoha.parseOP,
-// _STAR      25
-	konoha.parseOP,
-// _PLUS      26
-	konoha.parseOP,
-// _COMMA     27
-	konoha.parseOP1,
-// _MINUS     28
-	konoha.parseOP,
-// _DOT       29
-	konoha.parseOP,
-// _SLASH     30
-	konoha.parseSLASH,
-// _COLON     31
-	konoha.parseOP,
-// _SEMICOLON 32
-	konoha.parseOP1,
-// _EQ        33
-	konoha.parseOP,
-// _QUESTION  34
-	konoha.parseOP,
-// _AT        35
-	konoha.parseOP1,
-// _VAR       36
-	konoha.parseOP,
-// _CHILDER   37
-	konoha.parseOP,
-// _BKSLASH   38
-	konoha.parseUNDEF,
-// _HAT       39
-	konoha.parseOP,
-// _UNDER     40
-	konoha.parseSYMBOL
-// KCHAR_MAX  41
-);
-
-konoha.MKTM_type = new konoha.Enum(
-	"_NULL",
-	"_UNDEF",
-	"_DIGIT",
-	"_UALPHA",
-	"_LALPHA",
-	"_MULTI",
-	"_NL",
-	"_TAB",
-	"_SP",
-	"_LPAR",
-	"_RPAR",
-	"_LSQ",
-	"_RSQ",
-	"_LBR",
-	"_RBR",
-	"_LT",
-	"_GT",
-	"_QUOTE",
-	"_DQUOTE",
-	"_BKQUOTE",
-	"_OKIDOKI",
-	"_SHARP",
-	"_DOLLAR",
-	"_PER",
-	"_AND",
-	"_STAR",
-	"_PLUS",
-	"_COMMA",
-	"_MINUS",
-	"_DOT",
-	"_SLASH",
-	"_COLON",
-	"_SEMICOLON",
-	"_EQ",
-	"_QUESTION",
-	"_AT",
-	"_VAR",
-	"_CHILDER",
-	"_BKSLASH",
-	"_HAT",
-	"_UNDER",
-	"KCHAR_MAX"
-);
-
-konoha.cMatrix = new Array(
-	0/*nul*/, 1/*soh*/, 1/*stx*/, 1/*etx*/, 1/*eot*/, 1/*enq*/, 1/*ack*/, 1/*bel*/,
-	1/*bs*/,  konoha.MKTM_type._TAB/*ht*/, konoha.MKTM_type._NL/*nl*/, 1/*vt*/, 1/*np*/, 1/*cr*/, 1/*so*/, 1/*si*/,
-	/*	020 dle  021 dc1  022 dc2  023 dc3  024 dc4  025 nak  026 syn  027 etb*/
-	1, 1, 1, 1,     1, 1, 1, 1,
-	/*	030 can  031 em   032 sub  033 esc  034 fs   035 gs   036 rs   037 us*/
-	1, 1, 1, 1,     1, 1, 1, 1,
-	/*040 sp   041  !   042  "   043  #   044  $   045  %   046  &   047  '*/
-	konoha.MKTM_type._SP, konoha.MKTM_type._OKIDOKI, konoha.MKTM_type._DQUOTE, konoha.MKTM_type._SHARP, konoha.MKTM_type._DOLLAR, konoha.MKTM_type._PER, konoha.MKTM_type._AND, konoha.MKTM_type._QUOTE,
-	/*050  (   051  )   052  *   053  +   054  ,   055  -   056  .   057  /*/
-	konoha.MKTM_type._LPAR, konoha.MKTM_type._RPAR, konoha.MKTM_type._STAR, konoha.MKTM_type._PLUS, konoha.MKTM_type._COMMA, konoha.MKTM_type._MINUS, konoha.MKTM_type._DOT, konoha.MKTM_type._SLASH,
-	/*060  0   061  1   062  2   063  3   064  4   065  5   066  6   067  7 */
-	konoha.MKTM_type._DIGIT, konoha.MKTM_type._DIGIT, konoha.MKTM_type._DIGIT, konoha.MKTM_type._DIGIT,  konoha.MKTM_type._DIGIT, konoha.MKTM_type._DIGIT, konoha.MKTM_type._DIGIT, konoha.MKTM_type._DIGIT,
-	/*	070  8   071  9   072  :   073  ;   074  <   075  =   076  >   077  ? */
-	konoha.MKTM_type._DIGIT, konoha.MKTM_type._DIGIT, konoha.MKTM_type._COLON, konoha.MKTM_type._SEMICOLON, konoha.MKTM_type._LT, konoha.MKTM_type._EQ, konoha.MKTM_type._GT, konoha.MKTM_type._QUESTION,
-	/*100  @   101  A   102  B   103  C   104  D   105  E   106  F   107  G */
-	konoha.MKTM_type._AT, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA,
-	/*110  H   111  I   112  J   113  K   114  L   115  M   116  N   117  O */
-	konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA,
-	/*120  P   121  Q   122  R   123  S   124  T   125  U   126  V   127  W*/
-	konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA,
-	/*130  X   131  Y   132  Z   133  [   134  \   135  ]   136  ^   137  konoha.MKTM_type._*/
-	konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._UALPHA, konoha.MKTM_type._LSQ, konoha.MKTM_type._BKSLASH, konoha.MKTM_type._RSQ, konoha.MKTM_type._HAT, konoha.MKTM_type._UNDER,
-	/*140  `   141  a   142  b   143  c   144  d   145  e   146  f   147  g*/
-	konoha.MKTM_type._BKQUOTE, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA,
-	/*150  h   151  i   152  j   153  k   154  l   155  m   156  n   157  o*/
-	konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA,
-	/*160  p   161  q   162  r   163  s   164  t   165  u   166  v   167  w*/
-	konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA,
-	/*170  x   171  y   172  z   173  {   174  |   175  }   176  ~   177 del*/
-	konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LBR, konoha.MKTM_type._VAR, konoha.MKTM_type._RBR, konoha.MKTM_type._CHILDER, 1
-);
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
 
 konoha.kchar = function(t, pos)
 {
@@ -599,39 +424,6 @@ konoha.kchar = function(t, pos)
 	return konoha.cMatrix[ch]; //TODO : Multi-byte char
 }
 
-<<<<<<< HEAD
-//konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
-//{
-//	var ch, level = 1, pos = tok_start + 1;
-//	var fmat = tenv.fmat;
-//	tk.lpos += 1;
-//	while((ch = kchar(tenv.source, pos)) != 0) {
-//		if(ch == _RBR/*}*/) {
-//			level--;
-//			if(level == 0) {
-//				if(IS_NOTNULL(tk)) {
-//					KSETv(tk.text, new_kString(tenv.source + tok_start + 1, ((pos-2)-(tok_start)+1), 0));
-//					tk.tt = TK_CODE;
-//				}
-//				return pos + 1;
-//			}
-//			pos++;
-//		}
-//		else if(ch == _LBR/*'{'*/) {
-//			level++; pos++;
-//		}
-//		else {
-//			pos = fmat[ch](_ctx, K_NULLTOKEN, tenv, pos, NULL);
-//		}
-//	}
-//	if(IS_NOTNULL(tk)) {
-//		size_t errref = SUGAR_P(ERR_, tk.uline, tk.lpos, "must close with }");
-//		Token_toERR(_ctx, tk, errref);
-//	}
-//	return pos-1;
-//}
-//
-=======
 // konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
 // {
 // 	var ch, level = 1, pos = tok_start + 1;
@@ -663,18 +455,12 @@ konoha.kchar = function(t, pos)
 // 	return pos-1;
 // }
 
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
 konoha.tokenize = function(_ctx, tenv)
 {
 	var ch, pos = 0;
 	var fmat = tenv.fmat;
-<<<<<<< HEAD
-	var tk = new_W(Token, 0);
-//	assert(tk.tt == 0);
-=======
 	var tk = new kToken();
 //	konoha.assert(tk.tt == 0); //TODO : Is this necessary?
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
 	tk.uline = tenv.uline;
 	tk.lpos  = lpos(tenv, 0);
 	pos = parseINDENT(_ctx, tk, tenv, pos, null);
@@ -685,11 +471,7 @@ konoha.tokenize = function(_ctx, tenv)
 			tk.uline = tenv.uline;
 			tk.lpos  = lpos(tenv, pos);
 		}
-<<<<<<< HEAD
-		int pos2 = fmat[ch](_ctx, tk, tenv, pos, NULL);
-=======
 		var pos2 = fmat[ch](_ctx, tk, tenv, pos, NULL);
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
 		konoha.assert(pos2 > pos);
 		pos = pos2;
 	}
@@ -698,141 +480,6 @@ konoha.tokenize = function(_ctx, tenv)
 	}
 }
 
-<<<<<<< HEAD
-//konoha.KonohaSpace_tokenizerMatrix = function(_ctx, ks)
-//{
-//	if(ks.fmat == NULL) {
-//		DBG_ASSERT(KCHAR_MAX * sizeof(Ftokenizer) == sizeof(MiniKonohaTokenMatrix));
-//		var fmat = KMALLOC(sizeof(MiniKonohaTokenMatrix));
-//		if(ks.parentNULL != NULL && ks.parentNULL.fmat != NULL) {
-//			memcpy(fmat, ks.parentNULL.fmat, sizeof(MiniKonohaTokenMatrix));
-//		}
-//		else {
-//			memcpy(fmat, MiniKonohaTokenMatrix, sizeof(MiniKonohaTokenMatrix));
-//		}
-//		ks.fmat = fmat;
-//	}
-//	return ks.fmat;
-//}
-//
-//konoha.KonohaSpace_setTokenizer = function(_ctx, ks, ch, f, mtd/*future extension*/)
-//{
-//	var kchar = (ch < 0) ? _MULTI : cMatrix[ch];
-//	var fmat = KonohaSpace_tokenizerMatrix(_ctx, ks);
-//	fmat[kchar] = f;
-//}
-//
-//konoha.KonohaSpace_tokenize = function(_ctx, ks, source, uline, a)
-//{
-//	var i, pos = kArray_size(a);
-//	var tenv = {
-//		.source = source,
-//		.uline  = uline,
-//		.list   = a,
-//		.bol    = source,
-//		.indent_tab = 4,
-//		.fmat   = ks == NULL ? MiniKonohaTokenMatrix : KonohaSpace_tokenizerMatrix(_ctx, ks)
-//	};
-//	tokenize(_ctx, tenv);
-//	if(uline == 0) {
-//		for(i = pos; i < kArray_size(a); i++) {
-//			a.Wtoks[i].uline = 0;
-//		}
-//	}
-//}
-//
-//konoha.findTopCh = function(_ctx, tls, s, e, tt, closech)
-//}
-//{
-//	var i;
-//	for(i = s; i < e; i++) {
-//		var tk = tls.toks[i];
-//		if(tk.tt == tt && S_text(tk.text)[0] == closech) return i;
-//	}
-//	DBG_ASSERT(i != e);
-//	return e;
-//}
-//
-//konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst);
-//
-//konoha.checkNestedSyntax = function(_ctx, tls, s, e, tt, opench, closech)
-//{
-//	var i = s;
-//	var tk = tls.Wtoks[i];
-//	var t = S_text(tk.text);
-//	if(t[0] == opench && t[1] == 0) {
-//		int ne = findTopCh(_ctx, tls, i+1, e, tk.tt, closech);
-//		tk.tt = tt; tk.kw = tt;
-//		KSETv(tk.sub, new_(TokenArray, 0));
-//		tk.topch = opench; tk.closech = closech;
-//		makeSyntaxRule(_ctx, tls, i+1, ne, tk.sub);
-//		s = ne;
-//		return 1;
-//	}
-//	return 0;
-//}
-//
-//konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
-//{
-//	var i;
-//	var nbuf[80];
-//	var nameid = 0;
-//	dumpTokenArray(_ctx, 0, tls, s, e);
-//	for(i = s; i < e; i++) {
-//		var tk = tls.Wtoks[i];
-//		if(tk.tt == TK_INDENT) continue;
-//		if(tk.tt == TK_TEXT /*|| tk.tt == TK_STEXT*/) {
-//			if(checkNestedSyntax(_ctx, tls, &i, e, AST_PARENTHESIS, '(', ')') ||
-//				checkNestedSyntax(_ctx, tls, &i, e, AST_BRANCET, '[', ']') ||
-//				checkNestedSyntax(_ctx, tls, &i, e, AST_BRACE, '{', '}')) {
-//			}
-//			else {
-//				tk.tt = TK_CODE;
-//				tk.kw = keyword(_ctx, S_text(tk.text), S_size(tk.text), FN_NEWID);
-//			}
-//			kArray_add(adst, tk);
-//			continue;
-//		}
-//		if(tk.tt == TK_SYMBOL || tk.tt == TK_USYMBOL) {
-//			if(i > 0 && tls.toks[i-1].topch == '$') {
-//				snprintf(nbuf, sizeof(nbuf), "$%s", S_text(tk.text));
-//				tk.kw = keyword(_ctx, (const char*)nbuf, strlen(nbuf), FN_NEWID);
-//				tk.tt = TK_METANAME;
-//				if(nameid == 0) nameid = tk.kw;
-//				tk.nameid = nameid;
-//				nameid = 0;
-//				kArray_add(adst, tk); continue;
-//			}
-//			if(i + 1 < e && tls.toks[i+1].topch == ':') {
-//				var tk = tls.toks[i];
-//				nameid = keyword(_ctx, S_text(tk.text), S_size(tk.text), FN_NEWID);
-//				i++;
-//				continue;
-//			}
-//		}
-//		if(tk.tt == TK_OPERATOR) {
-//			if(checkNestedSyntax(_ctx, tls, i, e, AST_OPTIONAL, '[', ']')) {
-//				kArray_add(adst, tk);
-//				continue;
-//			}
-//			if(tls.toks[i].topch == '$') continue;
-//		}
-//		SUGAR_P(ERR_, tk.uline, tk.lpos, "illegal sugar syntax: %s", kToken_s(tk));
-//		return false;
-//	}
-//	return true;
-//}
-//
-//konoha.parseSyntaxRule = function(_ctx, rule, uline, a)
-//{
-//	var tls = ctxsugar.tokens;
-//	 pos = kArray_size(tls);
-//	KonohaSpace_tokenize(_ctx, NULL, rule, uline, tls);
-//	makeSyntaxRule(_ctx, tls, pos, kArray_size(tls), a);
-//	kArray_clear(tls, pos);
-//}
-//
-=======
 // konoha.KonohaSpace_tokenizerMatrix = function(_ctx, ks)
 // {
 // 	if(ks.fmat == NULL) {
@@ -965,5 +612,3 @@ konoha.tokenize = function(_ctx, tenv)
 // 	makeSyntaxRule(_ctx, tls, pos, kArray_size(tls), a);
 // 	kArray_clear(tls, pos);
 // }
-
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
