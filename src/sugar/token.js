@@ -197,13 +197,8 @@ konoha.parseCOMMENT = function(_ctx, tk, tenv, tok_start, thunk)
 		prev = ch;
 	}
 	if(IS_NOTNULL(tk)) {
-<<<<<<< HEAD
-		size_t errref = SUGAR_P(ERR_, tk.uline, tk.lpos, "must close with */");
-		token_toERR(_ctx, tk, errref);
-=======
 		var errref = SUGAR_P(ERR_, tk.uline, tk.lpos, "must close with */");
 		Token_toERR(_ctx, tk, errref);
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
 	}
 	return pos-1;/*EOF*/
 }
@@ -591,7 +586,6 @@ konoha.cMatrix = new Array(
 	/*170  x   171  y   172  z   173  {   174  |   175  }   176  ~   177 del*/
 	konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LALPHA, konoha.MKTM_type._LBR, konoha.MKTM_type._VAR, konoha.MKTM_type._RBR, konoha.MKTM_type._CHILDER, 1
 );
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
 
 konoha.kchar = function(t, pos)
 {
@@ -599,39 +593,6 @@ konoha.kchar = function(t, pos)
 	return konoha.cMatrix[ch]; //TODO : Multi-byte char
 }
 
-<<<<<<< HEAD
-//konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
-//{
-//	var ch, level = 1, pos = tok_start + 1;
-//	var fmat = tenv.fmat;
-//	tk.lpos += 1;
-//	while((ch = kchar(tenv.source, pos)) != 0) {
-//		if(ch == _RBR/*}*/) {
-//			level--;
-//			if(level == 0) {
-//				if(IS_NOTNULL(tk)) {
-//					KSETv(tk.text, new_kString(tenv.source + tok_start + 1, ((pos-2)-(tok_start)+1), 0));
-//					tk.tt = TK_CODE;
-//				}
-//				return pos + 1;
-//			}
-//			pos++;
-//		}
-//		else if(ch == _LBR/*'{'*/) {
-//			level++; pos++;
-//		}
-//		else {
-//			pos = fmat[ch](_ctx, K_NULLTOKEN, tenv, pos, NULL);
-//		}
-//	}
-//	if(IS_NOTNULL(tk)) {
-//		size_t errref = SUGAR_P(ERR_, tk.uline, tk.lpos, "must close with }");
-//		Token_toERR(_ctx, tk, errref);
-//	}
-//	return pos-1;
-//}
-//
-=======
 // konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
 // {
 // 	var ch, level = 1, pos = tok_start + 1;
@@ -663,18 +624,12 @@ konoha.kchar = function(t, pos)
 // 	return pos-1;
 // }
 
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
 konoha.tokenize = function(_ctx, tenv)
 {
 	var ch, pos = 0;
 	var fmat = tenv.fmat;
-<<<<<<< HEAD
-	var tk = new_W(Token, 0);
-//	assert(tk.tt == 0);
-=======
 	var tk = new kToken();
 //	konoha.assert(tk.tt == 0); //TODO : Is this necessary?
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
 	tk.uline = tenv.uline;
 	tk.lpos  = lpos(tenv, 0);
 	pos = parseINDENT(_ctx, tk, tenv, pos, null);
@@ -685,11 +640,7 @@ konoha.tokenize = function(_ctx, tenv)
 			tk.uline = tenv.uline;
 			tk.lpos  = lpos(tenv, pos);
 		}
-<<<<<<< HEAD
-		int pos2 = fmat[ch](_ctx, tk, tenv, pos, NULL);
-=======
 		var pos2 = fmat[ch](_ctx, tk, tenv, pos, NULL);
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
 		konoha.assert(pos2 > pos);
 		pos = pos2;
 	}
@@ -698,141 +649,6 @@ konoha.tokenize = function(_ctx, tenv)
 	}
 }
 
-<<<<<<< HEAD
-//konoha.KonohaSpace_tokenizerMatrix = function(_ctx, ks)
-//{
-//	if(ks.fmat == NULL) {
-//		DBG_ASSERT(KCHAR_MAX * sizeof(Ftokenizer) == sizeof(MiniKonohaTokenMatrix));
-//		var fmat = KMALLOC(sizeof(MiniKonohaTokenMatrix));
-//		if(ks.parentNULL != NULL && ks.parentNULL.fmat != NULL) {
-//			memcpy(fmat, ks.parentNULL.fmat, sizeof(MiniKonohaTokenMatrix));
-//		}
-//		else {
-//			memcpy(fmat, MiniKonohaTokenMatrix, sizeof(MiniKonohaTokenMatrix));
-//		}
-//		ks.fmat = fmat;
-//	}
-//	return ks.fmat;
-//}
-//
-//konoha.KonohaSpace_setTokenizer = function(_ctx, ks, ch, f, mtd/*future extension*/)
-//{
-//	var kchar = (ch < 0) ? _MULTI : cMatrix[ch];
-//	var fmat = KonohaSpace_tokenizerMatrix(_ctx, ks);
-//	fmat[kchar] = f;
-//}
-//
-//konoha.KonohaSpace_tokenize = function(_ctx, ks, source, uline, a)
-//{
-//	var i, pos = kArray_size(a);
-//	var tenv = {
-//		.source = source,
-//		.uline  = uline,
-//		.list   = a,
-//		.bol    = source,
-//		.indent_tab = 4,
-//		.fmat   = ks == NULL ? MiniKonohaTokenMatrix : KonohaSpace_tokenizerMatrix(_ctx, ks)
-//	};
-//	tokenize(_ctx, tenv);
-//	if(uline == 0) {
-//		for(i = pos; i < kArray_size(a); i++) {
-//			a.Wtoks[i].uline = 0;
-//		}
-//	}
-//}
-//
-//konoha.findTopCh = function(_ctx, tls, s, e, tt, closech)
-//}
-//{
-//	var i;
-//	for(i = s; i < e; i++) {
-//		var tk = tls.toks[i];
-//		if(tk.tt == tt && S_text(tk.text)[0] == closech) return i;
-//	}
-//	DBG_ASSERT(i != e);
-//	return e;
-//}
-//
-//konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst);
-//
-//konoha.checkNestedSyntax = function(_ctx, tls, s, e, tt, opench, closech)
-//{
-//	var i = s;
-//	var tk = tls.Wtoks[i];
-//	var t = S_text(tk.text);
-//	if(t[0] == opench && t[1] == 0) {
-//		int ne = findTopCh(_ctx, tls, i+1, e, tk.tt, closech);
-//		tk.tt = tt; tk.kw = tt;
-//		KSETv(tk.sub, new_(TokenArray, 0));
-//		tk.topch = opench; tk.closech = closech;
-//		makeSyntaxRule(_ctx, tls, i+1, ne, tk.sub);
-//		s = ne;
-//		return 1;
-//	}
-//	return 0;
-//}
-//
-//konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
-//{
-//	var i;
-//	var nbuf[80];
-//	var nameid = 0;
-//	dumpTokenArray(_ctx, 0, tls, s, e);
-//	for(i = s; i < e; i++) {
-//		var tk = tls.Wtoks[i];
-//		if(tk.tt == TK_INDENT) continue;
-//		if(tk.tt == TK_TEXT /*|| tk.tt == TK_STEXT*/) {
-//			if(checkNestedSyntax(_ctx, tls, &i, e, AST_PARENTHESIS, '(', ')') ||
-//				checkNestedSyntax(_ctx, tls, &i, e, AST_BRANCET, '[', ']') ||
-//				checkNestedSyntax(_ctx, tls, &i, e, AST_BRACE, '{', '}')) {
-//			}
-//			else {
-//				tk.tt = TK_CODE;
-//				tk.kw = keyword(_ctx, S_text(tk.text), S_size(tk.text), FN_NEWID);
-//			}
-//			kArray_add(adst, tk);
-//			continue;
-//		}
-//		if(tk.tt == TK_SYMBOL || tk.tt == TK_USYMBOL) {
-//			if(i > 0 && tls.toks[i-1].topch == '$') {
-//				snprintf(nbuf, sizeof(nbuf), "$%s", S_text(tk.text));
-//				tk.kw = keyword(_ctx, (const char*)nbuf, strlen(nbuf), FN_NEWID);
-//				tk.tt = TK_METANAME;
-//				if(nameid == 0) nameid = tk.kw;
-//				tk.nameid = nameid;
-//				nameid = 0;
-//				kArray_add(adst, tk); continue;
-//			}
-//			if(i + 1 < e && tls.toks[i+1].topch == ':') {
-//				var tk = tls.toks[i];
-//				nameid = keyword(_ctx, S_text(tk.text), S_size(tk.text), FN_NEWID);
-//				i++;
-//				continue;
-//			}
-//		}
-//		if(tk.tt == TK_OPERATOR) {
-//			if(checkNestedSyntax(_ctx, tls, i, e, AST_OPTIONAL, '[', ']')) {
-//				kArray_add(adst, tk);
-//				continue;
-//			}
-//			if(tls.toks[i].topch == '$') continue;
-//		}
-//		SUGAR_P(ERR_, tk.uline, tk.lpos, "illegal sugar syntax: %s", kToken_s(tk));
-//		return false;
-//	}
-//	return true;
-//}
-//
-//konoha.parseSyntaxRule = function(_ctx, rule, uline, a)
-//{
-//	var tls = ctxsugar.tokens;
-//	 pos = kArray_size(tls);
-//	KonohaSpace_tokenize(_ctx, NULL, rule, uline, tls);
-//	makeSyntaxRule(_ctx, tls, pos, kArray_size(tls), a);
-//	kArray_clear(tls, pos);
-//}
-//
-=======
 // konoha.KonohaSpace_tokenizerMatrix = function(_ctx, ks)
 // {
 // 	if(ks.fmat == NULL) {
@@ -965,5 +781,3 @@ konoha.tokenize = function(_ctx, tenv)
 // 	makeSyntaxRule(_ctx, tls, pos, kArray_size(tls), a);
 // 	kArray_clear(tls, pos);
 // }
-
->>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
