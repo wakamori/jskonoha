@@ -79,14 +79,14 @@
 //struct tenv_t;
 //typedef int (*Ftokenizer)(CTX, struct _kToken *, struct tenv_t *, int, kMethod *thunk);
 //
-//typedef struct tenv_t {
-//	const char   *source;
-//	kline_t       uline;
-//	kArray       *list;
-//	const char   *bol;     // begin of line
-//	int           indent_tab;
-//	const Ftokenizer *fmat;
-//} tenv_t;
+konoha.tenv_t = function() {
+	this.source = null; //const char* => String
+	this.uline = null; //kline_t
+	this.list = null; //kArray*
+	this.bol = null; //const char* => Number
+	this.indent_tab = null; //int => Number
+	this.fmat = null; //Ftokenizer*
+}
 //
 //// ParseToken
 //#define VAR_ParseToken(TK, STR, UL) \
@@ -149,7 +149,7 @@ konoha.ksyntax = function() {
 	this.priority = null;			//kshort_t
 	this.op2 = null;				//kmethodn_t
 	this.op1 = null;				//kmethodn_t
-//	//kshort_t dummy;
+	//	//kshort_t dummy;
 };
 //
 //#define TOKEN(T)  .name = T
@@ -226,49 +226,49 @@ konoha.kKonohaSpace = function() {
 //typedef kshort_t    ksugar_t;
 //typedef kshort_t    kexpr_t;
 //
-//typedef enum {
-//	TK_NONE,          // KW_Err
-//	TK_INDENT,        // KW_Expr
-//	TK_SYMBOL,        // KW_Symbol
-//	TK_USYMBOL,       // KW_Usymbol
-//	TK_TEXT,          // KW_Text
-//	TK_INT,           // KW_Int
-//	TK_FLOAT,         // KW_Float
-//	TK_TYPE,          // KW_Type
-//	AST_PARENTHESIS,  // KW_Parenthesis
-//	AST_BRANCET,      // KW_Brancet
-//	AST_BRACE,        // KW_Brace
-//
-//	TK_OPERATOR,
-//	TK_MSYMBOL,       //
-//	TK_ERR,           //
-//	TK_CODE,          //
-//	TK_WHITESPACE,    //
-//	TK_METANAME,
-//	TK_MN,
-//	AST_OPTIONAL      // for syntax sugar
-//} ktoken_t ;
+konoha.ktoken_t = new konoha.Enum(
+	"TK_NONE",          // KW_Err
+	"TK_INDENT",        // KW_Expr
+	"TK_SYMBOL",        // KW_Symbol
+	"TK_USYMBOL",       // KW_Usymbol
+	"TK_TEXT",          // KW_Text
+	"TK_INT",           // KW_Int
+	"TK_FLOAT",         // KW_Float
+	"TK_TYPE",          // KW_Type
+	"AST_PARENTHESIS",  // KW_Parenthesis
+	"AST_BRANCET",      // KW_Brancet
+	"AST_BRACE",        // KW_Brace
+
+	"TK_OPERATOR",
+	"TK_MSYMBOL",       //
+	"TK_ERR",           //
+	"TK_CODE",          //
+	"TK_WHITESPACE",    //
+	"TK_METANAME",
+	"TK_MN",
+	"AST_OPTIONAL"      // for syntax sugar
+);
 //
 konoha.kToken = function() {
 	this.h = null;				//kObjectHeader
 	this.tt = null;			//kushort_t
 	this.kw = null;			//ksymbol_t
-//	union {
-		this.text = null;		//kString *
-		this.sub = null;		//kArray *
-//	};
+	//	union {
+	this.text = null;		//kString *
+	this.sub = null;		//kArray *
+	//	};
 	this.uline = null;			//kline_t
-//	union {
-		this.lpos = null;		//kushort_t
-		this.closech = null;	//kshort_t  // ast
-		this.nameid = null;	//ksymbol_t   // sugar rule    in sugar
-		this.mn_type = null;	//kshort_t    // method type   if tt == TK_MN
-//	};
-//	union {
-		this.topch = null;		//kshort_t
-		this.ty = null;		//ktype_t       // if kw == KW_Type
-		this.mn = null;		//kmethodn_t	     // if tt == TK_MN
-//	};
+	//	union {
+	this.lpos = null;		//kushort_t
+	this.closech = null;	//kshort_t  // ast
+	this.nameid = null;	//ksymbol_t   // sugar rule    in sugar
+	this.mn_type = null;	//kshort_t    // method type   if tt == TK_MN
+	//	};
+	//	union {
+	this.topch = null;		//kshort_t
+	this.ty = null;		//ktype_t       // if kw == KW_Type
+	this.mn = null;		//kmethodn_t	     // if tt == TK_MN
+	//	};
 };
 //
 //typedef enum {
@@ -314,21 +314,21 @@ konoha.kExpr = function() {
 	this.ty = null;			//ktype_t
 	this.build = null;			//kexpr_t
 	this.tk = null;			//kToken
-//	union {
-		this.data = null;		//kObject*
-		this.cons = null;		//kArray *
-		this.single = null;	//kExpr *
-		this.block = null;		//const struct _kBlock *
-//	};
-//	union {
-		this.syn = null;		//ksyntax_t *
-		this.ivalue = null;	//kint_t
-		this.fvalue = null;	//kfloat_t
-		this.ndata = null;		//uintptr_t
-		this.index = null;		//intptr_t
-		this.cid = null;		//uintptr_t
-		this.mh = null;		//uintptr_t
-//	};
+	//	union {
+	this.data = null;		//kObject*
+	this.cons = null;		//kArray *
+	this.single = null;	//kExpr *
+	this.block = null;		//const struct _kBlock *
+	//	};
+	//	union {
+	this.syn = null;		//ksyntax_t *
+	this.ivalue = null;	//kint_t
+	this.fvalue = null;	//kfloat_t
+	this.ndata = null;		//uintptr_t
+	this.index = null;		//intptr_t
+	this.cid = null;		//uintptr_t
+	this.mh = null;		//uintptr_t
+	//	};
 };
 //
 //#define TSTMT_UNDEFINED      0

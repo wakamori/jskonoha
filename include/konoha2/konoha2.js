@@ -24,7 +24,6 @@
 //
 //#ifndef KONOHA2_H_
 //#define KONOHA2_H_
-var konoha = {};
 //
 //#ifdef HAVE_CONFIG_H
 //#include "config.h"
@@ -647,7 +646,7 @@ konoha.kObjectHeader = function() {
 };
 
 
-konoha.kObject = function( ) {
+konoha.kObject = function() {
 	this.h = null;						//kObjectHeader
 //	union {
 		this.fields[4] = null;			//const struct _kObject
@@ -809,6 +808,7 @@ konoha.kObject = function( ) {
 konoha.kArray = function() {
 	this.h = null;				//ObjectHeader
 	this.bytesize = null;		//size_t
+<<<<<<< HEAD
 //	union {
 	this.ndata = null;			//uintptr_t *
 	this.ilist = null;			//kint_t *
@@ -824,6 +824,25 @@ konoha.kArray = function() {
 	this.Wstmts = null;		//struct _kStmt **
 	this.data = null;
 //	};
+=======
+
+// //	union {
+// 	this.ndata = null;			//uintptr_t *
+// 	this.ilist = null;			//kint_t *
+// 	this.flist = null;			//kfloat_t *
+// 	this.list = null;			//const struct _kObject **
+// 	this.strings = null;		//const struct _kString **
+// 	this.methods = null;		//const struct _kMethod **
+// 	this.toks = null;			//const struct _kToken  **
+// 	this.Wtoks = null;			//struct _kToken **
+// 	this.kExpr = null;			//const struct _kExpr **
+// 	this.Wexprs = null;		//struct _kExpr **
+// 	this.stmts = null;			//const struct _kStmt **
+// 	this.Wstmts = null;		//struct _kStmt **
+// //	};
+	this.data = null; //union => Array
+
+>>>>>>> 20719432a636af26d39aefe24e4137691e2fee45
 	this.btyemax = null;		//size_t
 };
 
@@ -1299,6 +1318,9 @@ konoha.kParam = function() {
 //
 //#define KINITv(VAR, VAL)   OBJECT_SET(VAR, VAL)
 //#define KSETv(VAR, VAL)    OBJECT_SET(VAR, VAL)
+konoha.KSETv = function(VAR, VAL) {
+	VAR = VAL;
+}
 //#define KINITp(parent, v, o) KINITv(v, o)
 //#define KSETp(parent,  v, o) KSETv(v, o)
 //#define KUNUSEv(V)  (V)->h.ct->free(_ctx, (V))
