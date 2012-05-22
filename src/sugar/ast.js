@@ -305,20 +305,20 @@ konoha.WARN_Ignored = function(_ctx, tls, s, e)
 	}
 }
 
-konoha.ParseStmt = function(_ctx, syn, stmt, name, tls, s, e)
-{
-	BEGIN_LOCAL(lsfp, 8);
-	konoha.KSETv(lsfp[K_CALLDELTA+0].o, stmt);
-	lsfp[K_CALLDELTA+0].ndata = syn;
-	lsfp[K_CALLDELTA+1].ivalue = name;
-	konoha.KSETv(lsfp[K_CALLDELTA+2].a, tls);
-	lsfp[K_CALLDELTA+3].ivalue = s;
-	lsfp[K_CALLDELTA+4].ivalue = e;
-	KCALL(lsfp, 0, syn.ParseStmtNULL, 4, knull(CT_Int));
-	END_LOCAL();
-	return lsfp[0].ivalue;
-}
-
+//konoha.ParseStmt = function(_ctx, syn, stmt, name, tls, s, e)
+//{
+//	BEGIN_LOCAL(lsfp, 8);
+//	konoha.KSETv(lsfp[K_CALLDELTA+0].o, stmt);
+//	lsfp[K_CALLDELTA+0].ndata = syn;
+//	lsfp[K_CALLDELTA+1].ivalue = name;
+//	konoha.KSETv(lsfp[K_CALLDELTA+2].a, tls);
+//	lsfp[K_CALLDELTA+3].ivalue = s;
+//	lsfp[K_CALLDELTA+4].ivalue = e;
+//	KCALL(lsfp, 0, syn.ParseStmtNULL, 4, knull(CT_Int));
+//	END_LOCAL();
+//	return lsfp[0].ivalue;
+//}
+//
 konoha.lookAheadKeyword = function(tls, s, e, rule)
 {
 	var i;
