@@ -671,25 +671,25 @@
 ////#define DBG_CHECK_MALLOCED_DEC_SIZE(n)
 ////#endif
 //
-//static inline void do_bzero(void *ptr, size_t size)
-//{
-//	memset(ptr, 0, size);
-//}
-//
+konoha.do_bzero(ptr,size)
+{
+	memset(ptr, 0, size);
+}
+
 //static inline void do_memcpy(void *s1, void *s2, size_t size)
 //{
 //	memcpy(s1, s2, size);
 //}
 //
-//static inline void *do_malloc(size_t size)
-//{
-//	void *ptr = malloc(size);
-//	do_bzero(ptr, size);
-//	DBG_CHECK_MALLOCED_INC_SIZE(size);
-//	//fprintf(stderr, "mem:{a:(%p, %p), size=%ld}\n", ptr, ((char*)ptr)+size, size);
-//	return ptr;
-//}
-//
+konoha.do_malloc = new function(size)
+{
+	var ptr = malloc(size);
+	do_bzero(ptr, size);
+	DBG_CHECK_MALLOCED_INC_SIZE(size);
+	//fprintf(stderr, "mem:{a:(%p, %p), size=%ld}\n", ptr, ((char*)ptr)+size, size);
+	return ptr;
+}
+
 //static inline void *do_realloc(void *ptr, size_t oldSize, size_t newSize)
 //{
 //	char *newptr = (char *) realloc(ptr, newSize);
@@ -727,15 +727,15 @@
 //	return (void*)(p+1);
 //}
 //
-//static void* Kzmalloc(CTX, size_t s)
-//{
-//	klib2_malloced += s;
-//	size_t *p = (size_t*)do_malloc(s + sizeof(size_t));
-//	p[0] = s;
-//	do_bzero(p+1, s);
-//	return (void*)(p+1);
-//}
-//
+konoha.Kzmalloc = new function(_ctx, s)
+{
+	klib2_malloced += s;
+	var p = (size_t*)do_malloc(s + sizeof(size_t));
+	p[0] = s;
+	do_bzero(p+1, s);
+	return (p+1);
+}
+
 //static void Kfree(CTX, void *p, size_t s)
 //{
 //	size_t *pp = (size_t*)p;

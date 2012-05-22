@@ -86,55 +86,57 @@
 //	KARRAY_FREE(&ks->cl);
 //}
 //
-//static ksyntax_t* KonohaSpace_syntax(CTX, kKonohaSpace *ks0, keyword_t kw, int isnew)
-//{
-//	kKonohaSpace *ks = ks0;
-//	uintptr_t hcode = kw;
-//	ksyntax_t *parent = NULL;
-//	assert(ks0 != NULL);/* scan-build: remove warning */
-//	while(ks != NULL) {
-//		if(ks->syntaxMapNN != NULL) {
-//			kmape_t *e = kmap_get(ks->syntaxMapNN, hcode);
-//			while(e != NULL) {
-//				if(e->hcode == hcode) {
-//					parent = (ksyntax_t*)e->uvalue;
-//					if(isnew && ks0 != ks) goto L_NEW;
-//					return parent;
-//				}
-//				e = e->next;
-//			}
-//		}
-//		ks = ks->parentNULL;
-//	}
-//	L_NEW:;
-//	if(isnew == 1) {
-//		//DBG_P("creating new syntax %s old=%p", T_kw(kw), parent);
-//		if(ks0->syntaxMapNN == NULL) {
-//			((struct _kKonohaSpace*)ks0)->syntaxMapNN = kmap_init(0);
-//		}
-//		kmape_t *e = kmap_newentry(ks0->syntaxMapNN, hcode);
-//		kmap_add(ks0->syntaxMapNN, e);
-//		struct _ksyntax *syn = (struct _ksyntax*)KCALLOC(sizeof(ksyntax_t), 1);
-//		e->uvalue = (uintptr_t)syn;
-//
-//		if(parent != NULL) {  // TODO: RCGC
-//			memcpy(syn, parent, sizeof(ksyntax_t));
-//		}
-//		else {
-//			syn->kw = kw;
-//			syn->ty  = TY_unknown;
-//			syn->op1 = MN_NONAME;
-//			syn->op2 = MN_NONAME;
-//			KINITv(syn->ParseExpr, kmodsugar->UndefinedParseExpr);
-//			KINITv(syn->TopStmtTyCheck, kmodsugar->UndefinedStmtTyCheck);
-//			KINITv(syn->StmtTyCheck, kmodsugar->UndefinedStmtTyCheck);
-//			KINITv(syn->ExprTyCheck, kmodsugar->UndefinedExprTyCheck);
-//		}
-//		//syn->parent = parent;
-//		return syn;
-//	}
-//	return NULL;
-//}
+konoha.KonohaSpace_syntax = new function(_ctx, ks0, kw, isnew)
+{
+	var ks = ks0;
+	var hcode = kw;
+	var parent = NULL;
+	assert(ks0 != NULL);/* scan-build: remove warning */
+	while(ks != NULL) {
+		if(ks->syntaxMapNN != NULL) {
+			var e = kmap_get(ks->syntaxMapNN, hcode);
+			while(e != NULL) {
+				if(e->hcode == hcode) {
+					parent = e->uvalue;
+					if(isnew && ks0 != ks) goto L_NEW;
+					return parent;
+				}
+				e = e->next;
+			}
+		}
+		ks = ks->parentNULL;
+	}
+	L_NEW:;
+	if(isnew == 1) {
+		//DBG_P("creating new syntax %s old=%p", T_kw(kw), parent);
+		if(ks0->syntaxMapNN == NULL) {
+			ks0->syntaxMapNN = kmap_init(0);
+		}
+		var e = kmap_newentry(ks0->syntaxMapNN, hcode);
+		kmap_add(ks0->syntaxMapNN, e);
+		var syn = KCALLOC(sizeof(ksyntax_t), 1);
+		//#define KCALLOC(size, item)    (KPI)->Kzmalloc(_ctx, ((size) * (item)))
+		//static void * Kzmalloc(CTX, size_t s)
+		e->uvalue = syn;
+
+		if(parent != NULL) {  // TODO: RCGC
+			memcpy(syn, parent, sizeof(ksyntax_t));
+		}
+		else {
+			syn->kw = kw;
+			syn->ty  = TY_unknown;
+			syn->op1 = MN_NONAME;
+			syn->op2 = MN_NONAME;
+			KINITv(syn->ParseExpr, kmodsugar->UndefinedParseExpr);
+			KINITv(syn->TopStmtTyCheck, kmodsugar->UndefinedStmtTyCheck);
+			KINITv(syn->StmtTyCheck, kmodsugar->UndefinedStmtTyCheck);
+			KINITv(syn->ExprTyCheck, kmodsugar->UndefinedExprTyCheck);
+		}
+		//syn->parent = parent;
+		return syn;
+	}
+	return NULL;
+}
 //
 //static ksymbol_t keyword(CTX, const char *name, size_t len, ksymbol_t def);
 //static void parseSyntaxRule(CTX, const char *rule, kline_t pline, kArray *a);
@@ -195,16 +197,16 @@
 //}
 //
 //#define T_statement(kw)  T_statement_(_ctx, kw)
-//static const char* T_statement_(CTX, ksymbol_t kw)
-//{
-//	static char buf[80];  // this is not good, but this is very rare case.
-//	const char *statement = T_kw(kw), *postfix = " statement";
-//	if(kw == KW_Expr) { statement = "expression"; postfix = ""; }
-//	if(kw == KW_StmtTypeDecl) { statement = "variable"; postfix = " declaration"; }
-//	if(kw == KW_StmtMethodDecl) { statement =  "function"; postfix = " declaration"; }
-//	snprintf(buf, sizeof(buf), "%s%s", statement, postfix);
-//	return (const char*)buf;
-//}
+konoha.T_statement_ = new function(CTX,  kw)
+{
+	var buf[80];  // this is not good, but this is very rare case.
+	var statement = T_kw(kw), postfix = " statement";
+	if(kw == KW_Expr) { statement = "expression"; postfix = ""; }
+	if(kw == KW_StmtTypeDecl) { statement = "variable"; postfix = " declaration"; }
+	if(kw == KW_StmtMethodDecl) { statement =  "function"; postfix = " declaration"; }
+	snprintf(buf, sizeof(buf), "%s%s", statement, postfix);
+	return buf;
+}
 //
 //
 //// USymbolTable
@@ -642,34 +644,34 @@
 //	END_REFTRACE();
 //}
 //
-//static struct _kExpr* Expr_vadd(CTX, struct _kExpr *expr, int n, va_list ap)
-//{
-//	int i;
-//	if(!IS_Array(expr->cons)) {
-//		KSETv(expr->cons, new_(Array, 8));
-//	}
-//	for(i = 0; i < n; i++) {
-//		kObject *v =  (kObject*)va_arg(ap, kObject*);
-//		if(v == NULL || v == (kObject*)K_NULLEXPR) {
-//			return (struct _kExpr*)K_NULLEXPR;
-//		}
-//		kArray_add(expr->cons, v);
-//	}
-//	return expr;
-//}
-//
-//static kExpr* new_ConsExpr(CTX, ksyntax_t *syn, int n, ...)
-//{
-//	va_list ap;
-//	va_start(ap, n);
-//	DBG_ASSERT(syn != NULL);
-//	struct _kExpr *expr = new_W(Expr, syn);
-//	PUSH_GCSTACK(expr);
-//	expr = Expr_vadd(_ctx, expr, n, ap);
-//	va_end(ap);
-//	return (kExpr*)expr;
-//}
-//
+konoha.Expr_vadd = function(_ctx, expr, n, ap)
+{
+	var i;
+	if(!IS_Array(expr->cons)) {
+		KSETv(expr->cons, new_(Array, 8));
+	}
+	for(i = 0; i < n; i++) {
+		var v =  va_arg(ap, kObject*);
+		if(v == NULL || v == K_NULLEXPR) {
+			return K_NULLEXPR;
+		}
+		kArray_add(expr->cons, v);
+	}
+	return expr;
+}
+
+konoha.new_ConsExpr = function(_ctx, syn,  n, ...)
+{
+	var ap;
+	va_start(ap, n);
+	DBG_ASSERT(syn != NULL);
+	var expr = new_W(Expr, syn);
+	PUSH_GCSTACK(expr);
+	expr = new konoha.Expr_vadd(_ctx, expr, n, ap);
+	va_end(ap);
+	return expr;
+}
+
 //static kExpr* new_TypedConsExpr(CTX, int build, ktype_t ty, int n, ...)
 //{
 //	va_list ap;

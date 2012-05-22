@@ -822,9 +822,12 @@ konoha.kArray = function() {
 	this.Wexprs = null;		//struct _kExpr **
 	this.stmts = null;			//const struct _kStmt **
 	this.Wstmts = null;		//struct _kStmt **
+	this.data = null;
 //	};
 	this.btyemax = null;		//size_t
 };
+
+
 //
 ///* ------------------------------------------------------------------------ */
 ////## @Private @Immutable class Param Object;

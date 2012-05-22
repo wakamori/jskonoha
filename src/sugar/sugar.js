@@ -286,11 +286,12 @@
 //	EXPORT_SUGAR(base);
 //}
 //
-//static ksymbol_t keyword(CTX, const char *name, size_t len, ksymbol_t def)
-//{
-//	uintptr_t hcode = strhash(name, len);
-//	return kmap_getcode(kmodsugar->keywordMapNN, kmodsugar->keywordList, name, len, hcode, SPOL_ASCII|SPOL_POOL, def);
-//}
+konoha.keyword = function(CTX, name, len, def)
+{
+	var hcode = new konoha.strhash(name, len);
+	return kmap_getcode(kmodsugar->keywordMapNN, kmodsugar->keywordList, name, len, hcode, SPOL_ASCII|SPOL_POOL, def);
+	//#define kmap_getcode(M,L,N,NL,H,POL,DEF)  (KPI)->Kmap_getcode(_ctx, M, L, N, NL, H, POL, DEF)
+}
 //
 //// -------------------------------------------------------------------------
 //
