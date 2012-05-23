@@ -22,7 +22,7 @@
 // * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ***************************************************************************/
 
-//konoha ={};
+konoha ={};
 
 konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 	var bk = new kBlock();
@@ -78,7 +78,7 @@ konoha.TokenType_resolveGenerics = function(_ctx, ks, tk, tkP) {
 		if(psize > 0) {
 			ct = _ctx.share.ca.cts[tk.ty];
 			if(ct.cparam == konoha.K_NULLPARAM) {
-				konoha.sugar_p(_ctx, ERR_, tk.uline, tk.lpos, "not generic type: %s", S_text(S_ty(tk.ty));
+				konoha.sugar_p(_ctx, ERR_, tk.uline, tk.lpos, "not generic type: %s", S_text(S_ty(tk.ty)));
 				return tk;
 			}
 			ct = new konoha.CT_Generics(_ctx, ct, psize, p);
@@ -678,7 +678,7 @@ konoha.ParseExpr_DOLLAR = function(_ctx, sfp ,_rix)
 			var expr = new kBlock();
 			Expr_setTerm(expr, 1);
 			expr.tk = tk;
-			expr.block = konoha.new_Block(_ctx, konoha.Stmt_ks(stmt), stmt, tk.sub, 0, tk.sub.data.length, ';'));
+			expr.block = konoha.new_Block(_ctx, konoha.Stmt_ks(stmt), stmt, tk.sub, 0, tk.sub.data.length, ';');
 			RETURN_(expr);
 		}
 	}
