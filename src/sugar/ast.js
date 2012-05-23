@@ -283,7 +283,7 @@ konoha.Stmt_addAnnotation = function(_ctx, stmt, tls, s, e)
 				i++;
 			}
 			if(value != NULL) {
-				kObject_setObject(stmt, kw, value);
+				konoha.kObject_setObject(stmt, kw, value);
 			}
 		}
 	}
@@ -461,7 +461,7 @@ konoha.Block_addStmtLine = function(_ctx, bk, tls, s, e, tkERR)
 	if(tkERR != NULL) {
 		stmt.syn = konoha.KonohaSpace_syntax(_ctx, kStmt_ks(stmt), KW_Err, 0);
 		stmt.build = TSTMT_ERR;
-		kObject_setObject(stmt, KW_Err, tkERR.text);
+		konoha.kObject_setObject(stmt, KW_Err, tkERR.text);
 	}
 	else {
 		var estart = kerrno;
