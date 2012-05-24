@@ -24,6 +24,7 @@
 
 konoha ={};
 
+
 konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 	var bk = new kBlock();
 	if(prt != null) {
