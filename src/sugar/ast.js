@@ -314,10 +314,10 @@ konoha.ParseStmt = function(_ctx, syn, stmt, name, tls, s, e)
 	lsfp[K_CALLDELTA+4].ivalue = e;
 	var tsfp = lsfp + 0 + K_CALLDELTA;
 	tsfp[K_MTDIDX].mtdNC = syn.ParseStmtNULL;
-	tsfp[K_PCIDX].fname = __FILE__;
+//	tsfp[K_PCIDX].fname = __FILE__;
 	tsfp[K_SHIFTIDX].shift = 0;
 	tsfp[K_RTNIDX].o = knull(CT_int);
-	tspf[K_RTNIDX].uline = __LINE__;
+//	tspf[K_RTNIDX].uline = __LINE__;
 	_ctx.esp = (tsfp + 4 + 1);
 	syn.ParseStmtNULL.fastcall_1(_ctx, tsfp, K_RTNIDX);
 	tsfp[K_MTDIDX].mtdNC = null;
