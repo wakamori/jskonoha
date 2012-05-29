@@ -271,9 +271,11 @@ konoha.kToken = function() {
 	//	};
 };
 //
-//typedef enum {
-//	MNTYPE_method, MNTYPE_unary, MNTYPE_binary
-//} mntype_t;
+konoha.mntype_t = new konoha.Enum {
+	"MNTYPE_method",
+	"MNTYPE_unary",
+	"MNTYPE_binary"
+};
 //
 //static inline void kToken_setmn(kToken *tk, kmethodn_t mn, mntype_t mn_type)
 //{
@@ -425,54 +427,54 @@ konoha.kBlock = function() {
 //#define TK_SHIFT    10000
 //#define KW_TK(N)    (((keyword_t)N)+TK_SHIFT)
 //
-//#define KW_Err     0
-//#define KW_Expr    1
-//#define KW_Symbol  2
-////#define KW_name    2
-//#define KW_Usymbol 3
-////#define KW_cname   3
-//#define KW_Text    4
-//#define KW_Int     5
-//#define KW_Float   6
-//#define KW_Type    7
-//#define            KW_StmtTypeDecl KW_Type
-//#define KW_Parenthesis  8
-//#define KW_Brancet      9
-//#define KW_Brace        10
-//
-//#define KW_Block   11
-//#define KW_Params  12
-//#define       KW_ExprMethodCall  12/*FIXME*/
-//#define KW_Toks    13
-//
-//#define KW_DOT     14
-//#define KW_DIV     (1+KW_DOT)
-//#define KW_MOD     (2+KW_DOT)
-//#define KW_MUL     (3+KW_DOT)
-//#define KW_ADD     (4+KW_DOT)
-//#define KW_SUB     (5+KW_DOT)
-//#define KW_LT      (6+KW_DOT)
-//#define KW_LTE     (7+KW_DOT)
-//#define KW_GT      (8+KW_DOT)
-//#define KW_GTE     (9+KW_DOT)
-//#define KW_EQ      (10+KW_DOT)
-//#define KW_NEQ     (11+KW_DOT)
-//#define KW_AND     (12+KW_DOT)
-//#define KW_OR      (13+KW_DOT)
-//#define KW_NOT     (14+KW_DOT)
-////#define KW_COLON   (15+KW_DOT)
-//#define KW_LET     (15+KW_DOT)
-//#define KW_COMMA   (16+KW_DOT)
-//#define KW_DOLLAR  (17+KW_DOT)
-//
-//#define KW_void      (18+KW_DOT)
-//#define KW_StmtMethodDecl          KW_void
-//#define KW_boolean   (1+KW_void) kObjectHeader ;
-//#define KW_int       (2+KW_void)
-////#define KW_null      (3+KW_void)
-//#define KW_true      (3+KW_void)
-//#define KW_false     (4+KW_void)
-//#define KW_if        (5+KW_void)
+konoha.KW_Err     = 0;
+konoha.KW_Expr    = 1;
+konoha.KW_Symbol  = 2;
+konoha.KW_name    = 2;
+konoha.KW_Usymbol = 3;
+konoha.KW_cname   = 3;
+konoha.KW_Text    = 4;
+konoha.KW_Int     = 5;
+konoha.KW_Float   = 6;
+konoha.KW_Type    = 7;
+konoha.KW_StmtTypeDecl =  KW_Type;
+konoha.KW_Parenthesis  8
+konoha.KW_Brancet      9
+konoha.KW_Brace        10
+
+konoha.KW_Block   11
+konoha.KW_Params  12
+konoha.KW_ExprMethodCall  12/*FIXME*/
+konoha.KW_Toks    13
+
+konoha.KW_DOT     14
+konoha.KW_DIV     (1+KW_DOT)
+konoha.KW_MOD     (2+KW_DOT)
+konoha.KW_MUL     (3+KW_DOT)
+konoha.KW_ADD     (4+KW_DOT)
+konoha.KW_SUB     (5+KW_DOT)
+konoha.KW_LT      (6+KW_DOT)
+konoha.KW_LTE     (7+KW_DOT)
+konoha.KW_GT      (8+KW_DOT)
+konoha.KW_GTE     (9+KW_DOT)
+konoha.KW_EQ      (10+KW_DOT)
+konoha.KW_NEQ     (11+KW_DOT)
+konoha.KW_AND     (12+KW_DOT)
+konoha.KW_OR      (13+KW_DOT)
+konoha.KW_NOT     (14+KW_DOT)
+konoha.KW_COLON   (15+KW_DOT)
+konoha.KW_LET     (15+KW_DOT)
+konoha.KW_COMMA   (16+KW_DOT)
+konoha.KW_DOLLAR  (17+KW_DOT)
+
+konoha.KW_void      (18+KW_DOT)
+konoha.KW_StmtMethodDecl          KW_void
+konoha.KW_boolean   (1+KW_void) kObjectHeader ;
+konoha.KW_int       (2+KW_void)
+konoha.KW_null      (3+KW_void)
+konoha.KW_true      (3+KW_void)
+konoha.KW_false     (4+KW_void)
+konoha.KW_if        (5+KW_void)
 //#define KW_else      (6+KW_void)
 //#define KW_return    (7+KW_void)
 //// reserved
