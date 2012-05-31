@@ -1,6 +1,6 @@
 SRC_DIR = src
 INCLUDE_DIR = include/konoha2
-##TEST_DIR = test
+TEST_DIR = test
 BUILD_DIR = build
 
 PREFIX = .
@@ -42,4 +42,9 @@ clean:
 	@@echo "Removing" ${JSKONOHA}
 	@@rm -rf ${JSKONOHA}
 
-.PHONY: all clean 
+test:
+	@@echo "Run google-js-test"
+	@@files="test/src/*.js"
+	@@for utest in ${files}; do	(echo "Testing ${utest} .."); done
+
+.PHONY: all clean test
