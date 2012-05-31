@@ -253,7 +253,6 @@ konoha.parseUNDEF = function(_ctx, tk, tenv, tok_start, thunk)
 	return tok_start;
 }
 
-<<<<<<< HEAD
 konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk);
 
 static const Ftokenizer MiniKonohaTokenMatrix[] = {

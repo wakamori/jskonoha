@@ -268,7 +268,6 @@ konoha.parseUNDEF = function(_ctx, tk, tenv, tok_start, thunk)
 	return tok_start;
 }
 
-<<<<<<< HEAD
 konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk);
 
 static const Ftokenizer MiniKonohaTokenMatrix[] = {
@@ -943,13 +942,13 @@ konoha.ParseStmt = function(_ctx, syn, stmt, name, tls, s, e)
 	lsfp[K_CALLDELTA+4].ivalue = e;
 	var tsfp = lsfp + 0 + K_CALLDELTA;
 	tsfp[K_MTDIDX].mtdNC = syn.ParseStmtNULL;
-	tsfp[K_PCIDX].fname = __FILE__;
+//	tsfp[K_PCIDX].fname = __FILE__;
 	tsfp[K_SHIFTIDX].shift = 0;
 	tsfp[K_RTNIDX].o = knull(CT_int);
-	tspf[K_RTNIDX].uline = __LINE__;
+//	tspf[K_RTNIDX].uline = __LINE__;
 	_ctx.esp = (tsfp + 4 + 1);
 	syn.ParseStmtNULL.fastcall_1(_ctx, tsfp, K_RTNIDX);
-		tsfp[K_MTDIDX].mtdNC = null;
+	tsfp[K_MTDIDX].mtdNC = null;
 	_ctx.esp = exp_;
 	return lsfp[0].ivalue;
 }
@@ -1236,7 +1235,7 @@ konoha.ParseExpr_Op = function(_ctx, sfp ,_rix)
 	var s = sfp[2].ivalue;
 	var c = sfp[3].ivalue;
 	var e = sfp[4].ivalue;
-	
+
 	var tk = tls.toks[c];
 	var expr, rexpr = konoha.Stmt_newExpr2(_ctx, stmt, tls, c+1, e);
 	var mn = (s == c) ? syn.op1 : syn.op2;
@@ -1271,7 +1270,7 @@ konoha.ParseExpr_DOT = function(_ctx, sfp ,_rix)
 	var s = sfp[2].ivalue;
 	var c = sfp[3].ivalue; 	
 	var e = sfp[4].ivalue;
-	
+
 	if(isFieldName(tls, c, e)) {
 		var expr = konoha.Stmt_newExpr2(_ctx, stmt, tls, s, c);
 		expr = konoha.new_ConsExpr(_ctx, syn, 2, tls.toks[c+1], expr);
@@ -1291,7 +1290,7 @@ konoha.ParseExpr_Parenthesis = function(_ctx, sfp ,_rix)
 	var s = sfp[2].ivalue;
 	var c = sfp[3].ivalue;
 	var e = sfp[4].ivalue;
-	
+
 	var tk = tls.toks[c];
 	if(s == c) {
 		var expr = konoha.Stmt_newExpr2(_ctx, stmt, tk.sub, 0, kArray_size(tk.sub));
@@ -1366,7 +1365,6 @@ konoha.ParseStmt_Expr = function(_ctx, sfp ,_rix)
 	var tls = sfp[2].o;
 	var s = sfp[3].ivalue;
 	var e = sfp[4].ivalue;
-	
 	var r = -1;
 	konoha.dumpTokenArray(_ctx, 0, tls, s, e);
 	var expr = konoha.Stmt_newExpr2(_ctx, stmt, tls, s, e);
@@ -1387,8 +1385,6 @@ konoha.ParseStmt_Type = function(_ctx, sfp ,_rix)
 	var tls = sfp[2].o;
 	var s = sfp[3].ivalue;
 	var e = sfp[4].ivalue;
-	
-	
 	var r = -1;
 	var tk = tls.toks[s];
 	if((tk).kw == KW_Type) {
@@ -1407,7 +1403,6 @@ konoha.ParseStmt_Usymbol = function(_ctx, sfp ,_rix)
 	var tls = sfp[2].o;
 	var s = sfp[3].ivalue;
 	var e = sfp[4].ivalue;
-	
 	var r = -1;
 	var tk = tls.toks[s];
 	if(tk.tt == konoha.ktoken_t.TK_USYMBOL) {
@@ -1426,7 +1421,6 @@ konoha.ParseStmt_Symbol = function(_ctx, sfp ,_rix)
 	var tls = sfp[2].o;
 	var s = sfp[3].ivalue;
 	var e = sfp[4].ivalue;
-	
 	var r = -1;
 	var tk = tls.toks[s];
 	if(tk.tt == konoha.ktoken_t.TK_SYMBOL) {
@@ -1445,7 +1439,6 @@ konoha.ParseStmt_Params = function(_ctx, sfp ,_rix)
 	var tls = sfp[2].o;
 	var s = sfp[3].ivalue;
 	var e = sfp[4].ivalue;
-	
 	var r = -1;
 	var tk = tls.toks[s];
 	if(tk.tt == konoha.ktoken_t.AST_PARENTHESIS) {
@@ -1468,7 +1461,6 @@ konoha.ParseStmt_Block = function(_ctx, sfp ,_rix)
 	var tls = sfp[2].o;
 	var s = sfp[3].ivalue;
 	var e = sfp[4].ivalue;
-	
 	var tk = tls.toks[s];
 	if(tk.tt == konoha.ktoken_t.TK_CODE) {
 		konoha.kObject_setObject(stmt, name, tk);
@@ -1499,7 +1491,6 @@ konoha.ParseStmt_Toks = function(_ctx, sfp, _rix)
 	var tls = sfp[2].o;
 	var s = sfp[3].ivalue;
 	var e = sfp[4].ivalue;
-	
 	if(s < e) {
 		var a = new kArray();
 		while(s < e) {
