@@ -1,5 +1,5 @@
 ///****************************************************************************
-// * Copyright (c) 2012, the Konoha project authors. All rights reserved.
+// * copyright (c) 2012, the Konoha project authors. All rights reserved.
 //
 // * Redistribution and use in source and binary forms, with or without
 // * modification, are permitted provided that the following conditions are met:
@@ -22,7 +22,6 @@
 // * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ***************************************************************************/
-konoha = {};
 
 konoha.Token_toERR = function(_ctx, tk, errref)
 {
@@ -341,7 +340,7 @@ konoha.MiniKonohaTokenMatrix = new Array(
 );
 
 
-konoha.mkTM_type = new konoha.Enum(
+konoha.MKTM_type = new konoha.Enum(
 	"_NULL",
 	"_UNDEF",
 	"_DIGIT",
@@ -459,17 +458,17 @@ konoha.tokenize = function(_ctx, tenv)
 {
 	var ch, pos = 0;
 	var fmat = tenv.fmat;
-	var tk = new kToken();
+	var tk = new konoha.kToken();
 	//	konoha.assert(tk.tt == 0); //TODO : Is this necessary?
 	tk.uline = tenv.uline;
-	tk.lpos  = lpos(tenv, 0);
+	tk.lpos  = konoha.lpos(tenv, 0);
 	pos = konoha.parseINDENT(_ctx, tk, tenv, pos, null);
 	while ((ch = konoha.kchar(tenv.source, pos)) != 0) {
 		if(tk.tt != 0) {
 			tenv.list.data.push(tk);
-			tk = new kToken();
+			tk = new konoha.kToken();
 			tk.uline = tenv.uline;
-			tk.lpos  = lpos(tenv, pos);
+			tk.lpos  = konoha.lpos(tenv, pos);
 		}
 		var pos2 = fmat[ch](_ctx, tk, tenv, pos, null);
 		konoha.assert(pos2 > pos);
@@ -512,7 +511,7 @@ konoha.KonohaSpace_tokenize = function(_ctx, ks, source, uline, a)
 	tenv.list   = a,
 	tenv.bol    = source,
 	tenv.indent_tab = 4,
-	tenv.fmat   = ks == null ? konoha.MiniKonohaTokenMatrix : konoha.KonohaSpace_tokenizerMatrix(_ctx, ks)
+	tenv.fmat   = ks == null ? konoha.MiniKonohaTokenMatrix : konoha.KonohaSpace_tokenizerMatrix(ks)
 
 	konoha.tokenize(_ctx, tenv);
 	if(uline == 0) {

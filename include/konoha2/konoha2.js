@@ -768,7 +768,7 @@ konoha.kObject = function() {
 ////} kbytes_t;
 //
 //
-typedef const struct _kString kString;
+//typedef const struct _kString kString;
 konoha.kString = function()/* extends _Bytes */ {
 	this.h = null;        // kObjectHeader => kObjectHeader
 	this.bytesize = null; // size_t => Number
@@ -1229,14 +1229,14 @@ konoha.kParam = function() {
 //	kfloat_t value;
 //} KDEFINE_FLOAT_CONST;
 //
-konoha.kreportlevel_t = new konoha. Enum {
+konoha.kreportlevel_t = new konoha.Enum (
 	"CRIT_",     // raise(0)
 	"ERR_",
 	"WARN_",
 	"INFO_",
 	"DEBUG_",
 	"PRINT_"
-};
+);
 
 ////#define CRIT_  0
 ////#define ERR_   1

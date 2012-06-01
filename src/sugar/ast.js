@@ -22,11 +22,8 @@
 // * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ***************************************************************************/
 
-konoha = {};
-
-
 konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
-	var bk = new kBlock();
+	var bk = new konoha.kBlock();
 	if(prt != null) {
 		bk.parentNULL = prt;
 	}
@@ -64,7 +61,7 @@ konoha.Token_resolved = function(_ctx, ks, tk) {//
 konoha.TokenType_resolveGenerics = function(_ctx, ks, tk, tkP) {
 	if(tkP.tt == konoha.ktoken_t.AST_BRANCET) {
 		var i = 0, psize = 0, size = tkP.sub.data.length;
-		var p = new Array(size);
+		var p = new konoha.Array(size);
 		for(i = 0; i < size; i++) {
 			var tkT = (tkP.sub.toks[i]);
 			if((tkT).kw == konoha.KW_Type) {
@@ -128,7 +125,7 @@ konoha.appendKeyword = function(_ctx, ks, tls, s, e, dst, tkERR)
 		while(next + 1 < e) {
 			var tkB = tls.toks[next + 1];
 			if(tkB.topch != '[') break;
-			var abuf = new kArray();
+			var abuf = new konoha.kArray();
 			var atop = abuf.data.length;
 			next = konoha.makeTree(_ctx, ks, konoha.ktoken_t.AST_BRANCET, tls,  next+1, e, ']', abuf, tkERR);
 			if(!((abuf.data.length) > atop)) return next;
@@ -154,7 +151,7 @@ konoha.appendKeyword = function(_ctx, ks, tls, s, e, dst, tkERR)
 konoha.Token_toBRACE = function(_ctx, tk, ks)
 {
 	if(tk.tt == konoha.ktoken_t.TK_CODE) {
-		var a = new kArray();
+		var a = new konoha.kArray();
 		KonohaSpace_tokenize(_ctx, ks, tk.text, tk.uline, a);
 		tk.tt = konoha.ktoken_t.AST_BRACE;
 		tk.topch = '{';
@@ -170,14 +167,14 @@ konoha.makeTree = function(_ctx, ks, tt, tls, s, e, closech, tlsdst, tkERRRef)
 {
 	var i, probablyCloseBefore = e - 1;
 	var tk = tls.toks[s];
-	var tkP = new kBlock();
+	var tkP = new konoha.kBlock();
 	tlsdst.data.push;
 	tkP.tt = tt;
 	tkP.kw = tt;
 	tkP.uline = tk.uline;
 	tkP.topch = tk.topch;
 	tkP.lpos = closech;
-	tkP.sub = new kArray();
+	tkP.sub = new konoha.kArray();
 	for(i = s + 1; i < e; i++) {
 		tk = tls.toks[i];
 		if(tk.tt == konoha.ktoken_t.TK_ERR) break;
@@ -464,7 +461,7 @@ konoha.Stmt_parseSyntaxRule = function(_ctx, stmt, tls, s, e)
 
 konoha.Block_addStmtLine = function(_ctx, bk, tls, s, e, tkERR)
 {
-	var stmt = new kBlock();
+	var stmt = new konoha.kBlock();
 	bk.blocks.data.push(stmt);
 	stmt.parentNULL = bk;
 	if(tkERR != null) {
@@ -591,7 +588,7 @@ konoha.ParseExpr_Term = function(_ctx, sfp ,_rix)
 	var c = sfp[3].ivalue; 	
 	var e = sfp[4].ivalue; 	
 	var tk = tls.toks[c];
-	var expr = new kBlock(Expr, konoha.KonohaSpace_syntax(konoha.Stmt_ks(stmt), tk.kw));
+	var expr = new konoha.kBlock(Expr, konoha.KonohaSpace_syntax(konoha.Stmt_ks(stmt), tk.kw));
 	Expr_setTerm(expr, 1);
 	expr.tk = tk;
 	sfp[_rix].o = konoha.kExpr_rightJoin(expr, stmt, tls, s+1, c+1, e);
@@ -712,7 +709,7 @@ konoha.ParseExpr_DOLLAR = function(_ctx, sfp ,_rix)
 			konoha.Token_toBRACE(_ctx, tk, konoha.Stmt_ks(stmt));
 		}
 		if(tk.tt == konoha.ktoken_t.AST_BRACE) {
-			var expr = new kBlock();
+			var expr = new konoha.kBlock();
 			Expr_setTerm(expr, 1);
 			expr.tk = tk;
 			expr.block = konoha.new_Block(_ctx, konoha.Stmt_ks(stmt), stmt, tk.sub, 0, tk.sub.data.length, ';');
@@ -858,7 +855,7 @@ konoha.ParseStmt_Toks = function(_ctx, sfp, _rix)
 	var s = sfp[3].ivalue;
 	var e = sfp[4].ivalue;
 	if(s < e) {
-		var a = new kArray();
+		var a = new konoha.kArray();
 		while(s < e) {
 			a.data.push(tls.toks[s]);
 			s++;
