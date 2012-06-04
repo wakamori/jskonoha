@@ -245,8 +245,8 @@
 //typedef kushort_t       kmethodn_t;
 //
 ///* kcid_t */
-//#define CLASS_newid        ((kcid_t)-1)
-//#define TY_unknown         ((kcid_t)-2)
+konoha.CLASS_newid = -1;      //  ((kcid_t)-1)
+konoha.TY_unknown = -2;      //  ((kcid_t)-2)
 //
 //#define CT_(t)              (_ctx->share->ca.cts[t])
 //#define TY_isUnbox(t)       FLAG_is(CT_(t)->cflag, kClass_UnboxType)
@@ -296,18 +296,17 @@
 //
 //#define MOD_MAX    128
 //struct _kObject;
-//
-//#define MOD_logger   0
-//#define MOD_gc       1
-//#define MOD_code     2
-//#define MOD_sugar    3
-//#define MOD_float   11
-////#define MOD_jit     12
-//#define MOD_iconv   13
-////#define MOD_IO      14
-////#define MOD_llvm    15
-////#define MOD_REGEX   16
-//
+
+
+
+
+konoha.MOD_logger =  0
+konoha.MOD_gc     =  1
+konoha.MOD_code   =  2
+konoha.MOD_sugar  =  3
+konoha.MOD_float  = 11
+konoha.MOD_iconv  = 13
+
 //struct kmodlocal_t;
 //typedef struct kmodlocal_t {
 //	uintptr_t unique;
@@ -769,7 +768,7 @@ konoha.kObject = function() {
 ////} kbytes_t;
 //
 //
-typedef const struct _kString kString;
+//typedef const struct _kString kString;
 konoha.kString = function()/* extends _Bytes */ {
 	this.h = null;        // kObjectHeader => kObjectHeader
 	this.bytesize = null; // size_t => Number
@@ -785,11 +784,11 @@ konoha.kString = function()/* extends _Bytes */ {
 //	const char inline_text[SIZEOF_INLINETEXT];
 };
 //
-//#define SPOL_TEXT          (1<<0)
-//#define SPOL_ASCII         (1<<1)
-//#define SPOL_UTF8          (1<<2)
-//#define SPOL_POOL          (1<<3)
-//#define SPOL_NOCOPY        (1<<4)
+konoha.SPOL_TEXT        =  (1<<0)
+konoha.SPOL_ASCII       =  (1<<1)
+konoha.SPOL_UTF8        =  (1<<2)
+konoha.SPOL_POOL        =  (1<<3)
+konoha.SPOL_NOCOPY      =  (1<<4)
 //
 //#define new_T(t)            new_kString(t, knh_strlen(t), SPOL_TEXT|SPOL_ASCII|SPOL_POOL)
 //#define new_S(T, L)         new_kString(T, L, SPOL_ASCII|SPOL_POOL)
@@ -1230,15 +1229,15 @@ konoha.kParam = function() {
 //	kfloat_t value;
 //} KDEFINE_FLOAT_CONST;
 //
-//typedef enum {
-//	CRIT_,     // raise(0)
-//	ERR_,
-//	WARN_,
-//	INFO_,
-//	DEBUG_,
-//	PRINT_
-//} kreportlevel_t;
-//
+konoha.kreportlevel_t = new konoha.Enum (
+	"CRIT_",     // raise(0)
+	"ERR_",
+	"WARN_",
+	"INFO_",
+	"DEBUG_",
+	"PRINT_"
+);
+
 ////#define CRIT_  0
 ////#define ERR_   1
 ////#define WARN_  2

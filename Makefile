@@ -1,6 +1,6 @@
 SRC_DIR = src
 INCLUDE_DIR = include/konoha2
-##TEST_DIR = test
+TEST_DIR = test
 BUILD_DIR = build
 
 PREFIX = .
@@ -12,6 +12,8 @@ POST_COMPILER = ${JS_ENGINE} ${BUILD_DIR}/post-compile.js
 
 BASE_FILES = \
 	${SRC_DIR}/konoha_namespace.js\
+	${INCLUDE_DIR}/konoha2.js\
+	${INCLUDE_DIR}/sugar.js\
 	${SRC_DIR}/sugar/token.js\
 	${SRC_DIR}/sugar/ast.js
 
@@ -42,4 +44,9 @@ clean:
 	@@echo "Removing" ${JSKONOHA}
 	@@rm -rf ${JSKONOHA}
 
-.PHONY: all clean 
+test:
+	@@echo "Run google-js-test"
+	@@files="test/src/*.js"
+	@@for utest in ${files}; do	(echo "Testing ${utest} .."); done
+
+.PHONY: all clean test
