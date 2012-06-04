@@ -255,7 +255,7 @@ konoha.kToken = function() {
 	this.kw = null;			//ksymbol_t
 	//	union {
 	this.text = null;		//kString *
-	this.sub = null;		//kArray *
+	this.sub = new konoha.kArray();		//kArray *
 	//	};
 	this.uline = null;			//kline_t
 	//	union {
@@ -398,34 +398,34 @@ konoha.kBlock = function() {
 //
 ///* ------------------------------------------------------------------------ */
 //
-//#define ctxsugar    ((ctxsugar_t*)_ctx->modlocal[MOD_sugar])
-//#define kmodsugar  ((kmodsugar_t*)_ctx->modshare[MOD_sugar])
-//#define CT_Token    kmodsugar->cToken
-//#define CT_Expr     kmodsugar->cExpr
-//#define CT_Stmt     kmodsugar->cStmt
-//#define CT_Block    kmodsugar->cBlock
-//#define CT_KonohaSpace    kmodsugar->cKonohaSpace
-//#define CT_Gamma    kmodsugar->cGamma
-//
-//#define CT_TokenArray           kmodsugar->cTokenArray
-//#define kTokenArray             kArray
-//#define CT_ExprArray            CT_Array
-//#define kExprArray              kArray
-//#define CT_StmtArray            CT_Array
-//#define kStmtArray              kArray
-//
-//#define IS_Token(O)  ((O)->h.ct == CT_Token)
-//#define IS_Expr(O)  ((O)->h.ct == CT_Expr)
-//#define IS_Stmt(O)  ((O)->h.ct == CT_Stmt)
-//#define IS_Block(O)  ((O)->h.ct == CT_Block)
-//#define IS_Gamma(O)  ((O)->h.ct == CT_Gamma)
-//
-//#define K_NULLTOKEN  (kToken*)((CT_Token)->nulvalNUL)
-//#define K_NULLEXPR   (kExpr*)((CT_Expr)->nulvalNUL)
-//#define K_NULLBLOCK  (kBlock*)((CT_Block)->nulvalNUL)
-//
-//#define TK_SHIFT    10000
-//#define KW_TK(N)    (((keyword_t)N)+TK_SHIFT)
+// konoha.ctxsugar       = _ctx.modlocal[MOD_sugar]
+// konoha.kmodsugar      = _ctx.modshare[MOD_sugar]
+// konoha.CT_Token       = kmodsugar.cToken
+// konoha.CT_Expr        = kmodsugar.cExpr
+// konoha.CT_Stmt        = kmodsugar.cStmt
+// konoha.CT_Block       = kmodsugar.cBlock
+// konoha.CT_KonohaSpace = kmodsugar.cKonohaSpace
+// konoha.CT_Gamma       = kmodsugar.cGamma
+
+// konoha.CT_TokenArray           kmodsugar->cTokenArray
+// konoha.kTokenArray             kArray
+// konoha.CT_ExprArray            CT_Array
+// konoha.kExprArray              kArray
+// konoha.CT_StmtArray            CT_Array
+// konoha.kStmtArray              kArray
+// //
+// konoha.IS_Token(O)  ((O)->h.ct == CT_Token)
+// konoha.IS_Expr(O)  ((O)->h.ct == CT_Expr)
+// konoha.IS_Stmt(O)  ((O)->h.ct == CT_Stmt)
+// konoha.IS_Block(O)  ((O)->h.ct == CT_Block)
+// konoha.IS_Gamma(O)  ((O)->h.ct == CT_Gamma)
+// //
+// konoha.K_NULLTOKEN  (kToken*)((CT_Token)->nulvalNUL)
+// konoha.K_NULLEXPR   (kExpr*)((CT_Expr)->nulvalNUL)
+// konoha.K_NULLBLOCK  (kBlock*)((CT_Block)->nulvalNUL)
+// //
+// konoha.TK_SHIFT    10000
+// konoha.KW_TK(N)    (((keyword_t)N)+TK_SHIFT)
 //
 konoha.KW_Err     = 0;
 konoha.KW_Expr    = 1;
@@ -475,10 +475,10 @@ konoha.KW_null    =  (3+konoha.KW_void)
 konoha.KW_true    =  (3+konoha.KW_void)
 konoha.KW_false   =  (4+konoha.KW_void)
 konoha.KW_if      =  (5+konoha.KW_void)
-//#define KW_else      (6+KW_void)
-//#define KW_return    (7+KW_void)
+konoha.KW_else    =  (6+konoha.KW_void)
+konoha.KW_return  =  (7+konoha.KW_void)
 //// reserved
-//#define KW_new       (8+KW_void)
+konoha.KW_new     =  (8+konoha.KW_void)
 //#define FN_this      FN_("this")
 //
 //struct _kKonohaSpace;

@@ -87,14 +87,14 @@
 //#define SUGAR_P(PE, UL, POS, FMT, ...)  sugar_p(_ctx, PE, UL, POS, FMT,  ## __VA_ARGS__)
 //#define ERR_SyntaxError(UL)  SUGAR_P(ERR_, UL, -1, "syntax sugar error at %s:%d", __FUNCTION__, __LINE__)
 //
-//static size_t sugar_p(CTX, int pe, kline_t uline, int lpos, const char *fmt, ...)
-//{
-//	va_list ap;
-//	va_start(ap, fmt);
-//	size_t errref = vperrorf(_ctx, pe, uline, lpos, fmt, ap);
-//	va_end(ap);
-//	return errref;
-//}
+// konoha.sugar_p = function(_ctx, pe, uline, lpos, fmt)
+// {
+// 	va_list ap;
+// 	va_start(ap, fmt);
+// 	size_t errref = vperrorf(_ctx, pe, uline, lpos, fmt, ap);
+// 	va_end(ap);
+// 	return errref;
+// }
 //
 //#define kToken_p(TK, PE, FMT, ...)   Token_p(_ctx, TK, PE, FMT, ## __VA_ARGS__)
 //#define kExpr_p(E, PE, FMT, ...)     Expr_p(_ctx, E, PE, FMT, ## __VA_ARGS__)

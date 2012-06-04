@@ -784,11 +784,11 @@ konoha.kString = function()/* extends _Bytes */ {
 //	const char inline_text[SIZEOF_INLINETEXT];
 };
 //
-//#define SPOL_TEXT          (1<<0)
-//#define SPOL_ASCII         (1<<1)
-//#define SPOL_UTF8          (1<<2)
-//#define SPOL_POOL          (1<<3)
-//#define SPOL_NOCOPY        (1<<4)
+konoha.SPOL_TEXT        =  (1<<0)
+konoha.SPOL_ASCII       =  (1<<1)
+konoha.SPOL_UTF8        =  (1<<2)
+konoha.SPOL_POOL        =  (1<<3)
+konoha.SPOL_NOCOPY      =  (1<<4)
 //
 //#define new_T(t)            new_kString(t, knh_strlen(t), SPOL_TEXT|SPOL_ASCII|SPOL_POOL)
 //#define new_S(T, L)         new_kString(T, L, SPOL_ASCII|SPOL_POOL)
