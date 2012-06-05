@@ -37,7 +37,7 @@ konoha.lpos = function(tenv, s) //Number : tenv_t, Number
 konoha.parseINDENT = function(_ctx, tk, tenv, pos, thunk)
 {
 	var ch, c = 0;
-	while((ch = tenv.source[pos++]) != 0) {
+	while((ch = tenv.source[pos++]) != undefined) {
 		if(ch == '\t') {
 			c += tenv.indent_tab;
 		}
@@ -60,28 +60,29 @@ konoha.parseNL = function(_ctx, tk, tenv, pos, thunk)
 	return konoha.parseINDENT(_ctx, tk, tenv, pos + 1, thunk);
 }
 
-//until
 konoha.parseNUM = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	var ch, pos = tok_start, dot = 0;
-	var ts = tenv.source;
-	while((ch = ts[pos++]) != 0) {
+//	var ts = tenv.source;
+	while((ch = tenv.source[pos++]) != undefined) {
 		if(ch == '_') continue;
 		if(ch == '.') {
-			if(isNaN(Number(ts[pos]))) {
+			if(isNaN(Number(tenv.source[pos]))) {
 				break;
 			}
 			dot++;
 			continue;
 		}
-		if((ch == 'e' || ch == 'E') && (ts[pos] == '+' || ts[pos] =='-')) {
+		if((ch == 'e' || ch == 'E') && (tenv.source[pos] == '+' || tenv.source[pos] =='-')) {
 			pos++;
 			continue;
 		}
 		if(isNaN(Number(ch))) break;
 	}
 	//	if(IS_NOTNULL(tk)) {
-	tk.text = _ctx.lib2.Knew_String(_ctx, ts + tok_start, (pos-1)-tok_start, konoha.SPOL_ASCII);
+	tk.text = new konoha.kString();
+	tk.text.text = tenv.source.substr(tok_start, (pos-1)-tok_start);
+//	tk.text = new kString(_ctx, ts + tok_start, (pos-1)-tok_start, konoha.SPOL_ASCII);
 	tk.tt = (dot == 0) ? konoha.ktoken_t.TK_INT : konoha.ktoken_t.TK_FLOAT;
 	//	}
 	return pos - 1;
@@ -91,12 +92,13 @@ konoha.parseSYMBOL = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	var ch, pos = tok_start;
 	var ts = tenv.source;
-	while((ch = ts[pos++]) != 0) {
-		if(ch == '_' || isNaN(Number(ch))) continue;
+	while ((ch = ts[pos++]) != undefined) {
+		if (ch == '_' || konoha.isalnum(ch)) continue;
 		break;
 	}
 	//	if(IS_NOTNULL(tk)) {
-	tk.text = new_kString(ts + tok_start, (pos-1)-tok_start, konoha.SPOL_ASCII);
+	tk.text = new konoha.kString();
+	tk.text.text = ts.substr(tok_start, (pos-1)-tok_start);
 	tk.tt = konoha.ktoken_t.TK_SYMBOL;
 	//	}
 	return pos - 1;
@@ -106,12 +108,13 @@ konoha.parseUSYMBOL = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	var ch, pos = tok_start;
 	var ts = tenv.source;
-	while((ch = ts[pos++]) != 0) {
-		if(ch == '_' || isNaN(Number(ch))) continue;
+	while((ch = ts[pos++]) != undefined) {
+		if (ch == '_' || konoha.isalnum(ch)) continue;
 		break;
 	}
 	//	if(IS_NOTNULL(tk)) {
-	tk.text = konoha.Knew_String(ts + tok_start, (pos-1)-tok_start, konoha.SPOL_ASCII);
+	tk.text = new konoha.kString();
+	tk.text.text = ts.substr(tok_start, (pos-1)-tok_start);
 	tk.tt = konoha.ktoken_t.TK_USYMBOL;
 	//	}
 	return pos - 1;
@@ -121,11 +124,12 @@ konoha.parseMSYMBOL = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	var ch, pos = tok_start;
 	var ts = tenv.source;
-	while((ch = ts[pos++]) != 0) {
+	while((ch = ts.charCodeAt(pos++)) != undefined) {
 		if(!(ch < 0)) break;
 	}
 	//	if((tk.h.magicflag & (1<<0)) != (1<<0)) {
-	tk.text = konoha.Knew_String(ts + tok_start, (pos-1)-tok_start, konoha.SPOL_UTF8);
+	tk.text = new konoha.kString();
+	tk.text.text = ts.substr(tok_start, (pos-1)-tok_start);
 	tk.tt = konoha.ktoken_t.TK_MSYMBOL;
 	//	}
 	return pos - 1;
@@ -134,8 +138,9 @@ konoha.parseMSYMBOL = function(_ctx, tk, tenv, tok_start, thunk)
 konoha.parseOP1 = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	//	if(IS_NOTNULL(tk)) {
-	var s = tenv.source + tok_start;
-	tk.text = konoha.Knew_String(s, 1, konoha.SPOL_ASCII|konoha.SPOL_POOL);
+//	var s = tenv.source + tok_start;
+	tk.text = new konoha.kString();
+	tk.text.text = tenv.source[tok_start];
 	tk.tt = konoha.ktoken_t.TK_OPERATOR;
 	tk.topch = s[0];
 	//	}
@@ -145,8 +150,8 @@ konoha.parseOP1 = function(_ctx, tk, tenv, tok_start, thunk)
 konoha.parseOP = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	var ch, pos = tok_start;
-	while((ch = tenv.source[pos++]) != 0) {
-		if(isNaN(Number(ch))) break;
+	while((ch = tenv.source[pos++]) != undefined) {
+		if (konoha.isalnum(ch)) break;
 		switch(ch) {
 		case '<': case '>': case '@': case '$': case '#':
 		case '+': case '-': case '*': case '%': case '/':
@@ -157,8 +162,9 @@ konoha.parseOP = function(_ctx, tk, tenv, tok_start, thunk)
 		break;
 	}
 	//	if(IS_NOTNULL(tk)) {
-	var s = tenv.source + tok_start;
-	tk.text = konoha.Knew_String(s, (pos-1)-tok_start, konoha.SPOL_ASCII|konoha.SPOL_POOL);
+//	var s = tenv.source[tok_start];
+	tk.text = new konoha.kString();
+	tk.text.text = tenv.source.substr(tok_start, (pos-1)-tok_start);
 	tk.tt = konoha.ktoken_t.TK_OPERATOR;
 	if(tk.text.length == 1) {
 		tk.topch = tk.text;
@@ -170,7 +176,7 @@ konoha.parseOP = function(_ctx, tk, tenv, tok_start, thunk)
 konoha.parseLINE = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	var ch, pos = tok_start;
-	while((ch = tenv.source[pos++]) != 0) {
+	while((ch = tenv.source[pos++]) != undefined) {
 		if(ch == '\n') break;
 	}
 	return pos-1;/*EOF*/
@@ -181,10 +187,11 @@ konoha.parseCOMMENT = function(_ctx, tk, tenv, tok_start, thunk)
 	var ch, prev = 0, level = 1, pos = tok_start + 2;
 	/*@#nnnn is line number */
 	if(tenv.source[pos] == '@' && tenv.source[pos+1] == '#' && isdigit(tenv.source[pos+2])) {
-		tenv.uline >>= (sizeof(kshort_t)*8);
-		tenv.uline = (tenv.uline<<(sizeof(kshort_t)*8))  | strtoll(tenv.source + pos + 2, null, 10);
+//TODO
+// 		tenv.uline >>= (sizeof(kshort_t)*8);
+// 		tenv.uline = (tenv.uline<<(sizeof(kshort_t)*8))  | strtoll(tenv.source + pos + 2, null, 10);
 	}
-	while((ch = tenv.source[pos++]) != 0) {
+	while((ch = tenv.source[pos++]) != undefined) {
 		if(ch == '\n') {
 			tenv.uline += 1;
 		}
@@ -205,11 +212,11 @@ konoha.parseCOMMENT = function(_ctx, tk, tenv, tok_start, thunk)
 
 konoha.parseSLASH = function(_ctx, tk, tenv, tok_start, thunk)
 {
-	var ts = tenv.source + tok_start;
-	if(ts[1] == '/') {
+//	var ts = tenv.source + tok_start;
+	if(ts[tok_start + 1] == '/') {
 		return konoha.parseLINE(_ctx, tk, tenv, tok_start, thunk);
 	}
-	if(ts[1] == '*') {
+	if(ts[tok_start + 1] == '*') {
 		return konoha.parseCOMMENT(_ctx, tk, tenv, tok_start, thunk);
 	}
 	return konoha.parseOP(_ctx, tk, tenv, tok_start, thunk);
@@ -218,13 +225,14 @@ konoha.parseSLASH = function(_ctx, tk, tenv, tok_start, thunk)
 konoha.parseDQUOTE = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	var ch, prev = '"', pos = tok_start + 1;
-	while((ch = tenv.source[pos++]) != 0) {
+	while((ch = tenv.source[pos++]) != undefined) {
 		if(ch == '\n') {
 			break;
 		}
 		if(ch == '"' && prev != '\\') {
 			//			if(IS_NOTNULL(tk)) {
-			tk.text = konoha.Knew_String(tenv.source + tok_start + 1, (pos-1)- (tok_start+1), 0);
+			tk.text = new konoha.kString();
+			tk.text.text = tenv.source.substr(tok_start + 1, (pos-1)- (tok_start+1));
 			tk.tt = konoha.ktoken_t.TK_TEXT;
 			//			}
 			return pos;
@@ -249,7 +257,7 @@ konoha.parseUNDEF = function(_ctx, tk, tenv, tok_start, thunk)
 //	var errref = konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "undefined token character: %c", tenv.source[tok_start]);
 //	konoha.token_toERR(_ctx, tk, errref);
 	//	}
-	while(tenv.source[++tok_start] != 0);
+	while(tenv.source[++tok_start] != undefined);
 	return tok_start;
 }
 
@@ -423,36 +431,36 @@ konoha.kchar = function(t, pos)
 	return konoha.cMatrix[ch]; //TODO : Multi-byte char
 }
 
-// konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
-// {
-// 	var ch, level = 1, pos = tok_start + 1;
-// 	var fmat = tenv.fmat;
-// 	tk.lpos += 1;
-// 	while((ch = kchar(tenv.source, pos)) != 0) {
-// 		if(ch == _RBR/*}*/) {
-// 			level--;
-// 			if(level == 0) {
-// 				if(IS_NOTNULL(tk)) {
-// 					KSETv(tk.text, new_kString(tenv.source + tok_start + 1, ((pos-2)-(tok_start)+1), 0));
-// 					tk.tt = TK_CODE;
-// 				}
-// 				return pos + 1;
-// 			}
-// 			pos++;
-// 		}
-// 		else if(ch == _LBR/*'{'*/) {
-// 			level++; pos++;
-// 		}
-// 		else {
-// 			pos = fmat[ch](_ctx, K_NULLTOKEN, tenv, pos, NULL);
-// 		}
-// 	}
-// 	if(IS_NOTNULL(tk)) {
-// 		size_t errref = SUGAR_P(ERR_, tk.uline, tk.lpos, "must close with }");
-// 		Token_toERR(_ctx, tk, errref);
-// 	}
-// 	return pos-1;
-// }
+konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
+{
+	var ch, level = 1, pos = tok_start + 1;
+	var fmat = tenv.fmat;
+	tk.lpos += 1;
+	while((ch = kchar(tenv.source, pos)) != 0) {
+		if(ch == _RBR/*}*/) {
+			level--;
+			if(level == 0) {
+				if(IS_NOTNULL(tk)) {
+					KSETv(tk.text, new_kString(tenv.source + tok_start + 1, ((pos-2)-(tok_start)+1), 0));
+					tk.tt = TK_CODE;
+				}
+				return pos + 1;
+			}
+			pos++;
+		}
+		else if(ch == _LBR/*'{'*/) {
+			level++; pos++;
+		}
+		else {
+			pos = fmat[ch](_ctx, K_NULLTOKEN, tenv, pos, NULL);
+		}
+	}
+	if(IS_NOTNULL(tk)) {
+		size_t errref = SUGAR_P(ERR_, tk.uline, tk.lpos, "must close with }");
+		Token_toERR(_ctx, tk, errref);
+	}
+	return pos-1;
+}
 
 konoha.tokenize = function(_ctx, tenv)
 {
@@ -463,7 +471,7 @@ konoha.tokenize = function(_ctx, tenv)
 	tk.uline = tenv.uline;
 	tk.lpos  = konoha.lpos(tenv, 0);
 	pos = konoha.parseINDENT(_ctx, tk, tenv, pos, null);
-	while ((ch = konoha.kchar(tenv.source, pos)) != 0) {
+	while ((ch = konoha.kchar(tenv.source, pos)) != undefined) {
 		if(tk.tt != 0) {
 			tenv.list.data.push(tk);
 			tk = new konoha.kToken();
