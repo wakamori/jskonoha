@@ -431,36 +431,36 @@ konoha.kchar = function(t, pos)
 	return konoha.cMatrix[ch]; //TODO : Multi-byte char
 }
 
-konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
-{
-	var ch, level = 1, pos = tok_start + 1;
-	var fmat = tenv.fmat;
-	tk.lpos += 1;
-	while((ch = kchar(tenv.source, pos)) != 0) {
-		if(ch == _RBR/*}*/) {
-			level--;
-			if(level == 0) {
-				if(IS_NOTNULL(tk)) {
-					KSETv(tk.text, new_kString(tenv.source + tok_start + 1, ((pos-2)-(tok_start)+1), 0));
-					tk.tt = TK_CODE;
-				}
-				return pos + 1;
-			}
-			pos++;
-		}
-		else if(ch == _LBR/*'{'*/) {
-			level++; pos++;
-		}
-		else {
-			pos = fmat[ch](_ctx, K_NULLTOKEN, tenv, pos, NULL);
-		}
-	}
-	if(IS_NOTNULL(tk)) {
-		size_t errref = SUGAR_P(ERR_, tk.uline, tk.lpos, "must close with }");
-		Token_toERR(_ctx, tk, errref);
-	}
-	return pos-1;
-}
+// konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
+// {
+// 	var ch, level = 1, pos = tok_start + 1;
+// 	var fmat = tenv.fmat;
+// 	tk.lpos += 1;
+// 	while((ch = kchar(tenv.source, pos)) != 0) {
+// 		if(ch == _RBR/*}*/) {
+// 			level--;
+// 			if(level == 0) {
+// 				if(IS_NOTNULL(tk)) {
+// 					KSETv(tk.text, new_kString(tenv.source + tok_start + 1, ((pos-2)-(tok_start)+1), 0));
+// 					tk.tt = TK_CODE;
+// 				}
+// 				return pos + 1;
+// 			}
+// 			pos++;
+// 		}
+// 		else if(ch == _LBR/*'{'*/) {
+// 			level++; pos++;
+// 		}
+// 		else {
+// 			pos = fmat[ch](_ctx, K_NULLTOKEN, tenv, pos, NULL);
+// 		}
+// 	}
+// 	if(IS_NOTNULL(tk)) {
+// 		size_t errref = SUGAR_P(ERR_, tk.uline, tk.lpos, "must close with }");
+// 		Token_toERR(_ctx, tk, errref);
+// 	}
+// 	return pos-1;
+// }
 
 konoha.tokenize = function(_ctx, tenv)
 {
