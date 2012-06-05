@@ -46,7 +46,7 @@ clean:
 
 test:
 	@@echo "Run google-js-test"
-	@@files="test/src/*.js"
-	@@for utest in ${files}; do	(echo "Testing ${utest} .."); done
+	@@files="test/Debug/*.js"
+	@@for utest in test/Debug/*.js; do	(gjstest --js_files=~/Development/jskonoha/${JSKONOHA},${utest}); done
 
 .PHONY: all clean test
