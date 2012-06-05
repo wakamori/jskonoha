@@ -14,6 +14,6 @@ parseUSYMBOLTest.prototype.ReturnCorrectparseUSYMBOL = function() {
 	var thunk = null;
 
 	konoha.parseUSYMBOL(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq(pos, 0);
-	expectThat(tk.cub, elementsAre(['1', '+', '3']));
+	expectEq(konoha.ktoken_t.TK_USYMBOL, tk.tt);
+	expectEq(elementsAre(['1', '+', '3']), tk.text.text);
 }

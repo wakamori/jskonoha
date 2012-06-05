@@ -14,7 +14,7 @@ parseSYMBOLTest.prototype.ReturnCorrectparseSYMBOL = function() {
 	var thunk = null;
 
 	konoha.parseSYMBOL(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq(tk.tt, 5);
-	expectThat(tk.sub, elementsAre(['32', '/', '2']));
+	expectEq(konoha.ktoken_t.TK_SYMBOL, tk.tt);
+	expectEq(elementsAre(['32', '/', '2']), tk.text.text);
 
 }
