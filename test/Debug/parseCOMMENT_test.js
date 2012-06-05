@@ -2,7 +2,9 @@
 // parseCOMMENT
 //////////////////////
 
-function parseCOMMENTTest() {}
+function parseCOMMENTTest() {
+	this.resultCallback_ = createMockFunction();
+}
 registerTestSuite(parseCOMMENTTest);
 
 parseCOMMENTTest.prototype.ReturnCorrectparseCOMMENT = function() {
@@ -14,7 +16,7 @@ parseCOMMENTTest.prototype.ReturnCorrectparseCOMMENT = function() {
 	var thunk = null;
 
 	konoha.parseCOMMENT(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq(11, pos-1);
+	expectCall(this.resultCallback_)(11);
 
 	var _ctx = null;
 	var tk = new konoha.kToken();
@@ -24,7 +26,7 @@ parseCOMMENTTest.prototype.ReturnCorrectparseCOMMENT = function() {
 	var thunk = null;
 
 	konoha.parseCOMMENT(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq(7, pos-1);
+	expectCall(this.resultCallback_)(7);
 
 	var _ctx = null;
 	var tk = new konoha.kToken();
@@ -34,6 +36,6 @@ parseCOMMENTTest.prototype.ReturnCorrectparseCOMMENT = function() {
 	var thunk = null;
 
 	konoha.parseCOMMENT(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq(2, pos-1);
+	expectCall(this.resultCallback_)(2);
 
 }
