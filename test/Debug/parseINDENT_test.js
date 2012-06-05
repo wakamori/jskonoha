@@ -15,5 +15,7 @@ parseINDENTTest.prototype.ReturnCorrectINDENT = function() {
 
 
 	konoha.parseINDENT(_ctx, tk, tenv, pos, thunk);
-	expectEq(pos, 1);
+	expectEq(null, tenv.indent_tab);
+	expectEq(konoha.ktoken.TK_INDENT, tk.tt);
+
 }

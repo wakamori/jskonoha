@@ -14,5 +14,18 @@ parseNLTest.prototype.ReturnCorrectparseNL = function() {
 	var thunk = null;
 
 	konoha.parseNL(_ctx, tk ,tenv, pos, thunk);
-	expectEq(pos, 2);
+	expectEq(2, tenv.uline);
+	expectEq(3, tenv.bol);
+
+	var _ctx = null;
+	var tk = new konoha.kToken();
+	var tenv = new konoha.tenv_t;
+	tenv.source = "if(a < b) { \n return a; \n}else{\n return b;\n}";
+	var pos = 0;
+	var thunk = null;
+
+	konoha.parseNL(_ctx, tk ,tenv, pos, thunk);
+	expectEq(3, tenv.uline);
+	expectEq(4, tenv.bol);
+
 }

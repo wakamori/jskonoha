@@ -11,6 +11,6 @@ lposTest.prototype.Correctlpos = function() {
 	var s = "function";  //const char *
 
 	konoha.lpos(tenv, s);
-	expectEq(tenv.bol, s - tenv.bol);
+	expectEq(s - tenv.bol, tenv.bol);
 
 }

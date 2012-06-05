@@ -13,6 +13,6 @@ Token_toERRTest.prototype.ReturntoERR = function() {
 
 	konoha.Token_toERR(_ctx, tk, errref);
 
-	expectEq(tk.tt, konoha.ktoken_t.TK_ERR);
+	expectEq(konoha.ktoken_t.TK_ERR, tk.tt);
 
 }

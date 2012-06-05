@@ -9,11 +9,21 @@ parseLINETest.prototype.ReturnCorrectparseLINE = function() {
 	var _ctx = null;
 	var tk = new konoha.kToken();
 	var tenv = new konoha.tenv_t;
-	tenv.source = "ae + cji";
+	tenv.source = "if(n < 3) {\n return 1;\n}";
 	var tok_start = 0;
 	var thunk = null;
 
 	konoha.parseLINE(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq(tk.tt, 3);
-	expectThat(tk.sub, elementsAre(['ad', '+', 'cje']));
+	expectEq(10, pos-1);
+
+	var _ctx = null;
+	var tk = new konoha.kToken();
+	var tenv = new konoha.tenv_t;
+	tenv.source = "while((ch = tenv.source[pos++]) == 0) {\n a *=a\n}";
+	var tok_start = 0;
+	var thunk = null;
+
+	konoha.parseLINE(_ctx, tk ,tenv, tok_start, thunk);
+	expectEq(38, pos-1);
+
 }

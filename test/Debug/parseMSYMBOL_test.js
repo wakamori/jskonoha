@@ -14,7 +14,7 @@ parseMSYMBOLTest.prototype.ReturnCorrectparseMSYMBOL = function() {
 	var thunk = null;
 
 	konoha.parseMSYMBOL(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq(tk.tt, 10);
-	expectThat(tk.sub, elementsAre(['int','f','(','int','a',',','int','b',')','{','return','a','+','b',';','}',';']));
+	expectEq(10, tk.tt);
+	expectThat(elementsAre(['int','f','(','int','a',',','int','b',')','{','return','a','+','b',';','}',';']), tk.text.text);
 
 }
