@@ -142,7 +142,7 @@ konoha.parseOP1 = function(_ctx, tk, tenv, tok_start, thunk)
 	tk.text = new konoha.kString();
 	tk.text.text = tenv.source[tok_start];
 	tk.tt = konoha.ktoken_t.TK_OPERATOR;
-	tk.topch = s[0];
+//	tk.topch = s[0];
 	//	}
 	return tok_start+1;
 }

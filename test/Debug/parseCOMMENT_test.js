@@ -14,9 +14,9 @@ parseCOMMENTTest.prototype.ReturnCorrectparseCOMMENT = function() {
 	tenv.source = "/* int fib(n) */";
 	var tok_start = 0;
 	var thunk = null;
-
-	konoha.parseCOMMENT(_ctx, tk ,tenv, tok_start, thunk);
-	expectCall(this.resultCallback_)(11);
+	var ret = konoha.parseCOMMENT(_ctx, tk ,tenv, tok_start, thunk);
+	expectEq(tenv.source.length, ret);
+	//	expectCall(this.resultCallback_)(11);
 
 	var _ctx = null;
 	var tk = new konoha.kToken();
@@ -24,9 +24,9 @@ parseCOMMENTTest.prototype.ReturnCorrectparseCOMMENT = function() {
 	tenv.source = "/*abc != d*/";
 	var tok_start = 0;
 	var thunk = null;
-
-	konoha.parseCOMMENT(_ctx, tk ,tenv, tok_start, thunk);
-	expectCall(this.resultCallback_)(7);
+	var ret = konoha.parseCOMMENT(_ctx, tk ,tenv, tok_start, thunk);
+	expectEq(tenv.source.length, ret);
+	//	expectCall(this.resultCallback_)(7);
 
 	var _ctx = null;
 	var tk = new konoha.kToken();
@@ -34,8 +34,8 @@ parseCOMMENTTest.prototype.ReturnCorrectparseCOMMENT = function() {
 	tenv.source = "/*a*b*/";
 	var tok_start = 0;
 	var thunk = null;
-
-	konoha.parseCOMMENT(_ctx, tk ,tenv, tok_start, thunk);
-	expectCall(this.resultCallback_)(2);
+	var ret = konoha.parseCOMMENT(_ctx, tk ,tenv, tok_start, thunk);
+	expectEq(tenv.source.length, ret);
+	//	expectCall(this.resultCallback_)(2);
 
 }

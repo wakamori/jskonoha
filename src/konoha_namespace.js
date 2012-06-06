@@ -28,7 +28,7 @@ konoha.isnum = function(str) { //ignore number of letters
 
 konoha.isalnum = function(c) {
 	if (konoha.isalpha(c) &&
-		Konoha.isnum(c)) {
+		konoha.isnum(c)) {
 		return true;
 	}
 	else {

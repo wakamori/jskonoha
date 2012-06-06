@@ -13,8 +13,8 @@ parseSYMBOLTest.prototype.ReturnCorrectparseSYMBOL = function() {
 	var tok_start = 0;
 	var thunk = null;
 
-	konoha.parseSYMBOL(_ctx, tk ,tenv, tok_start, thunk);
+	var ret = konoha.parseSYMBOL(_ctx, tk ,tenv, tok_start, thunk);
 	expectEq(konoha.ktoken_t.TK_SYMBOL, tk.tt);
-	expectEq(elementsAre(['32', '/', '2']), tk.text.text);
+	expectEq("32", tk.text.text);
 
 }

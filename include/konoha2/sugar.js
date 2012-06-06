@@ -82,7 +82,7 @@
 konoha.tenv_t = function() {
 	this.source = null; //const char* => String
 	this.uline = null; //kline_t
-	this.list = null; //kArray*
+	this.list = new konoha.kArray(); //kArray*
 	this.bol = null; //const char* => Number
 	this.indent_tab = null; //int => Number
 	this.fmat = null; //Ftokenizer*
@@ -139,7 +139,7 @@ konoha.tenv_t = function() {
 konoha.ksyntax = function() {
 	this.kw = null;				//keyword_t
 	this.flag = null;				//kflag_t
-	this.syntaxRuleNULL = null;	//kArray *
+	this.syntaxRuleNULL = new konoha.kArray();	//kArray *
 	this.ParseStmtNULL = null;		//Method *
 	this.ParseExpr = null;			//kMethod *
 	this.TopStmtTyCheck = null;	//kMethod *
@@ -209,17 +209,17 @@ konoha.ksyntax = function() {
 //
 //
 konoha.kKonohaSpace = function() {
-	this.h = null;				//	kObjectHeader
+	this.h = new konoha.kObjectHeader();				//	kObjectHeader
 	this.packid = null;		//	kpack_t
 	this.pakdom = null;		//kpack_t
 	this.parentNULL = null;	//const struct _kKonohaSpace *
 	this.fmat = null;			//const Ftokenizer *
 	this.syntaxMapNN = null;	//struct kmap_t *
 	this.gluehdr = null;		//void *
-	this.scrNUL = null;		//kObject *
+	this.scrNUL = new konoha.kObject();		//kObject *
 	this.static_cid = null;	//kcid_t
 	this.function_cid = null;	//kcid_t
-	this.methods = null;		//kArray *
+	this.methods = new konoha.kArray();		//kArray *
 	this.cl = null;			//	karray_t
 };
 //
@@ -250,7 +250,7 @@ konoha.ktoken_t = new konoha.Enum(
 );
 //
 konoha.kToken = function() {
-	this.h = null;				//kObjectHeader
+	this.h = new konoha.kObjectHeader;				//kObjectHeader
 	this.tt = null;			//kushort_t
 	this.kw = null;			//ksymbol_t
 	//	union {
@@ -312,13 +312,13 @@ konoha.mntype_t = new konoha.Enum (
 //#define kExpr_at(E,N)        ((E)->cons->exprs[(N)])
 //
 konoha.kExpr = function() {
-	this.h = null;				//kObjectHeader
+	this.h = new konoha.kObjectHeader();				//kObjectHeader
 	this.ty = null;			//ktype_t
 	this.build = null;			//kexpr_t
 	this.tk = null;			//kToken
 	//	union {
-	this.data = null;		//kObject*
-	this.cons = null;		//kArray *
+	this.data = new konoha.kObject();		//kObject*
+	this.cons = new konoha.kArray();		//kArray *
 	this.single = null;	//kExpr *
 	this.block = null;		//const struct _kBlock *
 	//	};
@@ -343,7 +343,7 @@ konoha.kExpr = function() {
 //#define TSTMT_JUMP           7
 //
 konoha.kStmt = function() {
-	this.h = null;				//	kObjectHeader;
+	this.h = new konoha.kObjectHeader();				//	kObjectHeader;
 	this.uline = null;			//	kline_t;
 	this.syn = null;			//	ksyntax_t *;
 	this.parentNULL = null	//	const struct _kBlock *;
@@ -351,10 +351,10 @@ konoha.kStmt = function() {
 };
 
 konoha.kBlock = function() {
-	this.h = null;				//kObjectHeader
+	this.h = new konoha.kObjectHeader();				//kObjectHeader
 	this.ks = null;			//kKonohaSpace *
 	this.parentNULL = null;	//kStmt *
-	this.blocks = null;		//kArray *
+	this.blocks = new konoha.kArray();		//kArray *
 	this.esp = null;			//kExpr *
 };
 

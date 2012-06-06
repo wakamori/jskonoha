@@ -13,8 +13,8 @@ parseLINETest.prototype.ReturnCorrectparseLINE = function() {
 	var tok_start = 0;
 	var thunk = null;
 
-	konoha.parseLINE(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq(10, pos-1);
+	var ret = konoha.parseLINE(_ctx, tk ,tenv, tok_start, thunk);
+	expectEq(11, ret);
 
 	var _ctx = null;
 	var tk = new konoha.kToken();
@@ -23,7 +23,6 @@ parseLINETest.prototype.ReturnCorrectparseLINE = function() {
 	var tok_start = 0;
 	var thunk = null;
 
-	konoha.parseLINE(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq(38, pos-1);
-
+	var ret = konoha.parseLINE(_ctx, tk ,tenv, tok_start, thunk);
+	expectEq(39, ret);
 }

@@ -14,6 +14,6 @@ parseDQUOTETest.prototype.ReturnCorrectparseDQUOTE = function() {
 	var thunk = null;
 
 	konoha.parseLINE(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq(elementAre(['\"']), tk.text.text);
+	expectEq('\"', tk.text.text);
 	expectEq(tk.tt, konoha.ktoken_t.TK_TEX);
 }

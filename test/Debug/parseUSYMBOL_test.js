@@ -13,7 +13,7 @@ parseUSYMBOLTest.prototype.ReturnCorrectparseUSYMBOL = function() {
 	var tok_start = 0;
 	var thunk = null;
 
-	konoha.parseUSYMBOL(_ctx, tk ,tenv, tok_start, thunk);
+	var ret = konoha.parseUSYMBOL(_ctx, tk ,tenv, tok_start, thunk);
 	expectEq(konoha.ktoken_t.TK_USYMBOL, tk.tt);
-	expectEq(elementsAre(['1', '+', '3']), tk.text.text);
+	expectEq("1 + 3", tk.text.text);
 }

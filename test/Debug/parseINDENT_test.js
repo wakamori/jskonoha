@@ -12,10 +12,8 @@ parseINDENTTest.prototype.ReturnCorrectINDENT = function() {
 	tenv.source = "int f(n) {\n \t return n;\n}"
 	var pos = 0;
 	var thunk = null;
+	var ret = konoha.parseINDENT(_ctx, tk, tenv, pos, thunk); 
 
-
-	konoha.parseINDENT(_ctx, tk, tenv, pos, thunk);
 	expectEq(null, tenv.indent_tab);
-	expectEq(konoha.ktoken.TK_INDENT, tk.tt);
-
+	expectEq(konoha.ktoken_t.TK_INDENT, tk.tt);
 }

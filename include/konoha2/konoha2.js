@@ -492,7 +492,7 @@ konoha.MOD_iconv  = 13
 //typedef uintptr_t kmagicflag_t;
 //
 konoha.kclass = function() {
-//	KCLASSSPI;
+	//	KCLASSSPI;
 	this.packid = null;			//kpack_t
 	this.packdom = null;			//kpack_t
 	this.cid = null;				//kcid_t
@@ -507,14 +507,14 @@ konoha.kclass = function() {
 	this.DBG_NAME = null;			//const char *
 	this.nameid = null;			//kuname_t
 	this.optvalue = null;			//kushort_t
-//
+	//
 	this.cparam = null;			//const struct _kParam *
-	this.methods = null;			//const struct _kArray *
-	this.shortNameNULL = null;		//const struct _kString *
-//	union {   // default value
-		this.nulvalNUL = null;		//const struct _kObject *
-		this.WnulvalNUl = null;	//struct _kObject *
-//	};
+	this.methods = new konoha.kArray();			//const struct _kArray *
+	this.shortNameNULL = new konoha.kArray();		//const struct _kString *
+	//	union {   // default value
+	this.nulvalNUL = new konoha.kObject();		//const struct _kObject *
+	this.WnulvalNUl = new konoha.kObject();	//struct _kObject *
+	//	};
 	this.constPoolMapNO = null;	//struct kmap_t *
 	this.searchSimilarClassNULL = null;	//kclass_t
 	this.searchSuperMethodClassNULL = null;//kclass_t *
@@ -636,20 +636,20 @@ konoha.kclass = function() {
 konoha.kObjectHeader = function() {
 	this.magicflag = null;				//kmagicflag_t
 	this.ct = null;					//kclass_t
-//	union {
-		this.refc = null;				//uintptr_t
-		this.gcinfo = null;			//void *
-		this.hashcode = null;			//uintptr_t
-//	};
+	//	union {
+	this.refc = null;				//uintptr_t
+	this.gcinfo = null;			//void *
+	this.hashcode = null;			//uintptr_t
+	//	};
 	this.kvproto = null;				//karray_t *
 };
 
 
 konoha.kObject = function() {
-	this.h = null;						//kObjectHeader
+	this.h = new konoha.kObjectHeader();						//kObjectHeader
 //	union {
-		this.fields[4] = null;			//const struct _kObject
-		this.ndata[4] = null;			//uintptr_t
+	this.fields[4] = null;			//const struct _kObject
+	this.ndata[4] = null;			//uintptr_t
 //	};
 };
 //
@@ -770,7 +770,7 @@ konoha.kObject = function() {
 //
 //typedef const struct _kString kString;
 konoha.kString = function()/* extends _Bytes */ {
-	this.h = null;        // kObjectHeader => kObjectHeader
+	this.h = new konoha.kObjectHeader();        // kObjectHeader => kObjectHeader
 	this.bytesize = null; // size_t => Number
 	// union {
 	// 	   const char *byteptr;
@@ -813,11 +813,9 @@ konoha.SPOL_NOCOPY      =  (1<<4)
 //
 
 konoha.kArray = function() {
-	this.h = null;				//ObjectHeader
+	this.h = new konoha.kObjectHeader();;				//ObjectHeader
 	this.bytesize = null;		//size_t => Number
-
-	this.data = null;           //union => Array
-
+	this.data = new Array();           //union => Array
 	this.btyemax = null;		//size_t => Number
 };
 
@@ -839,7 +837,7 @@ konoha.kparam_t = function() {
 };
 //
 konoha.kParam = function() {
-	this.h = null;				//kObjectHeader
+	this.h = new konoha.kObjectHeader();;				//kObjectHeader
 	this.rtype = null;			//ktype_t
 	this.psize = null;			//kushort_t
 	this.p[3] = null;			//kparam_t

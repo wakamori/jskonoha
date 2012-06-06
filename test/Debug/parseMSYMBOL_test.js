@@ -13,8 +13,8 @@ parseMSYMBOLTest.prototype.ReturnCorrectparseMSYMBOL = function() {
 	var tok_start = 0;
 	var thunk = null;
 
-	konoha.parseMSYMBOL(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq(10, tk.tt);
-	expectThat(elementsAre(['int','f','(','int','a',',','int','b',')','{','return','a','+','b',';','}',';']), tk.text.text);
-
+	var ret = konoha.parseMSYMBOL(_ctx, tk ,tenv, tok_start, thunk);
+	expectEq(0, ret);
+	expectEq(konoha.ktoken_t.TK_MSYMBOL, tk.tt);
+	expectEq("", tk.text.text);
 }
