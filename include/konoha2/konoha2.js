@@ -676,8 +676,8 @@ konoha.kObjectHeader = function() {
 konoha.kObject = function() {
 	this.h = new konoha.kObjectHeader();						//kObjectHeader
 //	union {
-	this.fields[4] = null;			//const struct _kObject
-	this.ndata[4] = null;			//uintptr_t
+// 	this.fields[4] = null;			//const struct _kObject
+// 	this.ndata[4] = null;			//uintptr_t
 //	};
 };
 //

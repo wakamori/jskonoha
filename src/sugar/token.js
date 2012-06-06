@@ -267,85 +267,87 @@ konoha.parseUNDEF = function(_ctx, tk, tenv, tok_start, thunk)
 //konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk);
 
 konoha.MiniKonohaTokenMatrix = new Array(
-	//konoha._NULL    = 0
+	//konoha.MKTM_type._NULL    = 0
 	konoha.parseSKIP,
-	//konoha._DIGIT   = 2
+	//konoha.MKTM_type._UNDEF   = 1
+	konoha.parseSKIP,
+	//konoha.MKTM_type._DIGIT   = 2
 	konoha.parseNUM,
-	//konoha._UALPHA  = 3
+	//konoha.MKTM_type._UALPHA  = 3
 	konoha.parseUSYMBOL,
-	//konoha._LALPHA  = 4
+	//konoha.MKTM_type._LALPHA  = 4
 	konoha.parseSYMBOL,
-	//konoha._MULTI   = 5
+	//konoha.MKTM_type._MULTI   = 5
 	konoha.parseMSYMBOL,
-	//konoha._NL      = 6
+	//konoha.MKTM_type._NL      = 6
 	konoha.parseNL,
-	//konoha._TAB     = 7
+	//konoha.MKTM_type._TAB     = 7
 	konoha.parseSKIP,
-	//konoha._SP      = 8
+	//konoha.MKTM_type._SP      = 8
 	konoha.parseSKIP,
-	//konoha._LPAR    = 9
+	//konoha.MKTM_type._LPAR    = 9
 	konoha.parseOP1,
-	//konoha._RPAR    = 10
+	//konoha.MKTM_type._RPAR    = 10
 	konoha.parseOP1,
-	//konoha._LSQ     = 11
+	//konoha.MKTM_type._LSQ     = 11
 	konoha.parseOP1,
-	//konoha._RSQ     = 12
+	//konoha.MKTM_type._RSQ     = 12
 	konoha.parseOP1,
-	//konoha._LBR     = 13
+	//konoha.MKTM_type._LBR     = 13
 	konoha.parseBLOCK,
-	//konoha._RBR     = 14
+	//konoha.MKTM_type._RBR     = 14
 	konoha.parseOP1,
-	//konoha._LT      = 15
+	//konoha.MKTM_type._LT      = 15
 	konoha.parseOP,
-	//konoha._GT      = 16
+	//konoha.MKTM_type._GT      = 16
 	konoha.parseOP,
-	//konoha._QUOTE   = 17
+	//konoha.MKTM_type._QUOTE   = 17
 	konoha.parseUNDEF,
-	//konoha._DQUOTE  = 18
+	//konoha.MKTM_type._DQUOTE  = 18
 	konoha.parseDQUOTE,
-	//konoha._BKQUOTE = 19
+	//konoha.MKTM_type._BKQUOTE = 19
 	konoha.parseUNDEF,
-	//konoha._OKIDOKI = 20
+	//konoha.MKTM_type._OKIDOKI = 20
 	konoha.parseOP,
-	//konoha._SHARP   = 21
+	//konoha.MKTM_type._SHARP   = 21
 	konoha.parseOP,
-	//konoha._DOLLAR  = 22
+	//konoha.MKTM_type._DOLLAR  = 22
 	konoha.parseOP,
-	//konoha._PER     = 23
+	//konoha.MKTM_type._PER     = 23
 	konoha.parseOP,
-	//konoha._AND     = 24
+	//konoha.MKTM_type._AND     = 24
 	konoha.parseOP,
-	//konoha._STAR    = 25
+	//konoha.MKTM_type._STAR    = 25
 	konoha.parseOP,
-	//konoha._PLUS    = 26
+	//konoha.MKTM_type._PLUS    = 26
 	konoha.parseOP,
-	//konoha._COMMA   = 27
+	//konoha.MKTM_type._COMMA   = 27
 	konoha.parseOP1,
-	//konoha._MINUS   = 28
+	//konoha.MKTM_type._MINUS   = 28
 	konoha.parseOP,
-	//konoha._DOT     = 29
+	//konoha.MKTM_type._DOT     = 29
 	konoha.parseOP,
-	//konoha._SLASH   = 30
+	//konoha.MKTM_type._SLASH   = 30
 	konoha.parseSLASH,
-	//konoha._COLON   = 31
+	//konoha.MKTM_type._COLON   = 31
 	konoha.parseOP,
-	//konoha._SEMICOLON = 32
+	//konoha.MKTM_type._SEMICOLON = 32
 	konoha.parseOP1,
-	//konoha._EQ      = 33
+	//konoha.MKTM_type._EQ      = 33
 	konoha.parseOP,
-	//konoha._QUESTION= 34
+	//konoha.MKTM_type._QUESTION= 34
 	konoha.parseOP,
-	//konoha._AT      = 35
+	//konoha.MKTM_type._AT      = 35
 	konoha.parseOP1,
-	//konoha._VAR     = 36
+	//konoha.MKTM_type._VAR     = 36
 	konoha.parseOP,
-	//konoha._CHILDER = 37
+	//konoha.MKTM_type._CHILDER = 37
 	konoha.parseOP,
-	//konoha._BKSLASH = 38
+	//konoha.MKTM_type._BKSLASH = 38
 	konoha.parseUNDEF,
-	//konoha._HAT     = 39
+	//konoha.MKTM_type._HAT     = 39
 	konoha.parseOP,
-	//konoha._UNDER   = 40
+	//konoha.MKTM_type._UNDER   = 40
 	konoha.parseSYMBOL
 	//konoha.KCHAR_MAX= 41
 );

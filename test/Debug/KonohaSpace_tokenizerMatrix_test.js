@@ -7,8 +7,8 @@ registerTestSuite(KonohaSpace_tokenizerMatrixTest);
 
 KonohaSpace_tokenizerMatrixTest.prototype.ReturnCorrectKonohaSpace_tokenizerMatrix = function() {
 	var _ctx = null;
-	var ks = null;
+	var ks = new konoha.kKonohaSpace();
 
-	konoha.KonohaSpace_tokenizerMatrix(_ctx, ks);
-
+	var ret = konoha.KonohaSpace_tokenizerMatrix(_ctx, ks);
+	expectThat(ret, elementsAre(konoha.MiniKonohaTokenMatrix));
 }
