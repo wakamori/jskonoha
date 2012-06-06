@@ -344,7 +344,35 @@ konoha.MOD_iconv  = 13
 //	struct kmodshare_t               **modshare;
 //	struct kmodlocal_t               **modlocal;
 //} kcontext_t ;
-//
+konoha.kcontext_t = function() {
+	this.safepoint = null;
+	this.esp = null;
+	this.lib2 = null;
+	/* TODO(imasahiro)
+	 * checking modgc performance and remove
+	 * memshare/memlocal from context
+	 */
+	this.memshare = null;
+	this.memlocal = null;
+	this.share = null;
+	this.local = null;
+	this.stack = null;
+	this.logger = null;
+//	this.modshare = null;
+//	this.modlocal = null;
+	this.ctxsugar = function() { //FIX ME!! init here?
+//		kmodlocal_t h;
+//		kArray *tokens;
+//		karray_t cwb;
+//		int     err_count;
+		errors = new kArray();
+//		kBlock *singleBlock;
+//		kGamma *gma;
+//		kArray *lvarlst;
+//		kArray *definedMethods;
+	};
+};
+
 //typedef struct kshare_t {
 //	karray_t ca;
 //	struct kmap_t         *lcnameMapNN;

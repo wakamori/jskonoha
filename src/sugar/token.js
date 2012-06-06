@@ -26,7 +26,7 @@
 konoha.Token_toERR = function(_ctx, tk, errref)
 {
     tk.tt = konoha.ktoken_t.TK_ERR;
-	tk.text = ctxsugar.errors.strings[errref]; //TODO ERROR
+//	tk.text = ctxsugar.errors.strings[errref]; //TODO ERROR
 }
 
 konoha.lpos = function(tenv, s) //Number : tenv_t, Number
@@ -67,7 +67,7 @@ konoha.parseNUM = function(_ctx, tk, tenv, tok_start, thunk)
 	while((ch = tenv.source[pos++]) != undefined) {
 		if(ch == '_') continue;
 		if(ch == '.') {
-			if(isNaN(Number(tenv.source[pos]))) {
+			if(konoha.isdigit(tenv.source[pos])) {
 				break;
 			}
 			dot++;
@@ -77,7 +77,7 @@ konoha.parseNUM = function(_ctx, tk, tenv, tok_start, thunk)
 			pos++;
 			continue;
 		}
-		if(konoha.isalnum(ch)) break;
+		if(!konoha.isalnum(ch)) break;
 	}
 	//	if(IS_NOTNULL(tk)) {
 	tk.text = new konoha.kString();
