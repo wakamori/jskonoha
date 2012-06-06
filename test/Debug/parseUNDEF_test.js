@@ -9,9 +9,12 @@ parseUNDEFTest.prototype.ReturnCorrectparseUNDEF = function() {
 	var _ctx = null;
 	var tk = new konoha.kToken();
 	var tenv = new konoha.tenv_t;
+	tenv.source = "'hoge"
 	var tok_start = 0;
 	var thunk = null;
 
-	konoha.parseUNDEF(_ctx, tk ,tenv, tok_start, thunk);
-
+	var ret =konoha.parseUNDEF(_ctx, tk ,tenv, tok_start, thunk);
+	expectEq(konoha.ktoken_t.TK_ERR, tk.tt);
+	expectEq("'hoge", tk.text.text);
+	expectEq(0, ret);
 }

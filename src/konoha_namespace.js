@@ -17,17 +17,18 @@ konoha.isalpha = function(c) { //only use string which is single letter
 	}
 }
 
-konoha.isnum = function(str) { //ignore number of letters
-	if (isNaN(Number(str))) {
-		return false;
+konoha.isnum = function(c) { //only use string which is single letter
+	var cc = c.charCodeAt(0);
+	if (48 <= cc && cc <= 57) {
+		return true;
 	}
 	else {
-		return true;
+		return false;
 	}
 }
 
 konoha.isalnum = function(c) {
-	if (konoha.isalpha(c) &&
+	if (konoha.isalpha(c) ||
 		konoha.isnum(c)) {
 		return true;
 	}

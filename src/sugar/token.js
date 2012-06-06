@@ -93,7 +93,9 @@ konoha.parseSYMBOL = function(_ctx, tk, tenv, tok_start, thunk)
 	var ch, pos = tok_start;
 	var ts = tenv.source;
 	while ((ch = ts[pos++]) != undefined) {
-		if (ch == '_' || konoha.isalnum(ch)) continue;
+		if (ch == '_' || konoha.isalnum(ch)) {
+			continue;
+		}
 		break;
 	}
 	//	if(IS_NOTNULL(tk)) {
@@ -232,7 +234,7 @@ konoha.parseDQUOTE = function(_ctx, tk, tenv, tok_start, thunk)
 		if(ch == '"' && prev != '\\') {
 			//			if(IS_NOTNULL(tk)) {
 			tk.text = new konoha.kString();
-			tk.text.text = tenv.source.substr(tok_start + 1, (pos-1)- (tok_start+1));
+			tk.text.text = tenv.source.substr(tok_start + 1, (pos-1)-(tok_start+1));
 			tk.tt = konoha.ktoken_t.TK_TEXT;
 			//			}
 			return pos;
@@ -255,7 +257,8 @@ konoha.parseUNDEF = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	//	if(is_NOTNULL(tk)) {
 //	var errref = konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "undefined token character: %c", tenv.source[tok_start]);
-//	konoha.token_toERR(_ctx, tk, errref);
+	var errref = 0; //FIX ME!!
+	konoha.Token_toERR(_ctx, tk, errref);
 	//	}
 	while(tenv.source[++tok_start] != undefined);
 	return tok_start;

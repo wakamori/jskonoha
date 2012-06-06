@@ -10,7 +10,7 @@ parseOPTest.prototype.ReturnCorrectparseOP = function() {
 	var tk = new konoha.kToken();
 	var tenv = new konoha.tenv_t;
 	tenv.source = "ac + d";
-	var tok_start = 0;
+	var tok_start = 3;
 	var thunk = null;
 
 	konoha.parseOP(_ctx, tk ,tenv, tok_start, thunk);
@@ -21,7 +21,7 @@ parseOPTest.prototype.ReturnCorrectparseOP = function() {
 	var tk = new konoha.kToken();
 	var tenv = new konoha.tenv_t;
 	tenv.source = "1 < 3";
-	var tok_start = 0;
+	var tok_start = 2;
 	var thunk = null;
 
 	konoha.parseOP(_ctx, tk ,tenv, tok_start, thunk);
@@ -32,7 +32,7 @@ parseOPTest.prototype.ReturnCorrectparseOP = function() {
 	var tk = new konoha.kToken();
 	var tenv = new konoha.tenv_t;
 	tenv.source = "ABC != BCD";
-	var tok_start = 0;
+	var tok_start = 4;
 	var thunk = null;
 
 	konoha.parseOP(_ctx, tk ,tenv, tok_start, thunk);
@@ -43,7 +43,7 @@ parseOPTest.prototype.ReturnCorrectparseOP = function() {
 	var tk = new konoha.kToken();
 	var tenv = new konoha.tenv_t;
 	tenv.source = "D^10";
-	var tok_start = 0;
+	var tok_start = 1;
 	var thunk = null;
 
 	konoha.parseOP(_ctx, tk ,tenv, tok_start, thunk);

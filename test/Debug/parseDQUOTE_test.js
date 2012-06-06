@@ -13,7 +13,7 @@ parseDQUOTETest.prototype.ReturnCorrectparseDQUOTE = function() {
 	var tok_start = 0;
 	var thunk = null;
 
-	konoha.parseLINE(_ctx, tk ,tenv, tok_start, thunk);
-	expectEq('\"', tk.text.text);
-	expectEq(tk.tt, konoha.ktoken_t.TK_TEX);
+	konoha.parseDQUOTE(_ctx, tk ,tenv, tok_start, thunk);
+	expectEq("hoge", tk.text.text);
+	expectEq(tk.tt, konoha.ktoken_t.TK_TEXT);
 }
