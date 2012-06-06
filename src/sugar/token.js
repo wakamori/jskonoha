@@ -77,7 +77,7 @@ konoha.parseNUM = function(_ctx, tk, tenv, tok_start, thunk)
 			pos++;
 			continue;
 		}
-		if(isNaN(Number(ch))) break;
+		if(konoha.isalnum(ch)) break;
 	}
 	//	if(IS_NOTNULL(tk)) {
 	tk.text = new konoha.kString();
