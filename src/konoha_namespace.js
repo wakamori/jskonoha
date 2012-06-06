@@ -39,7 +39,7 @@ konoha.isalnum = function(c) {
 konoha.assert = function(cond, msg) {
 	if (!cond) {
 		var e = "Assersion!! " + msg;
-		console.log(e);
+//		console.log(e);
 		throw e;
 	}
 }
