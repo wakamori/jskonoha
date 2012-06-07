@@ -1,0 +1,19 @@
+//////////////////////
+//  isFieldName
+/////////////////////
+
+function isFieldNameTEST() {
+	this.resultCallback_ = createMockFunction();
+}
+registerTestSuite(isFieldNameTest);
+
+isFieldNameTest.prototype.ReturnCorrectisFieldName = function() {
+	var _ctx = new konoha.kcontext_t();
+	var sfp = new konoha.ksfp_t();
+	var _rix = null;
+
+	konoha.isFieldName(_ctx, sfp, _rix);
+
+//TODO	expectEq();
+}
+
