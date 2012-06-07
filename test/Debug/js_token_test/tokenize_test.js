@@ -16,7 +16,7 @@ tokenizeTest.prototype.ReturnCorrectTokenwords = function() {
 	var _ctx = null;
 	var tenv = new konoha.tenv_t;
 	tenv.source = "a + b";
-	tenv.fmat = 4;
+	tenv.fmat = konoha.MiniKonohaTokenMatrix;
 	konoha.tokenize(_ctx, tenv);
 	expectThat(tenv.list.data, elementAre(['a', '+', 'b']));
 }

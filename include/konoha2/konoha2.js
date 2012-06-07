@@ -1413,7 +1413,7 @@ konoha.KSETv = function(VAR, VAL) {
 //
 //#ifdef USE_BUILTINTEST
 //typedef int (*Ftest)(CTX);
-//typedef struct DEFINE_TESTFUNC {
+///typedef struct DEFINE_TESTFUNC {
 //	const char *name;
 //	Ftest f;
 //} DEFINE_TESTFUNC ;
