@@ -215,10 +215,10 @@ konoha.parseCOMMENT = function(_ctx, tk, tenv, tok_start, thunk)
 konoha.parseSLASH = function(_ctx, tk, tenv, tok_start, thunk)
 {
 //	var ts = tenv.source + tok_start;
-	if(ts[tok_start + 1] == '/') {
+	if(tenv.source[tok_start + 1] == '/') {
 		return konoha.parseLINE(_ctx, tk, tenv, tok_start, thunk);
 	}
-	if(ts[tok_start + 1] == '*') {
+	if(tenv.source[tok_start + 1] == '*') {
 		return konoha.parseCOMMENT(_ctx, tk, tenv, tok_start, thunk);
 	}
 	return konoha.parseOP(_ctx, tk, tenv, tok_start, thunk);
