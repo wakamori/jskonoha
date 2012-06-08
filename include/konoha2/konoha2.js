@@ -1007,7 +1007,7 @@ konoha.kParam = function() {
 //
 ////#define new_ReturnRawPtr(_ctx, sfp, p)  new_ReturnCppObject(_ctx, sfp, p, NULL)
 //
-//#define K_CALLDELTA   4
+konoha.K_CALLDELTA   = 4;
 //#define K_RTNIDX    (-4)
 //#define K_SHIFTIDX  (-3)
 //#define K_PCIDX     (-2)

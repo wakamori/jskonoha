@@ -284,27 +284,28 @@ konoha.mntype_t = new konoha.Enum (
 //	((struct _kToken*)tk)->mn_type = (kshort_t)mn_type;
 //}
 //
-//#define TEXPR_LOCAL_   -4   /*THIS IS NEVER PASSED*/
-//#define TEXPR_BLOCK_   -3   /*THIS IS NEVER PASSED*/
-//#define TEXPR_FIELD_   -2   /*THIS IS NEVER PASSED*/
-//#define TEXPR_shift    (TEXPR_LOCAL - (TEXPR_LOCAL_))
-//#define TEXPR_UNTYPED       -1   /*THIS MUST NOT HAPPEN*/
-//#define TEXPR_CONST          0
-//#define TEXPR_NEW            1
-//#define TEXPR_NULL           2
-//#define TEXPR_NCONST         3
-//#define TEXPR_LOCAL          4
-//#define TEXPR_BLOCK          5
-//#define TEXPR_FIELD          6
-//#define TEXPR_BOX            7
-//#define TEXPR_UNBOX          8
-//#define TEXPR_CALL           9
-//#define TEXPR_AND           10
-//#define TEXPR_OR            11
-//#define TEXPR_LET           12
-//#define TEXPR_STACKTOP      13
-//#define TEXPR_MAX           14
-//
+
+konoha.TEXPR_LOCAL_     =  -4;   /*THIS IS NEVER PASSED*/
+konoha.TEXPR_BLOCK_     =  -3;   /*THIS IS NEVER PASSED*/
+konoha.TEXPR_FIELD_     =  -2;   /*THIS IS NEVER PASSED*/
+konoha.TEXPR_shift      =  (TEXPR_LOCAL - (TEXPR_LOCAL_));
+konoha.TEXPR_UNTYPED    =  -1;   /*THIS MUST NOT HAPPEN*/
+konoha.TEXPR_CONST      =   0;
+konoha.TEXPR_NEW        =   1;
+konoha.TEXPR_NULL       =   2;
+konoha.TEXPR_NCONST     =   3;
+konoha.TEXPR_LOCAL      =   4;
+konoha.TEXPR_BLOCK      =   5;
+konoha.TEXPR_FIELD      =   6;
+konoha.TEXPR_BOX        =   7;
+konoha.TEXPR_UNBOX      =   8;
+konoha.TEXPR_CALL       =   9;
+konoha.TEXPR_AND        =  10;
+konoha.TEXPR_OR         =  11;
+konoha.TEXPR_LET        =  12;
+konoha.TEXPR_STACKTOP   =  13;
+konoha.TEXPR_MAX        =  14;
+
 //
 //#define Expr_isCONST(o)     (TEXPR_CONST <= (o)->build && (o)->build <= TEXPR_NCONST)
 //#define Expr_isTerm(o)      (TFLAG_is(uintptr_t,(o)->h.magicflag,kObject_Local1))
@@ -332,16 +333,16 @@ konoha.kExpr = function() {
 	this.mh = null;		//uintptr_t
 	//	};
 };
-//
-//#define TSTMT_UNDEFINED      0
-//#define TSTMT_ERR            1
-//#define TSTMT_EXPR           2
-//#define TSTMT_BLOCK          3
-//#define TSTMT_RETURN         4
-//#define TSTMT_IF             5
-//#define TSTMT_LOOP           6
-//#define TSTMT_JUMP           7
-//
+
+konoha.TSTMT_UNDEFINED    = 0;
+konoha.TSTMT_ERR          = 1;
+konoha.TSTMT_EXPR         = 2;
+konoha.TSTMT_BLOCK        = 3;
+konoha.TSTMT_RETURN       = 4;
+konoha.TSTMT_IF           = 5;
+konoha.TSTMT_LOOP         = 6;
+konoha.TSTMT_JUMP         = 7;
+
 konoha.kStmt = function() {
 	this.h = new konoha.kObjectHeader();				//	kObjectHeader;
 	this.uline = null;			//	kline_t;
