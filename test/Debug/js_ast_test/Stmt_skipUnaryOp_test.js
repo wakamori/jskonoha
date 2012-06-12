@@ -2,7 +2,7 @@
 //  Stmt_skipUnaryOp
 /////////////////////
 
-function Stmt_skipUnaryOpTEST() {
+function Stmt_skipUnaryOpTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(Stmt_skipUnaryOpTest);

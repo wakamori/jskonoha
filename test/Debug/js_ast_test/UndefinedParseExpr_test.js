@@ -2,7 +2,7 @@
 //  UndefinedParseExpr
 /////////////////////
 
-function UndefinedParseExprTEST() {
+function UndefinedParseExprTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(UndefinedParseExprTest);

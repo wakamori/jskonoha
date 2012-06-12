@@ -2,7 +2,7 @@
 //  isFieldName
 /////////////////////
 
-function isFieldNameTEST() {
+function isFieldNameTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(isFieldNameTest);

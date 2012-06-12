@@ -2,7 +2,7 @@
 //  ParseStmt_Type
 /////////////////////
 
-function ParseStmt_TypeTEST() {
+function ParseStmt_TypeTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(ParseStmt_TypeTest);

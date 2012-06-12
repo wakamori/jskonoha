@@ -2,7 +2,7 @@
 //  ParseExpr_Term
 /////////////////////
 
-function ParseExpr_TermTEST() {
+function ParseExpr_TermTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(ParseExpr_TermTest);

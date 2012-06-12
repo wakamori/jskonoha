@@ -2,7 +2,7 @@
 //  Stmt_newExpr2
 /////////////////////
 
-function Stmt_newExpr2TEST() {
+function Stmt_newExpr2Test() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(Stmt_newExpr2Test);

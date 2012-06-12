@@ -2,7 +2,7 @@
 //  Stmt_addAnnotation
 /////////////////////
 
-function Stmt_addAnnotationTEST() {
+function Stmt_addAnnotationTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(Stmt_addAnnotationTest);

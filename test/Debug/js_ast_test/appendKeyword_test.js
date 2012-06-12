@@ -2,7 +2,7 @@
 //  Token_toBRACE
 /////////////////////
 
-function Token_toBRACETEST() {
+function Token_toBRACETest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(Token_toBRACETest);

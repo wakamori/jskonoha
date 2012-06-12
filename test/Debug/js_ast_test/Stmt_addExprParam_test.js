@@ -2,7 +2,7 @@
 //  Stmt_addExprParams
 /////////////////////
 
-function Stmt_addExprParamsTEST() {
+function Stmt_addExprParamsTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(Stmt_addExprParamsTest);

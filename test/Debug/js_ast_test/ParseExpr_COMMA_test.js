@@ -2,7 +2,7 @@
 //  ParseExpr_COMMA
 /////////////////////
 
-function ParseExpr_COMMATEST() {
+function ParseExpr_COMMATest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(ParseExpr_COMMATest);

@@ -2,7 +2,7 @@
 //  Stmt_parseSyntaxRule
 /////////////////////
 
-function Stmt_parseSyntaxRuleTEST() {
+function Stmt_parseSyntaxRuleTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(Stmt_parseSyntaxRuleTest);

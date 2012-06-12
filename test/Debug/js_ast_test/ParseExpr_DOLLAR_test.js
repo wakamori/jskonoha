@@ -2,7 +2,7 @@
 //  ParseExpr_DOLLAR
 /////////////////////
 
-function ParseExpr_DOLLARTEST() {
+function ParseExpr_DOLLARTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(ParseExpr_DOLLARTest);

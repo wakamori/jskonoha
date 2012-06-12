@@ -2,7 +2,7 @@
 //  Token_resolved
 /////////////////////
 
-function Token_resolvedTEST() {
+function Token_resolvedTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(Token_resolvedTest);

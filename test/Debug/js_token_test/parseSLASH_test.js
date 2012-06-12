@@ -13,6 +13,6 @@ parseSLASHTest.prototype.ReturnCorrectparseSLASH = function() {
 	var tok_start = 0;
 	var thunk = null;
 
-	var ret = konoha.parceSLASH(_ctx, tk, tenv, tok_start, thunk);
+	var ret = konoha.parseSLASH(_ctx, tk, tenv, tok_start, thunk);
 	expectEq(7, ret);
 }

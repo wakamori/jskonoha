@@ -2,7 +2,7 @@
 //  ParseStmt_Usymbol
 /////////////////////
 
-function ParseStmt_UsymbolTEST() {
+function ParseStmt_UsymbolTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(ParseStmt_UsymbolTest);

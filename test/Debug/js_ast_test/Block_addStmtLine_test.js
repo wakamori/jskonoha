@@ -2,7 +2,7 @@
 //  Block_addStmtLine
 /////////////////////
 
-function Block_addStmtLineTEST() {
+function Block_addStmtLineTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(Block_addStmtLineTest);

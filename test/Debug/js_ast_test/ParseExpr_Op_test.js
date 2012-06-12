@@ -2,7 +2,7 @@
 //  ParseExpr_Op
 /////////////////////
 
-function ParseExpr_OpTEST() {
+function ParseExpr_OpTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(ParseExpr_OpTest);

@@ -2,7 +2,7 @@
 //  Stmt_isUnaryOp
 /////////////////////
 
-function Stmt_isUnaryOpTEST() {
+function Stmt_isUnaryOpTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(Stmt_isUnaryOpTest);

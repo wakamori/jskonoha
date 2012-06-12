@@ -2,7 +2,7 @@
 //  TokenType_resolveGenerics
 /////////////////////
 
-function TokenType_resolveGenericsTEST() {
+function TokenType_resolveGenericsTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(TokenType_resolveGenericsTest);

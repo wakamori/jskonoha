@@ -2,7 +2,7 @@
 //  WARN_Ignored
 /////////////////////
 
-function WARN_IgnoredTEST() {
+function WARN_IgnoredTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(WARN_IgnoredTest);

@@ -521,8 +521,8 @@ konoha.kcontext_t = function() {
 ////struct _kclass;
 //typedef uintptr_t kmagicflag_t;
 //
-konoha.kclass = function() {
-	//	KCLASSSPI;
+konoha.kclass_t = function() {
+	//		KCLASSSPI;
 	this.packid = null;			//kpack_t
 	this.packdom = null;			//kpack_t
 	this.cid = null;				//kcid_t
@@ -539,11 +539,11 @@ konoha.kclass = function() {
 	this.optvalue = null;			//kushort_t
 	//
 	this.cparam = null;			//const struct _kParam *
-	this.methods = new konoha.kArray();			//const struct _kArray *
-	this.shortNameNULL = new konoha.kArray();		//const struct _kString *
+	this.methods = null;//new konoha.kArray();			//const struct _kArray *
+	this.shortNameNULL = null;//new konoha.kArray();		//const struct _kString *
 	//	union {   // default value
-	this.nulvalNUL = new konoha.kObject();		//const struct _kObject *
-	this.WnulvalNUl = new konoha.kObject();	//struct _kObject *
+	this.nulvalNUL = null;//new konoha.kObject();		//const struct _kObject *
+	this.WnulvalNUl = null;//new konoha.kObject();	//struct _kObject *
 	//	};
 	this.constPoolMapNO = null;	//struct kmap_t *
 	this.searchSimilarClassNULL = null;	//kclass_t
@@ -851,7 +851,7 @@ konoha.kArray = function() {
 };
 
 
-//
+
 ///* ------------------------------------------------------------------------ */
 ////## @Private @Immutable class Param Object;
 ////## flag Param VARGs  1 - is set * *;

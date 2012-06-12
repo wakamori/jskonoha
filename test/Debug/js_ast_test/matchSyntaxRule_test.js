@@ -2,7 +2,7 @@
 //  matchSyntaxRule
 /////////////////////
 
-function matchSyntaxRuleTEST() {
+function matchSyntaxRuleTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(matchSyntaxRuleTest);

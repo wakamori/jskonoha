@@ -2,7 +2,7 @@
 //  lookAheadKeyword
 /////////////////////
 
-function lookAheadKeywordTEST() {
+function lookAheadKeywordTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(lookAheadKeywordTest);

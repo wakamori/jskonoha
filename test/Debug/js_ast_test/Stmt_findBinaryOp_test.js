@@ -2,7 +2,7 @@
 //  Stmt_findBinaryOp
 /////////////////////
 
-function Stmt_findBinaryOpTEST() {
+function Stmt_findBinaryOpTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(Stmt_findBinaryOpTest);

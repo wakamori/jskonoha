@@ -2,7 +2,7 @@
 //  KonohaSpace_getSyntaxRule
 /////////////////////
 
-function KonohaSpace_getSyntaxRuleTEST() {
+function KonohaSpace_getSyntaxRuleTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(KonohaSpace_getSyntaxRuleTest);

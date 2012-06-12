@@ -2,7 +2,7 @@
 //  TokenArray_lookAhead
 /////////////////////
 
-function TokenArray_lookAheadTEST() {
+function TokenArray_lookAheadTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(TokenArray_lookAheadTest);

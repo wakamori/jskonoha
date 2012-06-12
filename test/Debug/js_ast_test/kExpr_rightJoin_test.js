@@ -2,7 +2,7 @@
 //  kExpr_rightJoin
 /////////////////////
 
-function kExpr_rightJoinTEST() {
+function kExpr_rightJoinTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(kExpr_rightJoinTest);

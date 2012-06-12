@@ -2,7 +2,7 @@
 //  ParseExpr_Parenthesis
 /////////////////////
 
-function ParseExpr_ParenthesisTEST() {
+function ParseExpr_ParenthesisTest() {
 	this.resultCallback_ = createMockFunction();
 }
 registerTestSuite(ParseExpr_ParenthesisTest);
