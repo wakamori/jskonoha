@@ -14,8 +14,10 @@ BASE_FILES = \
 	${SRC_DIR}/konoha_namespace.js\
 	${INCLUDE_DIR}/konoha2.js\
 	${INCLUDE_DIR}/sugar.js\
+	${SRC_DIR}/sugar/sugar.js\
 	${SRC_DIR}/sugar/token.js\
 	${SRC_DIR}/sugar/ast.js
+
 
 JSKONOHA = ${BUILD_DIR}/jskonoha.js
 JSKONOHA_VER = $(shell cat version.txt)
