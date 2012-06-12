@@ -191,8 +191,10 @@
 //
 //#define KARRAYSIZE(BS, T)   ((BS)/sizeof(T##_t))
 //
-//typedef struct {
-//	size_t bytesize;
+konoha.karray_t =  function() {
+	var bytesize = null;
+	var bytebuf  = null;
+	var kvs = new konoha.kvs_t();
 //	union {
 //		char  *bytebuf;
 //		const struct _kclass **cts;
@@ -201,8 +203,8 @@
 //		const struct _kObject **objects;
 //		struct _kObject       **refhead;  // stack->ref
 //	};
-//	size_t bytemax;
-//} karray_t ;
+	var bytemax = null;
+};
 //
 //typedef struct kwb_t {
 //	karray_t *m;
@@ -663,13 +665,13 @@ konoha.kclass = function() {
 //
 konoha.kObjectHeader = function() {
 	this.magicflag = null;				//kmagicflag_t
-	this.ct = null;					//kclass_t
+	this.ct = new konoha.kclass_t();					//kclass_t
 	//	union {
 	this.refc = null;				//uintptr_t
 	this.gcinfo = null;			//void *
 	this.hashcode = null;			//uintptr_t
 	//	};
-	this.kvproto = null;				//karray_t *
+	this.kvproto = new konoha.karray_t();				//karray_t *
 };
 
 
@@ -681,15 +683,16 @@ konoha.kObject = function() {
 //	};
 };
 //
-//typedef struct kvs_t {
-//	ksymbol_t key;
-//	ktype_t   ty;
+konoha.kvs_t = function() {
+	var key = null;   //ksymbol_t
+	var ty = null;   //	ktype_t
+	var val = null;  //union
 //	union {
 //		uintptr_t                uval;
 //		kObject                 *oval;
 //		const struct _kString   *sval;
 //	};
-//} kvs_t;
+};
 //
 //#define O_ct(o)             ((o)->h.ct)
 //#define O_cid(o)            (O_ct(o)->cid)
