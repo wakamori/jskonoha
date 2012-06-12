@@ -554,17 +554,17 @@ konoha.kclass = function() {
 ///* ------------------------------------------------------------------------ */
 ///* mini konoha */
 //
-//#define CLASS_Tvoid             ((kcid_t)0)
-//#define CLASS_Tvar              ((kcid_t)1)
-//#define CLASS_Object            ((kcid_t)2)
-//#define CLASS_Boolean           ((kcid_t)3)
-//#define CLASS_Int               ((kcid_t)4)
-//#define CLASS_String            ((kcid_t)5)
-//#define CLASS_Param             ((kcid_t)6)
-//#define CLASS_Method            ((kcid_t)7)
-//#define CLASS_Array             ((kcid_t)8)
-//#define CLASS_System            ((kcid_t)9)
-//#define CLASS_T0                ((kcid_t)10)    /* ParamType*/
+konoha.CLASS_Tvoid             = 0;
+konoha.CLASS_Tvar              = 1;
+konoha.CLASS_Object            = 2;
+konoha.CLASS_Boolean           = 3;
+konoha.CLASS_Int               = 4;
+konoha.CLASS_String            = 5;
+konoha.CLASS_Param             = 6;
+konoha.CLASS_Method            = 7;
+konoha.CLASS_Array             = 8;
+konoha.CLASS_System            = 9;
+konoha.CLASS_T0                = 10;    /* ParamType*/
 //
 //#define CT_Object               CT_(CLASS_Object)
 //#define CT_Boolean              CT_(CLASS_Boolean)
@@ -1008,7 +1008,7 @@ konoha.kParam = function() {
 ////#define new_ReturnRawPtr(_ctx, sfp, p)  new_ReturnCppObject(_ctx, sfp, p, NULL)
 //
 konoha.K_CALLDELTA   = 4;
-//#define K_RTNIDX    (-4)
+konoha.K_RTNIDX      =-4;
 //#define K_SHIFTIDX  (-3)
 //#define K_PCIDX     (-2)
 //#define K_MTDIDX    (-1)

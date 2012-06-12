@@ -3,6 +3,7 @@
 /* expr.isUnbox */
 /* _ctx.konoha_setModule */
 /* distinguish beteween bool and number */
+/* KW_Block */
 
 MODCODE_init = function (_ctx)
 {
@@ -49,17 +50,22 @@ MODCODE_init = function (_ctx)
 	}
 }
 
-MODCODE_init.ASM = function(str)
+MODCODE_init.prototype.ASM = function(str)
 {
+	this.output += str;
+}
+
+MODCODE_init.prototype.ASM_NEWLINE = function() {
+	this.output += '\n';
 	for (var i = 0; i < this.indent; i++) {
 		this.output += this.tab;
 	}
-	this.output += str + '\n';
 }
 
 MODCODE_init.prototype.ASM_NMOV = function(a, b, ty)
 {
-	ASM('sfp' + a + ' = sfp' + b);
+	ASM('var sfp' + a + ' = sfp' + b + ';');
+	ASM_NEWLINE();
 }
 
 MODCODE_init.prototype.NMOV_asm = function(_ctx, a, ty, index)
@@ -67,14 +73,31 @@ MODCODE_init.prototype.NMOV_asm = function(_ctx, a, ty, index)
 	ASM_NMOV(a, b, ty);
 }
 
-MODCODE_init.prototype.ASM_NSET = function(a, v.data)
+MODCODE_init.prototype.ASM_NSET = function(a, data)
 {
-	ASM('sfp' + a + ' = ' + v.data);
+	ASM('var sfp' + a + ' = ' + v.data + ';');
+	ASM_NEWLINE();
 }
 
-MODCODE_init.prototype.ASM_OSET = function(a, v.data)
+MODCODE_init.prototype.ASM_OSET = function(a, data)
 {
-	console.log('TODo asm_oset');
+	console.log('TODO asm_oset');
+}
+
+MODCODE_init.prototype.ASM_CALL = function(_ctx, thisidx, espidx, argc, mtd) {
+	var rtype = kMethod_rtype(mtd); // TODO
+	if (rtype != konoha.CLASS_Tvoid) {
+		ASM('var sfp' + (thisidx+konoha.K_RTNIDX) + ' = ');
+	}
+	var mtdName = T_fn(mtd.mn); // TODO get method name
+	ASM(mtdName + '(');
+	for (var i = 0; i < argc; i++) {
+		ASM('sfp' + (thisidx+1+i));
+		if (i != argc-1) {
+			ASM(', ');
+		}
+	}
+	ASM(');');
 }
 
 MODCODE_init.prototype.CALL_asm = function(_ctx, a, expr, shift, espidx)
@@ -85,9 +108,9 @@ MODCODE_init.prototype.CALL_asm = function(_ctx, a, expr, shift, espidx)
 		var exprN = expr.cons[i];
 		EXPR_asm(_ctx, thisidx + i - 1, exprN, shift, thisidx + i - 1);
 	}
-	int argc = expr.cons.lenght - 2;
+	var argc = expr.cons.lenght - 2;
 	/* don't care wheather method is static or not */
-	/* TODO  call*/
+	ASM_CALL(_ctx, thisidx, espidx, argc, mtd);
 }
 
 MODCODE_init.prototype.EXPR_asm = function(_ctx, a, expr, shift, espidx)
@@ -170,6 +193,18 @@ MODCODE_init.prototype.ExprStmt_asm = function(_ctx, stmt, shift, espidx)
 	if (expr.isExpr()) {
 		EXPR_asm(_ctx, espidx, expr, shift, espidx);
 	}
+}
+
+MODCODE_init.prototype.LoopStmt_asm = function(_ctx, stmt, shift, espidx)
+{
+	ASM('while (');
+	EXPR_asm(_ctx, espidx, stmt[1] /* kstmt_expr(stmt, 1, NULL) */, shift, espidx);
+	ASM(') {;');
+	this.indent++;
+	ASM_NEWLINE();
+	BLOCK_asm(_ctx, kStmt_block(stmt, konoha.KW_Block), shift);
+	ASM('}');
+	ASM_NEWLINE();
 }
 
 MODCODE_init.prototype.BLOCK_asm = function(_ctx, bk, shift)
