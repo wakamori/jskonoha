@@ -665,13 +665,13 @@ konoha.kclass_t = function() {
 //
 konoha.kObjectHeader = function() {
 	this.magicflag = null;				//kmagicflag_t
-	this.ct = new konoha.kclass_t();					//kclass_t
+	this.ct = null;//new konoha.kclass_t();					//kclass_t
 	//	union {
 	this.refc = null;				//uintptr_t
 	this.gcinfo = null;			//void *
 	this.hashcode = null;			//uintptr_t
 	//	};
-	this.kvproto = new konoha.karray_t();				//karray_t *
+	this.kvproto = null;//new konoha.karray_t();				//karray_t *
 };
 
 
