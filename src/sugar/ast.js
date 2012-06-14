@@ -326,10 +326,10 @@ konoha.lookAheadKeyword = function(tls, s, e, rule) {
 }
 
 konoha.matchSyntaxRule = function(_ctx, stmt, rules, uline, tls, s, e, optional) {
-	var ri, ti, rule_size = rules.data.length;
+	var ri, ti, rule_size = rules.length;
 	ti = s;
 	for(ri = 0; ri < rule_size && ti < e; ri++) {
-		var rule = rules.data[ri];
+		var rule = rules[ri];
 		var tk = tls[ti];
 		uline = tk.uline;
 		if(rule.tt == konoha.ktoken_t.TK_CODE) {
@@ -342,7 +342,7 @@ konoha.matchSyntaxRule = function(_ctx, stmt, rules, uline, tls, s, e, optional)
 			continue;
 		}
 		else if(rule.tt == konoha.ktoken_t.TK_METANAME) {
-			var syn = KonohaSpace_syntax(_ctx, konoha.Stmt_ks(stmt), rule.kw, 0);
+			var syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(stmt), rule.kw, 0);
 			if(syn == null || syn.ParseStmtNULL == null) {
 				konoha.Token_p(tk, konoha.ERR_, "unknown syntax pattern: %s", konoha.T_kw_(_ctx, rule.kw));
 				return -1;

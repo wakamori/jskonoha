@@ -306,3 +306,9 @@ konoha.kmodsugar_t = function() {
 	this.Stmt_addExprParams = null;
 	this.Expr_rightJoin = null;
 }
+
+konoha.T_kw_ = function(_ctx, kw)
+{
+	a = _ctx.kmodsugar.keywordList;
+	return a[kw];
+}
