@@ -24,7 +24,8 @@
 
 
 var main = function() {
-	var _konoha = konoha_open();
+	var _konoha = konoha.konoha_open();
+	konoha.konoha_load(_konoha);
 }
 
 main();

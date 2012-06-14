@@ -22,6 +22,14 @@
 // * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ***************************************************************************/
 
+konoha.MODSUGAR_loadscript = function(_ctx)
+{
+	if (_ctx.ctxsugar == NULL) {
+		console.log("TODO modsugar startup");
+	}
+
+}
+
 konoha.MODSUGAR_init = function(_ctx)
 {
 	var modsugar = {};
