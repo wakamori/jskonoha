@@ -49,7 +49,7 @@ konoha.MOD_iconv  = 13
 konoha.kcontext_t = function() {
 	this.safepoint = null;
 	this.esp = null;
-	this.lib2 = null;
+	this.lib2 = {};
 	/* TODO(imasahiro)
 	 * checking modgc performance and remove
 	 * memshare/memlocal from context
@@ -178,9 +178,9 @@ konoha.IS_Array = function(o){
 
 konoha.kArray = function() {
 	this.h = new konoha.kObjectHeader();;				//ObjectHeader
-	this.bytesize = null;		//size_t => Number
+	//this.bytesize = null;		//size_t => Number
 	this.data = new Array();           //union => Array
-	this.btyemax = null;		//size_t => Number
+	//this.btyemax = null;		//size_t => Number
 };
 
 //
@@ -208,13 +208,6 @@ konoha.KSETv = function(VAR, VAL) {
 	VAR = VAL;
 }
 
-konoha.kKonohaSpace = function(conf) {
-	this.parentNULL = conf;
-	this.packid = 0;
-	this.packdom = null;
-	this.fmat = null; // const Ftokenizer
-	this.syntaxMapNN = {};
-	this.methods = [];
-	this.srcobj = null;
-	this.cl = [];
+konoha.kGamma = function(conf) {
+	this.genv = conf;
 }

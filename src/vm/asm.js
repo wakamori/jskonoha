@@ -7,7 +7,7 @@
 
 MODCODE_init = function (_ctx)
 {
-	_ctx.modshare[konoha.MOD_code] = this;
+	_ctx.modcode = this;
 	this.name = 'minivm';
 	this.output = ''; // source code to evaluated
 	this.indent = 0; // depth of indent
@@ -16,11 +16,11 @@ MODCODE_init = function (_ctx)
 	this.setup = function(_ctx)
 	{
 		/* kmodcode_setup */
-		/* create modlocal */
 		var base = {};
 		base.insts = [];
 		base.constPools = [];
-		_ctx.modlocal[konoha.MOD_code] = base;
+		_ctx.ctxcode = base;
+		//_ctx.modlocal[konoha.MOD_code] = base;
 	}
 
 	this.reftrace = function()
@@ -33,7 +33,8 @@ MODCODE_init = function (_ctx)
 		/* do nothing */
 	}
 	
-	_ctx.Konoha_setModule(konoha.MOD_code, this);
+	//_ctx.Konoha_setModule(konoha.MOD_code, this);
+
 	this.setup(_ctx);
 	_ctx.lib2.KMethod_genCode = function(_ctx, mtd, bk)
 	{
@@ -41,9 +42,12 @@ MODCODE_init = function (_ctx)
 
 		/* prepare code generate */
 		console.log('START CODE GENERATION..');
-		if (_ctx.modlocal[konoha.MOD_code] == null) {
-			_ctx.modshare[konoha.MOD_code].setup(_ctx);
+		if (_ctx.ctxcode == null) {
+			_ctx.modcode.setup(_ctx);
 		}
+		//if (_ctx.modlocal[konoha.MOD_code] == null) {
+		//	_ctx.modshare[konoha.MOD_code].setup(_ctx);
+		//}
 		
 		/* start code generation */
 		BLOCK_asm(_ctx, bk, 0);

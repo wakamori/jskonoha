@@ -478,7 +478,7 @@ konoha.tokenize = function(_ctx, tenv)
 	pos = konoha.parseINDENT(_ctx, tk, tenv, pos, null);
 	while ((ch = konoha.kchar(tenv.source, pos)) != undefined) {
 		if(tk.tt != 0) {
-			tenv.list.data.push(tk);
+			tenv.list.push(tk);
 			tk = new konoha.kToken();
 			tk.uline = tenv.uline;
 			tk.lpos  = konoha.lpos(tenv, pos);
@@ -488,7 +488,7 @@ konoha.tokenize = function(_ctx, tenv)
 		pos = pos2;
 	}
 	if(tk.tt != 0) {
-		tenv.list.data.push(tk);
+		tenv.list.push(tk);
 	}
 }
 
@@ -524,12 +524,12 @@ konoha.KonohaSpace_tokenize = function(_ctx, ks, source, uline, a)
 	tenv.list   = a,
 	tenv.bol    = source,
 	tenv.indent_tab = 4,
-	tenv.fmat   = ks == null ? konoha.MiniKonohaTokenMatrix : konoha.KonohaSpace_tokenizerMatrix(ks)
+	tenv.fmat   = ks == null ? konoha.MiniKonohaTokenMatrix : konoha.KonohaSpace_tokenizerMatrix(_ctx, ks)
 
 	konoha.tokenize(_ctx, tenv);
 	if(uline == 0) {
 		for(i = pos; i < a.length; i++) {
-			a.Wtoks[i].uline = 0;
+			a[i].uline = 0;
 		}
 	}
 }
@@ -550,7 +550,7 @@ konoha.findTopCh = function(_ctx, tls, s, e, tt, closech)
 konoha.checkNestedSyntax = function(_ctx, tls, s, e, tt, opench, closech)
 {
 	var i = s;
-	var tk = tls.Wtoks[i];
+	var tk = tls[i];
 	var t = tk.text;
 	if(t[0] == opench && t[1] == 0) {
 		var ne = konoha.findTopCh(_ctx, tls, i+1, e, tk.tt, closech);
@@ -573,7 +573,7 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 	var nameid = 0;
 	//	dumpTokenArray(_ctx, 0, tls, s, e);
 	for(i = s; i < e; i++) {
-		var tk = tls.Wtoks[i];
+		var tk = tls[i];
 		if(tk.tt == konoha.ktoken_t.TK_INDENT) continue;
 		if(tk.tt == konoha.ktoken_t.TK_TEXT /*|| tk.tt == TK_STEXT*/) {
 			if(konoha.checkNestedSyntax(_ctx, tls, i, e, konoha.ktoken_t.AST_PARENTHESIS, '(', ')') ||

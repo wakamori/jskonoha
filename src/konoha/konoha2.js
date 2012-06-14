@@ -25,9 +25,9 @@
 konoha.new_context = function(_ctx, stacksize /* unused */) {
 	_ctx = new konoha.kcontext_t();
 	_ctx.kmodsugar = konoha.MODSUGAR_init();
-	_ctx.kmodcode = MODCODE_init();
+	_ctx.kmodcode = MODCODE_init(_ctx);
 	_ctx.KCLASSTABLE_init();
-	return ctx;
+	return _ctx;
 }
 
 konoha.konoha_init = function() {
@@ -36,12 +36,12 @@ konoha.konoha_init = function() {
 
 konoha.konoha_open = function() {
 	konoha.konoha_init();
-	return konoha.new_context(null, K_PAGESIZE * 8);
+	return konoha.new_context(null, 0 /* K_PAGESIZE * 8 */);
 }
 
 konoha.konoha_load = function(_konoha)
 {
-	var res = MODSUGAR_loadscript(_konoha);
+	var res = konoha.MODSUGAR_loadscript(_konoha);
 	return res;
 }
 

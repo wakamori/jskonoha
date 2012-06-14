@@ -25,7 +25,7 @@
 konoha.KonohaSpace_eval = function(_ctx, ks, script)
 {
 	_ctx.kmodsugar.h.setup(_ctx, _ctx.kmodsugar, 0);
-	var tls = _ctx.ctxsugar;
+	var tls = _ctx.ctxsugar.tokens;
 	var pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, ks, script, 0 /* uline */, tls);
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
@@ -47,13 +47,13 @@ konoha.KonohaSpace_loadstream = function(_ctx, ks)
 
 konoha.KonohaSpace_loadscript = function(_ctx, ks)
 {
-	var _status = konoha.KonohaSpace_loadstrem(_ctx, ks);
+	var _status = konoha.KonohaSpace_loadstream(_ctx, ks);
 	return _status;
 }
 
 konoha.MODSUGAR_loadscript = function(_ctx)
 {
-	if (_ctx.ctxsugar == NULL) {
+	if (_ctx.ctxsugar == null) {
 		_ctx.kmodsugar.h.setup(_ctx, _ctx.kmodsugar, 0);
 	}
 	var ns = new konoha.kKonohaSpace(_ctx.kmodsugar.rootks);
@@ -72,9 +72,9 @@ konoha.MODSUGAR_init = function(_ctx)
 			base.lvarlst = [];
 			base.definedMethods = [];
 
-			base.gma = new konoha.Gamma();
-			base.singleBlock = new konoha.kBlock();
-			base.singleBlock.blocks.push(null);
+			base.gma = new konoha.kGamma(null);
+			base.singleBlock = new konoha.kBlock(null);
+			base.singleBlock.blocks.data.push(null);
 			_ctx.ctxsugar = base;
 		}
 	}

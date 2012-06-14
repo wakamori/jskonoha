@@ -22,9 +22,9 @@
 // * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ***************************************************************************/
 
-kcontext_t.prototype.KCLASSTABKE_init = function() {
+konoha.kcontext_t.prototype.KCLASSTABLE_init = function() {
 	this.share = new function(_ctx){
-		loadInitStructData(); // TODO
+		//loadInitStructData(); TODO
 		this.lcnameMapNN = {};
 		this.fieldList = [];
 		this.fieldMapNN = {};
@@ -39,7 +39,7 @@ kcontext_t.prototype.KCLASSTABKE_init = function() {
 		this.paramdomList = [];
 
 		this.constNull = {};
-		setNullObject(this.constNull);
+		konoha.setNullObject(this.constNull);
 		this.constTrue = true;
 		this.constFalse = false;
 		this.emptyString = '';
