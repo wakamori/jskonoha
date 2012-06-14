@@ -6,7 +6,7 @@ function findTopChTest() {}
 registerTestSuite(findTopChTest);
 
 findTopChTest.prototype.ReturnCorrectfindTopCh = function() {
-	var _ctx = null;
+	var _ctx = new konoha.kcontext_t();;
 	var tls = new konoha.kArray();
 	var s = ;
 	var e = ;

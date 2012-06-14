@@ -7,7 +7,7 @@ function Token_toERRTest() {}
 registerTestSuite(Token_toERRTest);
 
 Token_toERRTest.prototype.ReturntoERR = function() {
-	var _ctx = null;
+	var _ctx = new konoha.kcontext_t();
 	var tk = new konoha.kToken();;
 	var errref = 32;
 

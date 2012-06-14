@@ -191,8 +191,10 @@
 //
 //#define KARRAYSIZE(BS, T)   ((BS)/sizeof(T##_t))
 //
-//typedef struct {
-//	size_t bytesize;
+konoha.karray_t =  function() {
+	var bytesize = null;
+	var bytebuf  = null;
+	var kvs = new konoha.kvs_t();
 //	union {
 //		char  *bytebuf;
 //		const struct _kclass **cts;
@@ -201,8 +203,8 @@
 //		const struct _kObject **objects;
 //		struct _kObject       **refhead;  // stack->ref
 //	};
-//	size_t bytemax;
-//} karray_t ;
+	var bytemax = null;
+};
 //
 //typedef struct kwb_t {
 //	karray_t *m;
@@ -519,8 +521,8 @@ konoha.kcontext_t = function() {
 ////struct _kclass;
 //typedef uintptr_t kmagicflag_t;
 //
-konoha.kclass = function() {
-	//	KCLASSSPI;
+konoha.kclass_t = function() {
+	//		KCLASSSPI;
 	this.packid = null;			//kpack_t
 	this.packdom = null;			//kpack_t
 	this.cid = null;				//kcid_t
@@ -537,11 +539,11 @@ konoha.kclass = function() {
 	this.optvalue = null;			//kushort_t
 	//
 	this.cparam = null;			//const struct _kParam *
-	this.methods = new konoha.kArray();			//const struct _kArray *
-	this.shortNameNULL = new konoha.kArray();		//const struct _kString *
+	this.methods = null;//new konoha.kArray();			//const struct _kArray *
+	this.shortNameNULL = null;//new konoha.kArray();		//const struct _kString *
 	//	union {   // default value
-	this.nulvalNUL = new konoha.kObject();		//const struct _kObject *
-	this.WnulvalNUl = new konoha.kObject();	//struct _kObject *
+	this.nulvalNUL = null;//new konoha.kObject();		//const struct _kObject *
+	this.WnulvalNUl = null;//new konoha.kObject();	//struct _kObject *
 	//	};
 	this.constPoolMapNO = null;	//struct kmap_t *
 	this.searchSimilarClassNULL = null;	//kclass_t
@@ -663,13 +665,13 @@ konoha.CLASS_T0                = 10;    /* ParamType*/
 //
 konoha.kObjectHeader = function() {
 	this.magicflag = null;				//kmagicflag_t
-	this.ct = null;					//kclass_t
+	this.ct = null;//new konoha.kclass_t();					//kclass_t
 	//	union {
 	this.refc = null;				//uintptr_t
 	this.gcinfo = null;			//void *
 	this.hashcode = null;			//uintptr_t
 	//	};
-	this.kvproto = null;				//karray_t *
+	this.kvproto = null;//new konoha.karray_t();				//karray_t *
 };
 
 
@@ -681,21 +683,22 @@ konoha.kObject = function() {
 //	};
 };
 //
-//typedef struct kvs_t {
-//	ksymbol_t key;
-//	ktype_t   ty;
+konoha.kvs_t = function() {
+	var key = null;   //ksymbol_t
+	var ty = null;   //	ktype_t
+	var val = null;  //union
 //	union {
 //		uintptr_t                uval;
 //		kObject                 *oval;
 //		const struct _kString   *sval;
 //	};
-//} kvs_t;
+};
 //
-//#define O_ct(o)             ((o)->h.ct)
-//#define O_cid(o)            (O_ct(o)->cid)
-//#define O_bcid(o)           (O_ct(o)->bcid)
-//#define O_unbox(o)          (O_ct(o)->unbox(_ctx, o))
-//#define O_p0(o)             (O_ct(o)->cparam->p[0].ty)
+// konoha.O_ct(o) = (o.h.ct)
+// konoha.O_cid(o) = (konoha.O_ct(o).cid)
+// konoha.O_bcid(o) = (konoha.O_ct(o).bcid)
+// konoha.O_unbox(o) = (konoha.O_ct(o).unbox(_ctx, o))
+// konoha.O_p0(o) = (konoha.O_ct(o).cparam.p[0].ty)
 //
 ///* ------------------------------------------------------------------------ */
 ////## @Immutable class Boolean Object;
@@ -833,7 +836,9 @@ konoha.SPOL_NOCOPY      =  (1<<4)
 //#define CFLAG_Array              kClass_Final
 //#define OFLAG_Array              MAGICFLAG(0)
 //#define TY_Array                 CLASS_Array
-//#define IS_Array(o)              (O_bcid(o) == CLASS_Array)
+konoha.IS_Array = function(o){
+	return (O_bcid(o) == CLASS_Array);
+}
 //
 //#define kArray_isUnboxData(o)    (TFLAG_is(uintptr_t,(o)->h.magicflag,kObject_Local1))
 //#define kArray_setUnboxData(o,b) TFLAG_set(uintptr_t,(o)->h.magicflag,kObject_Local1,b)
@@ -848,7 +853,7 @@ konoha.kArray = function() {
 };
 
 
-//
+
 ///* ------------------------------------------------------------------------ */
 ////## @Private @Immutable class Param Object;
 ////## flag Param VARGs  1 - is set * *;
@@ -1413,7 +1418,7 @@ konoha.KSETv = function(VAR, VAL) {
 //
 //#ifdef USE_BUILTINTEST
 //typedef int (*Ftest)(CTX);
-//typedef struct DEFINE_TESTFUNC {
+///typedef struct DEFINE_TESTFUNC {
 //	const char *name;
 //	Ftest f;
 //} DEFINE_TESTFUNC ;

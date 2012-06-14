@@ -14,8 +14,12 @@ BASE_FILES = \
 	${SRC_DIR}/konoha_namespace.js\
 	${INCLUDE_DIR}/konoha2.js\
 	${INCLUDE_DIR}/sugar.js\
+	${SRC_DIR}/sugar/sugar.js\
 	${SRC_DIR}/sugar/token.js\
-	${SRC_DIR}/sugar/ast.js
+	${SRC_DIR}/sugar/ast.js\
+	${SRC_DIR}/sugar/struct.js
+
+
 
 JSKONOHA = ${BUILD_DIR}/jskonoha.js
 JSKONOHA_VER = $(shell cat version.txt)
@@ -43,10 +47,18 @@ $(JSKONOHA): $(BASE_FILES)
 clean:
 	@@echo "Removing" ${JSKONOHA}
 	@@rm -rf ${JSKONOHA}
+	@@rm -rf test/Debug/js_ast_test/*.html
 
 test:
 	@@echo "Run google-js-test"
-	@@files="test/Debug/*.js"
-	@@for utest in test/Debug/*.js; do (gjstest --js_files=${JSKONOHA},$$utest); done;
+	@@files="test/Debug/js_token_test/*.js"
+##	@@for utest in test/Debug/js_token_test/*.js; do (gjstest --js_files=${JSKONOHA},$$utest); done;
+	@@for utest in test/Debug/js_ast_test/*.js; do (gjstest --js_files=${JSKONOHA},$$utest); done;
 
-.PHONY: all clean test
+test-html:
+	@@echo "Run google-js-test, then generate html"
+	@@files="test/Debug/js_token_test/*.js"
+##	@@for utest in test/Debug/js_token_test/*.js; do (gjstest --js_files=${JSKONOHA},$$utest); done;
+	@@for utest in test/Debug/js_ast_test/*.js; do (gjstest --js_files=${JSKONOHA},$$utest --html_output_file=$$utest.html); done;
+
+.PHONY: all clean test test-html
