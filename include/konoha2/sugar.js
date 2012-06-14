@@ -243,3 +243,61 @@ konoha.Stmt_ks = function(stmt)
 {
 	return stmt.parentNULL.ks;
 }
+
+konoha.kmodsugar_t = function() {
+	this.h = null;
+	this.cToken = null;
+	this.cExpr = null;
+	this.cStmt = null;
+	this.cBlock = null;
+	this.cKonohaSpace = null;
+	this.cGamma = null;
+	this.cTokenArray = null;
+	//
+	this.keywordList = null;
+	this.keywordMapNN = null;
+	this.packageList = null;
+	this.packageMapNO = null;
+	this.rootks = null;
+
+	this.UndefinedParseExpr = null;
+	this.UndefinedStmtTyCheck = null;
+	this.UndefinedExprTyCheck = null;
+	this.ParseExpr_Term = null;
+	this.ParseExpr_Op = null;
+
+	// export
+	this.keyword = null;
+	this.KonohaSpace_setTokenizer = null;
+	this.KonohaSpace_tokenize = null;
+
+	this.Expr_setConstValue = null;
+	this.Expr_setNConstValue = null;
+	this.Expr_setVariable = null;
+
+	this.Stmt_token = null;
+	this.Stmt_expr = null;
+	this.Stmt_text = null;
+	this.Stmt_block = null;
+
+	this.Expr_tyCheckAt = null;
+	this.Stmt_tyCheckExpr = null;
+	this.Block_tyCheckAll = null;
+	this.Expr_tyCheckCallParams = null;
+	this.new_TypedMethodCall = null;
+	this.Stmt_toExprCall = null;
+
+	this.p = null;
+	this.Expr_uline = null;
+	this.KonohaSpace_syntax = null;
+	this.KonohaSpace_defineSyntax = null;
+
+	this.makeSyntaxRule = null;
+	this.new_Block = null;
+	this.Block_insertAfter = null;
+
+	this.Stmt_newExpr2 = null;
+	this.new_ConsExpr = null;
+	this.Stmt_addExprParams = null;
+	this.Expr_rightJoin = null;
+}

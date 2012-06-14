@@ -26,28 +26,25 @@
 
 konoha.KonohaSpace_syntax = function(_ctx, ks0, kw, isnew)
 {
-	var ks = new konoha.kKonohaSpace();
+//	var ks = new konoha.kKonohaSpace();
 	ks = ks0;
 	var parent = null;
-	// while(ks != null) {
-	// 	if(ks.syntaxMapNN != null) {
-	// 		var e = kw;
-	// 		while(e != null) {
-	// 			if(e.hcode == hcode) {
-	// 				parent = e.uvalue;
-	// 				if(isnew && ks0 != ks)
-	// 				return parent;
-	// 			}
-	// 			e = e.next;
-	// 		}
-	// 	}
-	// 	ks = ks.parentNULL;
-	// }
+	while(ks != null) {
+		if(ks.syntaxMapNN != null) {
+			var e = ks.syntaxMapNN[kw];
+			while(e != null) {
+//TODO!!	if(isnew && ks0 != ks) goto L_NEW;
+				return e;
+			}
+		}
+		ks = ks.parentNULL;
+	}
 
 	if(isnew == 1) {
 		if(ks0.syntaxMapNN == null) {
-			ks0.syntaxMapNN = kmap_init(0);
+			ks0.syntaxMapNN = new Array();
 		}
+		var syn = new konoha.ksyntax();
 		ks0.syntaxMapNN[kw] = syn;
 
 		if(parent != null) {  // TODO: RCGC
@@ -58,10 +55,10 @@ konoha.KonohaSpace_syntax = function(_ctx, ks0, kw, isnew)
 			syn.ty  = konoha.TY_unknown;
 			syn.op1 = konoha.MN_NONAME;
 			syn.op2 = konoha.MN_NONAME;
-			konoha.KSETv(syn.ParseExpr, kmodsugar.UndefinedParseExpr);
-			konoha.KSETv(syn.TopStmtTyCheck, kmodsugar.UndefinedStmtTyCheck);
-			konoha.KSETv(syn.StmtTyCheck, kmodsugar.UndefinedStmtTyCheck);
-			konoha.KSETv(syn.ExprTyCheck, kmodsugar.UndefinedExprTyCheck);
+			syn.ParseExpr = _ctx.kmodsugar.UndefinedParseExpr;
+			syn.TopStmtTyCheck = _ctx.kmodsugar.UndefinedStmtTyCheck;
+			syn.StmtTyCheck = _ctx.kmodsugar.UndefinedStmtTyCheck;
+			syn.ExprTyCheck = _ctx.kmodsugar.UndefinedExprTyCheck;
 		}
 		return syn;
 	}
@@ -91,3 +88,59 @@ konoha.kToken_s_ = function(_ctx, tk)
 	}
 }
 
+konoha.setSyntaxMethod = function(_ctx, f, synp, p, mp)
+{
+	if(f != null) {
+		if(f != p) {
+			p = f;
+			mp = f;
+		}
+		synp = mp;  // FIXME: in case of
+	}
+}
+
+konoha.KonohaSpace_defineSyntax = function(_ctx, ks, syndef)
+{
+	pParseStmt = null, pParseExpr = null, pStmtTyCheck = null, pExprTyCheck = null;
+	mParseStmt = null, mParseExpr = null, mStmtTyCheck = null, mExprTyCheck = null;
+	var i = 0;
+	while(syndef[i].name != null) {
+//		var kw = keyword(_ctx, syndef[i].name, syndef[i].name.length, konoha.FN_NEWID);
+		var kw = syndef[i].name;
+		var syn = konoha.KonohaSpace_syntax(_ctx, ks, kw, 1/*isnew*/);
+		//syn->token = syndef->name;
+		syn.flag  |= syndef[i].flag;
+		if(syndef[i].type != null) {
+			syn.ty = syndef[i].type;
+		}
+		if(syndef[i].op1 != null) {
+			syn.op1 = syndef[i].op1;
+		}
+		if(syndef[i].op2 != null) {
+			syn.op2 = syndef[i].op2;
+		}
+		if(syndef[i].priority_op2 > 0) {
+			syn.priority = syndef[i].priority_op2;
+		}
+		if(syndef[i].rule != null) {
+			syn.syntaxRuleNULL = new Array();
+			konoha.parseSyntaxRule(_ctx, syndef[i].rule, 0, syn.syntaxRuleNULL);
+		}
+		konoha.setSyntaxMethod(_ctx, syndef[i].ParseStmt, syn.ParseStmtNULL, pParseStmt, mParseStmt);
+		konoha.setSyntaxMethod(_ctx, syndef[i].ParseExpr, syn.ParseExpr, pParseExpr, mParseExpr);
+		konoha.setSyntaxMethod(_ctx, syndef[i].TopStmtTyCheck, syn.TopStmtTyCheck, pStmtTyCheck, mStmtTyCheck);
+		konoha.setSyntaxMethod(_ctx, syndef[i].StmtTyCheck, syn.StmtTyCheck, pStmtTyCheck, mStmtTyCheck);
+		konoha.setSyntaxMethod(_ctx, syndef[i].ExprTyCheck, syn.ExprTyCheck, pExprTyCheck, mExprTyCheck);
+		if(syn.ParseExpr == _ctx.kmodsugar.UndefinedParseExpr) {
+			if(konoha.FLAG_is(syn.flag, konoha.SYNFLAG_ExprOp)) {
+				syn.ParseExpr = _ctx.kmodsugar.ParseExpr_Op;
+			}
+			else if(konoha.FLAG_is(syn.flag, konoha.SYNFLAG_ExprTerm)) {
+				syn.ParseExpr = _ctx.kmodsugar.ParseExpr_Term;
+			}
+		}
+//		konoha.assert(syn == SYN_(ks, kw));
+		i++;
+	}
+	//DBG_P("syntax size=%d, hmax=%d", ks->syntaxMapNN->size, ks->syntaxMapNN->hmax);
+}

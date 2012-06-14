@@ -41,16 +41,16 @@ konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 }
 
 konoha.Token_resolved = function(_ctx, ks, tk) {//
-	var kw =  tk.text;
+	var kw =  tk.text.text;
 	//	if(kw != konoha.FN_NONAME) {
 	syn = konoha.KonohaSpace_syntax(_ctx, ks, kw, 0);
 	if(syn != null) {
 		if(syn.ty != konoha.TY_unknown) {
-			tk.kw = konoha.KW_Type;
+			tk.kw = konoha.kw.Type;
 			tk.ty = syn.ty;
 		}
 		else {
-			tk.kw = kw;
+			tk.kw = konoha.kw.array[tk.tt];
 		}
 		return 1;
 	}
@@ -90,12 +90,11 @@ konoha.TokenType_resolveGenerics = function(_ctx, ks, tk, tkP) {
 	return null;
 }
 
-konoha.appendKeyword = function(_ctx, ks, tls, s, e, dst, tkERR)
-{
+konoha.appendKeyword = function(_ctx, ks, tls, s, e, dst, tkERR) {
 	var next = s;
 	var tk = tls[s];
 	if(tk.tt < konoha.ktoken_t.TK_OPERATOR) {
-		tk.kw = tk.tt;
+		tk.kw = konoha.kw.array[tk.tt];
 	}
 	if(tk.tt == konoha.ktoken_t.TK_SYMBOL) {
 		konoha.Token_resolved(_ctx, ks, tk);
@@ -104,21 +103,21 @@ konoha.appendKeyword = function(_ctx, ks, tls, s, e, dst, tkERR)
 		if(!konoha.Token_resolved(_ctx, ks, tk)) {
 			var ct = new konoha.kKonohaSpace_getCT(ks, null/*FIXME*/, tk.text, tk.text.length, konoha.TY_unknown);
 			if(ct != null) {
-				tk.kw = konoha.KW_Type;
+				tk.kw = konoha.kw.type;
 				tk.ty = ct.cid;
 			}
 		}
 	}
 	else if(tk.tt == konoha.ktoken_t.TK_OPERATOR) {
-		// if(!konoha.Token_resolved(_ctx, ks, tk)) {
-		// 	var errref = konoha.sugar_p(_ctx, konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "undefined token: %s", konoha.kToken_s_(tk));
-		// 	konoha.Token_toERR(_ctx, tk, errref);
-		// 	tkERR[0] = tk;
-		// 	return e;
-		// }
+		if(!konoha.Token_resolved(_ctx, ks, tk)) {
+			var errref = -1;//FIX ME!! konoha.sugar_p(_ctx, konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "undefined token: %s", konoha.kToken_s_(tk));
+			konoha.Token_toERR(_ctx, tk, errref);
+			tkERR = tk;
+			return e;
+		}
 	}
 	else if(tk.tt == konoha.ktoken_t.TK_CODE) {
-		tk.kw = KW_Brace;
+		tk.kw = konoha.kw.Brace;
 	}
 	if((tk).kw == konoha.KW_Type) { 
 		dst.push(tk);
@@ -148,8 +147,7 @@ konoha.appendKeyword = function(_ctx, ks, tls, s, e, dst, tkERR)
 	return next;
 }
 
-konoha.Token_toBRACE = function(_ctx, tk, ks)
-{
+konoha.Token_toBRACE = function(_ctx, tk, ks) {
 	if(tk.tt == konoha.ktoken_t.TK_CODE) {
 		var a = new konoha.kArray();
 		KonohaSpace_tokenize(_ctx, ks, tk.text, tk.uline, a);
@@ -162,9 +160,7 @@ konoha.Token_toBRACE = function(_ctx, tk, ks)
 	return 0;
 }
 
-konoha.makeTree = function(_ctx, ks, tt, tls, s, e, closech, tlsdst, tkERRRef)
-
-{
+konoha.makeTree = function(_ctx, ks, tt, tls, s, e, closech, tlsdst, tkERRRef) {
 	var i, probablyCloseBefore = e - 1;
 	var tk = tls[s];
 	var tkP = new konoha.kBlock();
@@ -205,8 +201,7 @@ konoha.makeTree = function(_ctx, ks, tt, tls, s, e, closech, tlsdst, tkERRRef)
 	return e;
 }
 
-konoha.selectStmtLine = function(_ctx, ks, indent, tls /* Native array */, s, e, delim, tlsdst /* Native array */, tkERRRef)
-{
+konoha.selectStmtLine = function(_ctx, ks, indent, tls /* Native array */, s, e, delim, tlsdst /* Native array */, tkERRRef) {
 	var i = s;
 	for(; i < e - 1; i++) {
 		var tk = tls[i];
@@ -263,8 +258,7 @@ konoha.selectStmtLine = function(_ctx, ks, indent, tls /* Native array */, s, e,
 }
 
 
-konoha.Stmt_addAnnotation = function(_ctx, stmt, tls, s, e)
-{
+konoha.Stmt_addAnnotation = function(_ctx, stmt, tls, s, e) {
 	var i;
 	for(i = s; i < e; i++) {
 		var tk = tls[i];
@@ -286,8 +280,7 @@ konoha.Stmt_addAnnotation = function(_ctx, stmt, tls, s, e)
 	return i;
 }
 
-konoha.WARN_Ignored = function(_ctx, tls, s, e)
-{
+konoha.WARN_Ignored = function(_ctx, tls, s, e) {
 	if(s < e) {
 		var i = s;
 		var wb;
@@ -299,8 +292,7 @@ konoha.WARN_Ignored = function(_ctx, tls, s, e)
 	}
 }
 
-konoha.ParseStmt = function(_ctx, syn, stmt, name, tls, s, e)
-{
+konoha.ParseStmt = function(_ctx, syn, stmt, name, tls, s, e) {
 	var lsfp = _ctx.esp;
 	var esp_ = _ctx.esp;
 	_ctx.esp = esp_+8;
@@ -323,8 +315,7 @@ konoha.ParseStmt = function(_ctx, syn, stmt, name, tls, s, e)
 	return lsfp[0].ivalue;
 }
 
-konoha.lookAheadKeyword = function(tls, s, e, rule)
-{
+konoha.lookAheadKeyword = function(tls, s, e, rule) {
 	var i;
 	for(i = s; i < e; i++) {
 		var tk = tls[i];
@@ -333,8 +324,7 @@ konoha.lookAheadKeyword = function(tls, s, e, rule)
 	return -1;
 }
 
-konoha.matchSyntaxRule = function(_ctx, stmt, rules, uline, tls, s, e, optional)
-{
+konoha.matchSyntaxRule = function(_ctx, stmt, rules, uline, tls, s, e, optional) {
 	var ri, ti, rule_size = rules.data.length;
 	ti = s;
 	for(ri = 0; ri < rule_size && ti < e; ri++) {
@@ -410,19 +400,17 @@ konoha.matchSyntaxRule = function(_ctx, stmt, rules, uline, tls, s, e, optional)
 	return ti;
 }
 
-konoha.TokenArray_lookAhead = function(_ctx, tls, s, e)
-{
+konoha.TokenArray_lookAhead = function(_ctx, tls, s, e) {
 	return (s < e) ? tls[s] : K_NULLTOKEN;
 }
 
-konoha.KonohaSpace_getSyntaxRule = function(_ctx, ks, tls, s, e)
-{
+konoha.KonohaSpace_getSyntaxRule = function(_ctx, ks, tls, s, e) {
 	var tk = tls[s];
 	if((tk).kw == konoha.KW_Type) {
 		tk = konoha.TokenArray_lookAhead(_ctx, tls, s+1, e);
 		if(tk.tt == konoha.ktoken_t.TK_SYMBOL || tk.tt == konoha.ktoken_t.TK_USYMBOL) {
 			tk = konoha.TokenArray_lookAhead(_ctx, tls, s+2, e);
-			if(tk.tt == konoha.ktoken_t.AST_PARENTHESIS || tk.kw == KW_DOT) {
+			if(tk.tt == konoha.ktoken_t.AST_PARENTHESIS || tk.kw == konoha.kw.DOT) {
 				return konoha.KonohaSpace_syntax(_ctx, ks, KW_StmtMethodDecl, 0); 
 			}
 			return konoha.KonohaSpace_syntax(_ctx, ks, KW_StmtTypeDecl, 0);  
@@ -445,8 +433,7 @@ konoha.KonohaSpace_getSyntaxRule = function(_ctx, ks, tls, s, e)
 	return syn;
 }
 
-konoha.Stmt_parseSyntaxRule = function(_ctx, stmt, tls, s, e)
-{
+konoha.Stmt_parseSyntaxRule = function(_ctx, stmt, tls, s, e) {
 	var ret = false;
 	var syn = konoha.KonohaSpace_getSyntaxRule(_ctx, konoha.Stmt_ks(stmt), tls, s, e);
 	if(syn.syntaxRuleNULL != null) {
@@ -459,8 +446,7 @@ konoha.Stmt_parseSyntaxRule = function(_ctx, stmt, tls, s, e)
 	return ret;
 }
 
-konoha.Block_addStmtLine = function(_ctx, bk, tls, s, e, tkERR)
-{
+konoha.Block_addStmtLine = function(_ctx, bk, tls, s, e, tkERR) {
 	var stmt = new konoha.kStmt();
 	bk.blocks.data.push(stmt);
 	stmt.parentNULL = bk;
@@ -478,8 +464,7 @@ konoha.Block_addStmtLine = function(_ctx, bk, tls, s, e, tkERR)
 	}
 }
 
-konoha.UndefinedParseExpr = function(_ctx, sfp ,_rix)
-{
+konoha.UndefinedParseExpr = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   	
 	var syn = sfp[0].ndata;	
 	var tls = sfp[1].o;    	
@@ -490,14 +475,12 @@ konoha.UndefinedParseExpr = function(_ctx, sfp ,_rix)
 	konoha.sugar_p(ERR_, tk.uline, tk.lpos, "undefined expression parser for '%s'", konoha.kToken_s(tk));
 }
 
-konoha.Stmt_isUnaryOp = function(_ctx, stmt, tk)
-{
+konoha.Stmt_isUnaryOp = function(_ctx, stmt, tk) {
 	var syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(stmt), tk.kw, 0);
 	return (syn.op1 != konoha.MN_NONAME);
 }
 
-konoha.Stmt_skipUnaryOp = function(_ctx, stmt, tls, s, e)
-{
+konoha.Stmt_skipUnaryOp = function(_ctx, stmt, tls, s, e) {
 	var i;
 	for(i = s; i < e; i++) {
 		var tk = tls[i];
@@ -508,8 +491,7 @@ konoha.Stmt_skipUnaryOp = function(_ctx, stmt, tls, s, e)
 	return i;
 }
 
-konoha.Stmt_findBinaryOp = function(_ctx, stmt, tls, s, e, synRef)
-{
+konoha.Stmt_findBinaryOp = function(_ctx, stmt, tls, s, e, synRef) {
 	var idx = -1, i, prif = 0;
 	for(i = Stmt_skipUnaryOp(_ctx, stmt, tls, s, e) + 1; i < e; i++) {
 		var tk = tls[i];
@@ -528,12 +510,11 @@ konoha.Stmt_findBinaryOp = function(_ctx, stmt, tls, s, e, synRef)
 	return idx;
 }
 
-konoha.Stmt_addExprParams = function(_ctx, stmt, expr, tls, s, e, allowEmpty)
-{
+konoha.Stmt_addExprParams = function(_ctx, stmt, expr, tls, s, e, allowEmpty) {
 	var i, start = s;
 	for(i = s; i < e; i++) {
 		var tk = tls[i];
-		if(tk.kw == konoha.KW_COMMA) {
+		if(tk.kw == konoha.kw.COMMA) {
 			expr = konoha.Expr_add(_ctx, expr, Stmt_newExpr2(_ctx, stmt, tls, start, i));
 			start = i + 1;
 		}
@@ -545,8 +526,7 @@ konoha.Stmt_addExprParams = function(_ctx, stmt, expr, tls, s, e, allowEmpty)
 	return expr;
 }
 
-konoha.Stmt_newExpr2 = function(_ctx, stmt, tls, s,  e)
-{
+konoha.Stmt_newExpr2 = function(_ctx, stmt, tls, s,  e) {
 	if(s < e) {
 		var syn = null;
 		var idx = konoha.Stmt_findBinaryOp(_ctx, stmt, tls, s, e, syn);
@@ -571,16 +551,14 @@ konoha.Stmt_newExpr2 = function(_ctx, stmt, tls, s,  e)
 	}
 }
 
-konoha.Expr_rightJoin = function(_ctx, expr, stmt, tls, s, c, e)
-{
+konoha.Expr_rightJoin = function(_ctx, expr, stmt, tls, s, c, e) {
 	if(c < e && expr != K_NULLEXPR) {
 		konoha.WARN_Ignored(_ctx, tls, c, e);
 	}
 	return expr;
 }
 
-konoha.ParseExpr_Term = function(_ctx, sfp ,_rix)
-{
+konoha.ParseExpr_Term = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   	
 	var syn = sfp[0].ndata;	
 	var tls = sfp[1].o;    	
@@ -595,8 +573,7 @@ konoha.ParseExpr_Term = function(_ctx, sfp ,_rix)
 	//KNH_SAFEPOINT(_ctx, sfp);
 }
 
-konoha.ParseExpr_Op = function(_ctx, sfp ,_rix)
-{
+konoha.ParseExpr_Op = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   	
 	var syn = sfp[0].ndata;
 	var tls = sfp[1].o;
@@ -621,16 +598,15 @@ konoha.ParseExpr_Op = function(_ctx, sfp ,_rix)
 	//RETURN_(expr);
 }
 
-konoha.isFieldName = function(tls, c, e)
-{
+konoha.isFieldName = function(tls, c, e) {
 	if(c+1 < e) {
 		var tk = tls[c+1];
 		return (tk.tt == konoha.ktoken_t.TK_SYMBOL || tk.tt == konoha.ktoken_t.TK_USYMBOL || tk.tt == konoha.ktoken_t.TK_MSYMBOL);
 	}
 	return false;
 }
-konoha.ParseExpr_DOT = function(_ctx, sfp ,_rix)
-{
+
+konoha.ParseExpr_DOT = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   
 	var syn = sfp[0].ndata;
 	var tls = sfp[1].o;
@@ -648,8 +624,7 @@ konoha.ParseExpr_DOT = function(_ctx, sfp ,_rix)
 	//RETURN_(
 }
 
-konoha.ParseExpr_Parenthesis = function(_ctx, sfp ,_rix)
-{
+konoha.ParseExpr_Parenthesis = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   	
 	var syn = sfp[0].ndata;
 	var tls = sfp[1].o;
@@ -681,8 +656,7 @@ konoha.ParseExpr_Parenthesis = function(_ctx, sfp ,_rix)
 	}
 }
 
-konoha.ParseExpr_COMMA = function(_ctx, sfp ,_rix)
-{
+konoha.ParseExpr_COMMA = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   
 	var syn = sfp[0].ndata;
 	var tls = sfp[1].o;
@@ -695,8 +669,7 @@ konoha.ParseExpr_COMMA = function(_ctx, sfp ,_rix)
 	//RETURN_(expr);
 }
 
-konoha.ParseExpr_DOLLAR = function(_ctx, sfp ,_rix)
-{
+konoha.ParseExpr_DOLLAR = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   
 	var syn = sfp[0].ndata;
 	var tls = sfp[1].o;
@@ -720,8 +693,7 @@ konoha.ParseExpr_DOLLAR = function(_ctx, sfp ,_rix)
 	//RETURN_(
 }
 
-konoha.ParseStmt_Expr = function(_ctx, sfp ,_rix)
-{
+konoha.ParseStmt_Expr = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   
 	var syn = sfp[0].ndata;
 	var name = sfp[1].ivalue;
@@ -758,8 +730,7 @@ konoha.ParseStmt_Type = function(_ctx, sfp ,_rix)
 	//RETURNi_(r);
 }
 
-konoha.ParseStmt_Usymbol = function(_ctx, sfp ,_rix)
-{
+konoha.ParseStmt_Usymbol = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   
 	var syn = sfp[0].ndata;
 	var name = sfp[1].ivalue;
@@ -776,8 +747,7 @@ konoha.ParseStmt_Usymbol = function(_ctx, sfp ,_rix)
 	//RETURNi_(r);
 }
 
-konoha.ParseStmt_Symbol = function(_ctx, sfp ,_rix)
-{
+konoha.ParseStmt_Symbol = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   
 	var syn = sfp[0].ndata;
 	var name = sfp[1].ivalue;
@@ -794,8 +764,7 @@ konoha.ParseStmt_Symbol = function(_ctx, sfp ,_rix)
 	//RETURNi_(r);
 }
 
-konoha.ParseStmt_Params = function(_ctx, sfp ,_rix)
-{
+konoha.ParseStmt_Params = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   
 	var syn = sfp[0].ndata;
 	var name = sfp[1].ivalue;
@@ -816,8 +785,7 @@ konoha.ParseStmt_Params = function(_ctx, sfp ,_rix)
 	//RETURNi_(r);
 }
 
-konoha.ParseStmt_Block = function(_ctx, sfp ,_rix)
-{
+konoha.ParseStmt_Block = function(_ctx, sfp ,_rix) {
 	var stmt = sfp[0].o;   
 	var syn = sfp[0].ndata;
 	var name = sfp[1].ivalue;
@@ -846,8 +814,7 @@ konoha.ParseStmt_Block = function(_ctx, sfp ,_rix)
 	//RETURNi_(-1);
 }
 
-konoha.ParseStmt_Toks = function(_ctx, sfp, _rix)
-{
+konoha.ParseStmt_Toks = function(_ctx, sfp, _rix) {
 	var stmt = sfp[0].o;   
 	var syn = sfp[0].ndata;
 	var name = sfp[1].ivalue;

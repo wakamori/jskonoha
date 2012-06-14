@@ -25,7 +25,7 @@
 konoha.defineDefaultSyntax = function(_ctx, ks)
 {
 	var SYNTAX = [
-	{name: '&ERR', flag: konoha.SYNFLAG_StmtBreakExec },
+	{name: '$ERR', flag: konoha.SYNFLAG_StmtBreakExec },
 	{name: '$expr', rule: '$expr', PatternMatch: konoha.PatternMatch_Expr, TopStmtTyCheck: konoha.StmtTyCheck_Expr, StmtTyCheck: konoha.StmtTyCheck_Expr, },
 	{name: '$SYMBOL', flag: konoha.SYNFLAG_ExprTerm, PatternMatch: konoha.PatternMatch_Symbol, ExprTyCheck: konoha.ExprTyCheck_Symbol, },
 	{name: '$USYMBOL', flag: konoha.SYNFLAG_ExprTerm, PatternMatch: konoha.PatternMatch_Usymbol, TopStmtTyCheck: konoha.StmtTyCheck_ConstDecl, ExprTyCheck: konoha.ExprTyCheck_Usymbol, },
@@ -66,17 +66,27 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 	{name: 'else', rule: '\"else\" $block', TopStmtTyCheck: konoha.StmtTyCheck_else, StmtTyCheck: konoha.StmtTyCheck_else, },
 	{name: 'return', rule: '\"return\" [$expr]', flag: konoha.SYNFLAG_StmtBreakExec, StmtTyCheck: konoha.StmtTyCheck_return, },
 	{name: null}, ];
+ 	konoha.KonohaSpace_defineSyntax(_ctx, ks, SYNTAX);
+ 	syn = konoha.KonohaSpace_syntax(_ctx, ks, "void"/*IS THIS OK?*/, 0);
+ 	syn.ty = konoha.TY_void; // it's not cool, but necessary
+ 	syn = konoha.KonohaSpace_syntax(_ctx, ks, "$USYMBOL", 0);
+ 	syn.syntaxRuleNULL = new Array();
+ 	konoha.parseSyntaxRule(_ctx, "$USYMBOL \"=\" $expr", 0, syn.syntaxRuleNULL);
 }
 
 konoha.KonohaSpace_eval = function(_ctx, ks, script)
 {
+// 	console.log("##############script#########################");
+// 	console.log(script);
+// 	console.log("#############################################");
 	_ctx.kmodsugar.h.setup(_ctx, _ctx.kmodsugar, 0);
 	var tls = _ctx.ctxsugar.tokens;
 	var pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, ks, script, 0 /* uline */, tls);
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
-	konoha.kArray_clear(tls, pos); // TODO unimplemented
-	var result = Block_eval(_ctx, bk);
+//	konoha.kArray_clear(tls, pos); // TODO unimplemented
+	tls = tls.slice(0, pos - 1); // IS THIS OK?
+	var result;// = Block_eval(_ctx, bk);
 	return result;
 }
 
@@ -87,7 +97,8 @@ konoha.MODSUGAR_eval = function(_ctx, script)
 
 konoha.KonohaSpace_loadstream = function(_ctx, ks)
 {
-	var script = 'p("hello");'; // TODO load script
+//	var script = 'p("hello");'; // TODO load script
+	var script = '123+456'; // TODO load script
 	var _status = konoha.MODSUGAR_eval(_ctx, script);
 }
 
@@ -108,9 +119,9 @@ konoha.MODSUGAR_loadscript = function(_ctx)
 
 konoha.MODSUGAR_init = function(_ctx)
 {
-	var modsugar = {};
+	var modsugar = new konoha.kmodsugar_t();
 	modsugar.h = {};
-	modsugar.h.name = 'modsugar';
+	modsugar.h.name = 'sugar';
 	modsugar.h.setup = function(_ctx, def, newctx) {
 		if (!newctx && _ctx.ctxsugar == null) {
 			var base = {};
@@ -124,7 +135,18 @@ konoha.MODSUGAR_init = function(_ctx)
 			_ctx.ctxsugar = base;
 		}
 	}
+	modsugar.h.setup(_ctx, null/*FIX ME!!*/, 0);
+	modsugar.keywordList = new Array(32);
+	modsugar.keywordMapNN = new Array(); //Map
+	modsugar.packageList = new Array(8);
+	modsugar.packageMapNO = new Array(); //Map
+
 	modsugar.rootks = new konoha.kKonohaSpace(null);
+	_ctx.kmodsugar = modsugar;
 	konoha.defineDefaultSyntax(_ctx, modsugar.rootks);
 	return modsugar;
+}
+
+konoha.keyword = function(_ctx, text, length, def) {
+	return text;
 }

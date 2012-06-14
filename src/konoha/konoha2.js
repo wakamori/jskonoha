@@ -24,8 +24,7 @@
 
 konoha.new_context = function(_ctx, stacksize /* unused */) {
 	_ctx = new konoha.kcontext_t();
-	_ctx.kmodsugar = konoha.MODSUGAR_init();
-	_ctx.kmodcode = MODCODE_init(_ctx);
+	_ctx.kmodsugar = konoha.MODSUGAR_init(_ctx);
 	_ctx.KCLASSTABLE_init();
 	return _ctx;
 }

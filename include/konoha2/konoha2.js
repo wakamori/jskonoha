@@ -38,6 +38,9 @@ konoha.karray_t =  function() {
 ///* kcid_t */
 konoha.CLASS_newid = -1;      //  ((kcid_t)-1)
 konoha.TY_unknown = -2;      //  ((kcid_t)-2)
+konoha.FN_NONAME = -1;
+konoha.FN_NEWID = -2;
+konoha._NEWID = konoha.FN_NEWID
 //
 konoha.MOD_logger =  0
 konoha.MOD_gc     =  1
@@ -61,7 +64,9 @@ konoha.kcontext_t = function() {
 	this.stack = null;
 	this.logger = null;
 //	this.modshare = null; this.modshare[MOD_sugar] => this.kmodsugar
+	this.kmodsugar = null;
 //	this.modlocal = null; this.modlocal[MOD_sugar] => this.ctxsugar
+	this.ctxsugar = null;
 };
 
 konoha.kclass_t = function() {
@@ -210,4 +215,8 @@ konoha.KSETv = function(VAR, VAL) {
 
 konoha.kGamma = function(conf) {
 	this.genv = conf;
+}
+
+konoha.FLAG_is = function(f, op) {
+	return ((f & op) == op)
 }

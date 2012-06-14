@@ -569,7 +569,7 @@ konoha.checkNestedSyntax = function(_ctx, tls, s, e, tt, opench, closech)
 konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 {
 	var i;
-	var nbuf = new Array[80];
+	var nbuf = new Array(80);
 	var nameid = 0;
 	//	dumpTokenArray(_ctx, 0, tls, s, e);
 	for(i = s; i < e; i++) {
@@ -584,21 +584,21 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 				tk.tt = konoha.ktoken_t.TK_CODE;
 				tk.kw = konoha.keyword(_ctx, tk.text, tk.text.length, konoha.FN_NEWID);
 			}
-			konoha.Array_add(_ctx, adst, tk);
+			adst.push(tk);
 			continue;
 		}
 		if(tk.tt == konoha.TK_SYMBOL || tk.tt == konoha.TK_USYMBOL) {
-			if(i > 0 && tls.toks[i-1].topch == '$') {
+			if(i > 0 && tls[i-1].topch == '$') {
 				//				snprintf(nbuf, sizeof(nbuf), "$%s", tk.text);
 				tk.kw = konoha.keyword(_ctx, nbuf, nbuf.length, konoha.FN_NEWID);
 				tk.tt = konoha.TK_METANAME;
 				if(nameid == 0) nameid = tk.kw;
 				tk.nameid = nameid;
 				nameid = 0;
-				konoha.Array_add(_ctx, adst, tk); continue;
+				adst.push(tk); continue;
 			}
-			if(i + 1 < e && tls.toks[i+1].topch == ':') {
-				var tk = tls.toks[i];
+			if(i + 1 < e && tls[i+1].topch == ':') {
+				var tk = tls[i];
 				nameid = konoha.keyword(_ctx, tk.text, tk.text.length, konoha.FN_NEWID);
 				i++;
 				continue;
@@ -606,10 +606,10 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 		}
 		if(tk.tt == konoha.ktoken_t.TK_OPERATOR) {
 			if(konoha.checkNestedSyntax(_ctx, tls, i, e, konoha.ktoken_t.AST_OPTIONAL, '[', ']')) {
-				konoha.Array_add(_ctx, adst, tk);
+				adst.push(tk);
 				continue;
 			}
-			if(tls.toks[i].topch == '$') continue;
+			if(tls[i].topch == '$') continue;
 		}
 //		konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "illegal sugar syntax: %s", kToken_s(tk));
 		return false;
@@ -619,7 +619,7 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 
 konoha.parseSyntaxRule = function(_ctx, rule, uline, a)
 {
-	var tls = ctxsugar.tokens;
+	var tls = _ctx.ctxsugar.tokens;
 	pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, null, rule, uline, tls);
 	konoha.makeSyntaxRule(_ctx, tls, pos, tls.length, a);
