@@ -11,15 +11,17 @@ COMPILER = ${JS_ENGINE} ${BUILD_DIR}/uglify.js --unsafe
 POST_COMPILER = ${JS_ENGINE} ${BUILD_DIR}/post-compile.js
 
 BASE_FILES = \
-	${SRC_DIR}/konoha_namespace.js\
 	${INCLUDE_DIR}/konoha2.js\
 	${INCLUDE_DIR}/sugar.js\
+	${SRC_DIR}/konoha_namespace.js\
+	${SRC_DIR}/konoha/datatype.js\
+	${SRC_DIR}/konoha/konoha2.js\
 	${SRC_DIR}/sugar/sugar.js\
 	${SRC_DIR}/sugar/token.js\
 	${SRC_DIR}/sugar/ast.js\
-	${SRC_DIR}/sugar/struct.js
-
-
+	${SRC_DIR}/sugar/struct.js\
+	${SRC_DIR}/vm/asm.js\
+	${SRC_DIR}/tool/command.js
 
 JSKONOHA = ${BUILD_DIR}/jskonoha.js
 JSKONOHA_VER = $(shell cat version.txt)

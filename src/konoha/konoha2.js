@@ -22,6 +22,17 @@
 // * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ***************************************************************************/
 
+konoha.new_context = function(_ctx, stacksize /* unused */) {
+	_ctx = new konoha.kcontext_t();
+	_ctx.modsugar = konoha.MODSUGAR_init();
+	_ctx.kmodcode = MODCODE_init();
+	_ctx.KCLASSTABLE_init();
+}
+
+konoha.konoha_init = function() {
+	/* do nothing */
+}
+
 konoha.konoha_open = function() {
 	konoha.konoha_init();
 	return konoha.new_context(null, K_PAGESIZE * 8);

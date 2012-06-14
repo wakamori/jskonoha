@@ -362,17 +362,6 @@ konoha.kcontext_t = function() {
 	this.logger = null;
 //	this.modshare = null;
 //	this.modlocal = null;
-	this.ctxsugar = function() { //FIX ME!! init here?
-//		kmodlocal_t h;
-//		kArray *tokens;
-//		karray_t cwb;
-//		int     err_count;
-		errors = new kArray();
-//		kBlock *singleBlock;
-//		kGamma *gma;
-//		kArray *lvarlst;
-//		kArray *definedMethods;
-	};
 };
 
 //typedef struct kshare_t {
@@ -663,6 +652,11 @@ konoha.CLASS_T0                = 10;    /* ParamType*/
 //#define KNH_MAGICFLAG(f)         (K_OBJECT_MAGIC | ((kmagicflag_t)(f) & K_CFLAGMASK))
 //#define DBG_ASSERT_ISOBJECT(o)   DBG_ASSERT(TFLAG_is(uintptr_t,(o)->h.magicflag, K_OBJECT_MAGIC))
 //
+//
+
+konoha.setNullObject = function(obj) {
+	this.isNullObject = true;
+}
 konoha.kObjectHeader = function() {
 	this.magicflag = null;				//kmagicflag_t
 	this.ct = null;//new konoha.kclass_t();					//kclass_t
