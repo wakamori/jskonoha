@@ -694,11 +694,11 @@ konoha.kvs_t = function() {
 //	};
 };
 //
-//#define O_ct(o)             ((o)->h.ct)
-//#define O_cid(o)            (O_ct(o)->cid)
-//#define O_bcid(o)           (O_ct(o)->bcid)
-//#define O_unbox(o)          (O_ct(o)->unbox(_ctx, o))
-//#define O_p0(o)             (O_ct(o)->cparam->p[0].ty)
+// konoha.O_ct(o) = (o.h.ct)
+// konoha.O_cid(o) = (konoha.O_ct(o).cid)
+// konoha.O_bcid(o) = (konoha.O_ct(o).bcid)
+// konoha.O_unbox(o) = (konoha.O_ct(o).unbox(_ctx, o))
+// konoha.O_p0(o) = (konoha.O_ct(o).cparam.p[0].ty)
 //
 ///* ------------------------------------------------------------------------ */
 ////## @Immutable class Boolean Object;
@@ -836,7 +836,9 @@ konoha.SPOL_NOCOPY      =  (1<<4)
 //#define CFLAG_Array              kClass_Final
 //#define OFLAG_Array              MAGICFLAG(0)
 //#define TY_Array                 CLASS_Array
-//#define IS_Array(o)              (O_bcid(o) == CLASS_Array)
+konoha.IS_Array = function(o){
+	return (O_bcid(o) == CLASS_Array);
+}
 //
 //#define kArray_isUnboxData(o)    (TFLAG_is(uintptr_t,(o)->h.magicflag,kObject_Local1))
 //#define kArray_setUnboxData(o,b) TFLAG_set(uintptr_t,(o)->h.magicflag,kObject_Local1,b)

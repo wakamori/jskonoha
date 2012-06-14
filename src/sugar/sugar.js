@@ -286,12 +286,11 @@
 //	EXPORT_SUGAR(base);
 //}
 //
-konoha.keyword = function(CTX, name, len, def)
-{
-	var hcode = new konoha.strhash(name, len);
-	return kmap_getcode(kmodsugar->keywordMapNN, kmodsugar->keywordList, name, len, hcode, SPOL_ASCII|SPOL_POOL, def);
-	//#define kmap_getcode(M,L,N,NL,H,POL,DEF)  (KPI)->Kmap_getcode(_ctx, M, L, N, NL, H, POL, DEF)
-}
+// konoha.keyword = function(CTX, name, len, def)
+// {
+// 	var hcode = new Array;
+// 	return 	hcode[name] = len;
+// }
 //
 //// -------------------------------------------------------------------------
 //

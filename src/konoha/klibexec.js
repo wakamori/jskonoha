@@ -251,17 +251,17 @@
 //	KFREE(kmap, sizeof(kmap_t));
 //}
 //
-//static kmape_t *Kmap_getentry(kmap_t* kmap, kuint_t hcode)
-//{
-//	kmape_t **hlist = kmap->hentry;
-//	size_t idx = hcode % kmap->hmax;
-//	kmape_t *e = hlist[idx];
-//	while(e != NULL) {
-//		if(e->hcode == hcode) return e;
-//		e = e->next;
-//	}
-//	return NULL;
-//}
+// konoha.Kmap_getentry = function(kmap, hcode)
+// {
+// 	// kmape_t **hlist = kmap->hentry;
+// 	// idx = hcode % kmap->hmax;
+// 	var e = hlist[];
+// 	while(e != null) {
+// 		if(e.hcode == hcode) return e;
+// 		e = e.next;
+// 	}
+// 	return null;
+// //}
 //
 //static void Kmap_add(kmap_t* kmap, kmape_t *ne)
 //{
@@ -308,25 +308,25 @@
 //	kmap_add(kmp, e);
 //}
 //
-//static ksymbol_t Kmap_getcode(CTX, kmap_t *kmp, kArray *list, const char *name, size_t len, uintptr_t hcode, int spol, ksymbol_t def)
-//{
-//	kmape_t *e = kmap_get(kmp, hcode);
-//	while(e != NULL) {
-//		if(e->hcode == hcode && len == S_size(e->skey) && strncmp(S_text(e->skey), name, len) == 0) {
-//			return (ksymbol_t)e->uvalue;
-//		}
-//		e = e->next;
-//	}
-//	if(def == FN_NEWID) {
-//		kString *skey = new_kString(name, len, spol);
-//		uintptr_t sym = kArray_size(list);
-//		kArray_add(list, skey);
-//		map_addStringUnboxValue(_ctx, kmp, hcode, skey, sym);
-//		return (ksymbol_t)sym;
-//	}
-//	return def;
-//}
-//
+// konoha.Kmap_getcode = function(_ctx, kmp, list, name, len, hcode, spol, def)
+// {
+// 	var e = konoha.kmap_getentry(kmp, hcode);
+// 	while(e != null) {
+// 		if(e.hcode == hcode && len == e.skey.length && strncmp(S_text(e->skey), name, len) == 0) {
+// 			return e.uvalue;
+// 		}
+// 		e = e.next;
+// 	}
+// 	if(def == konoha.FN_NEWID) {
+// 		var skey = new kString(name, len, spol);
+// 		var sym = list.data.length;
+// 		list.data.push(skey);
+// 		map_addStringUnboxValue(_ctx, kmp, hcode, skey, sym);
+// 		return sym;
+// 	}
+// 	return def;
+// }
+
 //static kline_t Kfileid(CTX, const char *name, size_t len, int spol, ksymbol_t def)
 //{
 //	uintptr_t hcode = strhash(name, len);

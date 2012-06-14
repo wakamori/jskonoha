@@ -41,20 +41,20 @@ konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 }
 
 konoha.Token_resolved = function(_ctx, ks, tk) {//
-	var kw = konoha.keyword(_ctx, tk.text, tk.text.length, konoha.FN_NONAME);
-	if(kw != konoha.FN_NONAME) {
-		syn = konoha.KonohaSpace_syntax(_ctx, ks, kw, 0);
-		if(syn != null) {
-			if(syn.ty != konoha.TY_unknown) {
-				tk.kw = konoha.KW_Type;
-				tk.ty = syn.ty;
-			}
-			else {
-				tk.kw = kw;
-			}
-			return 1;
+	var kw =  tk.text;
+	//	if(kw != konoha.FN_NONAME) {
+	syn = konoha.KonohaSpace_syntax(_ctx, ks, kw, 0);
+	if(syn != null) {
+		if(syn.ty != konoha.TY_unknown) {
+			tk.kw = konoha.KW_Type;
+			tk.ty = syn.ty;
 		}
+		else {
+			tk.kw = kw;
+		}
+		return 1;
 	}
+	//	}
 	return 0;
 }
 
@@ -92,7 +92,7 @@ konoha.TokenType_resolveGenerics = function(_ctx, ks, tk, tkP) {
 
 konoha.appendKeyword = function(_ctx, ks, tls, s, e, dst, tkERR)
 {
-	var ext = s;
+	var next = s;
 	var tk = tls.data[s];
 	if(tk.tt < konoha.ktoken_t.TK_OPERATOR) {
 		tk.kw = tk.tt;
@@ -110,12 +110,12 @@ konoha.appendKeyword = function(_ctx, ks, tls, s, e, dst, tkERR)
 		}
 	}
 	else if(tk.tt == konoha.ktoken_t.TK_OPERATOR) {
-		if(!konoha.Token_resolved(_ctx, ks, tk)) {
-			var errref = konoha.sugar_p(_ctx, konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "undefined token: %s", konoha.kToken_s(tk));
-			konoha.Token_toERR(_ctx, tk, errref);
-			tkERR[0] = tk;
-			return e;
-		}
+		// if(!konoha.Token_resolved(_ctx, ks, tk)) {
+		// 	var errref = konoha.sugar_p(_ctx, konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "undefined token: %s", konoha.kToken_s_(tk));
+		// 	konoha.Token_toERR(_ctx, tk, errref);
+		// 	tkERR[0] = tk;
+		// 	return e;
+		// }
 	}
 	else if(tk.tt == konoha.ktoken_t.TK_CODE) {
 		tk.kw = KW_Brace;
@@ -168,7 +168,7 @@ konoha.makeTree = function(_ctx, ks, tt, tls, s, e, closech, tlsdst, tkERRRef)
 	var i, probablyCloseBefore = e - 1;
 	var tk = tls.data[s];
 	var tkP = new konoha.kBlock();
-	tlsdst.data.push;
+	tlsdst.data.push(tkP);
 	tkP.tt = tt;
 	tkP.kw = tt;
 	tkP.uline = tk.uline;

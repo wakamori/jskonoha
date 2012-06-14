@@ -34,15 +34,15 @@
 //	return base;
 //}
 //
-//static inline uintptr_t strhash(const char *name, size_t len)
-//{
-//	uintptr_t i, hcode = 0;
-//	for(i = 0; i < len; i++) {
-//		hcode = name[i] + (31 * hcode);
-//	}
-//	return hcode;
-//}
-//
+// konoha.strhash = function(name, len)
+// {
+// 	uintptr_t i, hcode = 0;
+// 	for(i = 0; i < len; i++) {
+// 		hcode = name[i] + (31 * hcode);
+// 	}
+// 	return hcode;
+// }
+
 //static inline uintptr_t casehash(const char *name, size_t len)
 //{
 //	uintptr_t i, hcode = 0;
