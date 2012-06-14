@@ -418,7 +418,7 @@ konoha.TokenArray_lookAhead = function(_ctx, tls, s, e)
 konoha.KonohaSpace_getSyntaxRule = function(_ctx, ks, tls, s, e)
 {
 	var tk = tls[s];
-	if((tk).kw == KW_Type) {
+	if((tk).kw == konoha.KW_Type) {
 		tk = konoha.TokenArray_lookAhead(_ctx, tls, s+1, e);
 		if(tk.tt == konoha.ktoken_t.TK_SYMBOL || tk.tt == konoha.ktoken_t.TK_USYMBOL) {
 			tk = konoha.TokenArray_lookAhead(_ctx, tls, s+2, e);
