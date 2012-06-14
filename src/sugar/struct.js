@@ -21,6 +21,9 @@
 // * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ***************************************************************************/
+
+// konoha.KonohaSpace_init goes include/konoha/konoha2.js
+
 konoha.KonohaSpace_syntax = function(_ctx, ks0, kw, isnew)
 {
 	var ks = new konoha.kKonohaSpace();

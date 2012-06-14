@@ -60,8 +60,8 @@ konoha.kcontext_t = function() {
 	this.local = null;
 	this.stack = null;
 	this.logger = null;
-//	this.modshare = null;
-//	this.modlocal = null;
+//	this.modshare = null; this.modshare[MOD_sugar] => this.kmodsugar
+//	this.modlocal = null; this.modlocal[MOD_sugar] => this.ctxsugar
 };
 
 konoha.kclass_t = function() {
@@ -206,4 +206,15 @@ konoha.kreportlevel_t = new konoha.Enum (
 
 konoha.KSETv = function(VAR, VAL) {
 	VAR = VAL;
+}
+
+konoha.kKonohaSpace = function(conf) {
+	this.parentNULL = conf;
+	this.packid = 0;
+	this.packdom = null;
+	this.fmat = null; // const Ftokenizer
+	this.syntaxMapNN = {};
+	this.methods = [];
+	this.srcobj = null;
+	this.cl = [];
 }
