@@ -130,12 +130,11 @@ konoha.MODSUGAR_init = function(_ctx)
 			base.definedMethods = [];
 
 			base.gma = new konoha.kGamma(null);
-			base.singleBlock = new konoha.kBlock(null);
+			base.singleBlock = new konoha.kBlock(_ctx);
 			base.singleBlock.blocks.data.push(null);
 			_ctx.ctxsugar = base;
 		}
 	}
-	modsugar.h.setup(_ctx, null/*FIX ME!!*/, 0);
 	modsugar.keywordList = new Array(32);
 	modsugar.keywordMapNN = new Array(); //Map
 	modsugar.packageList = new Array(8);
@@ -143,6 +142,7 @@ konoha.MODSUGAR_init = function(_ctx)
 
 	modsugar.rootks = new konoha.kKonohaSpace(null);
 	_ctx.kmodsugar = modsugar;
+	modsugar.h.setup(_ctx, null/*FIX ME!!*/, 0);
 	konoha.defineDefaultSyntax(_ctx, modsugar.rootks);
 	return modsugar;
 }

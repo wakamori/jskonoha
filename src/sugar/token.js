@@ -144,7 +144,7 @@ konoha.parseOP1 = function(_ctx, tk, tenv, tok_start, thunk)
 	tk.text = new konoha.kString();
 	tk.text.text = tenv.source[tok_start];
 	tk.tt = konoha.ktoken_t.TK_OPERATOR;
-//	tk.topch = s[0];
+	tk.topch = tenv.source[tok_start];
 	//	}
 	return tok_start+1;
 }
@@ -168,8 +168,8 @@ konoha.parseOP = function(_ctx, tk, tenv, tok_start, thunk)
 	tk.text = new konoha.kString();
 	tk.text.text = tenv.source.substr(tok_start, (pos-1)-tok_start);
 	tk.tt = konoha.ktoken_t.TK_OPERATOR;
-	if(tk.text.length == 1) {
-		tk.topch = tk.text;
+	if(tk.text.text.length == 1) {
+		tk.topch = tk.text.text;
 	}
 	//	}
 	return pos-1;
@@ -569,7 +569,7 @@ konoha.checkNestedSyntax = function(_ctx, tls, s, e, tt, opench, closech)
 konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 {
 	var i;
-	var nbuf = new Array(80);
+	var nbuf = "";
 	var nameid = 0;
 	//	dumpTokenArray(_ctx, 0, tls, s, e);
 	for(i = s; i < e; i++) {
@@ -587,11 +587,11 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 			adst.push(tk);
 			continue;
 		}
-		if(tk.tt == konoha.TK_SYMBOL || tk.tt == konoha.TK_USYMBOL) {
+		if(tk.tt == konoha.ktoken_t.TK_SYMBOL || tk.tt == konoha.ktoken_t.TK_USYMBOL) {
 			if(i > 0 && tls[i-1].topch == '$') {
-				//				snprintf(nbuf, sizeof(nbuf), "$%s", tk.text);
+				nbuf = "$" + tk.text.text
 				tk.kw = konoha.keyword(_ctx, nbuf, nbuf.length, konoha.FN_NEWID);
-				tk.tt = konoha.TK_METANAME;
+				tk.tt = konoha.ktoken_t.TK_METANAME;
 				if(nameid == 0) nameid = tk.kw;
 				tk.nameid = nameid;
 				nameid = 0;

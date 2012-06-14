@@ -32,7 +32,7 @@ konoha.tenv_t = function() {
 konoha.ksyntax = function() {
 	this.kw = null;				//keyword_t
 	this.flag = null;				//kflag_t
-	this.syntaxRuleNULL = new konoha.kArray();	//kArray *
+	this.syntaxRuleNULL = null; 	//kArray *
 	this.ParseStmtNULL = null;		//Method *
 	this.ParseExpr = null;			//kMethod *
 	this.TopStmtTyCheck = null;	//kMethod *
@@ -169,9 +169,14 @@ konoha.kStmt = function() {
 	this.build = null;			//	kushort_t;
 };
 
-konoha.kBlock = function(conf) {
+konoha.kBlock = function(_ctx, conf) {
 	this.h = new konoha.kObjectHeader();				//kObjectHeader
-	this.ks = conf;			//kKonohaSpace *
+	if (conf != null) {			//kKonohaSpace *
+		this.ks = conf;
+	}
+	else {
+		this.ks = _ctx.kmodsugar.rootks;
+	}
 	this.parentNULL = null;	//kStmt *
 	this.blocks = new konoha.kArray();		//kArray *
 	this.esp = null;			//kExpr *
