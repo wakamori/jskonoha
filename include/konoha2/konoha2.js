@@ -49,6 +49,10 @@ konoha.MOD_sugar  =  3
 konoha.MOD_float  = 11
 konoha.MOD_iconv  = 13
 
+konoha.CTX_isInteractive = 1
+konoha.CTX_isCompileOnly = 0
+konoha.CTX_isDebug       = 0
+
 konoha.kcontext_t = function() {
 	this.safepoint = null;
 	this.esp = null;

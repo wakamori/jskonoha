@@ -76,9 +76,9 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 
 konoha.KonohaSpace_eval = function(_ctx, ks, script)
 {
-// 	console.log("##############script#########################");
-// 	console.log(script);
-// 	console.log("#############################################");
+ 	console.log("##############script#########################");
+ 	console.log(script);
+ 	console.log("#############################################");
 	_ctx.kmodsugar.h.setup(_ctx, _ctx.kmodsugar, 0);
 	var tls = _ctx.ctxsugar.tokens;
 	var pos = tls.length;

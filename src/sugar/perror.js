@@ -31,58 +31,47 @@
 ///* ------------------------------------------------------------------------ */
 ///* [perror] */
 //
-//static const char* T_emsg(CTX, int pe)
-//{
-//	switch(pe) {
-//		case CRIT_:
-//		case ERR_: return "(error)";
-//		case WARN_: return "(warning)";
-//		case INFO_:
-//			if(CTX_isInteractive() || CTX_isCompileOnly() || verbose_sugar) {
-//				return "(info)";
-//			}
-//			return NULL;
-//		case DEBUG_:
-//			if(verbose_sugar) {
-//				return "(debug)";
-//			}
-//			return NULL;
-//	}
-//	return "(unknown)";
-//}
-//
-//static size_t vperrorf(CTX, int pe, kline_t uline, int lpos, const char *fmt, va_list ap)
-//{
-//	const char *msg = T_emsg(_ctx, pe);
-//	size_t errref = ((size_t)-1);
-//	if(msg != NULL) {
-//		ctxsugar_t *base = ctxsugar;
-//		kwb_t wb;
-//		kwb_init(&base->cwb, &wb);
-//		if(uline > 0) {
-//			const char *file = T_file(uline);
-////			if(lpos != -1) {
-////				kwb_printf(&wb, "%s (%s:%d+%d) " , msg, shortname(file), (kushort_t)uline, (int)lpos+1);
-////			}
-////			else {
-//				kwb_printf(&wb, "%s (%s:%d) " , msg, shortname(file), (kushort_t)uline);
-////			}
-//		}
-//		else {
-//			kwb_printf(&wb, "%s " , msg);
-//		}
-//		kwb_vprintf(&wb, fmt, ap);
-//		msg = kwb_top(&wb, 1);
-//		kString *emsg = new_kString(msg, strlen(msg), 0);
-//		errref = kArray_size(base->errors);
-//		kArray_add(base->errors, emsg);
-//		if(pe == ERR_ || pe == CRIT_) {
-//			base->err_count ++;
-//		}
-//		kreport(pe, S_text(emsg));
-//	}
-//	return errref;
-//}
+konoha.T_emsg = function(_ctx, pe)
+{
+	switch(pe) {
+	case konoha.kreportlevel_t.CRIT_:
+	case konoha.kreportlevel_t.ERR_: return "(error)";
+	case konoha.kreportlevel_t.WARN_: return "(warning)";
+	case konoha.kreportlevel_t.INFO_:
+		if(konoha.CTX_isInteractive() || konoha.CTX_isCompileOnly() || verbose_sugar) {
+			return "(info)";
+		}
+		return null;
+	case konoha.kreportlevel_t.DEBUG_:
+		if(verbose_sugar) {
+			return "(debug)";
+		}
+		return null;
+	}
+	return "(unknown)";
+}
+
+konoha.vperrorf = function(_ctx, pe, uline, lpos, fmt, ap)
+{
+	var msg = new konoha.kString();
+	msg =  konoha.T_emsg(_ctx, pe);
+	if(msg != null) {
+		var base = _ctx.ctxsugar;
+		if(uline > 0) {
+			var file = konoha.T_file(uline);
+			console.log(msg);
+			console.log(uline);
+		}
+		else {
+			console.log(msg);
+		}
+		console.log(fmt);
+		console.log(ap);
+		if(pe == konoha.kreportlevel_t.ERR_ || pe == konoha.CRIT_) {
+			base.err_count = base.err_count + 1;
+		}
+	}
+}
 //
 //#define SUGAR_P(PE, UL, POS, FMT, ...)  sugar_p(_ctx, PE, UL, POS, FMT,  ## __VA_ARGS__)
 //#define ERR_SyntaxError(UL)  SUGAR_P(ERR_, UL, -1, "syntax sugar error at %s:%d", __FUNCTION__, __LINE__)
@@ -98,15 +87,16 @@
 //
 //#define kToken_p(TK, PE, FMT, ...)   Token_p(_ctx, TK, PE, FMT, ## __VA_ARGS__)
 //#define kExpr_p(E, PE, FMT, ...)     Expr_p(_ctx, E, PE, FMT, ## __VA_ARGS__)
-//static kExpr* Token_p(CTX, kToken *tk, int pe, const char *fmt, ...)
-//{
+konoha.Token_p = function(_ctx, tk, pe, fmt)
+{
 //	va_list ap;
 //	va_start(ap, fmt);
-//	vperrorf(_ctx, pe, tk->uline, tk->lpos, fmt, ap);
+	konoha.vperrorf(_ctx, pe, tk.uline, tk.lpos, fmt);
 //	va_end(ap);
 //	return K_NULLEXPR;
-//}
-//
+
+}
+
 //#define kerrno   Kerrno(_ctx)
 //#define kstrerror(ENO)  Kstrerror(_ctx, ENO)
 //
