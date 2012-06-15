@@ -176,3 +176,19 @@ konoha.String.toLower = function(_ctx) {
 konoha.String.substring = function(_ctx, offset, length) {
 	return this.data.substr(offset.data, length.data);
 }
+
+konoha.Array.get = function(_ctx, index) {
+	return this.data[index.data];
+}
+
+konoha.Array.set = function(_ctx, index, value) {
+	this.data[index.data] = value.data;
+}
+
+konoha.Array.newArray = function(_ctx, size) {
+	return new Array(size.data);
+}
+
+konoha.Array.add = function(_ctx, value) {
+	return this.data.push(value.data);
+}
