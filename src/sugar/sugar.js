@@ -26,19 +26,19 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 {
 	var SYNTAX = [
 	{name: '$ERR', flag: konoha.SYNFLAG_StmtBreakExec },
-	{name: '$expr', rule: '$expr', PatternMatch: konoha.PatternMatch_Expr, TopStmtTyCheck: konoha.StmtTyCheck_Expr, StmtTyCheck: konoha.StmtTyCheck_Expr, },
-	{name: '$SYMBOL', flag: konoha.SYNFLAG_ExprTerm, PatternMatch: konoha.PatternMatch_Symbol, ExprTyCheck: konoha.ExprTyCheck_Symbol, },
-	{name: '$USYMBOL', flag: konoha.SYNFLAG_ExprTerm, PatternMatch: konoha.PatternMatch_Usymbol, TopStmtTyCheck: konoha.StmtTyCheck_ConstDecl, ExprTyCheck: konoha.ExprTyCheck_Usymbol, },
+	{name: '$expr', rule: '$expr', ParseStmt: konoha.ParseStmt_Expr, TopStmtTyCheck: konoha.StmtTyCheck_Expr, StmtTyCheck: konoha.StmtTyCheck_Expr, },
+	{name: '$SYMBOL', flag: konoha.SYNFLAG_ExprTerm, ParseStmt: konoha.ParseStmt_Symbol, ExprTyCheck: konoha.ExprTyCheck_Symbol, },
+	{name: '$USYMBOL', flag: konoha.SYNFLAG_ExprTerm, ParseStmt: konoha.ParseStmt_Usymbol, TopStmtTyCheck: konoha.StmtTyCheck_ConstDecl, ExprTyCheck: konoha.ExprTyCheck_Usymbol, },
 	{name: '$TEXT', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_Text, },
 	{name: '$INT', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_Int, },
 	{name: '$FLOAT', flag: konoha.SYNFLAG_ExprTerm, },
-	{name: '$type', flag: konoha.SYNFLAG_ExprTerm, PatternMatch: konoha.PatternMatch_Type, rule: '$type $expr', StmtTyCheck: konoha.StmtTyCheck_TypeDecl, ExprTyCheck: konoha.ExprTyCheck_Type, },
+	{name: '$type', flag: konoha.SYNFLAG_ExprTerm, ParseStmt: konoha.ParseStmt_Type, rule: '$type $expr', StmtTyCheck: konoha.StmtTyCheck_TypeDecl, ExprTyCheck: konoha.ExprTyCheck_Type, },
 	{name: '()', flag: konoha.SYNFLAG_ExprPostfixOp2, ParseExpr: konoha.ParseExpr_Parenthesis, priority_op2: 16, ExprTyCheck: konoha.ExprTyCheck_FuncStyleCall, },
 	{name: '[]', },
 	{name: '{}', },
-	{name: '$block', PatternMatch: konoha.PatternMatch_Block, ExprTyCheck: konoha.ExprTyCheck_Block, },
-	{name: '$params', PatternMatch: konoha.PatternMatch_Params, TopStmtTyCheck: konoha.StmtTyCheck_ParamsDecl, ExprTyCheck: konoha.ExprTyCheck_MethodCall, },
-	{name: '$toks', PatternMatch: konoha.PatternMatch_Toks, },
+	{name: '$block', ParseStmt: konoha.ParseStmt_Block, ExprTyCheck: konoha.ExprTyCheck_Block, },
+	{name: '$params', ParseStmt: konoha.ParseStmt_Params, TopStmtTyCheck: konoha.StmtTyCheck_ParamsDecl, ExprTyCheck: konoha.ExprTyCheck_MethodCall, },
+	{name: '$toks', ParseStmt: konoha.ParseStmt_Toks, },
 	{name: '.', ParseExpr: konoha.ParseExpr_DOT, priority_op2: 16, },
 	{name: '/', flag: konoha.SYNFLAG_ExprOp, op2: 'opDIV', priority_op2: 32, },
 	{name: '%', flag: konoha.SYNFLAG_ExprOp, op2: 'opMOD', priority_op2: 32, },
@@ -143,6 +143,13 @@ konoha.MODSUGAR_init = function(_ctx)
 	modsugar.rootks = new konoha.kKonohaSpace(null);
 	_ctx.kmodsugar = modsugar;
 	modsugar.h.setup(_ctx, null/*FIX ME!!*/, 0);
+
+	modsugar.UndefinedParseExpr = konoha.UndefinedParseExpr;
+	modsugar.UndefinedStmtTyCheck = konoha.UndefinedStmtTyCheck;
+	modsugar.UndefinedExprTyCheck = konoha.UndefinedExprTyCheck;
+	modsugar.ParseExpr_Op = konoha.ParseExpr_Op;
+	modsugar.ParseExpr_Term = konoha.ParseExpr_Term;
+
 	konoha.defineDefaultSyntax(_ctx, modsugar.rootks);
 	return modsugar;
 }

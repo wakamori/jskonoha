@@ -30,9 +30,7 @@ konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 	var i = s, indent = 0, atop = tls.length;
 	while(i < e) {
 		var tkERR = null;
-		console.log(tls);
 		i =  konoha.selectStmtLine(_ctx, ks, indent, tls, i, e, delim, tls, tkERR);
-		console.log(tls);
 		var asize = tls.length;
 		if(asize > atop) {
 			konoha.Block_addStmtLine(_ctx, bk, tls, atop, asize, tkERR);
@@ -355,13 +353,14 @@ konoha.matchSyntaxRule = function(_ctx, stmt, rules, uline, tls, s, e, optional)
 				}
 				ri++;
 			}
-			var err_count = ctxsugar.err_count;
-			var next =  konoha.ParseStmt(_ctx, syn, stmt, rule.nameid, tls, ti, c);
+//TODO!!			var err_count = ctxsugar.err_count;
+			var next = syn.ParseStmtNULL(_ctx, stmt, syn, rule.nameid, tls, ti, c);
 			if(next == -1) {
 				if(optional) return s;
-				if(err_count == ctxsugar.err_count) {
-					konoha.Token_p(_ctx, tk, konoha.ERR_, "%s needs syntax pattern %s, not %s ..", konoha.T_statement_(_ctx, stmt.syn.kw), konoha.T_kw_(_ctx, rule.kw), konoha.kToken_s(tk));
-				}
+//TODO!!
+// 				if(err_count == ctxsugar.err_count) {
+// 					konoha.Token_p(_ctx, tk, konoha.ERR_, "%s needs syntax pattern %s, not %s ..", konoha.T_statement_(_ctx, stmt.syn.kw), konoha.T_kw_(_ctx, rule.kw), konoha.kToken_s(tk));
+// 				}
 				return -1;
 			}
 			ti = (c == e) ? next : c + 1;
@@ -387,8 +386,8 @@ konoha.matchSyntaxRule = function(_ctx, stmt, rules, uline, tls, s, e, optional)
 		}
 	}
 	if(!optional) {
-		for(; ri < rules.data.length; ri++) {
-			var rule = rules.data[ri];
+		for(; ri < rules.length; ri++) {
+			var rule = rules[ri];
 			if(rule.tt != konoha.ktoken_t.AST_OPTIONAL) {
 				konoha.sugar_p(konoha.ERR_, uline, -1, "%s needs syntax pattern: %s", konoha.T_statement_(_ctx, stmt.syn.kw), konoha.T_kw_(_ctx, rule.kw));
 				return -1;
@@ -463,7 +462,7 @@ konoha.Block_addStmtLine = function(_ctx, bk, tls, s, e, tkERR) {
 
 konoha.UndefinedParseExpr = function(_ctx, stmt, syn, tls, s, c, e ,_rix) {
 	tk = tls[c];
-	konoha.sugar_p(ERR_, tk.uline, tk.lpos, "undefined expression parser for '%s'", konoha.kToken_s(tk));
+//TODO!!	konoha.sugar_p(konoha.ERR_, tk.uline, tk.lpos, "undefined expression parser for '%s'", konoha.kToken_s(tk));
 }
 
 konoha.Stmt_isUnaryOp = function(_ctx, stmt, tk) {
@@ -475,7 +474,7 @@ konoha.Stmt_skipUnaryOp = function(_ctx, stmt, tls, s, e) {
 	var i;
 	for(i = s; i < e; i++) {
 		var tk = tls[i];
-		if(!Stmt_isUnaryOp(_ctx, stmt, tk)) {
+		if(!konoha.Stmt_isUnaryOp(_ctx, stmt, tk)) {
 			break;
 		}
 	}
@@ -484,16 +483,17 @@ konoha.Stmt_skipUnaryOp = function(_ctx, stmt, tls, s, e) {
 
 konoha.Stmt_findBinaryOp = function(_ctx, stmt, tls, s, e, synRef) {
 	var idx = -1, i, prif = 0;
-	for(i = Stmt_skipUnaryOp(_ctx, stmt, tls, s, e) + 1; i < e; i++) {
+	for(i = konoha.Stmt_skipUnaryOp(_ctx, stmt, tls, s, e) + 1; i < e; i++) {
 		var tk = tls[i];
-		var syn = konoha.KonohaSpace_syntax(konoha.Stmt_ks(stmt), tk.kw);
+		var syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(stmt), tk.kw, 0);
 		if(syn.priority > 0) {
 			if(prif < syn.priority || (prif == syn.priority && !(FLAG_is(syn.flag, SYNFLAG_ExprLeftJoinOp2)) )) {
 				prif = syn.priority;
 				idx = i;
-				synRef = syn;
+				synRef.syn = syn;
 			}
-			if(!FLAG_is(syn.flag, SYNFLAG_ExprPostfixOp2)) {
+//			if(!FLAG_is(syn.flag, SYNFLAG_ExprPostfixOp2)) {
+			if(syn.flag == konoha.SYNFLAG_ExprPostfixOp2) {
 				i = konoha.Stmt_skipUnaryOp(_ctx, stmt, tls, i+1, e) - 1;
 			}
 		}
@@ -517,10 +517,20 @@ konoha.Stmt_addExprParams = function(_ctx, stmt, expr, tls, s, e, allowEmpty) {
 	return expr;
 }
 
+konoha.ParseExpr = function(_ctx, syn, stmt, tls, s, idx, e) {
+	if (syn == null || syn.ParseExpr == null) {
+		return _ctx.kmodsugar.UndefinedParseExpr(_ctx, stmt, syn, tls, s, idx, e);
+	}
+	else {
+		return syn.ParseExpr(_ctx, stmt, syn, tls, s, idx, e);
+	}
+}
+
 konoha.Stmt_newExpr2 = function(_ctx, stmt, tls, s,  e) {
 	if(s < e) {
-		var syn = null;
-		var idx = konoha.Stmt_findBinaryOp(_ctx, stmt, tls, s, e, syn);
+		var synref = {};
+		var idx = konoha.Stmt_findBinaryOp(_ctx, stmt, tls, s, e, synref);
+		var syn = synref.syn;
 		if(idx != -1) {
 			return konoha.ParseExpr(_ctx, syn, stmt, tls, s, idx, e);
 		}
@@ -551,8 +561,8 @@ konoha.Expr_rightJoin = function(_ctx, expr, stmt, tls, s, c, e) {
 
 konoha.ParseExpr_Term = function(_ctx, stmt, syn, tls, s, c, e) {
 	var tk = tls[c];
-	var expr = new konoha.kBlock(Expr, konoha.KonohaSpace_syntax(konoha.Stmt_ks(stmt), tk.kw));
-	Expr_setTerm(expr, 1);
+	var expr = new konoha.kExpr(konoha.KonohaSpace_syntax(konoha.Stmt_ks(stmt), tk.kw));
+//FIX ME!!	konoha.Expr_setTerm(expr, 1);
 	expr.tk = tk;
 }
 
@@ -560,10 +570,11 @@ konoha.ParseExpr_Op = function(_ctx, stmt, syn, tls, s, c, e ,_rix) {
 	var tk = tls[c];
 	var expr, rexpr = konoha.Stmt_newExpr2(_ctx, stmt, tls, c+1, e);
 	var mn = (s == c) ? syn.op1 : syn.op2;
-	if(mn != konoha.MN_NONAME && syn.ExprTyCheck == kmodsugar.UndefinedExprTyCheck) {
+	if(mn != konoha.MN_NONAME && syn.ExprTyCheck == _ctx.kmodsugar.UndefinedExprTyCheck) {
 		konoha.kToken_setmn(tk, mn, (s == c) ? konoha.mntype_t.MNTYPE_unary: konoha.mntype_t.MNTYPE_binary);
 		syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(stmt), konoha.KW_ExprMethodCall, 0);
 	}
+	console.log(s, c);
 	if(s == c) {
 		expr = konoha.new_ConsExpr(_ctx, syn, 2, tk, rexpr);
 	}
@@ -571,7 +582,8 @@ konoha.ParseExpr_Op = function(_ctx, stmt, syn, tls, s, c, e ,_rix) {
 		var lexpr = konoha.Stmt_newExpr2(_ctx, stmt, tls, s, c);
 		expr = konoha.new_ConsExpr(_ctx, syn, 3, tk, lexpr, rexpr);
 	}
-	sfp[_rix].o = expr;
+
+	return expr;
 }
 
 konoha.isFieldName = function(tls, c, e) {
@@ -639,13 +651,14 @@ konoha.ParseExpr_DOLLAR = function(_ctx, stmt, syn, tls, s, c, e,_rix) {
 
 konoha.ParseStmt_Expr = function(_ctx, stmt, syn, name, tls, s, e) {
 	var r = -1;
-	konoha.dumpTokenArray(_ctx, 0, tls, s, e);
+//TODO	konoha.dumpTokenArray(_ctx, 0, tls, s, e);
 	var expr = konoha.Stmt_newExpr2(_ctx, stmt, tls, s, e);
 	if(expr != konoha.K_NULLEXPR) {
 		konoha.dumpExpr(_ctx, 0, 0, expr);
 		konoha.kObject_setObject(stmt, name, expr);
 		r = e;
 	}
+	return r;
 }
 
 konoha.ParseStmt_Type = function(_ctx, stmt, syn, name,s, e)

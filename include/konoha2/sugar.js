@@ -130,7 +130,7 @@ konoha.TEXPR_LET        =  12;
 konoha.TEXPR_STACKTOP   =  13;
 konoha.TEXPR_MAX        =  14;
 
-konoha.kExpr = function() {
+konoha.kExpr = function(syn) {
 	this.h = new konoha.kObjectHeader();				//kObjectHeader
 	this.ty = null;			//ktype_t
 	this.build = null;			//kexpr_t
@@ -142,7 +142,9 @@ konoha.kExpr = function() {
 	this.block = null;		//const struct _kBlock *
 	//	};
 	//	union {
-	this.syn = null;		//ksyntax_t *
+	if (syn != null) {
+		this.syn = syn;		//ksyntax_t *
+	}
 	this.ivalue = null;	//kint_t
 	this.fvalue = null;	//kfloat_t
 	this.ndata = null;		//uintptr_t
@@ -202,34 +204,34 @@ konoha.KW_Int     = 5;
 konoha.KW_Float   = 6;
 konoha.KW_Type    = 7;
 konoha.KW_StmtTypeDecl =  konoha.KW_Type;
-konoha.KW_Parenthesis = 8
-konoha.KW_Brancet     = 9
-konoha.KW_Brace       = 10
+konoha.KW_Parenthesis = 8;
+konoha.KW_Brancet     = 9;
+konoha.KW_Brace       = 10;
 
-konoha.KW_Block  = 11
-konoha.KW_Params = 12
-konoha.KW_ExprMethodCall = 12/*FIXME*/
-konoha.KW_Toks   = 13
+konoha.KW_Block  = 11;
+konoha.KW_Params = 12;
+konoha.KW_ExprMethodCall = "$params";/*FIXME*/
+konoha.KW_Toks   = 13;
 
-konoha.KW_DOT    = 14
-konoha.KW_DIV    = (1+konoha.KW_DOT)
-konoha.KW_MOD    = (2+konoha.KW_DOT)
-konoha.KW_MUL    = (3+konoha.KW_DOT)
-konoha.KW_ADD    = (4+konoha.KW_DOT)
-konoha.KW_SUB    = (5+konoha.KW_DOT)
-konoha.KW_LT     = (6+konoha.KW_DOT)
-konoha.KW_LTE    = (7+konoha.KW_DOT)
-konoha.KW_GT     = (8+konoha.KW_DOT)
-konoha.KW_GTE    = (9+konoha.KW_DOT)
-konoha.KW_EQ     = (10+konoha.KW_DOT)
-konoha.KW_NEQ    = (11+konoha.KW_DOT)
-konoha.KW_AND    = (12+konoha.KW_DOT)
-konoha.KW_OR     = (13+konoha.KW_DOT)
-konoha.KW_NOT    = (14+konoha.KW_DOT)
-konoha.KW_COLON  = (15+konoha.KW_DOT)
-konoha.KW_LET    = (15+konoha.KW_DOT)
-konoha.KW_COMMA  = (16+konoha.KW_DOT)
-konoha.KW_DOLLAR = (17+konoha.KW_DOT)
+konoha.KW_DOT    = 14;
+konoha.KW_DIV    = (1+konoha.KW_DOT);
+konoha.KW_MOD    = (2+konoha.KW_DOT);
+konoha.KW_MUL    = (3+konoha.KW_DOT);
+konoha.KW_ADD    = (4+konoha.KW_DOT);
+konoha.KW_SUB    = (5+konoha.KW_DOT);
+konoha.KW_LT     = (6+konoha.KW_DOT);
+konoha.KW_LTE    = (7+konoha.KW_DOT);
+konoha.KW_GT     = (8+konoha.KW_DOT);
+konoha.KW_GTE    = (9+konoha.KW_DOT);
+konoha.KW_EQ     = (10+konoha.KW_DOT);
+konoha.KW_NEQ    = (11+konoha.KW_DOT);
+konoha.KW_AND    = (12+konoha.KW_DOT);
+konoha.KW_OR     = (13+konoha.KW_DOT);
+konoha.KW_NOT    = (14+konoha.KW_DOT);
+konoha.KW_COLON  = (15+konoha.KW_DOT);
+konoha.KW_LET    = (15+konoha.KW_DOT);
+konoha.KW_COMMA  = (16+konoha.KW_DOT);
+konoha.KW_DOLLAR = (17+konoha.KW_DOT);
 
 konoha.KW_void   =   (18+konoha.KW_DOT)
 konoha.KW_StmtMethodDecl  = konoha.KW_void
@@ -311,4 +313,11 @@ konoha.T_kw_ = function(_ctx, kw)
 {
 	a = _ctx.kmodsugar.keywordList;
 	return a[kw];
+}
+
+konoha.kToken_setmn = function(tk, mn, mn_type)
+{
+	tk.tt = konoha.ktoken_t.TK_MN;
+	tk.mn = mn;
+	tk.mn_type = mn_type;
 }
