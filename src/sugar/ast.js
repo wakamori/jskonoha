@@ -553,7 +553,7 @@ konoha.Stmt_newExpr2 = function(_ctx, stmt, tls, s,  e) {
 }
 
 konoha.Expr_rightJoin = function(_ctx, expr, stmt, tls, s, c, e) {
-	if(c < e && expr != K_NULLEXPR) {
+	if(c < e && expr != konoha.K_NULLEXPR) {
 		konoha.WARN_Ignored(_ctx, tls, c, e);
 	}
 	return expr;
@@ -564,6 +564,7 @@ konoha.ParseExpr_Term = function(_ctx, stmt, syn, tls, s, c, e) {
 	var expr = new konoha.kExpr(konoha.KonohaSpace_syntax(konoha.Stmt_ks(stmt), tk.kw));
 //FIX ME!!	konoha.Expr_setTerm(expr, 1);
 	expr.tk = tk;
+	return konoha.Expr_rightJoin(_ctx, expr, stmt, tls, s+1, c+1, e);
 }
 
 konoha.ParseExpr_Op = function(_ctx, stmt, syn, tls, s, c, e ,_rix) {
@@ -574,7 +575,6 @@ konoha.ParseExpr_Op = function(_ctx, stmt, syn, tls, s, c, e ,_rix) {
 		konoha.kToken_setmn(tk, mn, (s == c) ? konoha.mntype_t.MNTYPE_unary: konoha.mntype_t.MNTYPE_binary);
 		syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(stmt), konoha.KW_ExprMethodCall, 0);
 	}
-	console.log(s, c);
 	if(s == c) {
 		expr = konoha.new_ConsExpr(_ctx, syn, 2, tk, rexpr);
 	}
