@@ -17,6 +17,7 @@ BASE_FILES = \
 	${SRC_DIR}/sugar/perror.js\
 	${SRC_DIR}/konoha/datatype.js\
 	${SRC_DIR}/konoha/konoha2.js\
+	${SRC_DIR}/konoha/klibexec.js\
 	${SRC_DIR}/sugar/sugar.js\
 	${SRC_DIR}/sugar/token.js\
 	${SRC_DIR}/sugar/ast.js\

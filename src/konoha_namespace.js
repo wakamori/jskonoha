@@ -44,6 +44,14 @@ konoha.assert = function(cond, msg) {
 	}
 }
 
+konoha.abort = function(msg) {
+	if (msg != null) {
+//		console.log(e);
+	}
+	var e = "Abort!! " + msg;
+	throw e;
+}
+
 //keywords
 konoha.kw = {};
 konoha.kw.Err         = "$ERR";

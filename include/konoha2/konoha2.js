@@ -132,7 +132,7 @@ konoha.kObjectHeader = function() {
 	this.gcinfo = null;			//void *
 	this.hashcode = null;			//uintptr_t
 	//	};
-	this.kvproto = null;//new konoha.karray_t();				//karray_t *
+	this.kvproto = konoha.kvproto_null();//karray_t *
 };
 
 

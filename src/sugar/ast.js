@@ -37,6 +37,9 @@ konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 			tls.length = 0;
 		}
 	}
+	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[0]);
+	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
+	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
 	return bk;
 }
 
@@ -356,6 +359,7 @@ konoha.matchSyntaxRule = function(_ctx, stmt, rules, uline, tls, s, e, optional)
 			}
 //TODO!!			var err_count = ctxsugar.err_count;
 			var next = syn.ParseStmtNULL(_ctx, stmt, syn, rule.nameid, tls, ti, c);
+
 			if(next == -1) {
 				if(optional) return s;
 //TODO!!
@@ -554,7 +558,7 @@ konoha.Stmt_newExpr2 = function(_ctx, stmt, tls, s,  e) {
 }
 
 konoha.Expr_rightJoin = function(_ctx, expr, stmt, tls, s, c, e) {
-	if(c < e && expr != K_NULLEXPR) {
+	if(c < e && expr != konoha.K_NULLEXPR) {
 		konoha.WARN_Ignored(_ctx, tls, c, e);
 	}
 	return expr;
@@ -565,6 +569,7 @@ konoha.ParseExpr_Term = function(_ctx, stmt, syn, tls, s, c, e) {
 	var expr = new konoha.kExpr(konoha.KonohaSpace_syntax(konoha.Stmt_ks(stmt), tk.kw));
 //FIX ME!!	konoha.Expr_setTerm(expr, 1);
 	expr.tk = tk;
+	return konoha.Expr_rightJoin(_ctx, expr, stmt, tls, s+1, c+1, e);
 }
 
 konoha.ParseExpr_Op = function(_ctx, stmt, syn, tls, s, c, e ,_rix) {
@@ -575,7 +580,6 @@ konoha.ParseExpr_Op = function(_ctx, stmt, syn, tls, s, c, e ,_rix) {
 		konoha.kToken_setmn(tk, mn, (s == c) ? konoha.mntype_t.MNTYPE_unary: konoha.mntype_t.MNTYPE_binary);
 		syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(stmt), konoha.KW_ExprMethodCall, 0);
 	}
-	console.log(s, c);
 	if(s == c) {
 		expr = konoha.new_ConsExpr(_ctx, syn, 2, tk, rexpr);
 	}
@@ -654,9 +658,11 @@ konoha.ParseStmt_Expr = function(_ctx, stmt, syn, name, tls, s, e) {
 	var r = -1;
 //TODO	konoha.dumpTokenArray(_ctx, 0, tls, s, e);
 	var expr = konoha.Stmt_newExpr2(_ctx, stmt, tls, s, e);
+
 	if(expr != konoha.K_NULLEXPR) {
-		konoha.dumpExpr(_ctx, 0, 0, expr);
-		konoha.kObject_setObject(stmt, name, expr);
+//		konoha.dumpExpr(_ctx, 0, 0, expr);
+		var ty_expr = -1; //FIX ME!!
+		konoha.KObject_setObject(_ctx, stmt, name, ty_expr, expr);
 		r = e;
 	}
 	return r;
@@ -667,7 +673,7 @@ konoha.ParseStmt_Type = function(_ctx, stmt, syn, name,s, e)
 	var r = -1;
 	var tk = tls[s];
 	if((tk).kw == konoha.KW_Type) {
-		konoha.kObject_setObject(stmt, name, tk);
+		konoha.kObject_setObject(_ctx, stmt, name, tk_ty, tk);
 		r = s + 1;
 	}
 }
