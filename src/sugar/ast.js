@@ -37,9 +37,6 @@ konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 			tls.length = 0;
 		}
 	}
-	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[0]);
-	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
-	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
 	return bk;
 }
 

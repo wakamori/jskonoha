@@ -80,9 +80,17 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 	var tls = _ctx.ctxsugar.tokens;
 	var pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, ks, script, 0 /* uline */, tls);
+	console.log("################ tokenize ##################");
+	console.log(tls);
+	console.log("############################################");
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
-	//	konoha.kArray_clear(tls, pos); // TODO unimplemented
-	tls = tls.slice(0, pos - 1); // IS THIS OK?
+	console.log("################### ast ####################");
+//	console.log(bk);
+	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[0]);
+	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
+	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
+	console.log("############################################");
+	tls = tls.slice(0, pos - 1);
 	var result;// = Block_eval(_ctx, bk);
 	return result;
 }
@@ -121,15 +129,15 @@ konoha.KonohaSpace_loadstream = function(_ctx, ks)
 }
 
 //for browser
-// konoha.KonohaSpace_loadstream = function(_ctx, ks)
-// {
-// 	//	var script = 'p("hello");'; // TODO load script
-// 	var script = '123+456'; // TODO load script
-//  	console.log("##############script#########################");
-//  	console.log(script);
-//  	console.log("#############################################");
-// 	var _status = konoha.MODSUGAR_eval(_ctx, script);
-// }
+konoha.KonohaSpace_loadstream = function(_ctx, ks)
+{
+	//	var script = 'p("hello");'; // TODO load script
+	var script = 'if (0) {1+1;}'; // TODO load script
+ 	console.log("##############script#########################");
+ 	console.log(script);
+ 	console.log("#############################################");
+	var _status = konoha.MODSUGAR_eval(_ctx, script);
+}
 
 konoha.KonohaSpace_loadscript = function(_ctx, ks)
 {
