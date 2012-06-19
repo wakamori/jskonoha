@@ -156,6 +156,7 @@ konoha.KonohaSpace_defineSyntax = function(_ctx, ks, syndef)
 konoha.Expr_vadd = function(_ctx, expr, n, args)
 {
 	var i;
+//	console.log(args);
 	for(i = 0; i < n; i++) {
 		var v = args[i];
 		if(v == null || v == konoha.K_NULLEXPR) {

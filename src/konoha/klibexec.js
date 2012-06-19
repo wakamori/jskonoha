@@ -25,3 +25,53 @@
 konoha.klib2_init = function() {
 	return {};
 }
+
+konoha.KVPROTO_INIT = 8
+konoha.KVPROTO_DELTA = 7
+
+konoha.hidden = {};
+konoha.hidden.pnull = new konoha.karray_t();
+
+konoha.kvproto_null = function() // for proto_get safe null
+{
+	return konoha.hidden.pnull;
+}
+
+konoha.KObject_getObjectNULL = function(_ctx, o, key, defval)
+{
+	var d = konoha.kvproto_get(o.h.kvproto, key | konoha.FN_BOXED);
+	return (d != null) ? d.oval : defval;
+}
+
+konoha.KObject_setObject = function(_ctx, o, key, ty, val)
+{
+	var Wo = o;
+	var _checko;
+	konoha.kvproto_set(_ctx, Wo.h.kvproto, key | konoha.FN_BOXED, ty, val);
+//	WASSERT(V);
+}
+
+konoha.kvproto_set = function(_ctx, pval, key, ty, uval)
+{
+	var p = pval;
+	if (p.data == null) {
+		p.data = new Array();
+	}
+	var psize = p.data.length;
+	p.data[key] = uval;
+}
+
+konoha.kvproto_get = function(p, key)
+{
+	var psize = p.data.length;
+	var d = p.kvs + ((key) % psize);
+	if(d.key == key) return d; else d++; // 3
+	if(d.key == key) return d; else d++;
+	if(d.key == key) return d; else d++;
+	var i;
+	for(i = 0; i < konoha.KVPROTO_DELTA - 3; i++) {
+		if(d.key == key) return d;
+		d++;
+	}
+	return null;
+}
