@@ -59,14 +59,14 @@ konoha.vperrorf = function(_ctx, pe, uline, lpos, fmt, ap)
 		var base = _ctx.ctxsugar;
 		if(uline > 0) {
 			var file = konoha.T_file(uline);
-			console.log(msg);
-			console.log(uline);
+			konoha.DBG_P(msg);
+			konoha.DBG_P(uline);
 		}
 		else {
-			console.log(msg);
+			konoha.DBG_P(msg);
 		}
-		console.log(fmt);
-		console.log(ap);
+		konoha.DBG_P(fmt);
+		konoha.DBG_P(ap);
 		if(pe == konoha.kreportlevel_t.ERR_ || pe == konoha.CRIT_) {
 			base.err_count = base.err_count + 1;
 		}

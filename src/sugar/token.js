@@ -537,8 +537,8 @@ konoha.findTopCh = function(_ctx, tls, s, e, tt, closech)
 {
 	var i;
 	for(i = s; i < e; i++) {
-		var tk = tls.toks[i];
-		if(tk.tt == tt && (tk.text)[0] == closech) return i;
+		var tk = tls[i];
+		if(tk.tt == tt && tk.text.text == closech) return i;
 	}
 	//	DBG_ASSERT(i != e);
 	return e;
@@ -548,18 +548,17 @@ konoha.findTopCh = function(_ctx, tls, s, e, tt, closech)
 
 konoha.checkNestedSyntax = function(_ctx, tls, s, e, tt, opench, closech)
 {
-	var i = s;
-	var tk = tls[i];
-	var t = tk.text;
-	if(t[0] == opench && t[1] == 0) {
-		var ne = konoha.findTopCh(_ctx, tls, i+1, e, tk.tt, closech);
-		tk.tt = tt; tk.kw = tt;
+	var tk = tls[s.ivalue];
+	var t = tk.text.text;
+	if(t == opench) {
+		var ne = konoha.findTopCh(_ctx, tls, s.ivalue+1, e, tk.tt, closech);
+		tk.tt = tt; tk.kw = konoha.kw.array[tt]; // TODO!! tt=AST_OPTIONAL
 		//		tk.sub = new_(TokenArray, 0);
-		tk.sub = _ctx.lib2.konoha.new_Object(_ctx, CT_TokenArray, 0);
+		tk.sub = new Array();
 		tk.topch = opench; 
 		tk.closech = closech;
-		konoha.makeSyntaxRule(_ctx, tls, i+1, ne, tk.sub);
-		s = ne;
+		konoha.makeSyntaxRule(_ctx, tls, s.ivalue+1, ne, tk.sub);
+		s.ivalue = ne;
 		return 1;
 	}
 	return 0;
@@ -575,15 +574,18 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 		var tk = tls[i];
 		if(tk.tt == konoha.ktoken_t.TK_INDENT) continue;
 		if(tk.tt == konoha.ktoken_t.TK_TEXT /*|| tk.tt == TK_STEXT*/) {
-			if(konoha.checkNestedSyntax(_ctx, tls, i, e, konoha.ktoken_t.AST_PARENTHESIS, '(', ')') ||
-			   konoha.checkNestedSyntax(_ctx, tls, i, e, konoha.ktoken_t.AST_BRANCET, '[', ']') ||
-			   konoha.checkNestedSyntax(_ctx, tls, i, e, konoha.ktoken_t.AST_BRACE, '{', '}')) {
+			var boxed_i = {};
+			boxed_i.ivalue = i;
+			if(konoha.checkNestedSyntax(_ctx, tls, boxed_i, e, konoha.ktoken_t.AST_PARENTHESIS, '(', ')') ||
+			   konoha.checkNestedSyntax(_ctx, tls, boxed_i, e, konoha.ktoken_t.AST_BRANCET, '[', ']') ||
+			   konoha.checkNestedSyntax(_ctx, tls, boxed_i, e, konoha.ktoken_t.AST_BRACE, '{', '}')) {
 			}
 			else {
 				tk.tt = konoha.ktoken_t.TK_CODE;
-				tk.kw = konoha.keyword(_ctx, tk.text, tk.text.length, konoha.FN_NEWID);
+				tk.kw = konoha.keyword(_ctx, tk.text.text, tk.text.text.length, konoha.FN_NEWID);
 			}
 			adst.push(tk);
+			i = boxed_i.ivalue;
 			continue;
 		}
 		if(tk.tt == konoha.ktoken_t.TK_SYMBOL || tk.tt == konoha.ktoken_t.TK_USYMBOL) {
@@ -604,10 +606,13 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 			}
 		}
 		if(tk.tt == konoha.ktoken_t.TK_OPERATOR) {
-			if(konoha.checkNestedSyntax(_ctx, tls, i, e, konoha.ktoken_t.AST_OPTIONAL, '[', ']')) {
+			var boxed_i = {};
+			boxed_i.ivalue = i;
+			if(konoha.checkNestedSyntax(_ctx, tls, boxed_i, e, konoha.ktoken_t.AST_OPTIONAL, '[', ']')) {
 				adst.push(tk);
 				continue;
 			}
+			i = boxed_i.ivalue;
 			if(tls[i].topch == '$') continue;
 		}
 		//		konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "illegal sugar syntax: %s", kToken_s(tk));
@@ -621,6 +626,16 @@ konoha.parseSyntaxRule = function(_ctx, rule, uline, a)
 	var tls = _ctx.ctxsugar.tokens;
 	pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, null, rule, uline, tls);
+	konoha.DBG_P("################ makeSyntaxRule ##################");
 	konoha.makeSyntaxRule(_ctx, tls, pos, tls.length, a);
+	for (var i = 0; i < a.length; i++) {
+		console.log(a[i].tt, a[i].kw);
+		if (a[i].sub != null) {
+			for (var j = 0; j < a[i].sub.length; j++) {
+				console.log("\t", a[i].sub[j].tt, a[i].sub[j].kw);
+			}
+		}
+	}
+	konoha.DBG_P("############################################");
 	tls.length = 0;
 }
