@@ -37,19 +37,11 @@ all: $(JSKONOHA)
 
 $(JSKONOHA): $(BASE_FILES)
 	@@echo "Building" ${JSKONOHA}
-
+	@@if [ ! -d ${BUILD_DIR} ]; then \
+		mkdir -p ${BUILD_DIR};       \
+	fi
 	@@cat ${BASE_FILES} | \
 		${VER} > ${JSKONOHA};
-
-# ${JQ_MIN}: ${JQ}
-# 	@@if test ! -z ${JS_ENGINE}; then \
-# 		echo "Minifying jQuery" ${JQ_MIN}; \
-# 		${COMPILER} ${JQ} > ${JQ_MIN}.tmp; \
-# 		${POST_COMPILER} ${JQ_MIN}.tmp; \
-# 		rm -f ${JQ_MIN}.tmp; \
-# 	else \
-# 		echo "You must have NodeJS installed in order to minify jQuery."; \
-# 	fi
 
 clean:
 	@@echo "Removing" ${JSKONOHA}
