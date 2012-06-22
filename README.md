@@ -3,4 +3,10 @@ jskonoha
 
 based by konoha:r619
 
-jskonoha
+to make:
+    make
+
+to run:
+    node build/jskonoha.js
+ or
+    ${BROWSER} sample.html
