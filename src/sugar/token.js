@@ -626,16 +626,6 @@ konoha.parseSyntaxRule = function(_ctx, rule, uline, a)
 	var tls = _ctx.ctxsugar.tokens;
 	pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, null, rule, uline, tls);
-	konoha.DBG_P("################ makeSyntaxRule ##################");
 	konoha.makeSyntaxRule(_ctx, tls, pos, tls.length, a);
-	for (var i = 0; i < a.length; i++) {
-		console.log(a[i].tt, a[i].kw);
-		if (a[i].sub != null) {
-			for (var j = 0; j < a[i].sub.length; j++) {
-				console.log("\t", a[i].sub[j].tt, a[i].sub[j].kw);
-			}
-		}
-	}
-	konoha.DBG_P("############################################");
 	tls.length = 0;
 }

@@ -80,13 +80,13 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 	var tls = _ctx.ctxsugar.tokens;
 	var pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, ks, script, 0 /* uline */, tls);
-	konoha.DBG_P("################ tokenize ##################");
-	konoha.DBG_P(tls);
-	konoha.DBG_P("############################################");
+// 	konoha.DBG_P("################ tokenize ##################");
+// 	konoha.DBG_P(tls);
+// 	konoha.DBG_P("############################################");
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
 	konoha.DBG_P("################### ast ####################");
-	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data[0]);
-	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data[1]);
+	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data);
+//	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data[1]);
 // 	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data[0].cons.data[0]);
 // 	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
 // 	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
