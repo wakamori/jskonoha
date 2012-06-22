@@ -25,47 +25,47 @@
 konoha.defineDefaultSyntax = function(_ctx, ks)
 {
 	var SYNTAX = [
-	{name: '$ERR', flag: konoha.SYNFLAG_StmtBreakExec },
-	{name: '$expr', rule: '$expr', ParseStmt: konoha.ParseStmt_Expr, TopStmtTyCheck: konoha.StmtTyCheck_Expr, StmtTyCheck: konoha.StmtTyCheck_Expr, },
-	{name: '$SYMBOL', flag: konoha.SYNFLAG_ExprTerm, ParseStmt: konoha.ParseStmt_Symbol, ExprTyCheck: konoha.ExprTyCheck_Symbol, },
-	{name: '$USYMBOL', flag: konoha.SYNFLAG_ExprTerm, ParseStmt: konoha.ParseStmt_Usymbol, TopStmtTyCheck: konoha.StmtTyCheck_ConstDecl, ExprTyCheck: konoha.ExprTyCheck_Usymbol, },
-	{name: '$TEXT', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_Text, },
-	{name: '$INT', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_Int, },
-	{name: '$FLOAT', flag: konoha.SYNFLAG_ExprTerm, },
-	{name: '$type', flag: konoha.SYNFLAG_ExprTerm, ParseStmt: konoha.ParseStmt_Type, rule: '$type $expr', StmtTyCheck: konoha.StmtTyCheck_TypeDecl, ExprTyCheck: konoha.ExprTyCheck_Type, },
-	{name: '()', flag: konoha.SYNFLAG_ExprPostfixOp2, ParseExpr: konoha.ParseExpr_Parenthesis, priority_op2: 16, ExprTyCheck: konoha.ExprTyCheck_FuncStyleCall, },
-	{name: '[]', },
-	{name: '{}', },
-	{name: '$block', ParseStmt: konoha.ParseStmt_Block, ExprTyCheck: konoha.ExprTyCheck_Block, },
-	{name: '$params', ParseStmt: konoha.ParseStmt_Params, TopStmtTyCheck: konoha.StmtTyCheck_ParamsDecl, ExprTyCheck: konoha.ExprTyCheck_MethodCall, },
-	{name: '$toks', ParseStmt: konoha.ParseStmt_Toks, },
-	{name: '.', ParseExpr: konoha.ParseExpr_DOT, priority_op2: 16, },
-	{name: '/', flag: konoha.SYNFLAG_ExprOp, op2: 'opDIV', priority_op2: 32, },
-	{name: '%', flag: konoha.SYNFLAG_ExprOp, op2: 'opMOD', priority_op2: 32, },
-	{name: '*', flag: konoha.SYNFLAG_ExprOp, op2: 'opMUL', priority_op2: 32, },
-	{name: '+', flag: konoha.SYNFLAG_ExprOp, op1: 'opPLUS', op2: 'opADD', priority_op2: 64, },
-	{name: '-', flag: konoha.SYNFLAG_ExprOp, op1: 'opMINUS', op2: 'opSUB', priority_op2: 64, },
-	{name: '<', flag: konoha.SYNFLAG_ExprOp, op2: 'opLT', priority_op2: 256, },
-	{name: '<=', flag: konoha.SYNFLAG_ExprOp, op2: 'opLTE', priority_op2: 256, },
-	{name: '>', flag: konoha.SYNFLAG_ExprOp, op2: 'opGT', priority_op2: 256, },
-	{name: '>=', flag: konoha.SYNFLAG_ExprOp, op2: 'opGTE', priority_op2: 256, },
-	{name: '==', flag: konoha.SYNFLAG_ExprOp, op2: 'opEQ', priority_op2: 512, },
-	{name: '!=', flag: konoha.SYNFLAG_ExprOp, op2: 'opNEQ', priority_op2: 512, },
-	{name: '&&', flag: konoha.SYNFLAG_ExprOp, priority_op2: 1024, ExprTyCheck: konoha.ExprTyCheck_AND, },
-	{name: '||', flag: konoha.SYNFLAG_ExprOp, priority_op2: 2048, ExprTyCheck: konoha.ExprTyCheck_OR, },
-	{name: '!', flag: konoha.SYNFLAG_ExprOp, op1: 'opNOT', },
-	{name: '=', flag: konoha.SYMFLAG_ExprOp|konoha.SYNFLAG_ExprLeftJoinOp2, priority_op2: 4096, },
-	{name: ',', ParseExpr: konoha.ParseExpr_COMMA, op2: '*', priority_op2: 8192, },
-	{name: '$', ParseExpr: konoha.ParseExpr_DOLLAR, },
-	{name: 'void', type: konoha.TY_void, rule: '$type [$USYMBOL \".\"] $SYMBOL $params [$block]', TopStmtTyCheck: konoha.StmtTyCheck_MethodDecl, },
-	{name: 'boolean', type: konoha.TY_Boolean, },
-	{name: 'int', type: konoha.TY_Int, },
-	{name: 'true', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_true, },
-	{name: 'false', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_false, },
-	{name: 'if', rule: '\"if\" \"(\" $expr \")\" $block [\"else\" else: $block]', TopStmtTyCheck: konoha.StmtTyCheck_if, StmtTyCheck: konoha.StmtTyCheck_if, },
-	{name: 'else', rule: '\"else\" $block', TopStmtTyCheck: konoha.StmtTyCheck_else, StmtTyCheck: konoha.StmtTyCheck_else, },
-	{name: 'return', rule: '\"return\" [$expr]', flag: konoha.SYNFLAG_StmtBreakExec, StmtTyCheck: konoha.StmtTyCheck_return, },
-	{name: null}, ];
+		{name: '$ERR', flag: konoha.SYNFLAG_StmtBreakExec },
+		{name: '$expr', rule: '$expr', ParseStmt: konoha.ParseStmt_Expr, TopStmtTyCheck: konoha.StmtTyCheck_Expr, StmtTyCheck: konoha.StmtTyCheck_Expr, },
+		{name: '$SYMBOL', flag: konoha.SYNFLAG_ExprTerm, ParseStmt: konoha.ParseStmt_Symbol, ExprTyCheck: konoha.ExprTyCheck_Symbol, },
+		{name: '$USYMBOL', flag: konoha.SYNFLAG_ExprTerm, ParseStmt: konoha.ParseStmt_Usymbol, TopStmtTyCheck: konoha.StmtTyCheck_ConstDecl, ExprTyCheck: konoha.ExprTyCheck_Usymbol, },
+		{name: '$TEXT', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_Text, },
+		{name: '$INT', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_Int, },
+		{name: '$FLOAT', flag: konoha.SYNFLAG_ExprTerm, },
+		{name: '$type', flag: konoha.SYNFLAG_ExprTerm, ParseStmt: konoha.ParseStmt_Type, rule: '$type $expr', StmtTyCheck: konoha.StmtTyCheck_TypeDecl, ExprTyCheck: konoha.ExprTyCheck_Type, },
+		{name: '()', flag: konoha.SYNFLAG_ExprPostfixOp2, ParseExpr: konoha.ParseExpr_Parenthesis, priority_op2: 16, ExprTyCheck: konoha.ExprTyCheck_FuncStyleCall, },
+		{name: '[]', },
+		{name: '{}', },
+		{name: '$block', ParseStmt: konoha.ParseStmt_Block, ExprTyCheck: konoha.ExprTyCheck_Block, },
+		{name: '$params', ParseStmt: konoha.ParseStmt_Params, TopStmtTyCheck: konoha.StmtTyCheck_ParamsDecl, ExprTyCheck: konoha.ExprTyCheck_MethodCall, },
+		{name: '$toks', ParseStmt: konoha.ParseStmt_Toks, },
+		{name: '.', ParseExpr: konoha.ParseExpr_DOT, priority_op2: 16, },
+		{name: '/', flag: konoha.SYNFLAG_ExprOp, op2: 'opDIV', priority_op2: 32, },
+		{name: '%', flag: konoha.SYNFLAG_ExprOp, op2: 'opMOD', priority_op2: 32, },
+		{name: '*', flag: konoha.SYNFLAG_ExprOp, op2: 'opMUL', priority_op2: 32, },
+		{name: '+', flag: konoha.SYNFLAG_ExprOp, op1: 'opPLUS', op2: 'opADD', priority_op2: 64, },
+		{name: '-', flag: konoha.SYNFLAG_ExprOp, op1: 'opMINUS', op2: 'opSUB', priority_op2: 64, },
+		{name: '<', flag: konoha.SYNFLAG_ExprOp, op2: 'opLT', priority_op2: 256, },
+		{name: '<=', flag: konoha.SYNFLAG_ExprOp, op2: 'opLTE', priority_op2: 256, },
+		{name: '>', flag: konoha.SYNFLAG_ExprOp, op2: 'opGT', priority_op2: 256, },
+		{name: '>=', flag: konoha.SYNFLAG_ExprOp, op2: 'opGTE', priority_op2: 256, },
+		{name: '==', flag: konoha.SYNFLAG_ExprOp, op2: 'opEQ', priority_op2: 512, },
+		{name: '!=', flag: konoha.SYNFLAG_ExprOp, op2: 'opNEQ', priority_op2: 512, },
+		{name: '&&', flag: konoha.SYNFLAG_ExprOp, priority_op2: 1024, ExprTyCheck: konoha.ExprTyCheck_AND, },
+		{name: '||', flag: konoha.SYNFLAG_ExprOp, priority_op2: 2048, ExprTyCheck: konoha.ExprTyCheck_OR, },
+		{name: '!', flag: konoha.SYNFLAG_ExprOp, op1: 'opNOT', },
+		{name: '=', flag: konoha.SYMFLAG_ExprOp|konoha.SYNFLAG_ExprLeftJoinOp2, priority_op2: 4096, },
+		{name: ',', ParseExpr: konoha.ParseExpr_COMMA, op2: '*', priority_op2: 8192, },
+		{name: '$', ParseExpr: konoha.ParseExpr_DOLLAR, },
+		{name: 'void', type: konoha.TY_void, rule: '$type [$USYMBOL \".\"] $SYMBOL $params [$block]', TopStmtTyCheck: konoha.StmtTyCheck_MethodDecl, },
+		{name: 'boolean', type: konoha.TY_Boolean, },
+		{name: 'int', type: konoha.TY_Int, },
+		{name: 'true', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_true, },
+		{name: 'false', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_false, },
+		{name: 'if', rule: '\"if\" \"(\" $expr \")\" $block [\"else\" else: $block]', TopStmtTyCheck: konoha.StmtTyCheck_if, StmtTyCheck: konoha.StmtTyCheck_if, },
+		{name: 'else', rule: '\"else\" $block', TopStmtTyCheck: konoha.StmtTyCheck_else, StmtTyCheck: konoha.StmtTyCheck_else, },
+		{name: 'return', rule: '\"return\" [$expr]', flag: konoha.SYNFLAG_StmtBreakExec, StmtTyCheck: konoha.StmtTyCheck_return, },
+		{name: null}, ];
  	konoha.KonohaSpace_defineSyntax(_ctx, ks, SYNTAX);
  	syn = konoha.KonohaSpace_syntax(_ctx, ks, "void"/*IS THIS OK?*/, 0);
  	syn.ty = konoha.TY_void; // it's not cool, but necessary
@@ -76,18 +76,24 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 
 konoha.KonohaSpace_eval = function(_ctx, ks, script)
 {
- 	console.log("##############script#########################");
- 	console.log(script);
- 	console.log("#############################################");
 	_ctx.kmodsugar.h.setup(_ctx, _ctx.kmodsugar, 0);
 	var tls = _ctx.ctxsugar.tokens;
 	var pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, ks, script, 0 /* uline */, tls);
+	console.log("################ tokenize ##################");
+	console.log(tls);
+	console.log("############################################");
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
-//	console.log(bk.blocks.data.syn);
-//	konoha.kArray_clear(tls, pos); // TODO unimplemented
-	tls = tls.slice(0, pos - 1); // IS THIS OK?
-	var result = konoha.Block_eval(_ctx, bk);
+
+	console.log("################### ast ####################");
+//	console.log(bk);
+	console.log(bk.blocks.data[0].h.kvproto);
+//	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
+//	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
+	console.log("############################################");
+	tls = tls.slice(0, pos - 1);
+	var result = Block_eval(_ctx, bk);
+
 	return result;
 }
 
@@ -96,10 +102,43 @@ konoha.MODSUGAR_eval = function(_ctx, script)
 	return konoha.KonohaSpace_eval(_ctx, _ctx.kmodsugar.rootks, script);
 }
 
+//for node
 konoha.KonohaSpace_loadstream = function(_ctx, ks)
 {
-//	var script = 'p("hello");'; // TODO load script
-	var script = '123+456'; // TODO load script
+	//	var script = 'p("hello");'; // TODO load script
+	var readline = require('readline'),
+	rl = readline.createInterface(process.stdin, process.stdout),
+	prefix = '>>> ';
+	rl.on('line', function(line) {
+		switch(line.trim()) {
+		case 'quit':
+		case 'exit':
+		case 'bye':
+			process.exit(0);
+			break;
+		default:
+			var script = line.trim();
+			var _status = konoha.MODSUGAR_eval(_ctx, script);
+			break;
+		}
+		rl.setPrompt(prefix, prefix.length);
+		rl.prompt();
+	}).on('close', function() {
+		process.exit(0);
+	});
+	rl.setPrompt(prefix, prefix.length);
+	rl.prompt();
+}
+
+//for browser
+konoha.KonohaSpace_loadstream = function(_ctx, ks)
+{
+	//	var script = 'p("hello");'; // TODO load script
+	var script = "123+456;";
+//	var script = 'if (0) {1+1;}'; // TODO load script
+ 	console.log("##############script#########################");
+ 	console.log(script);
+ 	console.log("#############################################");
 	var _status = konoha.MODSUGAR_eval(_ctx, script);
 }
 

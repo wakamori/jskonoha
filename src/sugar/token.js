@@ -26,7 +26,7 @@
 konoha.Token_toERR = function(_ctx, tk, errref)
 {
     tk.tt = konoha.ktoken_t.TK_ERR;
-//	tk.text = ctxsugar.errors.strings[errref]; //TODO ERROR
+	//	tk.text = ctxsugar.errors.strings[errref]; //TODO ERROR
 }
 
 konoha.lpos = function(tenv, s) //Number : tenv_t, Number
@@ -46,10 +46,10 @@ konoha.parseINDENT = function(_ctx, tk, tenv, pos, thunk)
 		}
 		break;
 	}
-	//	if(IS_NOTNULL(tk)) { //TODO : Is this necessary?
-	tk.tt = konoha.ktoken_t.TK_INDENT;
-	tk.lpos = 0;
-	//	}
+	if(tk != null) {
+		tk.tt = konoha.ktoken_t.TK_INDENT;
+		tk.lpos = 0;
+	}
 	return pos - 1;
 }
 
@@ -63,7 +63,7 @@ konoha.parseNL = function(_ctx, tk, tenv, pos, thunk)
 konoha.parseNUM = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	var ch, pos = tok_start, dot = 0;
-//	var ts = tenv.source;
+	//	var ts = tenv.source;
 	while((ch = tenv.source[pos++]) != undefined) {
 		if(ch == '_') continue;
 		if(ch == '.') {
@@ -79,12 +79,11 @@ konoha.parseNUM = function(_ctx, tk, tenv, tok_start, thunk)
 		}
 		if(!konoha.isalnum(ch)) break;
 	}
-	//	if(IS_NOTNULL(tk)) {
-	tk.text = new konoha.kString();
-	tk.text.text = tenv.source.substr(tok_start, (pos-1)-tok_start);
-//	tk.text = new kString(_ctx, ts + tok_start, (pos-1)-tok_start, konoha.SPOL_ASCII);
-	tk.tt = (dot == 0) ? konoha.ktoken_t.TK_INT : konoha.ktoken_t.TK_FLOAT;
-	//	}
+	if (tk != null) {
+		tk.text = new konoha.kString();
+		tk.text.text = tenv.source.substr(tok_start, (pos-1)-tok_start);
+		tk.tt = (dot == 0) ? konoha.ktoken_t.TK_INT : konoha.ktoken_t.TK_FLOAT;
+	}
 	return pos - 1;
 }
 
@@ -98,11 +97,11 @@ konoha.parseSYMBOL = function(_ctx, tk, tenv, tok_start, thunk)
 		}
 		break;
 	}
-	//	if(IS_NOTNULL(tk)) {
-	tk.text = new konoha.kString();
-	tk.text.text = ts.substr(tok_start, (pos-1)-tok_start);
-	tk.tt = konoha.ktoken_t.TK_SYMBOL;
-	//	}
+	if(tk != null) {
+		tk.text = new konoha.kString();
+		tk.text.text = ts.substr(tok_start, (pos-1)-tok_start);
+		tk.tt = konoha.ktoken_t.TK_SYMBOL;
+	}
 	return pos - 1;
 }
 
@@ -114,11 +113,11 @@ konoha.parseUSYMBOL = function(_ctx, tk, tenv, tok_start, thunk)
 		if (ch == '_' || konoha.isalnum(ch)) continue;
 		break;
 	}
-	//	if(IS_NOTNULL(tk)) {
-	tk.text = new konoha.kString();
-	tk.text.text = ts.substr(tok_start, (pos-1)-tok_start);
-	tk.tt = konoha.ktoken_t.TK_USYMBOL;
-	//	}
+	if (tk != null) {
+		tk.text = new konoha.kString();
+		tk.text.text = ts.substr(tok_start, (pos-1)-tok_start);
+		tk.tt = konoha.ktoken_t.TK_USYMBOL;
+	}
 	return pos - 1;
 }
 
@@ -129,23 +128,23 @@ konoha.parseMSYMBOL = function(_ctx, tk, tenv, tok_start, thunk)
 	while((ch = ts.charCodeAt(pos++)) != undefined) {
 		if(!(ch < 0)) break;
 	}
-	//	if((tk.h.magicflag & (1<<0)) != (1<<0)) {
-	tk.text = new konoha.kString();
-	tk.text.text = ts.substr(tok_start, (pos-1)-tok_start);
-	tk.tt = konoha.ktoken_t.TK_MSYMBOL;
-	//	}
+	if (tk != null) {
+		tk.text = new konoha.kString();
+		tk.text.text = ts.substr(tok_start, (pos-1)-tok_start);
+		tk.tt = konoha.ktoken_t.TK_MSYMBOL;
+	}
 	return pos - 1;
 }
 
 konoha.parseOP1 = function(_ctx, tk, tenv, tok_start, thunk)
 {
-	//	if(IS_NOTNULL(tk)) {
-//	var s = tenv.source + tok_start;
-	tk.text = new konoha.kString();
-	tk.text.text = tenv.source[tok_start];
-	tk.tt = konoha.ktoken_t.TK_OPERATOR;
-	tk.topch = tenv.source[tok_start];
-	//	}
+	if (tk != null) {
+	//	var s = tenv.source + tok_start;
+		tk.text = new konoha.kString();
+		tk.text.text = tenv.source[tok_start];
+		tk.tt = konoha.ktoken_t.TK_OPERATOR;
+		tk.topch = tenv.source[tok_start];
+	}
 	return tok_start+1;
 }
 
@@ -163,15 +162,15 @@ konoha.parseOP = function(_ctx, tk, tenv, tok_start, thunk)
 		}
 		break;
 	}
-	//	if(IS_NOTNULL(tk)) {
-//	var s = tenv.source[tok_start];
-	tk.text = new konoha.kString();
-	tk.text.text = tenv.source.substr(tok_start, (pos-1)-tok_start);
-	tk.tt = konoha.ktoken_t.TK_OPERATOR;
-	if(tk.text.text.length == 1) {
-		tk.topch = tk.text.text;
+	if(tk != null) {
+	//	var s = tenv.source[tok_start];
+		tk.text = new konoha.kString();
+		tk.text.text = tenv.source.substr(tok_start, (pos-1)-tok_start);
+		tk.tt = konoha.ktoken_t.TK_OPERATOR;
+		if(tk.text.text.length == 1) {
+			tk.topch = tk.text.text;
+		}
 	}
-	//	}
 	return pos-1;
 }
 
@@ -189,9 +188,9 @@ konoha.parseCOMMENT = function(_ctx, tk, tenv, tok_start, thunk)
 	var ch, prev = 0, level = 1, pos = tok_start + 2;
 	/*@#nnnn is line number */
 	if(tenv.source[pos] == '@' && tenv.source[pos+1] == '#' && isdigit(tenv.source[pos+2])) {
-//TODO
-// 		tenv.uline >>= (sizeof(kshort_t)*8);
-// 		tenv.uline = (tenv.uline<<(sizeof(kshort_t)*8))  | strtoll(tenv.source + pos + 2, null, 10);
+		//TODO
+		// 		tenv.uline >>= (sizeof(kshort_t)*8);
+		// 		tenv.uline = (tenv.uline<<(sizeof(kshort_t)*8))  | strtoll(tenv.source + pos + 2, null, 10);
 	}
 	while((ch = tenv.source[pos++]) != undefined) {
 		if(ch == '\n') {
@@ -205,16 +204,16 @@ konoha.parseCOMMENT = function(_ctx, tk, tenv, tok_start, thunk)
 		}
 		prev = ch;
 	}
-	//	if(IS_NOTNULL(tk)) {
-//	var errref = konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "must close with */");
-//	konoha.Token_toERR(_ctx, tk, errref);
-	//	}
+	if (tk != null) {
+		var errref = konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "must close with */");
+		konoha.Token_toERR(_ctx, tk, errref);
+	}
 	return pos-1;/*EOF*/
 }
 
 konoha.parseSLASH = function(_ctx, tk, tenv, tok_start, thunk)
 {
-//	var ts = tenv.source + tok_start;
+	//	var ts = tenv.source + tok_start;
 	if(tenv.source[tok_start + 1] == '/') {
 		return konoha.parseLINE(_ctx, tk, tenv, tok_start, thunk);
 	}
@@ -232,39 +231,70 @@ konoha.parseDQUOTE = function(_ctx, tk, tenv, tok_start, thunk)
 			break;
 		}
 		if(ch == '"' && prev != '\\') {
-			//			if(IS_NOTNULL(tk)) {
-			tk.text = new konoha.kString();
-			tk.text.text = tenv.source.substr(tok_start + 1, (pos-1)-(tok_start+1));
-			tk.tt = konoha.ktoken_t.TK_TEXT;
-			//			}
+			if(tk != null) {
+				tk.text = new konoha.kString();
+				tk.text.text = tenv.source.substr(tok_start + 1, (pos-1)-(tok_start+1));
+				tk.tt = konoha.ktoken_t.TK_TEXT;
+			}
 			return pos;
 		}
 		prev = ch;
 	}
-	//	if(is_NOTNULL(tk)) {
-//	var errref = konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "must close with \"");
-//	konoha.token_toERR(_ctx, tk, errref);
-	//	}
+	if(tk != null) {
+		var errref = konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "must close with \"");
+		konoha.token_toERR(_ctx, tk, errref);
+	}
 	return pos-1;
 }
 
 konoha.parseSKIP = function(_ctx, tk, tenv, tok_start, thunk)
 {
+	tk.tt = 0;
 	return tok_start+1;
 }
 
 konoha.parseUNDEF = function(_ctx, tk, tenv, tok_start, thunk)
 {
-	//	if(is_NOTNULL(tk)) {
-//	var errref = konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "undefined token character: %c", tenv.source[tok_start]);
-	var errref = 0; //FIX ME!!
-	konoha.Token_toERR(_ctx, tk, errref);
-	//	}
+	if(tk != null) {
+//		var errref = konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "undefined token character: %c", tenv.source[tok_start]);
+		var errref = 0; //FIX ME!!
+		konoha.Token_toERR(_ctx, tk, errref);
+	}
 	while(tenv.source[++tok_start] != undefined);
 	return tok_start;
 }
 
-//konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk);
+konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
+{
+	var ch, level = 1, pos = tok_start + 1;
+	var fmat = tenv.fmat;
+	tk.lpos += 1;
+	while((ch = konoha.kchar(tenv.source, pos)) != 0) {
+		if(ch == konoha.MKTM_type._RBR/*}*/) {
+			level--;
+			if(level == 0) {
+				if(tk != null) {
+					tk.text = new konoha.kString();
+					tk.text.text = tenv.source.substr(tok_start + 1, (pos-2)-(tok_start)+1);
+					tk.tt = konoha.ktoken_t.TK_CODE;
+				}
+				return pos + 1;
+			}
+			pos++;
+		}
+		else if(ch == konoha.MKTM_type._LBR/*'{'*/) {
+			level++; pos++;
+		}
+		else {
+			pos = fmat[ch](_ctx, null, tenv, pos, null);
+		}
+	}
+	if(tk != null) {
+		var errref = konoha.sugar_p(konoha.ERR_, tk.uline, tk.lpos, "must close with }");
+		konoha.Token_toERR(_ctx, tk, errref);
+	}
+	return pos-1;
+}
 
 konoha.MiniKonohaTokenMatrix = new Array(
 	//konoha.MKTM_type._NULL    = 0
@@ -436,37 +466,6 @@ konoha.kchar = function(t, pos)
 	return konoha.cMatrix[ch]; //TODO : Multi-byte char
 }
 
-// konoha.parseBLOCK = function(_ctx, tk, tenv, tok_start, thunk)
-// {
-// 	var ch, level = 1, pos = tok_start + 1;
-// 	var fmat = tenv.fmat;
-// 	tk.lpos += 1;
-// 	while((ch = kchar(tenv.source, pos)) != 0) {
-// 		if(ch == _RBR/*}*/) {
-// 			level--;
-// 			if(level == 0) {
-// 				if(IS_NOTNULL(tk)) {
-// 					KSETv(tk.text, new_kString(tenv.source + tok_start + 1, ((pos-2)-(tok_start)+1), 0));
-// 					tk.tt = TK_CODE;
-// 				}
-// 				return pos + 1;
-// 			}
-// 			pos++;
-// 		}
-// 		else if(ch == _LBR/*'{'*/) {
-// 			level++; pos++;
-// 		}
-// 		else {
-// 			pos = fmat[ch](_ctx, K_NULLTOKEN, tenv, pos, NULL);
-// 		}
-// 	}
-// 	if(IS_NOTNULL(tk)) {
-// 		size_t errref = SUGAR_P(ERR_, tk.uline, tk.lpos, "must close with }");
-// 		Token_toERR(_ctx, tk, errref);
-// 	}
-// 	return pos-1;
-// }
-
 konoha.tokenize = function(_ctx, tenv)
 {
 	var ch, pos = 0;
@@ -611,7 +610,7 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 			}
 			if(tls[i].topch == '$') continue;
 		}
-//		konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "illegal sugar syntax: %s", kToken_s(tk));
+		//		konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "illegal sugar syntax: %s", kToken_s(tk));
 		return false;
 	}
 	return true;
