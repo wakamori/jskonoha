@@ -84,9 +84,10 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 	var pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, ks, script, 0 /* uline */, tls);
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
+//	console.log(bk.blocks.data.syn);
 //	konoha.kArray_clear(tls, pos); // TODO unimplemented
 	tls = tls.slice(0, pos - 1); // IS THIS OK?
-	var result;// = Block_eval(_ctx, bk);
+	var result = konoha.Block_eval(_ctx, bk);
 	return result;
 }
 

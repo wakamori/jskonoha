@@ -166,8 +166,9 @@ konoha.TSTMT_JUMP         = 7;
 konoha.kStmt = function() {
 	this.h = new konoha.kObjectHeader();				//	kObjectHeader;
 	this.uline = null;			//	kline_t;
-	this.syn = null;			//	ksyntax_t *;
-	this.parentNULL = null	//	const struct _kBlock *;
+	this.syn = new konoha.ksyntax();
+	var _ctx = new konoha.kcontext_t();			//	ksyntax_t *;
+	this.parentNULL = new konoha.kBlock(_ctx, null);	//	const struct _kBlock *;
 	this.build = null;			//	kushort_t;
 };
 
@@ -246,10 +247,6 @@ konoha.KW_return  =  (7+konoha.KW_void)
 //// reserved
 konoha.KW_new     =  (8+konoha.KW_void)
 
-konoha.Stmt_ks = function(stmt)
-{
-	return stmt.parentNULL.ks;
-}
 
 konoha.kmodsugar_t = function() {
 	this.h = null;
@@ -265,7 +262,7 @@ konoha.kmodsugar_t = function() {
 	this.keywordMapNN = null;
 	this.packageList = null;
 	this.packageMapNO = null;
-	this.rootks = null;
+	this.rootks = new konoha.kKonohaSpace();
 
 	this.UndefinedParseExpr = null;
 	this.UndefinedStmtTyCheck = null;
@@ -321,3 +318,57 @@ konoha.kToken_setmn = function(tk, mn, mn_type)
 	tk.mn = mn;
 	tk.mn_type = mn_type;
 }
+
+konoha.TK_isType = function(TK) {
+    TK.kw == konoha.KW_Type;
+}
+konoha.TK_type = function(TK) {
+	return TK.ty;
+}
+
+konoha.kStmt_ks = function(STMT) {
+	return   konoha.Stmt_ks(_ctx, STMT);
+}
+konoha.Stmt_ks = function(_ctx, stmt)
+{
+	return stmt.parentNULL.ks;
+}
+
+konoha.kStmt_setsyn = function(STMT, S) {
+	return konoha.Stmt_setsyn(_ctx, STMT, S);
+}
+
+konoha.kStmt_done = function(STMT) {
+	return Stmt_setsyn(_ctx, STMT, null);
+}
+
+konoha.Stmt_setsyn = function(_ctx, stmt, syn)
+{
+	stmt.syn = syn;
+}
+
+konoha.kStmt_typed = function(STMT, T) {
+	return konoha.Stmt_typed(STMT, TSTMT_T);
+}
+
+konoha.Stmt_typed = function(stmt,  build)
+{
+	stmt.build = build;
+}
+
+konoha.kExpr_setsyn = function(expr, syn)
+{
+	expr.syn = syn;
+}
+
+konoha.kExpr_typed = function(E, B, TY) {
+	return   konoha.Expr_typed(E, TEXPR_B, TY);
+}
+
+konoha.Expr_typed = function(expr, build, ty)
+{
+	expr.build = build;
+	expr.ty = ty;
+	return expr;
+}
+

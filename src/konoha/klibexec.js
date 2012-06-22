@@ -37,10 +37,9 @@ konoha.kvproto_null = function() // for proto_get safe null
 	return konoha.hidden.pnull;
 }
 
-konoha.KObject_getObjectNULL = function(_ctx, o, key, defval)
+konoha.KObject_getObjectNULL = function(_ctx, data, key, defval)
 {
-	var d = konoha.kvproto_get(o.h.kvproto, key | konoha.FN_BOXED);
-	return (d != null) ? d.oval : defval;
+	return  konoha.kvproto_get(data[0].h.kvproto, key | konoha.FN_BOXED);
 }
 
 konoha.KObject_setObject = function(_ctx, o, key, ty, val)
@@ -63,15 +62,5 @@ konoha.kvproto_set = function(_ctx, pval, key, ty, uval)
 
 konoha.kvproto_get = function(p, key)
 {
-	var psize = p.data.length;
-	var d = p.kvs + ((key) % psize);
-	if(d.key == key) return d; else d++; // 3
-	if(d.key == key) return d; else d++;
-	if(d.key == key) return d; else d++;
-	var i;
-	for(i = 0; i < konoha.KVPROTO_DELTA - 3; i++) {
-		if(d.key == key) return d;
-		d++;
-	}
-	return null;
+	return p.data[key];
 }

@@ -68,7 +68,7 @@ konoha.kcontext_t = function() {
 	this.stack = null;
 	this.logger = null;
 //	this.modshare = null; this.modshare[MOD_sugar] => this.kmodsugar
-	this.kmodsugar = null;
+	this.kmodsugar = new konoha.kmodsugar_t();
 //	this.modlocal = null; this.modlocal[MOD_sugar] => this.ctxsugar
 	this.ctxsugar = null;
 };
@@ -120,6 +120,13 @@ konoha.CLASS_Array             = 8;
 konoha.CLASS_System            = 9;
 konoha.CLASS_T0                = 10;    /* ParamType*/
 //
+//konoha.OFLAG_Tvoid   =    konoha.MAGICFLAG(0)
+//konoha.CFLAG_Tvoid   =    konoha.kClass_TypeVar|kClass_UnboxType|kClass_Singleton|kClass_Final
+konoha.TY_void       =    konoha.CLASS_Tvoid
+//konoha.OFLAG_Tvar    =    konoha.MAGICFLAG(0)
+//konoha.CFLAG_Tvar    =    konoha.CFLAG_Tvoid
+//konoha.TY_var        =    konoha.CLASS_Tvar
+
 
 konoha.setNullObject = function(obj) {
 	this.isNullObject = true;
@@ -224,3 +231,17 @@ konoha.kGamma = function(conf) {
 konoha.FLAG_is = function(f, op) {
 	return ((f & op) == op)
 }
+
+konoha.kstatus_t = new konoha.Enum (
+	"K_FAILED",
+	"K_CONTINUE",
+	"K_BREAK"
+);
+
+// konoha.K_NULL        =    (_ctx.share.constNull)
+// konoha.K_TRUE        =    (_ctx.share.constTrue)
+// konoha.K_FALSE       =    (_ctx.share.constFalse)
+// konoha.K_NULLPARAM   =    (_ctx.share.nullParam)
+// konoha.K_DEFPARAM    =    (_ctx.share.defParam)
+// konoha.K_EMPTYARRAY  =    (_ctx.share.emptyArray)
+// konoha.TS_EMPTY      =    (_ctx.share.emptyString)

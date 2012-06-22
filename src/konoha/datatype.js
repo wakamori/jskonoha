@@ -46,3 +46,23 @@ konoha.kcontext_t.prototype.KCLASSTABLE_init = function() {
 		this.emptyArray = [];
 	}(this);
 }
+
+konoha.new_Method = function(_ctx, flag,  cid,  mn, paN,  func)
+{
+	var mtd = konoha.new_Object(_ctx, CT_MethodC, paN);
+	mtd.flag  = flag;
+	mtd.cid     = cid;
+	mtd.mn      = mn;
+	kMethod_setFunc(mtd, func);
+	return mtd;
+}
+
+konoha.new_Object = function(_ctx, ct, conf)
+{
+	var o = new konoha.kObject();
+	o.h.magicflag = ct.magicflag;
+	o.h.ct = ct;
+	o.h.kvproto = kvproto_null();
+	ct.init(_ctx, o, conf);
+	return o;
+}

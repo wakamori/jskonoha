@@ -1,33 +1,3 @@
-///****************************************************************************
-// * Copyright (c) 2012, the Konoha project authors. All rights reserved.
-// * Redistribution and use in source and binary forms, with or without
-// * modification, are permitted provided that the following conditions are met:
-// *
-// *  * Redistributions of source code must retain the above copyright notice,
-// *    this list of conditions and the following disclaimer.
-// *  * Redistributions in binary form must reproduce the above copyright
-// *    notice, this list of conditions and the following disclaimer in the
-// *    documentation and/or other materials provided with the distribution.
-// *
-// * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
-// * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-// * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
-// * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-// * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-// * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-// * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-// * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-// * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-// * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// ***************************************************************************/
-//
-//#ifdef __cplusplus
-//extern "C" {
-//#endif
-//
-///* ------------------------------------------------------------------------ */
-//
 //static gmabuf_t *Gamma_push(CTX, kGamma *gma, gmabuf_t *newone)
 //{
 //	gmabuf_t *oldone = gma->genv;
@@ -596,14 +566,12 @@
 //	RETURN_(K_NULLEXPR);
 //}
 //
-//static KMETHOD StmtTyCheck_Expr(CTX, ksfp_t *sfp _RIX)  // $expr
-//{
-//	VAR_StmtTyCheck(stmt, syn, gma);
-//	kbool_t r = Stmt_tyCheckExpr(_ctx, stmt, KW_Expr, gma, TY_var, TPOL_ALLOWVOID);
-//	kStmt_typed(stmt, EXPR);
-//	RETURNb_(r);
-//}
-//
+// konoha.StmtTyCheck_Expr(bk)  // $expr
+// {
+// //	kStmt_typed(stmt, EXPR);
+// 	stmt.build = TSTMT_EXPR;;
+// }
+
 //static int addGammaStack(CTX, gstack_t *s, ktype_t ty, ksymbol_t fn)
 //{
 //	int index = s->varsize;
@@ -723,26 +691,26 @@
 //	RETURN_(texpr);
 //}
 //
-////static void Stmt_toBlockStmt(CTX, kStmt *stmt, kBlock *bk)
-////{
-////	kObject_setObject(stmt, KW_Block, bk);
-////	kStmt_typed(stmt, BLOCK);
-////}
-//
-//static KMETHOD StmtTyCheck_if(CTX, ksfp_t *sfp _RIX)
-//{
-//	kbool_t r = 1;
-//	VAR_StmtTyCheck(stmt, syn, gma);
-//	if((r = Stmt_tyCheckExpr(_ctx, stmt, KW_Expr, gma, TY_Boolean, 0))) {
-//		kBlock *bkThen = kStmt_block(stmt, KW_Block, K_NULLBLOCK);
-//		kBlock *bkElse = kStmt_block(stmt, KW_else, K_NULLBLOCK);
-//		r = Block_tyCheckAll(_ctx, bkThen, gma);
-//		r = r & Block_tyCheckAll(_ctx, bkElse, gma);
-//		kStmt_typed(stmt, IF);
-//	}
-//	RETURNb_(r);
-//}
-//
+// static void Stmt_toBlockStmt(CTX, kStmt *stmt, kBlock *bk)
+// {
+// 	kObject_setObject(stmt, KW_Block, bk);
+// 	kStmt_typed(stmt, BLOCK);
+// }
+
+// static KMETHOD StmtTyCheck_if(CTX, ksfp_t *sfp _RIX)
+// {
+// 	kbool_t r = 1;
+// 	VAR_StmtTyCheck(stmt, syn, gma);
+// 	if((r = Stmt_tyCheckExpr(_ctx, stmt, KW_Expr, gma, TY_Boolean, 0))) {
+// 		kBlock *bkThen = kStmt_block(stmt, KW_Block, K_NULLBLOCK);
+// 		kBlock *bkElse = kStmt_block(stmt, KW_else, K_NULLBLOCK);
+// 		r = Block_tyCheckAll(_ctx, bkThen, gma);
+// 		r = r & Block_tyCheckAll(_ctx, bkElse, gma);
+// 		kStmt_typed(stmt, IF);
+// 	}
+// 	RETURNb_(r);
+// }
+
 //static kStmt* Stmt_lookupIfStmtWithoutElse(CTX, kStmt *stmt)
 //{
 //	kBlock *bkElse = kStmt_block(stmt, KW_else, NULL);
@@ -795,46 +763,46 @@
 //	RETURNb_(r);
 //}
 //
-//static KMETHOD StmtTyCheck_return(CTX, ksfp_t *sfp _RIX)
-//{
-//	VAR_StmtTyCheck(stmt, syn, gma);
-//	kbool_t r = 1;
-//	ktype_t rtype = gma->genv->mtd->pa->rtype;
-//	kStmt_typed(stmt, RETURN);
-//	if(rtype != TY_void) {
-//		r = Stmt_tyCheckExpr(_ctx, stmt, KW_Expr, gma, rtype, 0);
-//	} else {
-//		kExpr *expr = (kExpr*)kObject_getObjectNULL(stmt, 1);
-//		if (expr != NULL) {
-//			SUGAR_P(WARN_, stmt->uline, -1, "ignored return value");
-//			r = Stmt_tyCheckExpr(_ctx, stmt, KW_Expr, gma, TY_var, 0);
-//			kObject_removeKey(stmt, 1);
-//		}
-//	}
-//	RETURNb_(r);
-//}
-//
+// static KMETHOD StmtTyCheck_return(CTX, ksfp_t *sfp _RIX)
+// {
+// 	VAR_StmtTyCheck(stmt, syn, gma);
+// 	kbool_t r = 1;
+// 	ktype_t rtype = gma->genv->mtd->pa->rtype;
+// 	kStmt_typed(stmt, RETURN);
+// 	if(rtype != TY_void) {
+// 		r = Stmt_tyCheckExpr(_ctx, stmt, KW_Expr, gma, rtype, 0);
+// 	} else {
+// 		kExpr *expr = (kExpr*)kObject_getObjectNULL(stmt, 1);
+// 		if (expr != NULL) {
+// 			SUGAR_P(WARN_, stmt->uline, -1, "ignored return value");
+// 			r = Stmt_tyCheckExpr(_ctx, stmt, KW_Expr, gma, TY_var, 0);
+// 			kObject_removeKey(stmt, 1);
+// 		}
+// 	}
+// 	RETURNb_(r);
+// }
+
 ///* ------------------------------------------------------------------------ */
 //
-//static void Stmt_toExprCall(CTX, kStmt *stmt, kMethod *mtd, int n, ...)
-//{
-////	kExpr *expr = new_ConsExpr(_ctx, SYN_(kStmt_ks(stmt), KW_ExprMethodCall), 0);
-////	int i;
-////	va_list ap;
-////	va_start(ap, n);
-////	kArray_add(expr->cons, mtd);
-////	for(i = 0; i < n; i++) {
-////		kObject *v =  (kObject*)va_arg(ap, kObject*);
-////		assert(v != NULL);
-////		kArray_add(expr->cons, v);
-////	}
-////	va_end(ap);
-////	kObject_setObject(stmt, 1, expr);
-////	kStmt_setsyn(stmt, SYN_(kStmt_ks(stmt), KW_Expr));
-////	kStmt_typed(stmt, EXPR);
-//	DBG_ABORT("This function was added by ide? is it working?");
-//}
-//
+// static void Stmt_toExprCall(CTX, kStmt *stmt, kMethod *mtd, int n, ...)
+// {
+// 	kExpr *expr = new_ConsExpr(_ctx, SYN_(kStmt_ks(stmt), KW_ExprMethodCall), 0);
+// 	int i;
+// 	va_list ap;
+// 	va_start(ap, n);
+// 	kArray_add(expr->cons, mtd);
+// 	for(i = 0; i < n; i++) {
+// 		kObject *v =  (kObject*)va_arg(ap, kObject*);
+// 		assert(v != NULL);
+// 		kArray_add(expr->cons, v);
+// 	}
+// 	va_end(ap);
+// 	kObject_setObject(stmt, 1, expr);
+// 	kStmt_setsyn(stmt, SYN_(kStmt_ks(stmt), KW_Expr));
+// 	kStmt_typed(stmt, EXPR);
+// 	DBG_ABORT("This function was added by ide? is it working?");
+// }
+
 /////* ------------------------------------------------------------------------ */
 //
 //
@@ -1171,97 +1139,52 @@
 //	return result;
 //}
 //
-//static ktype_t Stmt_checkReturnType(CTX, kStmt *stmt)
-//{
-//	if(stmt->syn->kw == KW_Expr) {
-//		kExpr *expr = (kExpr*)kObject_getObjectNULL(stmt, 1);
-//		DBG_ASSERT(expr != NULL);
-//		if(expr->ty != TY_void) {
-//			kStmt_setsyn(stmt, SYN_(kStmt_ks(stmt), KW_return));
-//			kStmt_typed(stmt, RETURN);
-//			return expr->ty;
-//		}
-//	}
-//	return TY_void;
-//}
-//
-//static ktype_t Gamma_evalMethod(CTX, kGamma *gma, kBlock *bk, kMethod *mtd)
-//{
-//	kStmt *stmt = bk->blocks->stmts[0];
-//	if(stmt->syn == NULL) {
-//		_ctx->stack->evalty = TY_void;
-//		return K_CONTINUE;
-//	}
-//	if(stmt->syn->kw == KW_Err) return K_FAILED;
-//	ktype_t rtype = Stmt_checkReturnType(_ctx, stmt);
-//	kMethod_genCode(mtd, bk);
-//	return Method_runEval(_ctx, mtd, rtype);
-//}
-//
-//static kstatus_t SingleBlock_eval(CTX, kBlock *bk, kMethod *mtd, kKonohaSpace *ks)
-//{
-//	kstatus_t result;
-//	kGamma *gma = ctxsugar->gma;
-//	gammastack_t fvars[32] = {}, lvars[32] = {};
-//	gmabuf_t newgma = {
-//		.flag = kGamma_TOPLEVEL,
-//		.mtd = mtd,
-//		.ks = ks,
-//		.this_cid     = TY_System,
-//		.f.vars = fvars, .f.capacity = 32, .f.varsize = 0, .f.allocsize = 0,
-//		.l.vars = lvars, .l.capacity = 32, .l.varsize = 0, .l.allocsize = 0,
-//	};
-//	GAMMA_PUSH(gma, &newgma);
-//	Gamma_initIt(_ctx, &newgma, mtd->pa);
-//	Block_tyCheckAll(_ctx, bk, gma);
-//	if(kGamma_isERROR(gma)) {
-//		result = K_BREAK;
-//		_ctx->stack->evalty = TY_void;
-//	}
-//	else {
-//		Gamma_shiftBlockIndex(_ctx, &newgma);
-//		result = Gamma_evalMethod(_ctx, gma, bk, mtd);
-//	}
-//	GAMMA_POP(gma, &newgma);
-//	return result;
-//}
-//
-//static kstatus_t Block_eval(CTX, kBlock *bk)
-//{
-//	INIT_GCSTACK();
-//	BEGIN_LOCAL(lsfp, 0);
-//	kBlock *bk1 = ctxsugar->singleBlock;
-//	kMethod *mtd = new_kMethod(kMethod_Static, 0, 0, K_DEFPARAM, NULL);
-//	PUSH_GCSTACK(mtd);
-//	kstack_t *base = _ctx->stack;
-//	kstatus_t result = K_CONTINUE;
-//	kjmpbuf_t lbuf = {};
-//	int i, jmpresult;
-//	if(base->evaljmpbuf == NULL) {
-//		base->evaljmpbuf = (kjmpbuf_t*)KCALLOC(sizeof(kjmpbuf_t), 1);
-//	}
-//	memcpy(&lbuf, base->evaljmpbuf, sizeof(kjmpbuf_t));
-//	if((jmpresult = ksetjmp(*base->evaljmpbuf)) == 0) {
-//		for(i = 0; i < kArray_size(bk->blocks); i++) {
-//			KSETv(bk1->blocks->list[0], bk->blocks->list[i]);
-//			KSETv(((struct _kBlock*)bk1)->ks, bk->ks);  // FIXME
-//			result = SingleBlock_eval(_ctx, bk1, mtd, bk->ks);
-//			if(result == K_FAILED) break;
-//		}
-//	}
-//	else {
-//		DBG_P("Catch eval exception jmpresult=%d", jmpresult);
-//		base->evalty = TY_void;
-//		result = K_FAILED;
-//	}
-//	memcpy(base->evaljmpbuf, &lbuf, sizeof(kjmpbuf_t));
-//	END_LOCAL();
-//	RESET_GCSTACK();
-//	return result;
-//}
-//
-///* ------------------------------------------------------------------------ */
-//
-//#ifdef __cplusplus
-//}
-//#endif
+konoha.Stmt_checkReturnType = function(_ctx, data)
+{
+//	console.log(data[0].syn.kw);
+//	console.log(konoha.KW_Expr);
+//	console.log(data.h);
+	if(data[0].syn.kw == "$expr") {
+//	console.log("hoge");
+//	console.log(data.h);
+		console.log(data[0].h.kvproto);
+		var expr = konoha.KObject_getObjectNULL(_ctx, data[0], 1, null);
+		console.log(expr);
+		if(expr != konoha.TY_void) {
+//			console.log(data);
+			konoha.kStmt_setsyn(data, konoha.SYN_(konoha.Stmt_ks(_ctx, data[0]), konoha.KW_return));
+			konoha.kStmt_typed(data, RETURN);
+			return expr.ty;
+		}
+	}
+	return konoha.TY_void;
+}
+
+// konoha.Gamma_evalMethod = function(_ctx, kGamma *gma, kBlock *bk, kMethod *mtd)
+// {
+// 	kStmt *stmt = bk.blocks.stmts[0];
+// 	if(stmt.syn == NULL) {
+// 		_ctx.stack.evalty = TY_void;
+// 		return K_CONTINUE;
+// 	}
+// 	if(stmt.syn.kw == KW_Err) return K_FAILED;
+	
+// 	kMethod_genCode(mtd, bk);
+// 	return Method_runEval(_ctx, mtd, rtype);
+// }
+
+// konoha.SingleBlock_eval = function(_ctx, bk, mtd, ks)
+// {
+// 	var result = Gamma_evalMethod(_ctx, gma, bk, mtd);
+// 	ktype_t rtype = Stmt_checkReturnType(_ctx, stmt);
+// 	return result;
+// }
+
+konoha.Block_eval = function(_ctx, bk)
+{
+//	console.log(bk.blocks.data);
+//	console.log(bk.blocks.data[0].syn);
+	var result = konoha.Stmt_checkReturnType(_ctx, bk.blocks.data);
+	konoha.MODCODE_init.prototype.BLOCK_asm(_ctx, bk, 0);
+	return result;
+}
