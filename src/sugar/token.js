@@ -555,7 +555,6 @@ konoha.checkNestedSyntax = function(_ctx, tls, s, e, tt, opench, closech)
 	if(t == opench) {
 		var ne = konoha.findTopCh(_ctx, tls, s.ivalue+1, e, tk.tt, closech);
 		tk.tt = tt; tk.kw = konoha.kw.array[tt]; // TODO!! tt=AST_OPTIONAL
-		//		tk.sub = new_(TokenArray, 0);
 		tk.sub = new Array();
 		tk.topch = opench; 
 		tk.closech = closech;
@@ -610,11 +609,12 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 		if(tk.tt == konoha.ktoken_t.TK_OPERATOR) {
 			var boxed_i = {};
 			boxed_i.ivalue = i;
-			if(konoha.checkNestedSyntax(_ctx, tls, boxed_i, e, konoha.ktoken_t.AST_OPTIONAL, '[', ']')) {
+			var cond = konoha.checkNestedSyntax(_ctx, tls, boxed_i, e, konoha.ktoken_t.AST_OPTIONAL, '[', ']');
+			i = boxed_i.ivalue;
+			if (cond) {
 				adst.push(tk);
 				continue;
 			}
-			i = boxed_i.ivalue;
 			if(tls[i].topch == '$') continue;
 		}
 		//		konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "illegal sugar syntax: %s", kToken_s(tk));
@@ -628,6 +628,9 @@ konoha.parseSyntaxRule = function(_ctx, rule, uline, a)
 	var tls = _ctx.ctxsugar.tokens;
 	pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, null, rule, uline, tls);
+//	console.log("rule=\"", rule, "\"");
+//	console.log(tls);
 	konoha.makeSyntaxRule(_ctx, tls, pos, tls.length, a);
+//	console.log(a);
 	tls.length = 0;
 }

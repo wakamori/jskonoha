@@ -348,7 +348,7 @@ konoha.matchSyntaxRule = function(_ctx, stmt, rules, uline, tls, s, e, optional)
 			}
 			var c = e;
 			if(ri + 1 < rule_size && rules[ri+1].tt == konoha.ktoken_t.TK_CODE) {
-				c = lookAheadKeyword(tls, ti+1, e, rules[ri+1]);
+				c = konoha.lookAheadKeyword(tls, ti+1, e, rules[ri+1]);
 				if(c == -1) {
 					if(optional) return s;
 					konoha.Token_p(_ctx, tk, konoha.kreportlevel_t.ERR_, konoha.T_statement_(_ctx, stmt.syn.kw) + " needs " + konoha.T_kw_(_ctx, rule.kw));
@@ -440,7 +440,6 @@ konoha.Stmt_parseSyntaxRule = function(_ctx, stmt, tls, s, e) {
 	var syn = konoha.KonohaSpace_getSyntaxRule(_ctx, konoha.Stmt_ks(_ctx, stmt), tls, s, e);
 	if(syn.syntaxRuleNULL != null) {
 		stmt.syn = syn;
-		console.log(syn);
 		ret = (konoha.matchSyntaxRule(_ctx, stmt, syn.syntaxRuleNULL, stmt.uline, tls, s, e, 0) != -1);
 	}
 	else {
@@ -661,8 +660,7 @@ konoha.ParseStmt_Expr = function(_ctx, stmt, syn, name, tls, s, e) {
 
 	if(expr != null) {
 //		konoha.dumpExpr(_ctx, 0, 0, expr);
-		var ty_expr = -1; //FIX ME!!
-		konoha.KObject_setObject(_ctx, stmt, name, ty_expr, expr);
+		konoha.KObject_setObject(_ctx, stmt, name, null, expr);
 		r = e;
 	}
 	return r;
@@ -672,8 +670,9 @@ konoha.ParseStmt_Type = function(_ctx, stmt, syn, name, tls, s, e)
 {
 	var r = -1;
 	var tk = tls[s];
-	if((tk).kw == konoha.KW_Type) {
-		konoha.KObject_setObject(_ctx, stmt, name, tk_ty, tk);
+	console.log(tk.kw);
+	if(tk.kw == konoha.kw.Type) {
+		konoha.KObject_setObject(_ctx, stmt, name, null, tk);
 		r = s + 1;
 	}
 	return r;
@@ -691,6 +690,7 @@ konoha.ParseStmt_Usymbol = function(_ctx, stmt, syn, name, tls, s, e) {
 }
 
 konoha.ParseStmt_Symbol = function(_ctx, stmt, syn, name, tls, s, e,_rix) {
+	console.log("parseStmt_Symbol");
 	var r = -1;
 	var tk = tls[s];
 	if(tk.tt == konoha.ktoken_t.TK_SYMBOL) {
@@ -701,6 +701,7 @@ konoha.ParseStmt_Symbol = function(_ctx, stmt, syn, name, tls, s, e,_rix) {
 }
 
 konoha.ParseStmt_Params = function(_ctx, stmt, syn, name, tls, s, e,_rix) {
+	console.log("parseStmt_Params");
 	var r = -1;
 	var tk = tls[s];
 	if(tk.tt == konoha.ktoken_t.AST_PARENTHESIS) {
@@ -715,6 +716,7 @@ konoha.ParseStmt_Params = function(_ctx, stmt, syn, name, tls, s, e,_rix) {
 }
 
 konoha.ParseStmt_Block = function(_ctx, stmt, syn, name, tls, s, e,_rix) {
+	console.log("parseStmt_Block");
 	var tk = tls[s];
 	if(tk.tt == konoha.ktoken_t.TK_CODE) {
 		konoha.KObject_setObject(_ctx, stmt, name, null, tk);
