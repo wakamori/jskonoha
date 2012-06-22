@@ -249,7 +249,9 @@ konoha.parseDQUOTE = function(_ctx, tk, tenv, tok_start, thunk)
 
 konoha.parseSKIP = function(_ctx, tk, tenv, tok_start, thunk)
 {
-	tk.tt = 0;
+	if (tk != null) {
+		tk.tt = 0;
+	}
 	return tok_start+1;
 }
 

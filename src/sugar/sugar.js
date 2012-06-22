@@ -80,17 +80,17 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 	var tls = _ctx.ctxsugar.tokens;
 	var pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, ks, script, 0 /* uline */, tls);
-// 	konoha.DBG_P("################ tokenize ##################");
-// 	konoha.DBG_P(tls);
-// 	konoha.DBG_P("############################################");
+	konoha.DBG_P("################ tokenize ##################");
+	konoha.DBG_P(tls);
+	konoha.DBG_P("############################################");
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
-
-	console.log("################### ast ####################");
-//	console.log(bk);
-	console.log(bk.blocks.data[0].h.kvproto);
-//	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
-//	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
-	console.log("############################################");
+	konoha.DBG_P("################### ast ####################");
+	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data);
+// 	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data[1]);
+// 	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data[0].cons.data[0]);
+// 	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
+// 	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
+	konoha.DBG_P("############################################");
 	tls = tls.slice(0, pos - 1);
 	var result = konoha.Block_eval(_ctx, bk);
 
@@ -133,18 +133,13 @@ konoha.KonohaSpace_loadstream = function(_ctx, ks)
 //for browser
 konoha.KonohaSpace_loadstream = function(_ctx, ks)
 {
-	//	var script = 'p("hello");'; // TODO load script
+//	var script = 'p("hello");';
+//	var script = 'if (true) {1+1;}';
 
-	var script = "123+456;";
-//	var script = 'if (0) {1+1;}'; // TODO load script
- 	console.log("##############script#########################");
- 	console.log(script);
- 	console.log("#############################################");
-	// var script = 'if (true) {1+1;}'; // TODO load script
- 	// konoha.DBG_P("##############script#########################");
- 	// konoha.DBG_P(script);
- 	// konoha.DBG_P("#############################################");
-
+	var script = 'int func(int i) { return i+1;}';
+ 	konoha.DBG_P("##############script#########################");
+ 	konoha.DBG_P(script);
+ 	konoha.DBG_P("#############################################");
 	var _status = konoha.MODSUGAR_eval(_ctx, script);
 }
 
