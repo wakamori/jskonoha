@@ -117,3 +117,4 @@ konoha.kw._if         = 'if';
 konoha.kw._else       = 'else';
 konoha.kw._return     = 'return';
 konoha.kw.KW_StmtMethodDecl = konoha.kw._void;
+konoha.kw.KW_StmtTypeDecl =  konoha.kw.Type;

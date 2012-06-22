@@ -67,7 +67,7 @@ konoha.parseNUM = function(_ctx, tk, tenv, tok_start, thunk)
 	while((ch = tenv.source[pos++]) != undefined) {
 		if(ch == '_') continue;
 		if(ch == '.') {
-			if(konoha.isdigit(tenv.source[pos])) {
+			if(!konoha.isnum(tenv.source[pos])) {
 				break;
 			}
 			dot++;
@@ -187,7 +187,7 @@ konoha.parseCOMMENT = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	var ch, prev = 0, level = 1, pos = tok_start + 2;
 	/*@#nnnn is line number */
-	if(tenv.source[pos] == '@' && tenv.source[pos+1] == '#' && isdigit(tenv.source[pos+2])) {
+	if(tenv.source[pos] == '@' && tenv.source[pos+1] == '#' && konoha.isnum(tenv.source[pos+2])) {
 		//TODO
 		// 		tenv.uline >>= (sizeof(kshort_t)*8);
 		// 		tenv.uline = (tenv.uline<<(sizeof(kshort_t)*8))  | strtoll(tenv.source + pos + 2, null, 10);

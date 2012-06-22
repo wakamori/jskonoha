@@ -92,7 +92,7 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 // 	konoha.DBG_P(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
 	konoha.DBG_P("############################################");
 	tls = tls.slice(0, pos - 1);
-	var result = konoha.Block_eval(_ctx, bk);
+	var result;// = konoha.Block_eval(_ctx, bk);
 
 	return result;
 }
@@ -130,18 +130,18 @@ konoha.KonohaSpace_loadstream = function(_ctx, ks)
 	rl.prompt();
 }
 
-//for browser
-konoha.KonohaSpace_loadstream = function(_ctx, ks)
-{
-//	var script = 'p("hello");';
-//	var script = 'if (true) {1+1;}';
+// //for browser
+// konoha.KonohaSpace_loadstream = function(_ctx, ks)
+// {
+// //	var script = 'p("hello");';
+// //	var script = 'if (true) {1+1;}';
 
-	var script = 'int func(int i) { return i+1;}';
- 	konoha.DBG_P("##############script#########################");
- 	konoha.DBG_P(script);
- 	konoha.DBG_P("#############################################");
-	var _status = konoha.MODSUGAR_eval(_ctx, script);
-}
+// 	var script = 'int func(int i) { return i+1;}';
+//  	konoha.DBG_P("##############script#########################");
+//  	konoha.DBG_P(script);
+//  	konoha.DBG_P("#############################################");
+// 	var _status = konoha.MODSUGAR_eval(_ctx, script);
+// }
 
 konoha.KonohaSpace_loadscript = function(_ctx, ks)
 {
