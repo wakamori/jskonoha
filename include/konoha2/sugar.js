@@ -352,7 +352,7 @@ konoha.Stmt_setsyn = function(_ctx, stmt, syn)
 }
 
 konoha.kStmt_typed = function(STMT, T) {
-	return konoha.Stmt_typed(STMT, TSTMT_T);
+	return konoha.Stmt_typed(STMT, T);
 }
 
 konoha.Stmt_typed = function(stmt,  build)

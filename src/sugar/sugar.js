@@ -87,8 +87,8 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 
 	console.log("################### ast ####################");
 //	console.log(bk);
-	console.log(bk.blocks.data[0].h.kvproto);
-//	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
+//	console.log(bk.blocks.data[0].h.kvproto);
+	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
 //	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
 	console.log("############################################");
 	tls = tls.slice(0, pos - 1);
