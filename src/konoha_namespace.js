@@ -1,4 +1,8 @@
 konoha = {};
+konoha.DBG_P = function(msg) {
+	console.log(msg);
+}
+
 konoha.Enum = function() {
 	for (var i in arguments) {
 		this[arguments[i]] = parseInt(i);
@@ -84,6 +88,7 @@ konoha.kw.array = [
 	konoha.kw.Params,
 	konoha.kw.Toks,
 ];
+
 konoha.kw.DOT         = '.';
 konoha.kw.DIV         = '/';
 konoha.kw.MOD         = '%';

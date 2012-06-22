@@ -185,6 +185,10 @@ konoha.kBlock = function(_ctx, conf) {
 	this.esp = null;			//kExpr *
 };
 
+konoha.SYN_ = function(_ctx, KS, KW) {
+	return konoha.KonohaSpace_syntax(_ctx, KS, KW, 0);
+}
+
 konoha.SYNFLAG_ExprTerm        = 1;
 konoha.SYNFLAG_ExprOp          = 1 << 1;
 konoha.SYNFLAG_ExprLeftJoinOp2 = 1 << 2;
@@ -334,7 +338,7 @@ konoha.Stmt_ks = function(_ctx, stmt)
 	return stmt.parentNULL.ks;
 }
 
-konoha.kStmt_setsyn = function(STMT, S) {
+konoha.kStmt_setsyn = function(_ctx, STMT, S) {
 	return konoha.Stmt_setsyn(_ctx, STMT, S);
 }
 
