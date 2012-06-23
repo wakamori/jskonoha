@@ -85,12 +85,12 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 // 	konoha.DBG_P("############################################");
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
 
-	console.log("################### ast ####################");
+//	console.log("################### ast ####################");
 //	console.log(bk);
-//	console.log(bk.blocks.data[0].h.kvproto);
-	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
-//	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
-	console.log("############################################");
+//	console.log(bk.blocks.data[0].h.kvproto.data[0]);
+	// console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
+	// console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
+	// console.log("############################################");
 	tls = tls.slice(0, pos - 1);
 	var result = konoha.Block_eval(_ctx, bk);
 
@@ -103,32 +103,32 @@ konoha.MODSUGAR_eval = function(_ctx, script)
 }
 
 //for node
-konoha.KonohaSpace_loadstream = function(_ctx, ks)
-{
-	//	var script = 'p("hello");'; // TODO load script
-	var readline = require('readline'),
-	rl = readline.createInterface(process.stdin, process.stdout),
-	prefix = '>>> ';
-	rl.on('line', function(line) {
-		switch(line.trim()) {
-		case 'quit':
-		case 'exit':
-		case 'bye':
-			process.exit(0);
-			break;
-		default:
-			var script = line.trim();
-			var _status = konoha.MODSUGAR_eval(_ctx, script);
-			break;
-		}
-		rl.setPrompt(prefix, prefix.length);
-		rl.prompt();
-	}).on('close', function() {
-		process.exit(0);
-	});
-	rl.setPrompt(prefix, prefix.length);
-	rl.prompt();
-}
+// konoha.KonohaSpace_loadstream = function(_ctx, ks)
+// {
+// 	//	var script = 'p("hello");'; // TODO load script
+// 	var readline = require('readline'),
+// 	rl = readline.createInterface(process.stdin, process.stdout),
+// 	prefix = '>>> ';
+// 	rl.on('line', function(line) {
+// 		switch(line.trim()) {
+// 		case 'quit':
+// 		case 'exit':
+// 		case 'bye':
+// 			process.exit(0);
+// 			break;
+// 		default:
+// 			var script = line.trim();
+// 			var _status = konoha.MODSUGAR_eval(_ctx, script);
+// 			break;
+// 		}
+// 		rl.setPrompt(prefix, prefix.length);
+// 		rl.prompt();
+// 	}).on('close', function() {
+// 		process.exit(0);
+// 	});
+// 	rl.setPrompt(prefix, prefix.length);
+// 	rl.prompt();
+// }
 
 //for browser
 konoha.KonohaSpace_loadstream = function(_ctx, ks)

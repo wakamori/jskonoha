@@ -1147,14 +1147,11 @@ konoha.Stmt_checkReturnType = function(_ctx, data)
 	if(data[0].syn.kw == "$expr") {
 //	console.log("hoge");
 //	console.log(data.h);
-		console.log("-------------------data[0].h.kvproto.data[0]----");
-		console.log(data[0].h.kvproto.data[0]);
-		console.log("-------------------data[0].h.kvproto.data[0]----");
 		var expr = konoha.KObject_getObjectNULL(_ctx, data, 0, null);
-		console.log("================expr==============");
-		console.log(expr);
-		console.log("================expr==============");
-		if(expr != konoha.TY_void) {
+//		console.log("================expr==============");
+//		console.log(expr);
+//		console.log("================expr==============");
+		if(expr.ty != konoha.TY_void) {
 //			console.log(data);
 			konoha.kStmt_setsyn(_ctx, data, konoha.SYN_(konoha.Stmt_ks(_ctx, data[0]), konoha.KW_return));
 			konoha.kStmt_typed(data, konoha.TSTMT_RETURN);

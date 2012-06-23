@@ -417,7 +417,7 @@ konoha.KonohaSpace_getSyntaxRule = function(_ctx, ks, tls, s, e) {
 			}
 			return konoha.KonohaSpace_syntax(_ctx, ks, KW_StmtTypeDecl, 0);  
 		}
-		return konoha.KonohaSpace_syntax(_ctx, ks, KW_Expr, 0);
+		return konoha.KonohaSpace_syntax(_ctx, ks, konoha.kw.Expr, 0);
 	}
 	var syn = konoha.KonohaSpace_syntax(_ctx, ks, tk.kw, 0);
 	if(syn.syntaxRuleNULL == null) {
@@ -551,7 +551,7 @@ konoha.Stmt_newExpr2 = function(_ctx, stmt, tls, s,  e) {
 		else {
 			konoha.sugar_p(konoha.kreportlevel_t.ERR_, stmt.uline, 0, "expected expression");
 		}
-		return K_NULLEXPR;
+		return konoha.K_NULLEXPR;
 	}
 }
 

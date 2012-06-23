@@ -182,7 +182,7 @@ konoha.kBlock = function(_ctx, conf) {
 	}
 	this.parentNULL = null;	//kStmt *
 	this.blocks = new konoha.kArray();		//kArray *
-	this.esp = null;			//kExpr *
+	this.esp = new konoha.kExpr();;			//kExpr *
 };
 
 konoha.SYN_ = function(_ctx, KS, KW) {
@@ -323,8 +323,12 @@ konoha.kToken_setmn = function(tk, mn, mn_type)
 	tk.mn_type = mn_type;
 }
 
+konoha.IS_Expr = function(_ctx, expr) {
+	return (expr.h.ct == _ctx.kmodsugar.cExpr);
+}
+
 konoha.TK_isType = function(TK) {
-    TK.kw == konoha.KW_Type;
+    return TK.kw == konoha.KW_Type;
 }
 konoha.TK_type = function(TK) {
 	return TK.ty;
@@ -357,7 +361,7 @@ konoha.kStmt_typed = function(STMT, T) {
 
 konoha.Stmt_typed = function(stmt,  build)
 {
-	stmt.build = build;
+	stmt[0].build = build;
 }
 
 konoha.kExpr_setsyn = function(expr, syn)
