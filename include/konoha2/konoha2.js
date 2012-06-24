@@ -245,3 +245,23 @@ konoha.kstatus_t = new konoha.Enum (
 // konoha.K_DEFPARAM    =    (_ctx.share.defParam)
 // konoha.K_EMPTYARRAY  =    (_ctx.share.emptyArray)
 // konoha.TS_EMPTY      =    (_ctx.share.emptyString)
+konoha.K_CALLDELTA =   4
+konoha.K_RTNIDX    = (-4)
+konoha.K_SHIFTIDX  = (-3)
+konoha.K_PCIDX     = (-2)
+konoha.K_MTDIDX    = (-1)
+konoha.K_TMRIDX    = (0)
+konoha.K_SELFIDX   = 0
+				   
+konoha.K_ULINEIDX2 =  (-7)
+konoha.K_SHIFTIDX2 =  (-5)
+konoha.K_PCIDX2    =  (-3)
+konoha.K_MTDIDX2   =  (-1)
+
+konoha.kMethod_isStatic = function(mtd) {
+	return konoha.TFLAG_is(mtd.flag, 1<<4);
+}
+
+konoha.TFLAG_is = function(f, op) {
+	return ( (f & op) == op);
+}

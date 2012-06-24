@@ -1144,16 +1144,18 @@ konoha.Stmt_checkReturnType = function(_ctx, data)
 //	console.log(data[0].syn.kw);
 //	console.log(konoha.KW_Expr);
 //	console.log(data.h);
-	if(data[0].syn.kw == "$expr") {
-//	console.log("hoge");
+	if(data.syn.kw == "$expr") {
+//	console.log("hogecheckreturntype");
 //	console.log(data.h);
 		var expr = konoha.KObject_getObjectNULL(_ctx, data, 0, null);
 //		console.log("================expr==============");
 //		console.log(expr);
 //		console.log("================expr==============");
 		if(expr.ty != konoha.TY_void) {
-//			console.log(data);
-			konoha.kStmt_setsyn(_ctx, data, konoha.SYN_(konoha.Stmt_ks(_ctx, data[0]), konoha.KW_return));
+//			console.log("hogeexpr.ty");
+//			console.log(data.syn);
+//			konoha.kStmt_setsyn(_ctx, data, konoha.SYN_(_ctx, konoha.Stmt_ks(_ctx, data), konoha.KW_return));
+//			console.log(data.syn);
 			konoha.kStmt_typed(data, konoha.TSTMT_RETURN);
 			return expr.ty;
 		}
@@ -1185,7 +1187,8 @@ konoha.Block_eval = function(_ctx, bk)
 {
 //	console.log(bk.blocks.data);
 //	console.log(bk.blocks.data[0].syn);
-	var result = konoha.Stmt_checkReturnType(_ctx, bk.blocks.data);
+	var result = konoha.Stmt_checkReturnType(_ctx, bk.blocks.data[0]);
+//	console.log(bk.blocks.data[0]);
 	konoha.MODCODE_init.prototype.BLOCK_asm(_ctx, bk, 0);
 	return result;
 }

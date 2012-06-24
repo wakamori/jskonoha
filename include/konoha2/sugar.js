@@ -361,7 +361,7 @@ konoha.kStmt_typed = function(STMT, T) {
 
 konoha.Stmt_typed = function(stmt,  build)
 {
-	stmt[0].build = build;
+	stmt.build = build;
 }
 
 konoha.kExpr_setsyn = function(expr, syn)
