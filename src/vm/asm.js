@@ -113,7 +113,7 @@ konoha.MODCODE_init.prototype.CALL_asm = function(_ctx, a, expr, shift, espidx)
 	console.log(expr.cons.data.length);
 	console.log("-----expr.cons.data.length----------");
 	for (var i = s; i < expr.cons.data.length; i++) {
-		var exprN = expr.cons[i];
+		var exprN = expr.cons.data[i];
 		konoha.MODCODE_init.prototype.EXPR_asm(_ctx, thisidx + i - 1, exprN, shift, thisidx + i - 1);
 	}
 	var argc = expr.cons.lenght - 2;
@@ -231,7 +231,7 @@ konoha.MODCODE_init.prototype.ReturnStmt_asm = function(_ctx, stmt, shift, espid
 	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, 0, null);
 	console.log("expr = ");
 	console.log(expr.build);
-	expr.build = konoha.TEXPR_CALL;
+//	expr.build = konoha.TEXPR_CALL;
 	if(expr != null && konoha.IS_Expr(_ctx, expr) && expr.ty != konoha.TY_void) {
 //		console.log("hoge");
 		konoha.MODCODE_init.prototype.EXPR_asm(_ctx, konoha.K_RTNIDX, expr, espidx);

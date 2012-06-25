@@ -175,3 +175,12 @@ konoha.new_ConsExpr = function(_ctx, syn, n)
 	expr = konoha.Expr_vadd(_ctx, expr, n, args);
 	return expr;
 }
+
+konoha.KonohaSpace_getCastMethodNULL = function(_ctx, ks, cid, tcid)
+{
+	var mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, cid, tcid | konoha.MN_TOCID);
+	if(mtd == null) {
+		mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, cid, tcid | konoha.MN_ASCID);
+	}
+	return mtd;
+}

@@ -25,6 +25,7 @@
 konoha.kcontext_t.prototype.KCLASSTABLE_init = function() {
 	this.share = new function(_ctx){
 		//loadInitStructData(); TODO
+		this.ca = new konoha.karray_t();
 		this.lcnameMapNN = {};
 		this.fieldList = [];
 		this.fieldMapNN = {};
@@ -47,22 +48,24 @@ konoha.kcontext_t.prototype.KCLASSTABLE_init = function() {
 	}(this);
 }
 
-konoha.new_Method = function(_ctx, flag,  cid,  mn, paN,  func)
-{
-	var mtd = konoha.new_Object(_ctx, CT_MethodC, paN);
-	mtd.flag  = flag;
-	mtd.cid     = cid;
-	mtd.mn      = mn;
-	kMethod_setFunc(mtd, func);
-	return mtd;
-}
-
 konoha.new_Object = function(_ctx, ct, conf)
 {
 	var o = new konoha.kObject();
 	o.h.magicflag = ct.magicflag;
 	o.h.ct = ct;
-	o.h.kvproto = kvproto_null();
+	o.h.kvproto = konoha.kvproto_null();
 	ct.init(_ctx, o, conf);
 	return o;
 }
+
+
+konoha.new_Method = function(_ctx, flag,  cid,  mn, paN,  func)
+{
+	var mtd = konoha.new_Object(_ctx, _ctx.share.ca.cts, paN);
+	mtd.flag  = flag;
+	mtd.cid     = cid;
+	mtd.mn      = mn;
+	konoha.kMethod_setFunc(mtd, func);
+	return mtd;
+}
+

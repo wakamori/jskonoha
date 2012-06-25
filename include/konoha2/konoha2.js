@@ -21,58 +21,6 @@
 // * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ***************************************************************************/
-konoha.karray_t =  function() {
-	var bytesize = null;
-	var bytebuf  = null;
-	var kvs = new konoha.kvs_t();
-//	union {
-//		char  *bytebuf;
-//		const struct _kclass **cts;
-//		struct kvs_t          *kvs;
-//		struct kopl_t          *opl;
-//		const struct _kObject **objects;
-//		struct _kObject       **refhead;  // stack->ref
-//	};
-	var bytemax = null;
-};
-///* kcid_t */
-konoha.CLASS_newid = -1;      //  ((kcid_t)-1)
-konoha.TY_unknown = -2;      //  ((kcid_t)-2)
-konoha.FN_NONAME = -1;
-konoha.FN_NEWID = -2;
-konoha._NEWID = konoha.FN_NEWID
-//
-konoha.MOD_logger =  0
-konoha.MOD_gc     =  1
-konoha.MOD_code   =  2
-konoha.MOD_sugar  =  3
-konoha.MOD_float  = 11
-konoha.MOD_iconv  = 13
-
-konoha.CTX_isInteractive = 1
-konoha.CTX_isCompileOnly = 0
-konoha.CTX_isDebug       = 0
-
-konoha.kcontext_t = function() {
-	this.safepoint = null;
-	this.esp = null;
-	this.lib2 = {};
-	/* TODO(imasahiro)
-	 * checking modgc performance and remove
-	 * memshare/memlocal from context
-	 */
-	this.memshare = null;
-	this.memlocal = null;
-	this.share = null;
-	this.local = null;
-	this.stack = null;
-	this.logger = null;
-//	this.modshare = null; this.modshare[MOD_sugar] => this.kmodsugar
-	this.kmodsugar = new konoha.kmodsugar_t();
-//	this.modlocal = null; this.modlocal[MOD_sugar] => this.ctxsugar
-	this.ctxsugar = null;
-};
-
 konoha.kclass_t = function() {
 	//		KCLASSSPI;
 	this.packid = null;			//kpack_t
@@ -101,6 +49,74 @@ konoha.kclass_t = function() {
 	this.searchSimilarClassNULL = null;	//kclass_t
 	this.searchSuperMethodClassNULL = null;//kclass_t *
 };
+
+
+konoha.karray_t =  function() {
+	this.bytesize = null;
+	this.bytebuf  = null;
+	this.kvs = new konoha.kvs_t();
+	this.cts = new konoha.kclass_t();//		const struct _kclass **cts;
+	this.bytemax = null;
+};
+///* kcid_t */
+konoha.CLASS_newid = -1;      //  ((kcid_t)-1)
+konoha.TY_unknown = -2;      //  ((kcid_t)-2)
+konoha.FN_NONAME = -1;
+konoha.FN_NEWID = -2;
+konoha._NEWID = konoha.FN_NEWID
+//
+konoha.MOD_logger =  0
+konoha.MOD_gc     =  1
+konoha.MOD_code   =  2
+konoha.MOD_sugar  =  3
+konoha.MOD_float  = 11
+konoha.MOD_iconv  = 13
+
+konoha.CTX_isInteractive = 1
+konoha.CTX_isCompileOnly = 0
+konoha.CTX_isDebug       = 0
+
+konoha.kshare_t = function() {
+	this.ca = new konoha.karray_t();
+	this.lcnameMapNN = null; //struct kmap_t
+	this.constNull = null; //const struct _kObject *
+	this.constTrue = null; //const struct _kBoolean *
+	this.constFalse = null; //const struct _kBoolean *
+	this.emptyString = null; //const struct _kString *
+	this.emptyArray = null;  //const struct _kArray *
+	this.nullParam = null;  //const struct _kParam *
+	this.defParam = null;  //const struct _kParam *
+	this.fileidList = null; //const struct _kArray * 
+	this.fileidMapNN = null;   //struct kmap_t
+	this.packList = null;   //const struct _kArray *
+	this.packMapNN = null; // struct kmap_t *
+	this.unameList = null;  //const struct _kArray *
+	this.unameMapNN = null;  //struct kmap_t *
+	this.symbolList = null;   //const struct _kArray
+	this.symbolMapNN = null;  //struct kmap_t *
+};
+
+konoha.kcontext_t = function() {
+	this.safepoint = null;
+	this.esp = null;
+	this.lib2 = {};
+	/* TODO(imasahiro)
+	 * checking modgc performance and remove
+	 * memshare/memlocal from context
+	 */
+	this.memshare = null;
+	this.memlocal = null;
+	this.share = new konoha.kshare_t();
+	this.local = null;
+	this.stack = null;
+	this.logger = null;
+//	this.modshare = null; this.modshare[MOD_sugar] => this.kmodsugar
+	this.kmodsugar = new konoha.kmodsugar_t();
+//	this.modlocal = null; this.modlocal[MOD_sugar] => this.ctxsugar
+	this.ctxsugar = null;
+};
+
+
 //
 ///* ----------------------------------------------------------------------- */
 ///* CLASS */
@@ -125,7 +141,7 @@ konoha.CLASS_T0                = 10;    /* ParamType*/
 konoha.TY_void       =    konoha.CLASS_Tvoid
 //konoha.OFLAG_Tvar    =    konoha.MAGICFLAG(0)
 //konoha.CFLAG_Tvar    =    konoha.CFLAG_Tvoid
-//konoha.TY_var        =    konoha.CLASS_Tvar
+konoha.TY_var        =    konoha.CLASS_Tvar
 
 
 konoha.setNullObject = function(obj) {
@@ -265,3 +281,40 @@ konoha.kMethod_isStatic = function(mtd) {
 konoha.TFLAG_is = function(f, op) {
 	return ( (f & op) == op);
 }
+
+konoha.KFLAG_H = function(n) {
+	return ((8*8)-n);
+}
+konoha.KFLAG_H0   =              ((1 << konoha.KFLAG_H(1)))
+konoha.KFLAG_H1   =              ((1 << konoha.KFLAG_H(2)))
+konoha.KFLAG_H2   =              ((1 << konoha.KFLAG_H(3)))
+konoha.KFLAG_H3   =              ((1 << konoha.KFLAG_H(4)))
+konoha.KFLAG_H4   =              ((1 << konoha.KFLAG_H(5)))
+konoha.KFLAG_H5   =              ((1 << konoha.KFLAG_H(6)))
+konoha.KFLAG_H6   =              ((1 << konoha.KFLAG_H(7)))
+konoha.KFLAG_H7   =              ((1 << konoha.KFLAG_H(8)))
+
+konoha.MN_ISBOOL  =   konoha.KFLAG_H0
+konoha.MN_GETTER  =   konoha.KFLAG_H1
+konoha.MN_SETTER  =   konoha.KFLAG_H2
+konoha.MN_TOCID   =   (konoha.KFLAG_H0|konoha.KFLAG_H1)
+konoha.MN_ASCID   =   (konoha.KFLAG_H0|konoha.KFLAG_H1|konoha.KFLAG_H2)
+
+konoha.kMethod_isCoercion = function(mtd) {
+	return    (konoha.TFLAG_is(mtd.flag, konoha.kMethod_Coercion));
+}
+
+konoha.kMethod_Public       =        ((1<<0))
+konoha.kMethod_Virtual      =        ((1<<1))
+konoha.kMethod_Hidden       =        ((1<<2))
+konoha.kMethod_Const        =        ((1<<3))
+konoha.kMethod_Static       =        ((1<<4))
+konoha.kMethod_Immutable    =        ((1<<5))
+konoha.kMethod_Restricted   =        ((1<<6))
+konoha.kMethod_Overloaded   =        ((1<<7))
+konoha.kMethod_CALLCC       =        ((1<<8))
+konoha.kMethod_FASTCALL     =        ((1<<9))
+konoha.kMethod_D            =        ((1<<10))
+konoha.kMethod_Abstract     =        ((1<<11))
+konoha.kMethod_Coercion     =        ((1<<12))
+konoha.kMethod_SmartReturn  =        ((1<<13))

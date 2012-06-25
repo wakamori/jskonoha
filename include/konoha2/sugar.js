@@ -380,3 +380,6 @@ konoha.Expr_typed = function(expr, build, ty)
 	return expr;
 }
 
+konoha.TPOL_NOCHECK     =         1
+konoha.TPOL_ALLOWVOID   =   (1 << 1)
+konoha.TPOL_COERCION    =   (1 << 2)
