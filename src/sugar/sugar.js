@@ -109,28 +109,44 @@ konoha.KonohaSpace_loadstream = function(_ctx, ks)
 	var readline = require('readline'),
 	rl = readline.createInterface(process.stdin, process.stdout),
 	prefix = '>>> ';
-	rl.on('line', function(line) {
-		switch(line.trim()) {
-		case 'quit':
-		case 'exit':
-		case 'bye':
+	var opts = require("opts");
+	opts.parse([
+		{
+			'short': 's',
+			'long': 'script',
+			'description': 'konoha script',
+			'value': true,
+			'required': false
+		},
+	]);
+	var script = opts.get("script");
+	if (script != null) {
+		var _status = konoha.MODSUGAR_eval(_ctx, script);
+	}
+	else {
+		rl.on('line', function(line) {
+			switch(line.trim()) {
+			case 'quit':
+			case 'exit':
+			case 'bye':
+				process.exit(0);
+				break;
+			default:
+				var script = line.trim();
+				var _status = konoha.MODSUGAR_eval(_ctx, script);
+				break;
+			}
+			rl.setPrompt(prefix, prefix.length);
+			rl.prompt();
+		}).on('close', function() {
 			process.exit(0);
-			break;
-		default:
-			var script = line.trim();
-			var _status = konoha.MODSUGAR_eval(_ctx, script);
-			break;
-		}
+		});
 		rl.setPrompt(prefix, prefix.length);
 		rl.prompt();
-	}).on('close', function() {
-		process.exit(0);
-	});
-	rl.setPrompt(prefix, prefix.length);
-	rl.prompt();
+	}
 }
 
-// //for browser
+// //for DEBUG
 // konoha.KonohaSpace_loadstream = function(_ctx, ks)
 // {
 // //	var script = 'p("hello");';
