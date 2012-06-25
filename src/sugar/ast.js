@@ -490,7 +490,7 @@ konoha.Stmt_findBinaryOp = function(_ctx, stmt, tls, s, e, synRef) {
 		var tk = tls[i];
 		var syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), tk.kw, 0);
 		if(syn.priority > 0) {
-			if(prif < syn.priority || (prif == syn.priority && !(FLAG_is(syn.flag, SYNFLAG_ExprLeftJoinOp2)) )) {
+			if(prif < syn.priority || (prif == syn.priority && syn.flag == konoha.SYNFLAG_ExprLeftJoinOp2)) { //do we use FLAG_is?
 				prif = syn.priority;
 				idx = i;
 				synRef.syn = syn;
