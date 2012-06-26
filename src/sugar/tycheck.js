@@ -596,9 +596,32 @@ konoha.StmtTyCheck_Expr = function(_ctx, stmt)  // $expr
 //	RETURNb_(0);
 //}
 //
+konoha.Stmt_TyCheckFunc = function(_ctx, fo, stmt, gma)
+{
+	return fo(_ctx, stmt, gma);
+}
+
 konoha.Stmt_TyCheck = function(_ctx, syn, stmt, gma)
 {
-	syn.StmtTyCheck(_ctx, stmt);
+	var fo = gma.flag ? syn.TopStmtTyCheck : syn.StmtTyCheck;
+	var result;
+// 	if(IS_Array(fo)) { // @Future
+// 		int i;
+// 		kArray *a = (kArray*)fo;
+// 		for(i = kArray_size(a) - 1; i > 0; i++) {
+// 			result = Stmt_TyCheckFunc(_ctx, a->funcs[i], stmt, gma);
+// 			if(stmt->syn == NULL) return true;
+// 			if(stmt->build != TSTMT_UNDEFINED) return result;
+// 		}
+// 		fo = a->funcs[0];
+// 	}
+// 	DBG_ASSERT(IS_Func(fo));
+	result = konoha.Stmt_TyCheckFunc(_ctx, fo, stmt, gma);
+	if(stmt.syn == null) return true; // this means done;
+	if(result == false && stmt.build == konoha.TSTMT_UNDEFINED) {
+//TODO		konoha.kStmt_p(stmt, ERR_, "statement typecheck error: %s", T_statement(syn.kw));
+	}
+	return result;
 }
 
 konoha.Block_tyCheckAll = function(_ctx, bk, gma)
@@ -1154,7 +1177,7 @@ konoha.Stmt_checkReturnType = function(_ctx, data)
 
 konoha.SingleBlock_eval = function(_ctx, bk, mtd, ks)
 {
-	var gma = {};//TODO
+	var gma = {flag : konoha.kGamma_TOPLEVEL};//TODO
 	konoha.Block_tyCheckAll(_ctx, bk, gma);
 //	return  konoha.Gamma_evalMethod(_ctx, gma, bk, mtd);
 }

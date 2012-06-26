@@ -86,15 +86,16 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
 	console.log("################### ast ####################");
 //	console.log(bk);
- 	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[0]);
- 	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
- 	console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
+ 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"]);
+ 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[1].tk);
+ 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[2].tk);
 	console.log("############################################");
 	tls = tls.slice(0, pos - 1);
 	var result = konoha.Block_eval(_ctx, bk);
 	console.log("################### eval ####################");
 //	console.log(bk);
  	console.log(bk.blocks.data[0]);
+	console.log(konoha.MODCODE_init.prototype.ASM);
 	console.log("############################################");
 	return result;
 }
