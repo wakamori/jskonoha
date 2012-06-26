@@ -176,6 +176,21 @@ konoha.new_ConsExpr = function(_ctx, syn, n)
 	return expr;
 }
 
+konoha.KonohaSpace_getMethodNULL = function(_ctx, ks, cid, mn)
+{
+	while(ks != null) {
+		var i;
+		var mtd = ks.methods[mn];
+		if (mtd != null) {
+			return mtd;
+		}
+		else {
+			ks = ks.parentNULL;
+		}
+	}
+	return konoha.CT_findMethodNULL(_ctx, CT_(cid), mn);
+}
+
 konoha.KonohaSpace_getCastMethodNULL = function(_ctx, ks, cid, tcid)
 {
 	var mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, cid, tcid | konoha.MN_TOCID);
@@ -183,4 +198,37 @@ konoha.KonohaSpace_getCastMethodNULL = function(_ctx, ks, cid, tcid)
 		mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, cid, tcid | konoha.MN_ASCID);
 	}
 	return mtd;
+}
+
+konoha.Expr_setNConstValue = function(_ctx, expr, ty, ndata)
+{
+	if(expr == null) {
+		expr = new kExpr();
+	}
+	expr.build = konoha.TEXPR_NCONST;
+	expr.ndata = ndata;
+	expr.data = konoha.K_NULL;
+	expr.ty = ty;
+	return expr;
+}
+
+konoha.Expr_setConstValue = function(_ctx, expr, ty, o)
+{
+	if(expr == null) {
+//		expr = new_(Expr, 0);
+//		PUSH_GCSTACK(expr);
+	}
+	var Wexpr = expr;
+	Wexpr.ty = ty;
+	if(konoha.TY_isUnbox(ty)) {
+		Wexpr.build = konoha.TEXPR_NCONST;
+		Wexpr.ndata = konoha.N_toint(o);
+		Wexpr.data = null;
+	}
+	else {
+		Wexpr.build = konoha.TEXPR_CONST;
+		Wexpr.data = o;
+	}
+//	WASSERT(expr);
+	return expr;
 }

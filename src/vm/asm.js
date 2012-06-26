@@ -206,7 +206,7 @@ konoha.MODCODE_init.prototype.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 konoha.MODCODE_init.prototype.ExprStmt_asm = function(_ctx, stmt, shift, espidx)
 {
 //var expr = stmt[1];
-	var expr = stmt.h.kvproto.data[0].cons.data[1];
+	var expr = stmt.h.kvproto.data["$expr"].cons.data[1];
 //	if (expr.isExpr()) {
 	konoha.MODCODE_init.prototype.EXPR_asm(_ctx, espidx, expr, shift, espidx);
 //	}
@@ -219,8 +219,8 @@ konoha.MODCODE_init.prototype.BlockStmt_asm = function(_ctx, stmt, shift, espidx
 
 konoha.MODCODE_init.prototype.IfStmt_asm = function(_ctx, stmt, shift, espidx)
 {
-	kBasicBlock*  lbELSE = new_BasicBlockLABEL(_ctx);
-	kBasicBlock*  lbEND  = new_BasicBlockLABEL(_ctx);
+	var lbELSE = new_BasicBlockLABEL(_ctx);
+	var lbEND  = new_BasicBlockLABEL(_ctx);
 	/* if */
 	lbELSE = EXPR_asmJMPIF(_ctx, espidx, kStmt_expr(stmt, 1, NULL), 0/*FALSE*/, lbELSE, espidx);
 	/* then */

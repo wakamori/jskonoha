@@ -564,7 +564,7 @@ konoha.Expr_rightJoin = function(_ctx, expr, stmt, tls, s, c, e) {
 
 konoha.ParseExpr_Term = function(_ctx, stmt, syn, tls, s, c, e) {
 	var tk = tls[c];
-	var expr = new konoha.kExpr(konoha.KonohaSpace_syntax(konoha.Stmt_ks(_ctx, stmt), tk.kw));
+	var expr = new konoha.kExpr(konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), tk.kw, 0));
 //FIX ME!!	konoha.Expr_setTerm(expr, 1);
 	expr.tk = tk;
 	return konoha.Expr_rightJoin(_ctx, expr, stmt, tls, s+1, c+1, e);

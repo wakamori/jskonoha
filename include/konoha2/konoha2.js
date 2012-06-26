@@ -158,9 +158,9 @@ konoha.TY_var        =    konoha.CLASS_Tvar
 konoha.setNullObject = function(obj) {
 	this.isNullObject = true;
 }
-konoha.kObjectHeader = function() {
+konoha.kObjectHeader = function(name) {
 	this.magicflag = null;				//kmagicflag_t
-	this.ct = null;//new konoha.kclass_t();					//kclass_t
+	this.ct = new konoha.kclass_t();					//kclass_t
 	//	union {
 	this.refc = null;				//uintptr_t
 	this.gcinfo = null;			//void *
