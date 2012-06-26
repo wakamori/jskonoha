@@ -60,7 +60,18 @@ konoha.karray_t =  function() {
 };
 ///* kcid_t */
 konoha.CLASS_newid = -1;      //  ((kcid_t)-1)
-konoha.TY_unknown = -2;      //  ((kcid_t)-2)
+konoha.TY_unknown  = -2;      //  ((kcid_t)-2)
+konoha.TY_void     = 0;
+konoha.TY_var      = 1;
+konoha.TY_Object   = 2;
+konoha.TY_Boolean  = 3;
+konoha.TY_Int      = 4;
+konoha.TY_String   = 5;
+konoha.TY_Param    = 6;
+konoha.TY_Method   = 7;
+konoha.TY_Array    = 8;
+konoha.TY_System   = 9;
+konoha.TY_T0       = 10;    /* ParamType*/
 konoha.FN_NONAME = -1;
 konoha.FN_NEWID = -2;
 konoha._NEWID = konoha.FN_NEWID

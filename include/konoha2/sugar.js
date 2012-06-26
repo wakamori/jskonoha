@@ -334,9 +334,9 @@ konoha.TK_type = function(TK) {
 	return TK.ty;
 }
 
-konoha.kStmt_ks = function(STMT) {
-	return   konoha.Stmt_ks(_ctx, STMT);
-}
+// konoha.kStmt_ks = function(STMT) {
+// 	return   konoha.Stmt_ks(_ctx, STMT);
+// }
 konoha.Stmt_ks = function(_ctx, stmt)
 {
 	return stmt.parentNULL.ks;

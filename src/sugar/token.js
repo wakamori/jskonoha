@@ -67,7 +67,7 @@ konoha.parseNUM = function(_ctx, tk, tenv, tok_start, thunk)
 	while((ch = tenv.source[pos++]) != undefined) {
 		if(ch == '_') continue;
 		if(ch == '.') {
-			if(konoha.isdigit(tenv.source[pos])) {
+			if(!konoha.isnum(tenv.source[pos])) {
 				break;
 			}
 			dot++;
@@ -187,7 +187,7 @@ konoha.parseCOMMENT = function(_ctx, tk, tenv, tok_start, thunk)
 {
 	var ch, prev = 0, level = 1, pos = tok_start + 2;
 	/*@#nnnn is line number */
-	if(tenv.source[pos] == '@' && tenv.source[pos+1] == '#' && isdigit(tenv.source[pos+2])) {
+	if(tenv.source[pos] == '@' && tenv.source[pos+1] == '#' && konoha.isnum(tenv.source[pos+2])) {
 		//TODO
 		// 		tenv.uline >>= (sizeof(kshort_t)*8);
 		// 		tenv.uline = (tenv.uline<<(sizeof(kshort_t)*8))  | strtoll(tenv.source + pos + 2, null, 10);
@@ -249,7 +249,9 @@ konoha.parseDQUOTE = function(_ctx, tk, tenv, tok_start, thunk)
 
 konoha.parseSKIP = function(_ctx, tk, tenv, tok_start, thunk)
 {
-	tk.tt = 0;
+	if (tk != null) {
+		tk.tt = 0;
+	}
 	return tok_start+1;
 }
 
@@ -553,7 +555,6 @@ konoha.checkNestedSyntax = function(_ctx, tls, s, e, tt, opench, closech)
 	if(t == opench) {
 		var ne = konoha.findTopCh(_ctx, tls, s.ivalue+1, e, tk.tt, closech);
 		tk.tt = tt; tk.kw = konoha.kw.array[tt]; // TODO!! tt=AST_OPTIONAL
-		//		tk.sub = new_(TokenArray, 0);
 		tk.sub = new Array();
 		tk.topch = opench; 
 		tk.closech = closech;
@@ -608,11 +609,12 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 		if(tk.tt == konoha.ktoken_t.TK_OPERATOR) {
 			var boxed_i = {};
 			boxed_i.ivalue = i;
-			if(konoha.checkNestedSyntax(_ctx, tls, boxed_i, e, konoha.ktoken_t.AST_OPTIONAL, '[', ']')) {
+			var cond = konoha.checkNestedSyntax(_ctx, tls, boxed_i, e, konoha.ktoken_t.AST_OPTIONAL, '[', ']');
+			i = boxed_i.ivalue;
+			if (cond) {
 				adst.push(tk);
 				continue;
 			}
-			i = boxed_i.ivalue;
 			if(tls[i].topch == '$') continue;
 		}
 		//		konoha.sugar_p(konoha.kreportlevel_t.ERR_, tk.uline, tk.lpos, "illegal sugar syntax: %s", kToken_s(tk));
@@ -626,6 +628,9 @@ konoha.parseSyntaxRule = function(_ctx, rule, uline, a)
 	var tls = _ctx.ctxsugar.tokens;
 	pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, null, rule, uline, tls);
+//	console.log("rule=\"", rule, "\"");
+//	console.log(tls);
 	konoha.makeSyntaxRule(_ctx, tls, pos, tls.length, a);
+//	console.log(a);
 	tls.length = 0;
 }
