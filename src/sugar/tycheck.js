@@ -212,8 +212,7 @@ konoha.Expr_tyCheck = function(_ctx, expr,  reqty, pol)
 //
 konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, reqty, pol)
 {
-	console.log(stmt);
-	var expr = konoha.KObject_getObjectNULL(stmt, nameid);
+	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, nameid, null);
 	if(expr != null && konoha.IS_Expr(expr)) {
 		var texpr = konoha.Expr_tyCheck(_ctx, expr, reqty, pol);
 		if(texpr != _ctx.modsugar.cExpr.nulvalNUL) {
@@ -615,8 +614,8 @@ konoha.Block_tyCheckAll = function(_ctx, bk, gma)
 		}
 		konoha.Stmt_TyCheck(_ctx, syn, stmt, gma);
 	}
-	if(bk != _ctx.modsugar.cKonohaSpace.nulvalNUL) {
-		konoha.kExpr_setVariable(bk.esp, LOCAL_, TY_void, gma.genv.l.varsize, gma);
+	if(bk != null) {
+//TODO!!		konoha.kExpr_setVariable(bk.esp, LOCAL_, TY_void, gma.genv.l.varsize, gma);
 	}
 	return result;
 }
@@ -1157,7 +1156,7 @@ konoha.SingleBlock_eval = function(_ctx, bk, mtd, ks)
 {
 	var gma = {};//TODO
 	konoha.Block_tyCheckAll(_ctx, bk, gma);
-	return  konoha.Gamma_evalMethod(_ctx, gma, bk, mtd);
+//	return  konoha.Gamma_evalMethod(_ctx, gma, bk, mtd);
 }
 
 konoha.Block_eval = function(_ctx, bk)
@@ -1174,10 +1173,10 @@ konoha.Block_eval = function(_ctx, bk)
 		result = konoha.SingleBlock_eval(_ctx, bk1, mtd, bk.ks);
 		if(result == konoha.kstatus_t.K_FAILED) break;
 	}
-	return result;
+//	return result;
 //	var result = konoha.Stmt_checkReturnType(_ctx, bk.blocks.data[0]);
 //	console.log(bk.blocks.data[0]);
-//	konoha.MODCODE_init.prototype.BLOCK_asm(_ctx, bk, 0);
+	konoha.MODCODE_init.prototype.BLOCK_asm(_ctx, bk, 0);
 	return result;
 }
 

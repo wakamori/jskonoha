@@ -108,7 +108,8 @@ konoha.MODCODE_init.prototype.CALL_asm = function(_ctx, a, expr, shift, espidx)
 {
 	var mtd = expr.cons.data[0]; // TODO unuse methods field, is it OK?
 //	console.log(expr.cons.data[0]);
-	var s = konoha.kMethod_isStatic(mtd) ? 2 : 1, thisidx = espidx + konoha.K_CALLDELTA;
+	var s = 2;//konoha.kMethod_isStatic(mtd) ? 2 : 1,
+	var thisidx = espidx + konoha.K_CALLDELTA;
 	console.log("-----expr.cons.data.length----------");
 	console.log(expr.cons.data.length);
 	console.log("-----expr.cons.data.length----------");
@@ -194,15 +195,21 @@ konoha.MODCODE_init.prototype.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 	}
 	default:
 		console.log('unknown expr=' + expr.build);
+//TODO rm!!
+		konoha.MODCODE_init.prototype.CALL_asm(_ctx, a, expr, shift, espidx);
+		if (a != espidx) {
+			konoha.MODCODE_init.prototype.NMOV_asm(_ctx, a, expr.ty, espidx);
+		}
 	}
 }
 
 konoha.MODCODE_init.prototype.ExprStmt_asm = function(_ctx, stmt, shift, espidx)
 {
-	var expr = stmt[1];
-	if (expr.isExpr()) {
-		konoha.MODCODE_init.prototype.EXPR_asm(_ctx, espidx, expr, shift, espidx);
-	}
+//var expr = stmt[1];
+	var expr = stmt.h.kvproto.data[0].cons.data[1];
+//	if (expr.isExpr()) {
+	konoha.MODCODE_init.prototype.EXPR_asm(_ctx, espidx, expr, shift, espidx);
+//	}
 }
 
 konoha.MODCODE_init.prototype.BlockStmt_asm = function(_ctx, stmt, shift, espidx)
