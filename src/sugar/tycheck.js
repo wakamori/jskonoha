@@ -212,7 +212,8 @@ konoha.Expr_tyCheck = function(_ctx, expr,  reqty, pol)
 //
 konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, reqty, pol)
 {
-	var expr = konoha.kObject_getObjectNULL(stmt, nameid);
+	console.log(stmt);
+	var expr = konoha.KObject_getObjectNULL(stmt, nameid);
 	if(expr != null && konoha.IS_Expr(expr)) {
 		var texpr = konoha.Expr_tyCheck(_ctx, expr, reqty, pol);
 		if(texpr != _ctx.modsugar.cExpr.nulvalNUL) {
@@ -1154,6 +1155,7 @@ konoha.Stmt_checkReturnType = function(_ctx, data)
 
 konoha.SingleBlock_eval = function(_ctx, bk, mtd, ks)
 {
+	var gma = {};//TODO
 	konoha.Block_tyCheckAll(_ctx, bk, gma);
 	return  konoha.Gamma_evalMethod(_ctx, gma, bk, mtd);
 }
@@ -1162,8 +1164,8 @@ konoha.Block_eval = function(_ctx, bk)
 {
 //	console.log(bk.blocks.data);
 //	console.log(bk.blocks.data[0].syn);
-	var bk1 = _ctx.ctxsugarsingleBlock;
-	var mtd = konoha.new_Method(_ctx, konoha.kMethod_Static, 0, 0, _ctx.share.defParam, null);
+	var bk1 = _ctx.ctxsugar.singleBlock;
+	var mtd = {};//konoha.new_Method(_ctx, konoha.kMethod_Static, 0, 0, _ctx.share.defParam, null);
 	var result = konoha.kstatus_t.K_CONTINUE;
 	var i;
 	for(i = 0; i < bk.blocks.data.length; i++) {

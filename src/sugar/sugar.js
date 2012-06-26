@@ -177,7 +177,7 @@ konoha.MODSUGAR_init = function(_ctx)
 
 			base.gma = new konoha.kGamma(null);
 			base.singleBlock = new konoha.kBlock(_ctx);
-			base.singleBlock.blocks.data.push(null);
+//			base.singleBlock.blocks.data.push(null);
 			_ctx.ctxsugar = base;
 		}
 	}
