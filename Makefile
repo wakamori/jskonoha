@@ -46,7 +46,7 @@ $(JSKONOHA): $(BASE_FILES)
 clean:
 	@@echo "Removing" ${JSKONOHA}
 	@@rm -rf ${JSKONOHA}
-	@@rm -rf test/Debug/js_ast_test/*.html
+	@@rm -rf test/Debug/js_ast_test/*.{html,xml}
 
 test:
 	@@echo "Run google-js-test"
@@ -60,4 +60,9 @@ test-html:
 ##	@@for utest in test/Debug/js_token_test/*.js; do (gjstest --js_files=${JSKONOHA},$$utest); done;
 	@@for utest in test/Debug/js_ast_test/*.js; do (gjstest --js_files=${JSKONOHA},$$utest --html_output_file=$$utest.html); done;
 
-.PHONY: all clean test test-html
+test-xml:
+	@@echo "Run google-js-test and output test result as xml report"
+	@@files="test/Debug/js_token_test/*.js"
+	@@for utest in test/Debug/js_ast_test/*.js; do (gjstest --js_files=${JSKONOHA},$$utest --xml_output_file=$$utest.xml); done;
+
+.PHONY: all clean test test-html test-xml
