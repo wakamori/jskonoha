@@ -63,31 +63,31 @@ jskonoha_Test.prototype.ReturnCorrectAnswer = function() {
 	ret = konoha.eval(script);
 	expectEq(1 ,ret);
 
-	script = "var f(n) { if(n == 2) return 2;} \n f(2)";
+	script = "int f(int n) { if(n == 2) return 2;} \n f(2)";
 	ret = konoha.eval(script);
 	expectEq(2 ,ret);
 
-	script = "var pow(n) { return n*n;} \n pow(3)";
+	script = "int pow(int n) { return n*n;} \n pow(3)";
 	ret = konoha.eval(script);
 	expectEq(9 ,ret);
 
-	script = "var f(a ,b) { if(a < b) return a; \n return b;} \n f(8 ,2)";
+	script = "int f(int a ,int b) { if(a < b) return a; \n return b;} \n f(8 ,2)";
 	ret = konoha.eval(script);
 	expectEq(2 ,ret);
 
-	script = "var f(a, b, c) { if( (a<b) && (a<c) ) { return a; } else { return b;} } \n f(1, 2, 3)";
+	script = "int f(int a, int b, int c) { if( (a<b) && (a<c) ) { return a; } else { return b;} } \n f(1, 2, 3)";
 	ret = konoha.eval(script);
 	expectEq(1 ,ret);
 
-	script = "var fibo(n) { if(n < 3) { return 1;} \n return fibo(n-1) + fibo(n-2);} \n fibo(10)";
+	script = "int fibo(int n) { if(n < 3) { return 1;} \n return fibo(n-1) + fibo(n-2);} \n fibo(10)";
 	ret = konoha.eval(script);
 	expectEq(55 ,ret);
 
-	script = "var fibo(n) { if(n < 3) { return 1;} \n return fibo(n-1) + fibo(n-2);} \n fibo(36)";
+	script = "int fibo(int n) { if(n < 3) { return 1;} \n return fibo(n-1) + fibo(n-2);} \n fibo(36)";
 	ret = konoha.eval(script);
 	expectEq(14930352 ,ret);
 
-	script = "var fibo(n) { if(n < 3) { return 1;} \n return fibo(n-1) + fibo(n-2);} \n fibo(40)";
+	script = "int fibo(int n) { if(n < 3) { return 1;} \n return fibo(n-1) + fibo(n-2);} \n fibo(40)";
 	ret = konoha.eval(script);
 	expectEq(102334155 ,ret);
 
