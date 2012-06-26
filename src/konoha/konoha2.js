@@ -39,9 +39,9 @@ konoha.konoha_open = function() {
 	return konoha.new_context(null, 0 /* K_PAGESIZE * 8 */);
 }
 
-konoha.konoha_load = function(_konoha)
+konoha.konoha_load = function(_konoha, script)
 {
-	var res = konoha.MODSUGAR_loadscript(_konoha);
+	var res = konoha.MODSUGAR_loadscript(_konoha, script);
 	return res;
 }
 
