@@ -1,4 +1,10 @@
 konoha = {};
+console = {};
+
+console.log = function(script) {
+	return script;
+}
+
 konoha.DBG_P = function(msg) {
 	console.log(msg);
 }
