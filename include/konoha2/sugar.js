@@ -82,7 +82,7 @@ konoha.ktoken_t = new konoha.Enum(
 );
 //
 konoha.kToken = function() {
-	this.h = new konoha.kObjectHeader;				//kObjectHeader
+	this.h = new konoha.kObjectHeader(konoha.TY_Token);				//kObjectHeader
 	this.tt = null;			//kushort_t
 	this.kw = null;			//ksymbol_t
 	//	union {
@@ -131,7 +131,7 @@ konoha.TEXPR_STACKTOP   =  13;
 konoha.TEXPR_MAX        =  14;
 
 konoha.kExpr = function(syn) {
-	this.h = new konoha.kObjectHeader();				//kObjectHeader
+	this.h = new konoha.kObjectHeader(konoha.TY_Expr);				//kObjectHeader
 	this.ty = konoha.TY_var;			//ktype_t
 	this.build = null;			//kexpr_t
 	this.tk = null;			//kToken
@@ -171,7 +171,7 @@ konoha.kStmt = function() {
 };
 
 konoha.kBlock = function(_ctx, conf) {
-	this.h = new konoha.kObjectHeader();				//kObjectHeader
+	this.h = new konoha.kObjectHeader(konoha.TY_Block);				//kObjectHeader
 	if (conf != null) {			//kKonohaSpace *
 		this.ks = conf;
 	}
@@ -321,8 +321,16 @@ konoha.kToken_setmn = function(tk, mn, mn_type)
 	tk.mn_type = mn_type;
 }
 
+konoha.IS_Block = function(_ctx, block) {
+	return block.h.ct.cid == konoha.TY_Block;
+}
+
+konoha.IS_Token = function(_ctx, token) {
+	return token.h.ct.cid == konoha.TY_Token;
+}
+
 konoha.IS_Expr = function(_ctx, expr) {
-	return (expr.h.ct == _ctx.kmodsugar.cExpr);
+	return expr.h.ct.cid == konoha.TY_Expr;
 }
 
 konoha.TK_isType = function(TK) {

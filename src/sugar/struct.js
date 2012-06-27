@@ -24,6 +24,15 @@
 
 // konoha.KonohaSpace_init goes include/konoha/konoha2.js
 
+konoha.Stmt_expr = function(_ctx, stmt, kw, def)
+{
+	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, kw);
+	if(expr != null && konoha.IS_Expr(expr)) {
+		return expr;
+	}
+	return def;
+}
+
 konoha.KonohaSpace_syntax = function(_ctx, ks0, kw, isnew)
 {
 //	var ks = new konoha.kKonohaSpace();
@@ -246,4 +255,23 @@ konoha.Expr_setConstValue = function(_ctx, expr, ty, o)
 	}
 //	WASSERT(expr);
 	return expr;
+}
+
+konoha.Stmt_block = function(_ctx, stmt, kw, def)
+{
+	var bk = konoha.KObject_getObjectNULL(_ctx, stmt, kw);
+	if(bk != null) {
+		if(konoha.IS_Token(_ctx, bk)) {
+			var tk = bk;
+			if (tk.tt == konoha.ktoken_t.TK_CODE) {
+				konoha.Token_toBRACE(_ctx, tk, konoha.Stmt_ks(_ctx, stmt));
+			}
+			if (tk.tt == konoha.ktoken_t.AST_BRACE) {
+				bk = konoha.new_Block(_ctx, konoha.Stmt_ks(_ctx, stmt), stmt, tk.sub, 0, tk.sub.length, ';');
+				konoha.KObject_setObject(_ctx, stmt, kw, null, bk);
+			}
+		}
+		if(konoha.IS_Block(_ctx, bk)) return bk;
+	}
+	return def;
 }

@@ -59,19 +59,25 @@ konoha.karray_t =  function() {
 	this.bytemax = null;
 };
 ///* kcid_t */
-konoha.CLASS_newid = -1;      //  ((kcid_t)-1)
-konoha.TY_unknown  = -2;      //  ((kcid_t)-2)
-konoha.TY_void     = 0;
-konoha.TY_var      = 1;
-konoha.TY_Object   = 2;
-konoha.TY_Boolean  = 3;
-konoha.TY_Int      = 4;
-konoha.TY_String   = 5;
-konoha.TY_Param    = 6;
-konoha.TY_Method   = 7;
-konoha.TY_Array    = 8;
-konoha.TY_System   = 9;
-konoha.TY_T0       = 10;    /* ParamType*/
+konoha.CLASS_newid    = -1;      //  ((kcid_t)-1)
+konoha.TY_unknown     = -2;      //  ((kcid_t)-2)
+konoha.TY_void        = 0;
+konoha.TY_var         = 1;
+konoha.TY_Object      = 2;
+konoha.TY_Boolean     = 3;
+konoha.TY_Int         = 4;
+konoha.TY_String      = 5;
+konoha.TY_Param       = 6;
+konoha.TY_Method      = 7;
+konoha.TY_Array       = 8;
+konoha.TY_System      = 9;
+konoha.TY_T0          = 10;    /* ParamType*/
+konoha.TY_KonohaSpace = 11;
+konoha.TY_Token       = 12;
+konoha.TY_Stmt        = 13;
+konoha.TY_Block       = 14;
+konoha.TY_Expr        = 15;
+
 konoha.FN_NONAME = -1;
 konoha.FN_NEWID = -2;
 konoha._NEWID = konoha.FN_NEWID
@@ -158,9 +164,10 @@ konoha.TY_var        =    konoha.CLASS_Tvar
 konoha.setNullObject = function(obj) {
 	this.isNullObject = true;
 }
-konoha.kObjectHeader = function(name) {
+konoha.kObjectHeader = function(cid) {
 	this.magicflag = null;				//kmagicflag_t
 	this.ct = new konoha.kclass_t();					//kclass_t
+	this.ct.cid = cid;
 	//	union {
 	this.refc = null;				//uintptr_t
 	this.gcinfo = null;			//void *
@@ -209,15 +216,6 @@ konoha.SPOL_ASCII       =  (1<<1)
 konoha.SPOL_UTF8        =  (1<<2)
 konoha.SPOL_POOL        =  (1<<3)
 konoha.SPOL_NOCOPY      =  (1<<4)
-//
-konoha.IS_Array = function(o){
-	return (O_bcid(o) == CLASS_Array);
-}
-//
-//#define kArray_isUnboxData(o)    (TFLAG_is(uintptr_t,(o)->h.magicflag,kObject_Local1))
-//#define kArray_setUnboxData(o,b) TFLAG_set(uintptr_t,(o)->h.magicflag,kObject_Local1,b)
-//
-//
 
 konoha.kArray = function() {
 	this.h = new konoha.kObjectHeader();;				//ObjectHeader

@@ -5,6 +5,23 @@
 /* distinguish beteween bool and number */
 /* KW_Block */
 
+konoha.kBasicBlock = function() {
+	this.h = new konoha.kObjectHeader();
+	this.id = null;
+	this.incoming = null;
+	this.op = null;
+//	union {
+	this.nextNC = null;
+//	struct _kBasicBlock *WnextNC;
+//	};
+//	union {
+	this.jumpNC = null;
+//		struct _kBasicBlock *WjumpNC;
+//	};
+	this.code = null;
+	this.opjmp = null;
+};
+
 konoha.MODCODE_init = function (_ctx)
 {
 	_ctx.modcode = this;
@@ -55,16 +72,27 @@ konoha.MODCODE_init = function (_ctx)
 	}
 }
 
+konoha.MODCODE_init.prototype.new_BasicBlockLABEL = function(_ctx)
+{
+	if (this.insts == null) {
+		this.insts = new Array();
+	}
+	var bb = new konoha.kBasicBlock();
+	bb.id = this.insts.length;
+	this.insts.push(bb);
+	return bb;
+}
+
 konoha.MODCODE_init.prototype.ASM = function(str)
 {
+	for (var i = 0; i < this.indent; i++) {
+		this.output += this.tab;
+	}
 	this.output += str;
 }
 
 konoha.MODCODE_init.prototype.ASM_NEWLINE = function() {
 	this.output += '\n';
-	for (var i = 0; i < this.indent; i++) {
-		this.output += this.tab;
-	}
 }
 
 konoha.MODCODE_init.prototype.ASM_NMOV = function(a, b, ty)
@@ -147,7 +175,7 @@ konoha.MODCODE_init.prototype.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 		break;
 	}
 	case konoha.TEXPR_NCONST : {
-		konoha.MODCODE_init.prototype.ASM_NSET(a, expr.tk.text.text); // TODO data
+		konoha.MODCODE_init.prototype.ASM_NSET(a, expr.tk.text.text);
 		break;
 	}
 	case konoha.TEXPR_LOCAL : {
@@ -196,8 +224,6 @@ konoha.MODCODE_init.prototype.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 	}
 	default:
 		console.log('unknown expr=' + expr.build);
-//TODO rm!!
-		konoha.MODCODE_init.prototype.CALL_asm(_ctx, a, expr, shift, espidx);
 		if (a != espidx) {
 			konoha.MODCODE_init.prototype.NMOV_asm(_ctx, a, expr.ty, espidx);
 		}
@@ -207,7 +233,7 @@ konoha.MODCODE_init.prototype.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 konoha.MODCODE_init.prototype.ExprStmt_asm = function(_ctx, stmt, shift, espidx)
 {
 //var expr = stmt[1];
-	var expr = stmt.h.kvproto.data["$expr"];
+	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, "$expr", null);
 //	if (expr.isExpr()) {
 	konoha.MODCODE_init.prototype.EXPR_asm(_ctx, espidx, expr, shift, espidx);
 //	}
@@ -218,20 +244,58 @@ konoha.MODCODE_init.prototype.BlockStmt_asm = function(_ctx, stmt, shift, espidx
 	konoha.BLOCK_asm(_ctx, kStmt_block(stmt, KW_Block, konoha.K_NULLBLOCK));
 }
 
+// konoha.MODCODE_init.prototype.ASM_JMPF = (_ctx, flocal, lbJUMP) = function() {
+// 	var bb = this.WcurbbNC;
+// 	var lbNEXT = konoha.new_BasicBlockLABEL(_ctx);
+// //	var op = {TADDR, OPCODE_JMPF, ASMLINE, NULL, NC_(flocal)};
+// 	if(BUILD_asmJMPF(_ctx, &op)) {
+// 		bb->jumpNC = lbNEXT;
+// 		bb->nextNC = lbJUMP;
+// 	}
+// 	else {
+// 		bb->jumpNC = lbJUMP;
+// 		bb->nextNC = lbNEXT;
+// 	}
+// 	lbNEXT->incoming += 1;
+// 	ctxcode->WcurbbNC = lbNEXT;
+// 	W(kBasicBlock, lbJUMP);
+// 	WlbJUMP->incoming += 1;
+// 	WASSERT(lbJUMP);
+// 	return lbJUMP;
+// }
+
+konoha.EXPR_asmJMPIF = function(_ctx, a, expr, isTRUE, label, shift, espidx)
+{
+	konoha.MODCODE_init.prototype.EXPR_asm(_ctx, a, expr, shift, espidx);
+	if(isTRUE) {
+		konoha.abort("TODO!! not implemented");
+//		konoha.MODCODE_init.prototype.ASM(BNOT, NC_(a), NC_(a));
+	}
+	return konoha.ASM_JMPF(_ctx, a, label);
+}
+
 konoha.MODCODE_init.prototype.IfStmt_asm = function(_ctx, stmt, shift, espidx)
 {
-	var lbELSE = new_BasicBlockLABEL(_ctx);
-	var lbEND  = new_BasicBlockLABEL(_ctx);
-	/* if */
-	lbELSE = EXPR_asmJMPIF(_ctx, espidx, kStmt_expr(stmt, 1, NULL), 0/*FALSE*/, lbELSE, espidx);
-	/* then */
-	BLOCK_asm(_ctx, kStmt_block(stmt, KW_Block, K_NULLBLOCK));
-	konoha.MODCODE_init.prototype.ASM_JMP(_ctx, lbEND);
-	/* else */
-	konoha.MODCODE_init.prototype.ASM_LABEL(_ctx, lbELSE);
-	BLOCK_asm(_ctx, kStmt_block(stmt, KW_else, K_NULLBLOCK));
-	/* endif */
-	konoha.MODCODE_init.prototype.ASM_LABEL(_ctx, lbEND);
+	konoha.MODCODE_init.prototype.EXPR_asm(_ctx, espidx, konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Expr, null));
+	konoha.MODCODE_init.prototype.ASM("if (sfp" + espidx + ") {");
+	this.indent++;
+	konoha.MODCODE_init.prototype.ASM_NEWLINE();
+	konoha.MODCODE_init.prototype.BLOCK_asm(_ctx, konoha.Stmt_block(_ctx, stmt, konoha.kw.Block), shift);
+	konoha.MODCODE_init.prototype.ASM_NEWLINE();
+	konoha.MODCODE_init.prototype.ASM("}");
+
+// 	var lbELSE = konoha.MODCODE_init.prototype.new_BasicBlockLABEL(_ctx);
+// 	var lbEND  = konoha.MODCODE_init.prototype.new_BasicBlockLABEL(_ctx);
+// 	/* if */
+// 	lbELSE = EXPR_asmJMPIF(_ctx, espidx, konoha.Stmt_expr(_ctx, stmt, 1, null), 0/*FALSE*/, lbELSE, espidx);
+// 	/* then */
+// 	BLOCK_asm(_ctx, konoha.Stmt_block(_ctx, stmt, KW_Block, null));
+// 	konoha.MODCODE_init.prototype.ASM_JMP(_ctx, lbEND);
+// 	/* else */
+// 	konoha.MODCODE_init.prototype.ASM_LABEL(_ctx, lbELSE);
+// 	BLOCK_asm(_ctx, kStmt_block(stmt, KW_else, K_NULLBLOCK));
+// 	/* endif */
+// 	konoha.MODCODE_init.prototype.ASM_LABEL(_ctx, lbEND);
 }
 
 konoha.MODCODE_init.prototype.ReturnStmt_asm = function(_ctx, stmt, shift, espidx)
@@ -249,7 +313,7 @@ konoha.MODCODE_init.prototype.LoopStmt_asm = function(_ctx, stmt, shift, espidx)
 {
 	konoha.MODCODE_init.prototype.ASM('while (');
 	konoha.MODCODE_init.prototype.EXPR_asm(_ctx, espidx, stmt[1] /* kstmt_expr(stmt, 1, NULL) */, shift, espidx);
-	konoha.MODCODE_init.prototype.ASM(') {;');
+	konoha.MODCODE_init.prototype.ASM(') {');
 	this.indent++;
 	konoha.MODCODE_init.prototype.ASM_NEWLINE();
 	BLOCK_asm(_ctx, kStmt_block(stmt, konoha.KW_Block), shift);
@@ -261,8 +325,8 @@ konoha.MODCODE_init.prototype.BLOCK_asm = function(_ctx, bk, shift)
 {
 //	console.log(bk);
 	/* bk: kBlock, shift: int */
-	var espidx = (bk.esp.build == konoha.TEXPR_STACKTOP) ? shift + bk.esp.index : bk.esp.index;
-	//	var espidx = bk.esp.index;
+//TODO!!	var espidx = (bk.esp.build == konoha.TEXPR_STACKTOP) ? shift + bk.esp.index : bk.esp.index;
+	var espidx = 0;
 	console.log("shift = "+ shift + ", espidx = " + espidx + ", build = " + bk.esp.build);
 	/* TODO Is blocks' type Array? */
 //	console.log(bk.blocks.data);

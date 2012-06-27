@@ -226,6 +226,7 @@ konoha.loadInitStructMethodData = function(_ctx) {
 konoha.addClassDef = function(_ctx, classname) {
 	konoha.ct[classname] = {};
 	konoha.ct[classname].DBG_NAME = classname;
+	konoha.ct[classname].cid = konoha.ct.length;
 	_ctx.share.ca.push(konoha.ct[classname]);
 }
 
@@ -244,6 +245,12 @@ konoha.loadInitStructData = function(_ctx)
 	konoha.addClassDef(_ctx, "System");
 	konoha.addClassDef(_ctx, "T0");
 	konoha.addClassDef(_ctx, "Float");
+//TODO should there be defined here?
+	konoha.addClassDef(_ctx, "KonohaSpace");
+	konoha.addClassDef(_ctx, "Token");
+	konoha.addClassDef(_ctx, "Stmt");
+	konoha.addClassDef(_ctx, "Block");
+	konoha.addClassDef(_ctx, "Expr");
 	konoha.loadInitStructMethodData(_ctx);
 }
 
