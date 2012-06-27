@@ -295,8 +295,7 @@ konoha.Block_eval = function(_ctx, bk)
 	}
 //	return result;
 //	var result = konoha.Stmt_checkReturnType(_ctx, bk.blocks.data[0]);
-	konoha.MODCODE_init.prototype.output = "";
-	var result = konoha.MODCODE_init.prototype.BLOCK_asm(_ctx, bk, 0);
+	var result = konoha.BLOCK_asm(_ctx, bk, 0);
 	return result;
 }
 
