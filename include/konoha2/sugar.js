@@ -160,6 +160,7 @@ konoha.TSTMT_RETURN       = 4;
 konoha.TSTMT_IF           = 5;
 konoha.TSTMT_LOOP         = 6;
 konoha.TSTMT_JUMP         = 7;
+konoha.TSTMT_MTDDEF       = 8; //special constant for jskonoha
 
 konoha.kStmt = function() {
 	this.h = new konoha.kObjectHeader();				//	kObjectHeader;
@@ -359,10 +360,6 @@ konoha.kStmt_done = function(STMT) {
 konoha.Stmt_setsyn = function(_ctx, stmt, syn)
 {
 	stmt.syn = syn;
-}
-
-konoha.kStmt_typed = function(STMT, T) {
-	return konoha.Stmt_typed(STMT, T);
 }
 
 konoha.Stmt_typed = function(stmt,  build)
