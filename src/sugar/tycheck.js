@@ -225,6 +225,113 @@ konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, reqty, pol)
 	return 0;
 }
 
+konoha.StmtTyCheck_if = function(_ctx, stmt)
+{
+	console.log("konoha.StmtTyCheck_if");
+	var r = 1;
+	if((r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, konoha.TY_Boolean, 0))) {
+		var bkThen = konoha.kStmt_block(stmt, konoha.kw.Block, null);
+		var bkElse = konoha.kStmt_block(stmt, konoha.kw.else, null);
+		r = konoha.Block_tyCheckAll(_ctx, bkThen);
+		r = r & konoha.Block_tyCheckAll(_ctx, bkElse);
+		konoha.kStmt_typed(stmt, konoha.TSTMT_IF);
+	}
+	return r;
+}
+
+konoha.StmtTyCheck_else = function(_ctx, stmt)
+{
+	var r = 1;
+	var stmtIf = konoha.Stmt_lookupIfStmtNULL(_ctx, stmt);
+	if(stmtIf != null) {
+		var bkElse = konoha.kStmt_block(stmt, konoha.kw.Block, null);
+		konoha.kObject_setObject(stmtIf, konoha.kw.else, bkElse);
+		konoha.kStmt_done(stmt);
+		r = konoha.Block_tyCheckAll(_ctx, bkElse);
+	}
+	else {
+//		konoha.sugar_p(ERR_, stmt->uline, -1, "else is not statement");
+		r = 0;
+	}
+	return r;
+}
+
+konoha.StmtTyCheck_return = function(_ctx, stmt)
+{
+	var r = 1;
+	konoha.kStmt_typed(stmt, konoha.TSTMT_RETURN);
+	if(rtype != konoha.TY_void) {
+		r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, rtype, 0);
+	} else {
+		var expr = konoha.KObject_getObjectNULL(_ctx, stmt, 1, null);
+		if (expr != null) {
+//			SUGAR_P(WARN_, stmt->uline, -1, "ignored return value");
+			r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, konoha.TY_var, 0);
+			konoha.kObject_removeKey(stmt, 1);
+		}
+	}
+	return r;
+}
+
+konoha.StmtTyCheck_TypeDecl = function(_ctx, stmt)
+{
+	var tk  = konoha.kStmt_token(stmt, konoha.kw.Type, null);
+	var expr = konoha.kStmt_expr(stmt, konoha.kw.Expr, null);
+	if(tk == null || !konoha.TK_isType(_ctx, tk) || expr == null) {
+		konoha.ERR_SyntaxError(stmt.uline);
+		return false;
+	}
+	konoha.kStmt_done(stmt);
+	return (Expr_declType(_ctx, expr, konoha.TK_type(_ctx, tk), stmt));
+}
+
+konoha.StmtTyCheck_MethodDecl = function(_ctx, stmt)
+{
+	var r = 0;
+	var flag =  konoha.Stmt_flag(_ctx, stmt, MethodDeclFlag, 0);
+	var cid =  konoha.Stmt_getcid(_ctx, stmt, ks, konoha.kw.Usymbol, ks.function_cid);
+	var mn = konoha.Stmt_getmn(_ctx, stmt, ks, konoha.kw.Symbol, MN_("new"));
+	var pa = konoha.Stmt_newMethodParamNULL(_ctx, stmt);
+	if(konoha.TY_isSingleton(cid)) flag |= konoha.kMethod_Static;
+	if(pa != null) {
+		var mtd = konoha.new_kMethod(flag, cid, mn, pa, null);
+		if(konoha.kKonohaSpace_defineMethod(ks, mtd, stmt.uline)) {
+			r = 1;
+			konoha.Stmt_setMethodFunc(_ctx, stmt, ks, mtd);
+			konoha.kStmt_done(stmt);
+		}
+	}
+	return r;
+}
+
+konoha.StmtTyCheck_ParamsDecl = function(_ctx, stmt)
+{
+	var tkT = konoha.kStmt_token(stmt, konoha.kw.Type, null); // type
+	var rtype =  tkT == null ? konoha.TY_void : konohaTK_type(_ctx, tkT);
+	var pa = null;
+	var params = konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Params, null);
+	if(params == null) {
+		pa = (rtype == konoha.TY_void) ? konoha.K_NULLPARAM : konoha.new_kParam(rtype, 0, null);
+	}
+	else if(konoha.IS_Param(params)) {
+		pa = params;
+	}
+	else if(konoha.IS_Block(params)) {
+		var i, psize = params.blocks.data;
+		var p = new Array(psize);
+		for(i = 0; i < psize; i++) {
+			var stmts = params.blocks.stmts[i];
+			if(stmt.syn.kw != konoha.kw.StmtTypeDecl || !konoha.StmtTypeDecl_setParam(_ctx, stmt, i, p)) {
+//				SUGAR_P(ERR_, stmt->uline, -1, "parameter declaration must be a $type $name form");
+				return false;
+			}
+		}
+		pa = konoha.new_kParam(rtype, psize, p);
+	}
+	konoha.kObject_setObject(stmt, konoha.kw.Params, pa);
+	return 1;
+}
+
 konoha.StmtTyCheck_Expr = function(_ctx, stmt)  // $expr
 {
 	var r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, konoha.TY_var, konoha.TPOL_ALLOWVOID);
@@ -434,6 +541,16 @@ konoha.ExprTyCheckFunc = function(_ctx, fo, stmt, expr, /*gma,*/ reqty)
 	var ret = fo(_ctx, stmt, expr, /*gma*/reqty)
 //	DBG_ASSERT(IS_Expr(lsfp[0].o));
 	return ret;
+}
+
+konoha.ExprTyCheck_true = function(_ctx, stmt, expr, /*gma,*/ reqty)
+{
+	return konoha.Expr_setNConstValue(_ctx, expr, konoha.TY_Boolean, 1);
+}
+
+konoha.ExprTyCheck_false = function(_ctx, stmt, expr, /*gma,*/ reqty)
+{
+	return konoha.Expr_setNConstValue(_ctx, expr, konoha.TY_Boolean, 0);
 }
 
 konoha.ExprTyCheck_Int = function(_ctx, stmt, expr, /*gma,*/ reqty)
