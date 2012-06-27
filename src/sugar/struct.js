@@ -65,13 +65,13 @@ konoha.KonohaSpace_syntax = function(_ctx, ks0, kw, isnew)
 	return null;
 }
 //#define T_statement(kw)  T_statement_(_ctx, kw)
-konoha.T_statement_ = new function(CTX,  kw)
+konoha.T_statement_ = new function(_ctx,  kw)
 {
 	var buf = new Array();  // this is not good, but this is very rare case.
 	var statement = null, postfix = " statement";
-	if(kw == konoha.KW_Expr) { statement = "expression"; postfix = ""; }
-	if(kw == konoha.KW_StmtTypeDecl) { statement = "variable"; postfix = " declaration"; }
-	if(kw == konoha.KW_StmtMethodDecl) { statement =  "function"; postfix = " declaration"; }
+	if(kw == konoha.kw.Expr) { statement = "expression"; postfix = ""; }
+	if(kw == konoha.kw.StmtTypeDecl) { statement = "variable"; postfix = " declaration"; }
+	if(kw == konoha.kw.StmtMethodDecl) { statement =  "function"; postfix = " declaration"; }
 //	snprintf(buf, sizeof(buf), "%s%s", statement, postfix);
 	return buf;
 }
@@ -225,7 +225,6 @@ konoha.Expr_setNConstValue = function(_ctx, expr, ty, ndata)
 	expr.ty = ty;
 	return expr;
 }
-
 konoha.Expr_setConstValue = function(_ctx, expr, ty, o)
 {
 	if(expr == null) {
@@ -245,4 +244,14 @@ konoha.Expr_setConstValue = function(_ctx, expr, ty, o)
 	}
 //	WASSERT(expr);
 	return expr;
+}
+
+konoha.Expr_add = function(_ctx, expr, e)
+{
+//	konoha.assert(konoha.IS_Array(expr.cons));
+	if(expr != null && e != null) {
+		expr.cons.data.push(e);
+		return expr;
+	}
+	return null;
 }

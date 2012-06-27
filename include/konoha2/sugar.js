@@ -195,7 +195,6 @@ konoha.SYNFLAG_ExprPostfixOp2  = 1 << 3;
 konoha.SYNFLAG_StmtBreakExec   = 1 << 8;
 konoha.SYNFLAG_StmtJumpAhead   = 1 << 9;
 konoha.SYNFLAG_StmtJumpSkip    = 1 << 10;
-
 konoha.KW_Err     = 0;
 konoha.KW_Expr    = 1;
 konoha.KW_Symbol  = 2;

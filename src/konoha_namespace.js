@@ -86,6 +86,7 @@ konoha.kw.array = [
 	konoha.kw.Brace,
 	konoha.kw.Block,
 	konoha.kw.Params,
+	konoha.kw.ExprMethodCall,
 	konoha.kw.Toks,
 ];
 

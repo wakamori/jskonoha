@@ -80,15 +80,23 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 	var tls = _ctx.ctxsugar.tokens;
 	var pos = tls.length;
 	konoha.KonohaSpace_tokenize(_ctx, ks, script, 0 /* uline */, tls);
-	konoha.DBG_P("################ tokenize ##################");
-	konoha.DBG_P(tls);
-	konoha.DBG_P("############################################");
+//	konoha.DBG_P("################ tokenize ##################");
+//	konoha.DBG_P(tls);
+//	konoha.DBG_P("############################################");
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
 	console.log("################### ast ####################");
 //	console.log(bk);
- 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"]);
- 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[1]);
- 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[2]);
+
+ 	// console.log(bk.blocks.data[0].h.kvproto.data["$expr"]);
+ 	// console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[1]);
+ 	// console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[2]);
+ 	console.log("==========bk.blocks.data[0].h.kvproto.data[$expr].cons.data[0].text.text========");
+ 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[0].text.text);
+ 	console.log("==========bk.blocks.data[0].h.kvproto.data[$expr].cons.data[1].tk.text.text========");
+ 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[1].tk.text.text);
+ 	console.log("==========bk.blocks.data[0].h.kvproto.data[$expr].cons.data[2].tk.text.text========");
+ 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[2].tk.text.text);
+
 	console.log("############################################");
 	tls = tls.slice(0, pos - 1);
 	var result = konoha.Block_eval(_ctx, bk);

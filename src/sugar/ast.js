@@ -100,9 +100,9 @@ konoha.appendKeyword = function(_ctx, ks, tls, s, e, dst, tkERR) {
 	}
 	else if(tk.tt == konoha.ktoken_t.TK_USYMBOL) {
 		if(!konoha.Token_resolved(_ctx, ks, tk)) {
-			var ct = new konoha.kKonohaSpace_getCT(ks, null/*FIXME*/, tk.text, tk.text.length, konoha.TY_unknown);
+			var ct = _ctx.share.ca[10];
 			if(ct != null) {
-				tk.kw = konoha.kw.type;
+				tk.kw = konoha.kw.Type;
 				tk.ty = ct.cid;
 			}
 		}
@@ -161,6 +161,7 @@ konoha.Token_toBRACE = function(_ctx, tk, ks) {
 }
 
 konoha.makeTree = function(_ctx, ks, tt, tls, s, e, closech, tlsdst, tkERRRef) {
+	console.log("maketree start");
 	var i, probablyCloseBefore = e - 1;
 	var tk = tls[s];
 	var tkP = new konoha.kToken();
@@ -175,6 +176,7 @@ konoha.makeTree = function(_ctx, ks, tt, tls, s, e, closech, tlsdst, tkERRRef) {
 		tk = tls[i];
 		if(tk.tt == konoha.ktoken_t.TK_ERR) break;
 		if(tk.topch == '(') {
+			console.log("maketree'('");
 			i = konoha.makeTree(_ctx, ks, konoha.ktoken_t.AST_PARENTHESIS, tls, i, e, ')', tkP.sub, tkERRRef);
 			continue;
 		}
@@ -351,14 +353,13 @@ konoha.matchSyntaxRule = function(_ctx, stmt, rules, uline, tls, s, e, optional)
 				c = konoha.lookAheadKeyword(tls, ti+1, e, rules[ri+1]);
 				if(c == -1) {
 					if(optional) return s;
-					konoha.Token_p(_ctx, tk, konoha.kreportlevel_t.ERR_, konoha.T_statement_(_ctx, stmt.syn.kw) + " needs " + konoha.T_kw_(_ctx, rule.kw));
+//					konoha.Token_p(_ctx, tk, konoha.kreportlevel_t.ERR_, konoha.T_statement_(_ctx, stmt.syn.kw) + " needs " + konoha.T_kw_(_ctx, rule.kw));
 					return -1;
 				}
 				ri++;
 			}
 //TODO!!			var err_count = ctxsugar.err_count;
 			var next = syn.ParseStmtNULL(_ctx, stmt, syn, rule.nameid, tls, ti, c);
-
 			if(next == -1) {
 				if(optional) return s;
 //TODO!!
@@ -453,9 +454,9 @@ konoha.Block_addStmtLine = function(_ctx, bk, tls, s, e, tkERR) {
 	bk.blocks.data.push(stmt);
 	stmt.parentNULL = bk;
 	if(tkERR != null) {
-		stmt.syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), konoha.KW_Err, 0);
+		stmt.syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), konoha.kw.Err, 0);
 		stmt.build = konoha.TSTMT_ERR;
-		konoha.kObject_setObject(stmt, konoha.KW_Err, tkERR.text);	}
+		konoha.kObject_setObject(stmt, konoha.kw.Err, tkERR.text);	}
 	else {
 		s = konoha.Stmt_addAnnotation(_ctx, stmt, tls, s, e);
 		if(!konoha.Stmt_parseSyntaxRule(_ctx, stmt, tls, s, e)) {
@@ -490,7 +491,7 @@ konoha.Stmt_findBinaryOp = function(_ctx, stmt, tls, s, e, synRef) {
 		var tk = tls[i];
 		var syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), tk.kw, 0);
 		if(syn.priority > 0) {
-			if(prif < syn.priority || (prif == syn.priority && syn.flag == konoha.SYNFLAG_ExprLeftJoinOp2)) { //do we use FLAG_is?
+			if(prif < syn.priority || (prif == syn.priority/* && syn.flag == konoha.SYNFLAG_ExprLeftJoinOp2*/)) { //do we use FLAG_is?
 				prif = syn.priority;
 				idx = i;
 				synRef.syn = syn;
@@ -509,12 +510,12 @@ konoha.Stmt_addExprParams = function(_ctx, stmt, expr, tls, s, e, allowEmpty) {
 	for(i = s; i < e; i++) {
 		var tk = tls[i];
 		if(tk.kw == konoha.kw.COMMA) {
-			expr = konoha.Expr_add(_ctx, expr, Stmt_newExpr2(_ctx, stmt, tls, start, i));
+			expr = konoha.Expr_add(_ctx, expr, konoha.Stmt_newExpr2(_ctx, stmt, tls, start, i));
 			start = i + 1;
 		}
 	}
 	if(allowEmpty == 0 || start < i) {
-		expr = konoha.Expr_add(_ctx, expr, Stmt_newExpr2(_ctx, stmt, tls, start, i));
+		expr = konoha.Expr_add(_ctx, expr, konoha.Stmt_newExpr2(_ctx, stmt, tls, start, i));
 	}
 	tls.length = 0;
 	return expr;
@@ -522,14 +523,17 @@ konoha.Stmt_addExprParams = function(_ctx, stmt, expr, tls, s, e, allowEmpty) {
 
 konoha.ParseExpr = function(_ctx, syn, stmt, tls, s, idx, e) {
 	if (syn == null || syn.ParseExpr == null) {
+		console.log("parseExpr_a");
 		return _ctx.kmodsugar.UndefinedParseExpr(_ctx, stmt, syn, tls, s, idx, e);
 	}
 	else {
+		console.log("parseExpr_b");
 		return syn.ParseExpr(_ctx, stmt, syn, tls, s, idx, e);
 	}
 }
 
 konoha.Stmt_newExpr2 = function(_ctx, stmt, tls, s,  e) {
+	console.log("stmt_newexpr2");
 	if(s < e) {
 		var synref = {};
 		var idx = konoha.Stmt_findBinaryOp(_ctx, stmt, tls, s, e, synref);
@@ -576,7 +580,7 @@ konoha.ParseExpr_Op = function(_ctx, stmt, syn, tls, s, c, e ,_rix) {
 	var mn = (s == c) ? syn.op1 : syn.op2;
 	if(mn != konoha.MN_NONAME && syn.ExprTyCheck == _ctx.kmodsugar.UndefinedExprTyCheck) {
 		konoha.kToken_setmn(tk, mn, (s == c) ? konoha.mntype_t.MNTYPE_unary: konoha.mntype_t.MNTYPE_binary);
-		syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), konoha.KW_ExprMethodCall, 0);
+		syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), konoha.kw.ExprMethodCall, 0);
 	}
 	if(s == c) {
 		expr = konoha.new_ConsExpr(_ctx, syn, 2, tk, rexpr);
@@ -598,35 +602,36 @@ konoha.isFieldName = function(tls, c, e) {
 }
 
 konoha.ParseExpr_DOT = function(_ctx, stmt, syn, tls, s, c, e,_rix) {
-	if(isFieldName(tls, c, e)) {
+	if(konoha.isFieldName(tls, c, e)) {
 		var expr = konoha.Stmt_newExpr2(_ctx, stmt, tls, s, c);
 		expr = konoha.new_ConsExpr(_ctx, syn, 2, tls[c+1], expr);
-		return konoha.kExpr_rightJoin(expr, stmt, tls, c+2, c+2, e);
+		return konoha.Expr_rightJoin(_ctx, expr, stmt, tls, c+2, c+2, e);
 	}
 	if(c + 1 < e) c++;
 	return konoha.kToken_p(_ctx, tls[c], ERR_, "expected field name: not %s", konoha.kToken_s(tls[c]));
 }
 
 konoha.ParseExpr_Parenthesis = function(_ctx, stmt, syn, tls, s, c, e) {
+	console.log("parenthesis");
 	var tk = tls[c];
 	if(s == c) {
-		var expr = konoha.Stmt_newExpr2(_ctx, stmt, tk.sub, 0, kArray_size(tk.sub));
-		return konoha.kExpr_rightJoin(expr, stmt, tls, s+1, c+1, e);
+		var expr = konoha.Stmt_newExpr2(_ctx, stmt, tk.sub, 0, tk.sub.length);
+		return konoha.Expr_rightJoin(_ctx, expr, stmt, tls, s+1, c+1, e);
 	}
 	else {
 		var lexpr = konoha.Stmt_newExpr2(_ctx, stmt, tls, s, c);
 		if(lexpr == null) {
 			return lexpr;
 		}
-		if(lexpr.syn.kw == konoha.KW_DOT) {
-			lexpr.syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), KW_ExprMethodCall, 0);
+		if(lexpr.syn.kw == konoha.kw.DOT) {
+			lexpr.syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), konoha.kw.ExprMethodCall, 0);
 		}
-		else if(lexpr.syn.kw != konoha.KW_ExprMethodCall) {
-			syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), konoha.KW_Parenthesis, 0);
+		else if(lexpr.syn.kw != konoha.kw.ExprMethodCall) {
+			syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), konoha.kw.Parenthesis, 0);
 			lexpr  = konoha.new_ConsExpr(_ctx, syn, 2, lexpr, K_NULL);
 		}
 		lexpr = konoha.Stmt_addExprParams(_ctx, stmt, lexpr, tk.sub, 0, tk.sub.length, 1/*allowEmpty*/);
-		return konoha.kExpr_rightJoin(lexpr, stmt, tls, s+1, c+1, e);
+		return konoha.Expr_rightJoin(_ctx, lexpr, stmt, tls, s+1, c+1, e);
 	}
 }
 
@@ -654,6 +659,7 @@ konoha.ParseExpr_DOLLAR = function(_ctx, stmt, syn, tls, s, c, e,_rix) {
 }
 
 konoha.ParseStmt_Expr = function(_ctx, stmt, syn, name, tls, s, e) {
+	console.log("parsestmt_expr");
 	var r = -1;
 //TODO	konoha.dumpTokenArray(_ctx, 0, tls, s, e);
 	var expr = konoha.Stmt_newExpr2(_ctx, stmt, tls, s, e);
