@@ -97,7 +97,7 @@ konoha.MODCODE_init.prototype.ASM_CALL = function(_ctx, thisidx, espidx, argc, m
 	var mtdName = mtd.mtdname;
 	konoha.MODCODE_init.prototype.ASM(mtdName + '(');
 	for (var i = 0; i < argc; i++) {
-		konoha.MODCODE_init.prototype.ASM('sfp' + (thisidx+1+i));
+		konoha.MODCODE_init.prototype.ASM('sfp' + (thisidx+i));
 		if (i != argc-1) {
 			konoha.MODCODE_init.prototype.ASM(', ');
 		}
