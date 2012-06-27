@@ -88,7 +88,7 @@ konoha.CTX_isCompileOnly = 0
 konoha.CTX_isDebug       = 0
 
 konoha.kshare_t = function() {
-	this.ca = new konoha.karray_t();
+	this.ca = new Array();
 	this.lcnameMapNN = null; //struct kmap_t
 	this.constNull = null; //const struct _kObject *
 	this.constTrue = null; //const struct _kBoolean *
@@ -329,3 +329,7 @@ konoha.kMethod_D            =        ((1<<10))
 konoha.kMethod_Abstract     =        ((1<<11))
 konoha.kMethod_Coercion     =        ((1<<12))
 konoha.kMethod_SmartReturn  =        ((1<<13))
+
+konoha.CT_ = function(_ctx, cid) {
+	return _ctx.share.ca[cid];
+}

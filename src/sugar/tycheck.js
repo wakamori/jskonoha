@@ -169,7 +169,6 @@ konoha.new_BoxingExpr = function(_ctx, expr, reqty)
 
 konoha.Expr_tyCheck = function(_ctx, stmt, expr, /*gma,*/ reqty, pol)
 {
-	console.log("Expr_tyCheck");
 	var texpr = expr;
 	if(expr.ty == konoha.TY_var && expr != null/*_ctx.kmodsugar.cExpr.nulvalNUL*/) {
 //TODO  if(!konoha.IS_Expr(expr)) {
@@ -204,7 +203,6 @@ konoha.Expr_tyCheckAt = function(_ctx, stmt, exprP, pos, /*gma,*/ reqty, pol)
 {
 	if(/*!konoha.Expr_isTerm(exprP) &&*/ pos < exprP.cons.data.length) {
 		var expr = exprP.cons.data[pos];
-//		console.log(expr);
 		expr = konoha.Expr_tyCheck(_ctx, stmt, expr, /*gma,*/ reqty, pol);
 		exprP.cons.data[pos] =  expr;
 		return expr;
@@ -214,7 +212,6 @@ konoha.Expr_tyCheckAt = function(_ctx, stmt, exprP, pos, /*gma,*/ reqty, pol)
 
 konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, reqty, pol)
 {
-	console.log("Stmt_tyCheckExpr");
 	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, nameid, null);
 	if(expr != null/* && konoha.IS_Expr(expr)*/) {
 		var texpr = konoha.Expr_tyCheck(_ctx, stmt, expr, reqty, pol);
@@ -236,13 +233,11 @@ konoha.StmtTyCheck_Expr = function(_ctx, stmt)  // $expr
 
 konoha.Stmt_TyCheckFunc = function(_ctx, fo, stmt, gma)
 {
-	console.log("Stmt_TyCheckFunc");
 	return fo(_ctx, stmt, gma);
 }
 
 konoha.Stmt_TyCheck = function(_ctx, syn, stmt, gma)
 {
-	console.log("Stmt_TyCheck");
 	var fo = gma.flag ? syn.TopStmtTyCheck : syn.StmtTyCheck;
 	var result;
 // 	if(IS_Array(fo)) { // @Future
@@ -330,12 +325,11 @@ konoha.Block_eval = function(_ctx, bk)
 	}
 //	return result;
 //	var result = konoha.Stmt_checkReturnType(_ctx, bk.blocks.data[0]);
-	konoha.MODCODE_init.prototype.BLOCK_asm(_ctx, bk, 0);
+	var result = konoha.MODCODE_init.prototype.BLOCK_asm(_ctx, bk, 0);
 	return result;
 }
 
 konoha.Expr_typedWithMethod = function(_ctx, expr, mtd, reqty) {
-	console.log("Expr_typedWithMethod");
 	var expr1 = konoha.kExpr_at(expr, 1);
 	expr.cons.data[0] = mtd;
 	if(expr1.build == konoha.TEXPR_NEW) {
@@ -349,55 +343,53 @@ konoha.Expr_typedWithMethod = function(_ctx, expr, mtd, reqty) {
 
 konoha.Expr_tyCheckCallParams = function(_ctx, stmt, expr, mtd, reqty)
 {
-	console.log("Expr_tyCheckCallParams");
 	var cons = expr.cons;
 	var i, size = cons.data.length;
 	var expr1 = cons.data[1];
-	var this_ct = konoha.CT_(expr1.ty);
+	var this_ct = konoha.CT_(_ctx, expr1.ty);
 //	DBG_ASSERT(IS_Method(mtd));
 //	DBG_ASSERT(this_ct.cid != TY_var);
-	if(!konoha.TY_isUnbox(mtd.cid) && konoha.CT_isUnbox(this_ct)) {
-		expr1 = konoha.new_BoxingExpr(_ctx, cons.data[1], this_ct.cid);
-		cons.exprs[1] = expr1;
-	}
-	var isConst = (konoha.Expr_isCONST(expr1)) ? 1 : 0;
+// 	if(!konoha.TY_isUnbox(mtd.cid) && konoha.CT_isUnbox(this_ct)) {
+// 		expr1 = konoha.new_BoxingExpr(_ctx, cons.data[1], this_ct.cid);
+// 		cons.exprs[1] = expr1;
+// 	}
+//	var isConst = (konoha.Expr_isCONST(expr1)) ? 1 : 0;
 	//	if(rtype == TY_var && gma.genv.mtd == mtd) {
 	//		return ERROR_Unsupported(_ctx, "type inference of recursive calls", TY_unknown, null);
 	//	}
 	for(i = 2; i < size; i++) {
-		var texpr = konoha.kExpr_tyCheckAt(_ctx, stmt, expr, i, konoha.TY_var, 0);
+		var texpr = konoha.Expr_tyCheckAt(_ctx, stmt, expr, i, konoha.TY_var, 0);
 		if(texpr == null) {
 			return texpr;
 		}
 	}
-//	mtd = kExpr_lookUpOverloadMethod(_ctx, expr, mtd, gma, this_ct);
-	var pa = konoha.kMethod_param(mtd);
-	if(pa.psize + 2 != size) {
-//		return konoha.kExpr_p(stmt, expr, ERR_, "%s.%s%s takes %d parameter(s), but given %d parameter(s)", CT_t(this_ct), T_mn(mtd.mn), (int)pa.psize, (int)size-2);
-		return null;//TODO!!
-	}
-	for(i = 0; i < pa.psize; i++) {
-		var n = i + 2;
-		var ptype = konoha.ktype_var(_ctx, pa.p[i].ty, this_ct);
-		var pol = konoha.param_policy(pa.p[i].fn);
-		var texpr = konoha.kExpr_tyCheckAt(_ctx, stmt, expr, n, ptype, pol);
-		if(texpr == null) {
-//			return konoha.kExpr_p(stmt, expr, ERR_, "%s.%s%s accepts %s at the parameter %d", CT_t(this_ct), T_mn(mtd.mn), TY_t(ptype), (int)i+1);
-			return null;//TODO!!
-		}
-		if(!konoha.Expr_isCONST(expr)) isConst = 0;
-	}
-	expr = konoha.Expr_typedWithMethod(_ctx, expr, mtd, reqty);
-	if(konoha.isConst && konoha.kMethod_isConst(mtd)) {
-		var rtype = konoha.ktype_var(_ctx, pa.rtype, this_ct);
-		return konoha.ExprCall_toConstValue(_ctx, expr, cons, rtype);
-	}
+// //	mtd = kExpr_lookUpOverloadMethod(_ctx, expr, mtd, gma, this_ct);
+// 	var pa = konoha.kMethod_param(mtd);
+// 	if(pa.psize + 2 != size) {
+// //		return konoha.kExpr_p(stmt, expr, ERR_, "%s.%s%s takes %d parameter(s), but given %d parameter(s)", CT_t(this_ct), T_mn(mtd.mn), (int)pa.psize, (int)size-2);
+// 		return null;//TODO!!
+// 	}
+// 	for(i = 0; i < pa.psize; i++) {
+// 		var n = i + 2;
+// 		var ptype = konoha.ktype_var(_ctx, pa.p[i].ty, this_ct);
+// 		var pol = konoha.param_policy(pa.p[i].fn);
+// 		var texpr = konoha.kExpr_tyCheckAt(_ctx, stmt, expr, n, ptype, pol);
+// 		if(texpr == null) {
+// //			return konoha.kExpr_p(stmt, expr, ERR_, "%s.%s%s accepts %s at the parameter %d", CT_t(this_ct), T_mn(mtd.mn), TY_t(ptype), (int)i+1);
+// 			return null;//TODO!!
+// 		}
+// 		if(!konoha.Expr_isCONST(expr)) isConst = 0;
+// 	}
+// 	expr = konoha.Expr_typedWithMethod(_ctx, expr, mtd, reqty);
+// 	if(konoha.isConst && konoha.kMethod_isConst(mtd)) {
+// 		var rtype = konoha.ktype_var(_ctx, pa.rtype, this_ct);
+// 		return konoha.ExprCall_toConstValue(_ctx, expr, cons, rtype);
+// 	}
 	return expr;
 }
 
 konoha.Expr_lookupMethod = function(_ctx, stmt, expr, this_cid, reqty)
 {
-	console.log("Expr_lookupMethod");
 	var mtd = null;
 //	var ks = gma.genv.ks;
 	var tkMN = expr.cons.data[0];
@@ -428,7 +420,6 @@ konoha.Expr_lookupMethod = function(_ctx, stmt, expr, this_cid, reqty)
 
 konoha.ExprTyCheck_MethodCall = function(_ctx, stmt, expr, reqty)
 {
-	console.log("ExprTyCheck_MethodCall");
 	var texpr = konoha.Expr_tyCheckAt(_ctx, stmt, expr, 1, /*gma,*/ konoha.TY_var, 0);
 	if(texpr != null) {
 		var this_cid = texpr.ty;
@@ -451,7 +442,6 @@ konoha.ExprTyCheck_Int = function(_ctx, stmt, expr, /*gma,*/ reqty)
 }
 
 konoha.ExprTyCheck = function(_ctx, stmt, expr, /*gma,*/ reqty) {
-	console.log("ExprTyCheck");
 	var fo = expr.syn.ExprTyCheck;
 	var texpr;
 //TODO!!

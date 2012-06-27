@@ -176,6 +176,20 @@ konoha.new_ConsExpr = function(_ctx, syn, n)
 	return expr;
 }
 
+konoha.CT_findMethodNULL = function(_ctx, ct, mn)
+{
+	while(ct != null) {
+		var ret = ct[mn];
+		if (ret != null) {
+			return ret;
+		}
+		else {
+			ct = ct.superclass;
+		}
+	}
+	return null;
+}
+
 konoha.KonohaSpace_getMethodNULL = function(_ctx, ks, cid, mn)
 {
 	while(ks != null) {
@@ -188,7 +202,7 @@ konoha.KonohaSpace_getMethodNULL = function(_ctx, ks, cid, mn)
 			ks = ks.parentNULL;
 		}
 	}
-	return konoha.CT_findMethodNULL(_ctx, CT_(cid), mn);
+	return konoha.CT_findMethodNULL(_ctx, konoha.CT_(_ctx, cid), mn);
 }
 
 konoha.KonohaSpace_getCastMethodNULL = function(_ctx, ks, cid, tcid)
