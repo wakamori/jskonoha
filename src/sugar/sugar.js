@@ -95,6 +95,7 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 	console.log("################### eval ####################");
 //	console.log(bk);
 // 	console.log(bk.blocks.data[0]);
+	console.log(konoha.MODCODE_init.prototype.output);
 	console.log("############################################");
 	return result;
 }

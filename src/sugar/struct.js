@@ -181,6 +181,7 @@ konoha.CT_findMethodNULL = function(_ctx, ct, mn)
 	while(ct != null) {
 		var ret = ct[mn];
 		if (ret != null) {
+			ret.mtdname = "konoha.ct." + ct.DBG_NAME + "." + mn;
 			return ret;
 		}
 		else {
