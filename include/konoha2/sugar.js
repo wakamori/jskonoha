@@ -367,10 +367,6 @@ konoha.kExpr_setsyn = function(expr, syn)
 	expr.syn = syn;
 }
 
-konoha.kExpr_typed = function(E, B, TY) {
-	return   konoha.Expr_typed(E, TEXPR_B, TY);
-}
-
 konoha.Expr_typed = function(expr, build, ty)
 {
 	expr.build = build;
@@ -383,3 +379,7 @@ konoha.TPOL_ALLOWVOID   =   (1 << 1);
 konoha.TPOL_COERCION    =   (1 << 2);
 
 konoha.kGamma_TOPLEVEL  =   1;
+
+konoha.kExpr_at = function(expr, n) {
+    return expr.cons.data[n];
+}
