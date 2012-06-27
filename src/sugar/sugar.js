@@ -84,15 +84,18 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 	konoha.DBG_P(tls);
 	konoha.DBG_P("############################################");
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
-//	console.log("################### ast ####################");
+	console.log("################### ast ####################");
 //	console.log(bk);
-//	console.log(bk.blocks.data[0].h.kvproto.data[0]);
-	// console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[1].tk);
-	// console.log(bk.blocks.data[0].h.kvproto.data[0].cons.data[2].tk);
-	// console.log("############################################");
+ 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"]);
+ 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[1]);
+ 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[2]);
+	console.log("############################################");
 	tls = tls.slice(0, pos - 1);
-	var result;// = konoha.Block_eval(_ctx, bk);
-
+	var result = konoha.Block_eval(_ctx, bk);
+	console.log("################### eval ####################");
+//	console.log(bk);
+// 	console.log(bk.blocks.data[0]);
+	console.log("############################################");
 	return result;
 }
 

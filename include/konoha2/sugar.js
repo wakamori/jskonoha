@@ -132,7 +132,7 @@ konoha.TEXPR_MAX        =  14;
 
 konoha.kExpr = function(syn) {
 	this.h = new konoha.kObjectHeader();				//kObjectHeader
-	this.ty = null;			//ktype_t
+	this.ty = konoha.TY_var;			//ktype_t
 	this.build = null;			//kexpr_t
 	this.tk = null;			//kToken
 	//	union {
@@ -142,9 +142,7 @@ konoha.kExpr = function(syn) {
 	this.block = null;		//const struct _kBlock *
 	//	};
 	//	union {
-	if (syn != null) {
-		this.syn = syn;		//ksyntax_t *
-	}
+	this.syn = syn;		//ksyntax_t *
 	this.ivalue = null;	//kint_t
 	this.fvalue = null;	//kfloat_t
 	this.ndata = null;		//uintptr_t
@@ -380,6 +378,8 @@ konoha.Expr_typed = function(expr, build, ty)
 	return expr;
 }
 
-konoha.TPOL_NOCHECK     =         1
-konoha.TPOL_ALLOWVOID   =   (1 << 1)
-konoha.TPOL_COERCION    =   (1 << 2)
+konoha.TPOL_NOCHECK     =         1;
+konoha.TPOL_ALLOWVOID   =   (1 << 1);
+konoha.TPOL_COERCION    =   (1 << 2);
+
+konoha.kGamma_TOPLEVEL  =   1;
