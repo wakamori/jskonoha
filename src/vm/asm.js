@@ -205,7 +205,7 @@ konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 
 konoha.ASM_MDEF = function(_ctx, mn, param_name, block, shift, espidx)
 {
-	konoha.modcode.ASM(mn + " = function(" + param_name + ")");
+	konoha.modcode.ASM("konoha.ct.Global." + mn + " = function(" + param_name + ")");
 	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("{");
 	konoha.modcode.indentInc();
