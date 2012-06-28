@@ -429,21 +429,21 @@ konoha.ExprTyCheck_MethodCall = function(_ctx, stmt, expr, reqty)
 	}
 }
 
-konoha.ExprTyCheckFunc = function(_ctx, fo, stmt, expr, /*gma,*/ reqty)
+konoha.ExprTyCheckFunc = function(_ctx, fo, stmt, expr, gma, reqty)
 {
-	var ret = fo(_ctx, stmt, expr, /*gma*/reqty)
+	var ret = fo(_ctx, stmt, expr, gma, reqty)
 //	DBG_ASSERT(IS_Expr(lsfp[0].o));
 	return ret;
 }
 
-konoha.ExprTyCheck_Int = function(_ctx, stmt, expr, /*gma,*/ reqty)
+konoha.ExprTyCheck_Int = function(_ctx, stmt, expr, gma, reqty)
 {
 	var tk = expr.tk;
 	var n = Number(tk.text.text);
 	return konoha.Expr_setNConstValue(_ctx, expr, konoha.TY_Int, n);
 }
 
-konoha.ExprTyCheck = function(_ctx, stmt, expr, /*gma,*/ reqty) {
+konoha.ExprTyCheck = function(_ctx, stmt, expr, gma, reqty) {
 	var fo = expr.syn.ExprTyCheck;
 	var texpr;
 //TODO!!
@@ -458,7 +458,7 @@ konoha.ExprTyCheck = function(_ctx, stmt, expr, /*gma,*/ reqty) {
 // 		fo = a.funcs[0];
 // 	}
 //	DBG_ASSERT(IS_Func(fo));
-	texpr = konoha.ExprTyCheckFunc(_ctx, fo, stmt, expr, /*gma,*/ reqty);
+	texpr = konoha.ExprTyCheckFunc(_ctx, fo, stmt, expr, gma, reqty);
 	if(stmt.build == konoha.TSTMT_ERR) return null;
 //	FIXME: CHECK ALL VAR_ExprTyCheck
 //	if(texpr.ty == TY_var && texpr != K_NULLEXPR) {
@@ -483,7 +483,7 @@ konoha.new_GetterExpr = function(_ctx, tkU, mtd, expr)
 	return expr1;
 }
 
-konoha.Expr_tyCheckVariable2 = function(_ctx, expr, /*gma,*/ reqty)
+konoha.Expr_tyCheckVariable2 = function(_ctx, expr, gma, reqty)
 {
 	//DBG_ASSERT(expr.ty == TY_var);
 	var tk = expr.tk;
@@ -542,7 +542,7 @@ konoha.ExprTyCheck_Usymbol = function(_ctx)
 	}
 	var v = konoha.KonohaSpace_getSymbolValueNULL(_ctx, gma.genv.ks, tk.text.text, tk.text.text.length);
 	var texpr = (v == null) ?
-			konoha.kToken_p(tk, ERR_, "undefined name: " + konoha.kToken_s(tk)) : konoha.kExpr_setConstValue(expr, O_cid(v), v);
+			konoha.kToken_p(tk, konoha.ERR_, "undefined name: " + konoha.kToken_s(tk)) : konoha.kExpr_setConstValue(expr, O_cid(v), v);
 	return texpr;
 }
 
@@ -556,7 +556,7 @@ konoha.StmtTyCheck_ConstDecl = function(_ctx)
 		konoha.sugar_p(konoha.ERR_, stmt.uline, -1, "already defined name: " + konoha.kToken_s(tk));
 	}
 	else {
-		r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, /*gma*/konoha.TY_var, konoha.TPOL_CONST);
+		r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, gma, konoha.TY_var, konoha.TPOL_CONST);
 		if(r) {
 			var expr = konoha.kStmt_expr(stmt, konoha.kw.Expr, null);
 			var kv = ukey;
