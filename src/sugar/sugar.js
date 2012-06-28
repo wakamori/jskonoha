@@ -157,31 +157,33 @@ konoha.MODSUGAR_eval = function(_ctx, script)
 // }
 
 //for DEBUG
-konoha.KonohaSpace_loadstream = function(_ctx, ks)
+konoha.KonohaSpace_loadstream = function(_ctx, ks, script)
 {
 	var script = "123+456;";
 //	var script = 'p("hello");';
 //	var script = 'if (true) {123+456;}';
 //	var script = 'int func(int i) {return 1+1;}';
+//	var script = 'System.p("hello");';
+
  	konoha.DBG_P("##############script#########################");
- 	konoha.DBG_P(script);
+ //	konoha.DBG_P(script);
  	konoha.DBG_P("#############################################");
 	var _status = konoha.MODSUGAR_eval(_ctx, script);
 }
 
-konoha.KonohaSpace_loadscript = function(_ctx, ks)
+konoha.KonohaSpace_loadscript = function(_ctx, ks, script)
 {
-	var _status = konoha.KonohaSpace_loadstream(_ctx, ks);
+	var _status = konoha.KonohaSpace_loadstream(_ctx, ks, script);
 	return _status;
 }
 
-konoha.MODSUGAR_loadscript = function(_ctx)
+konoha.MODSUGAR_loadscript = function(_ctx, script)
 {
 	if (_ctx.ctxsugar == null) {
 		_ctx.kmodsugar.h.setup(_ctx, _ctx.kmodsugar, 0);
 	}
 	var ns = new konoha.kKonohaSpace(_ctx.kmodsugar.rootks);
-	var result = konoha.KonohaSpace_loadscript(_ctx, ns);
+	var result = konoha.KonohaSpace_loadscript(_ctx, ns, script);
 }
 
 konoha.MODSUGAR_init = function(_ctx)

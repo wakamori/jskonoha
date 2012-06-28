@@ -22,10 +22,7 @@
 // * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ***************************************************************************/
 
-
-var main = function() {
+konoha.eval = function(script) {
 	var _konoha = konoha.konoha_open();
-	konoha.konoha_load(_konoha);
+	konoha.konoha_load(_konoha, script);
 }
-
-main();
