@@ -298,7 +298,10 @@ konoha.Block_eval = function(_ctx, bk)
 	}
 //	return result;
 //	var result = konoha.Stmt_checkReturnType(_ctx, bk.blocks.data[0]);
-	var result = konoha.BLOCK_asm(_ctx, bk, 0, 0);
+	konoha.BLOCK_asm(_ctx, bk, 0, 0);
+	konoha.modcode.ASM("\nsfp0;"); //FIX ME!!
+	var result = eval(konoha.modcode.output);
+
 	return result;
 }
 

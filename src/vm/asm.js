@@ -93,7 +93,7 @@ konoha.ASM_CALL = function(_ctx, thisidx, espidx, argc, mtd) {
 	konoha.modcode.ASM('var sfp' + (thisidx+konoha.K_RTNIDX) + ' = ');
 //	}
 	var mtdName = mtd.mtdname;
-	konoha.modcode.ASM(mtdName + '(');
+	konoha.modcode.ASM(mtdName + '(_ctx, ');
 	konoha.modcode.indentStash();
 	for (var i = 0; i < argc; i++) {
 		konoha.modcode.ASM('sfp' + (thisidx+i));

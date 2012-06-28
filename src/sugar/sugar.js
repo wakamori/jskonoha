@@ -95,10 +95,14 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 //  	console.log(bk.blocks.data[0].h.kvproto["$expr"].cons.data[2]);
 	console.log("############################################");
 	tls = tls.slice(0, pos - 1);
-	var result = konoha.Block_eval(_ctx, bk);
-	console.log("################### eval ####################");
+	var result = konoha.Block_eval(_ctx, bk); //result is result of evaluating generated code
+	konoha.result = result;
+	console.log("################### code ####################");
 	console.log(konoha.modcode.output);
 // 	console.log(bk.blocks.data[0]);
+	console.log("############################################");
+	console.log("################### eval ####################");
+	console.log(result);
 	console.log("############################################");
 	return result;
 }
@@ -155,10 +159,10 @@ konoha.MODSUGAR_eval = function(_ctx, script)
 //for DEBUG
 konoha.KonohaSpace_loadstream = function(_ctx, ks)
 {
-//	var script = "123+456;";
+	var script = "123+456;";
 //	var script = 'p("hello");';
 //	var script = 'if (true) {123+456;}';
-	var script = 'int func(int i) {return 1+1;}';
+//	var script = 'int func(int i) {return 1+1;}';
  	konoha.DBG_P("##############script#########################");
  	konoha.DBG_P(script);
  	konoha.DBG_P("#############################################");
