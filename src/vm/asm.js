@@ -203,14 +203,14 @@ konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 	}
 }
 
-konoha.ASM_MDEF = function(_ctx, mn, param_name, block, shift, espidx)
+konoha.ASM_MTDDEF = function(_ctx, mn, param_name, block, shift, espidx)
 {
 	konoha.modcode.ASM("konoha.ct.Global." + mn + " = function(sfp1)");
 	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("{");
 	konoha.modcode.indentInc();
 	konoha.modcode.ASM_NEWLINE();
-	konoha.BLOCK_asm(_ctx, block, shift, espidx + 1);
+	konoha.BLOCK_asm(_ctx, block, shift, espidx + 1/*argsize*/ + 1);
 	konoha.modcode.indentDec();
 	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("}");
@@ -236,7 +236,7 @@ konoha.MethodDefStmt_asm = function(_ctx, stmt, shift, espidx)
 
 	konoha.Block_tyCheckAll(_ctx, block, gma);
 	konoha.Gamma_shiftBlockIndex(_ctx, newgma);
-	konoha.ASM_MDEF(_ctx, mn, param_name, block, shift, espidx);
+	konoha.ASM_MTDDEF(_ctx, mn, param_name, block, shift, espidx);
 }
 
 konoha.ExprStmt_asm = function(_ctx, stmt, shift, espidx)
