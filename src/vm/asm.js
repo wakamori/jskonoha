@@ -38,8 +38,13 @@ konoha.MODCODE_init = function(_ctx)
 			this.indent_s += "\t";
 		}
 		this.indentDec = function() {
-			this.indent_i++;
-			this.indent_s = this.indent_s.substr(0, -1);
+			this.indent_i--;
+//			this.indent_s = this.indent_s.substr(0, -1);
+			var tmp = "";
+			for (var i = 0; i < this.indent_i; i++) {
+				tmp += "\t";
+			}
+			this.indent_s = tmp;
 		}
 		this.indentStash = function() {
 			this.indent_stack.push(this.indent_s);
@@ -155,7 +160,7 @@ konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 		break;
 	}
 	case konoha.TEXPR_BLOCK : {
-		konoha.BLOCK_asm(_ctx, expr.block, espidx);
+		konoha.BLOCK_asm(_ctx, expr.block, shift, espidx);
 		konoha.NMOV_asm(_ctx, a, expr.ty, espidx);
 		break;
 	}
@@ -212,7 +217,6 @@ konoha.ASM_MTDDEF = function(_ctx, mn, param_name, block, shift, espidx)
 	konoha.modcode.ASM_NEWLINE();
 	konoha.BLOCK_asm(_ctx, block, shift, espidx + 1/*argsize*/ + 1);
 	konoha.modcode.indentDec();
-	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("}");
 }
 
@@ -275,12 +279,16 @@ konoha.BlockStmt_asm = function(_ctx, stmt, shift, espidx)
 
 konoha.IfStmt_asm = function(_ctx, stmt, shift, espidx)
 {
-	konoha.EXPR_asm(_ctx, espidx, konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Expr, null), espidx);
+	konoha.EXPR_asm(_ctx, espidx, konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Expr, null), shift, espidx);
+	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("if (sfp" + espidx + ") {");
 	konoha.modcode.indentInc();
 	konoha.modcode.ASM_NEWLINE();
-	konoha.BLOCK_asm(_ctx, konoha.Stmt_block(_ctx, stmt, konoha.kw.Block), shift, espidx);
+	console.log("indent", konoha.modcode.indent_i);
+	konoha.BLOCK_asm(_ctx, konoha.Stmt_block(_ctx, stmt, konoha.kw.Block), shift, espidx + 1);
+	console.log("indent", konoha.modcode.indent_i);
 	konoha.modcode.indentDec();
+	console.log("indent", konoha.modcode.indent_i);
 	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("}");
 	konoha.modcode.ASM_NEWLINE();
@@ -289,7 +297,7 @@ konoha.IfStmt_asm = function(_ctx, stmt, shift, espidx)
 		konoha.modcode.ASM("else {");
 		konoha.modcode.indentInc();
 		konoha.modcode.ASM_NEWLINE();
-		konoha.BLOCK_asm(_ctx, else_block, shift, espidx);
+		konoha.BLOCK_asm(_ctx, else_block, shift, espidx + 1);
 		konoha.modcode.indentDec();
 		konoha.modcode.ASM_NEWLINE();
 		konoha.modcode.ASM("}");
@@ -338,6 +346,7 @@ konoha.BLOCK_asm = function(_ctx, bk, shift, espidx)
 {
 	/* bk: kBlock, shift: int */
 //TODO!!	var espidx = (bk.esp.build == konoha.TEXPR_STACKTOP) ? shift + bk.esp.index : bk.esp.index;
+	console.log("knoha.BLOCK_asm");
 	console.log("shift = " + shift + ", espidx = " + espidx + ", build = " + bk.esp.build);
 	/* TODO Is blocks' type Array? */
 	console.log("------bk.blocks.data.length----");

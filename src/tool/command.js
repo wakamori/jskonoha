@@ -35,6 +35,6 @@ konoha.eval = function(script) {
 //	var script = 'if (true) {123+456;}';
 //	var script = 'if (false) {12+34;} else {56+78;}';
 //var script = 'int func(int i) {return 1+i;}';
-var script = 'int func(int i) {return i+1;}';
-//var script = "int fib(int n) {if (n < 3) {return 1;}}";
+//var script = 'int func(int i) {return i+1;}';
+var script = "int func(int n) {if (n < 3) {return 1;} else {return 2;}}";
 konoha.eval(script);
