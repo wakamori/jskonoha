@@ -25,4 +25,8 @@
 konoha.eval = function(script) {
 	var _konoha = konoha.konoha_open();
 	konoha.konoha_load(_konoha, script);
+	return konoha.result;
 }
+
+//konoha.eval("1+
+//konoha.eval("if(1 < 3) { return 1;}");

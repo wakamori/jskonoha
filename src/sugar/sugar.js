@@ -159,12 +159,12 @@ konoha.MODSUGAR_eval = function(_ctx, script)
 //for DEBUG
 konoha.KonohaSpace_loadstream = function(_ctx, ks, script)
 {
-	var script = "123+456;";
+//	var script = "123+456;";
 //	var script = 'p("hello");';
 //	var script = 'if (true) {123+456;}';
 //	var script = 'int func(int i) {return 1+1;}';
 //	var script = 'System.p("hello");';
-
+//	console.log(script);
  	konoha.DBG_P("##############script#########################");
  //	konoha.DBG_P(script);
  	konoha.DBG_P("#############################################");

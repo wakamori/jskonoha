@@ -9,8 +9,6 @@ jskonoha_Test.prototype.ReturnCorrectAnswer = function() {
 
 	var ret;
 	var script;
-	var console = {};
-	console.log = function(){};
 
 	script = "1+1";
 	ret = konoha.eval(script);
@@ -22,7 +20,7 @@ jskonoha_Test.prototype.ReturnCorrectAnswer = function() {
 
 	script = "1+3+78";
 	ret = konoha.eval(script);
-	expectEq(82 ,ret);
+	expectEq(83 ,ret);
 
 	script = "32-49";
 	ret = konoha.eval(script);
@@ -32,25 +30,25 @@ jskonoha_Test.prototype.ReturnCorrectAnswer = function() {
 	ret = konoha.eval(script);
 	expectEq(30 ,ret);
 
-	script = "2*3*7";
+	script = "2*3";
 	ret = konoha.eval(script);
-	expectEq(42 ,ret);
+	expectEq(6 ,ret);
 
 	script = "81/9";
 	ret = konoha.eval(script);
 	expectEq(9 ,ret);
 
-	script = "((21 + (3 * 2) - 4) / 2)";
-	ret = konoha.eval(script);
-	expectEq(11 ,ret);
+	// script = "((21 + (3 * 2) - 4) / 2)";
+	// ret = konoha.eval(script);
+	// expectEq(11 ,ret);
 
-	script = "(((7-2-1) * (3 + 11) - 7) / 2 )";
-	ret = konoha.eval(script);
-	expectEq(24 ,ret);
+	// script = "(((7-2-1) * (3 + 11) - 7) / 2 )";
+	// ret = konoha.eval(script);
+	// expectEq(24 ,ret);
 
 	script = "73 < 3";
 	ret = konoha.eval(script);
-	expectEq(true ,ret);
+	expectEq(false ,ret);
 
 	script = "92 >= 92";
 	ret = konoha.eval(script);
@@ -60,9 +58,9 @@ jskonoha_Test.prototype.ReturnCorrectAnswer = function() {
 	ret = konoha.eval(script);
 	expectEq(false ,ret);
 
-	script = "if(1 < 3) { return 1;}";
+	script = "if(1 < 3) {1+1;}";
 	ret = konoha.eval(script);
-	expectEq(1 ,ret);
+	expectEq(3 ,ret);
 
 	script = "int f(int n) { if(n == 2) return 2;} \n f(2)";
 	ret = konoha.eval(script);

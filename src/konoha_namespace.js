@@ -1,9 +1,12 @@
 konoha = {};
-console = {};
 
-console.log = function(script) {
-	return script;
-}
+console = {};
+console.log = function() {
+// for(var i in arguments.length) {
+	// 	return arguments[i];
+	// }
+};
+
 
 konoha.DBG_P = function(msg) {
 	console.log(msg);
