@@ -29,14 +29,14 @@ konoha.new_BoxingExpr = function(_ctx, expr, reqty)
 	}
 }
 
-konoha.Expr_tyCheck = function(_ctx, stmt, expr, /*gma,*/ reqty, pol)
+konoha.Expr_tyCheck = function(_ctx, stmt, expr, gma, reqty, pol)
 {
 	var texpr = expr;
 	if(expr.ty == konoha.TY_var && expr != null/*_ctx.kmodsugar.cExpr.nulvalNUL*/) {
 //TODO  if(!konoha.IS_Expr(expr)) {
 // 			expr = konoha.Expr_setConstValue(_ctx, null, expr.h.ct.cid, expr)
 		// 		}
-		texpr = konoha.ExprTyCheck(_ctx, stmt, expr, reqty);
+		texpr = konoha.ExprTyCheck(_ctx, stmt, expr, gma, reqty);
 	}
 	if(texpr != null/*_ctx.kmodsugar.cExpr.nulvalNUL*/) {
 		if(texpr.ty == konoha.TY_void) {
@@ -61,11 +61,11 @@ konoha.Expr_tyCheck = function(_ctx, stmt, expr, /*gma,*/ reqty, pol)
 	return texpr;
 }
 
-konoha.Expr_tyCheckAt = function(_ctx, stmt, exprP, pos, /*gma,*/ reqty, pol)
+konoha.Expr_tyCheckAt = function(_ctx, stmt, exprP, pos, gma, reqty, pol)
 {
 	if(/*!konoha.Expr_isTerm(exprP) &&*/ pos < exprP.cons.data.length) {
 		var expr = exprP.cons.data[pos];
-		expr = konoha.Expr_tyCheck(_ctx, stmt, expr, /*gma,*/ reqty, pol);
+		expr = konoha.Expr_tyCheck(_ctx, stmt, expr, gma, reqty, pol);
 		exprP.cons.data[pos] =  expr;
 		return expr;
 	}
@@ -392,12 +392,12 @@ konoha.Expr_lookupMethod = function(_ctx, stmt, expr, this_cid, reqty)
 	return null;
 }
 
-konoha.ExprTyCheck_MethodCall = function(_ctx, stmt, expr, reqty)
+konoha.ExprTyCheck_MethodCall = function(_ctx, stmt, expr, gma, reqty)
 {
-	var texpr = konoha.Expr_tyCheckAt(_ctx, stmt, expr, 1, /*gma,*/ konoha.TY_var, 0);
+	var texpr = konoha.Expr_tyCheckAt(_ctx, stmt, expr, 1, gma, konoha.TY_var, 0);
 	if(texpr != null) {
 		var this_cid = texpr.ty;
-		return konoha.Expr_lookupMethod(_ctx, stmt, expr, this_cid, /*gma,*/ reqty);
+		return konoha.Expr_lookupMethod(_ctx, stmt, expr, this_cid, gma, reqty);
 	}
 }
 
@@ -408,22 +408,22 @@ konoha.ExprTyCheckFunc = function(_ctx, fo, stmt, expr, gma, reqty)
 	return ret;
 }
 
-konoha.ExprTyCheck_Symbol = function(_ctx, stmt, expr, /*gma,*/ reqty)
+konoha.ExprTyCheck_Symbol = function(_ctx, stmt, expr, gma, reqty)
 {
-	return konoha.Expr_tyCheckVariable2(_ctx, stmt, expr, /*gma,*/ reqty);
+	return konoha.Expr_tyCheckVariable2(_ctx, stmt, expr, gma, reqty);
 }
 
-konoha.ExprTyCheck_true = function(_ctx, stmt, expr, /*gma,*/ reqty)
+konoha.ExprTyCheck_true = function(_ctx, stmt, expr, gma, reqty)
 {
 	return konoha.Expr_setNConstValue(_ctx, expr, konoha.TY_Boolean, 1);
 }
 
-konoha.ExprTyCheck_false = function(_ctx, stmt, expr, /*gma,*/ reqty)
+konoha.ExprTyCheck_false = function(_ctx, stmt, expr, gma, reqty)
 {
 	return konoha.Expr_setNConstValue(_ctx, expr, konoha.TY_Boolean, 0);
 }
 
-konoha.ExprTyCheck_Int = function(_ctx, stmt, expr, /*gma,*/ reqty)
+konoha.ExprTyCheck_Int = function(_ctx, stmt, expr, gma, reqty)
 {
 	var tk = expr.tk;
 	var n = Number(tk.text.text);
@@ -438,7 +438,7 @@ konoha.ExprTyCheck = function(_ctx, stmt, expr, gma, reqty) {
 // 		var i;
 // 		var a = fo;
 // 		for(i = a.length - 1; i > 0; i++) {
-// 			texpr = konoha.ExprTyCheckFunc(_ctx, a.data[i], stmt, expr, /*gma,*/ reqty);
+// 			texpr = konoha.ExprTyCheckFunc(_ctx, a.data[i], stmt, expr, gma, reqty);
 // 			if(konoha.kStmt_isERR(stmt)) return null;
 // 			if(texpr.ty != konoha.TY_var) return texpr;
 // 		}
