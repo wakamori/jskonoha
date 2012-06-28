@@ -43,14 +43,14 @@ konoha.isalnum = function(c) {
 konoha.assert = function(cond, msg) {
 	if (!cond) {
 		var e = "Assersion!! " + msg;
-//		console.log(e);
+		console.log(e);
 		throw e;
 	}
 }
 
 konoha.abort = function(msg) {
 	if (msg != null) {
-//		console.log(e);
+		console.log(e);
 	}
 	var e = "Abort!! " + msg;
 	throw e;
@@ -58,21 +58,23 @@ konoha.abort = function(msg) {
 
 //keywords
 konoha.kw = {};
-konoha.kw.Err         = "$ERR";
-konoha.kw.Expr        = "$expr";
-konoha.kw.Symbol      = "$SYMBOL";
-konoha.kw.Usymbol     = "$USYMBOL";
-konoha.kw.Text        = "$TEXT";
-konoha.kw.Int         = "$INT";
-konoha.kw.Float       = "$Float";
-konoha.kw.Type        = "$type";
-konoha.kw.Parenthesis = '()';
-konoha.kw.Brancet     = '[]';
-konoha.kw.Brace       = '{}';
-konoha.kw.Block       = '$block';
-konoha.kw.Params      = '$params';
-konoha.kw.Toks        = '$toks';
-konoha.kw.array = [
+konoha.kw.Err            = "$ERR";
+konoha.kw.Expr           = "$expr";
+konoha.kw.Symbol         = "$SYMBOL";
+konoha.kw.Usymbol        = "$USYMBOL";
+konoha.kw.Text           = "$TEXT";
+konoha.kw.Int            = "$INT";
+konoha.kw.Float          = "$Float";
+konoha.kw.Type           = "$type";
+konoha.kw.Parenthesis    = '()';
+konoha.kw.Brancet        = '[]';
+konoha.kw.Brace          = '{}';
+konoha.kw.Block          = '$block';
+konoha.kw.Params         = '$params';
+konoha.kw.Toks           = '$toks';
+konoha.kw.ExprMethodCall = konoha.kw.Params;
+
+konoha.kw.array = [ //
 	konoha.kw.Err,
 	konoha.kw.Expr,
 	konoha.kw.Symbol,
@@ -86,8 +88,8 @@ konoha.kw.array = [
 	konoha.kw.Brace,
 	konoha.kw.Block,
 	konoha.kw.Params,
-	konoha.kw.ExprMethodCall,
 	konoha.kw.Toks,
+	konoha.kw.ExprMethodCall,
 ];
 
 konoha.kw.DOT         = '.';

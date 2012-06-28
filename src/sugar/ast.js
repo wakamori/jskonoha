@@ -149,8 +149,8 @@ konoha.appendKeyword = function(_ctx, ks, tls, s, e, dst, tkERR) {
 
 konoha.Token_toBRACE = function(_ctx, tk, ks) {
 	if(tk.tt == konoha.ktoken_t.TK_CODE) {
-		var a = new konoha.kArray();
-		KonohaSpace_tokenize(_ctx, ks, tk.text, tk.uline, a);
+		var a = new Array();
+		konoha.KonohaSpace_tokenize(_ctx, ks, tk.text.text, tk.uline, a);
 		tk.tt = konoha.ktoken_t.AST_BRACE;
 		tk.topch = '{';
 		tk.closech = '}';
