@@ -261,27 +261,28 @@ konoha.BlockStmt_asm = function(_ctx, stmt, shift, espidx)
 // 	return lbJUMP;
 // }
 
-konoha.EXPR_asmJMPIF = function(_ctx, a, expr, isTRUE, label, shift, espidx)
-{
-	konoha.EXPR_asm(_ctx, a, expr, shift, espidx);
-	if(isTRUE) {
-		konoha.abort("TODO!! not implemented");
-//		konoha.modcode.ASM(BNOT, NC_(a), NC_(a));
-	}
-	return konoha.ASM_JMPF(_ctx, a, label);
-}
-
 konoha.IfStmt_asm = function(_ctx, stmt, shift, espidx)
 {
 	konoha.EXPR_asm(_ctx, espidx, konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Expr, null), espidx);
 	konoha.modcode.ASM("if (sfp" + espidx + ") {");
 	konoha.modcode.indentInc();
 	konoha.modcode.ASM_NEWLINE();
-	konoha.BLOCK_asm(_ctx, konoha.Stmt_block(_ctx, stmt, konoha.kw.Block), shift);
+	konoha.BLOCK_asm(_ctx, konoha.Stmt_block(_ctx, stmt, konoha.kw.Block), shift, espidx);
 	konoha.modcode.indentDec();
 	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("}");
-
+	konoha.modcode.ASM_NEWLINE();
+	var else_block = konoha.Stmt_block(_ctx, stmt, konoha.kw._else)
+	if (else_block != null) {
+		konoha.modcode.ASM("else {");
+		konoha.modcode.indentInc();
+		konoha.modcode.ASM_NEWLINE();
+		konoha.BLOCK_asm(_ctx, else_block, shift, espidx);
+		konoha.modcode.indentDec();
+		konoha.modcode.ASM_NEWLINE();
+		konoha.modcode.ASM("}");
+		konoha.modcode.ASM_NEWLINE();
+	}
 // 	var lbELSE = konoha.new_BasicBlockLABEL(_ctx);
 // 	var lbEND  = konoha.new_BasicBlockLABEL(_ctx);
 // 	/* if */

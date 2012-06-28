@@ -601,7 +601,7 @@ konoha.makeSyntaxRule = function(_ctx, tls, s, e, adst)
 			}
 			if(i + 1 < e && tls[i+1].topch == ':') {
 				var tk = tls[i];
-				nameid = konoha.keyword(_ctx, tk.text, tk.text.length, konoha.FN_NEWID);
+				nameid = konoha.keyword(_ctx, tk.text.text, tk.text.length, konoha.FN_NEWID);
 				i++;
 				continue;
 			}

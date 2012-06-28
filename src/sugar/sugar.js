@@ -158,7 +158,9 @@ konoha.KonohaSpace_loadstream = function(_ctx, ks)
 //	var script = "123+456;";
 //	var script = 'p("hello");';
 //	var script = 'if (true) {123+456;}';
-	var script = 'int func(int i) {return 1+1;}';
+//	var script = 'if (true) {12+34;} else {56+78;}';
+//	var script = 'int func(int i) {return 1+1;}';
+	var script = 'int func(int i) {return i+1;}';
  	konoha.DBG_P("##############script#########################");
  	konoha.DBG_P(script);
  	konoha.DBG_P("#############################################");

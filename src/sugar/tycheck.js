@@ -108,7 +108,7 @@ konoha.StmtTyCheck_else = function(_ctx, stmt, gma)
 	var stmtIf = konoha.Stmt_lookupIfStmtNULL(_ctx, stmt);
 	if(stmtIf != null) {
 		var bkElse = konoha.kStmt_block(stmt, konoha.kw.Block, null);
-		konoha.kObject_setObject(stmtIf, konoha.kw.else, bkElse);
+		konoha.kObject_setObject(stmtIf, konoha.kw._else, bkElse);
 		konoha.kStmt_done(stmt);
 		r = konoha.Block_tyCheckAll(_ctx, bkElse, gma);
 	}
