@@ -284,7 +284,8 @@ konoha.K_PCIDX2    =  (-3)
 konoha.K_MTDIDX2   =  (-1)
 
 konoha.kMethod_isStatic = function(mtd) {
-	return konoha.TFLAG_is(mtd.flag, 1<<4);
+	return mtd.static_flag == true ? true : false;
+//	return konoha.TFLAG_is(mtd.flag, 1<<4);
 }
 
 konoha.TFLAG_is = function(f, op) {

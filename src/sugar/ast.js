@@ -100,7 +100,7 @@ konoha.appendKeyword = function(_ctx, ks, tls, s, e, dst, tkERR) {
 	}
 	else if(tk.tt == konoha.ktoken_t.TK_USYMBOL) {
 		if(!konoha.Token_resolved(_ctx, ks, tk)) {
-			var ct = _ctx.share.ca[10];
+			var ct = konoha.KonohaSpace_getCT(_ctx, ks, null/*FIXME*/, tk.text.text, tk.text.text.length, konoha.TY_unknown);
 			if(ct != null) {
 				tk.kw = konoha.kw.Type;
 				tk.ty = ct.cid;

@@ -221,13 +221,15 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.System.p = function(_ctx, val) {
 		console.log(val);
 	}
+	konoha.ct.System.p.static_flag = true;
 }
 
 konoha.addClassDef = function(_ctx, classname) {
 	konoha.ct[classname] = {};
 	konoha.ct[classname].DBG_NAME = classname;
-	konoha.ct[classname].cid = konoha.ct.length;
+	konoha.ct[classname].cid = _ctx.share.ca.length;
 	_ctx.share.ca.push(konoha.ct[classname]);
+//	_ctx.share.lcnameMapNN[classname] = konoha.ct[classname];
 }
 
 konoha.loadInitStructData = function(_ctx)

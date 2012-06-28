@@ -114,16 +114,16 @@ konoha.CALL_asm = function(_ctx, a, expr, shift, espidx)
 {
 	var mtd = expr.cons.data[0]; // TODO unuse methods field, is it OK?
 //	console.log(expr.cons.data[0]);
-	var s = 1;//konoha.kMethod_isStatic(mtd) ? 2 : 1,
+	var s = konoha.kMethod_isStatic(mtd) ? 2 : 1;
 	var thisidx = espidx + konoha.K_CALLDELTA;
 	console.log("-----expr.cons.data.length----------");
 	console.log(expr.cons.data.length);
 	console.log("-----expr.cons.data.length----------");
 	for (var i = s; i < expr.cons.data.length; i++) {
 		var exprN = expr.cons.data[i];
-		konoha.EXPR_asm(_ctx, thisidx + i - 1, exprN, shift, thisidx + i - 1);
+		konoha.EXPR_asm(_ctx, thisidx + i - s, exprN, shift, thisidx + i - s);
 	}
-	var argc = expr.cons.data.length - 1;
+	var argc = expr.cons.data.length - s;
 	/* don't care wheather method is static or not */
 	konoha.ASM_CALL(_ctx, thisidx, espidx, argc, mtd);
 }
@@ -326,6 +326,7 @@ konoha.ReturnStmt_asm = function(_ctx, stmt, shift, espidx)
 		konoha.EXPR_asm(_ctx, espidx, expr, shift, espidx+1);
 		konoha.modcode.ASM("return sfp" + espidx + ";");
 	}
+	konoha.modcode.ASM_NEWLINE();
 //	konoha.ASM_JMP(_ctx, ctxcode.lbEND);  // RET
 }
 

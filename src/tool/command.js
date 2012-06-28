@@ -31,10 +31,11 @@ konoha.eval = function(script) {
 //konoha.eval("1+
 //konoha.eval("if(1 < 3) { return 1;}");
 //	var script = "123+456+789;";
-//	var script = 'p("hello");';
+	var script = 'System.p(123);';
+//	var script = 'System.p("hello");';
 //	var script = 'if (true) {123+456;}';
 //	var script = 'if (false) {12+34;} else {56+78;}';
 //var script = 'int func(int i) {return 1+i;}';
 //var script = 'int func(int i) {return i+1;}';
-var script = "int func(int n) {if (n < 3) {return 1;} else {return 2;}}";
+//var script = "int func(int n) {if (n < 3) {return 1;} else {return 2;}}";
 konoha.eval(script);

@@ -409,6 +409,9 @@ konoha.Expr_lookupMethod = function(_ctx, stmt, expr, this_cid, gma, reqty)
 //	var ks = gma.genv.ks;
 	var tkMN = expr.cons.data[0];
 //	DBG_ASSERT(IS_Token(tkMN));
+	if(tkMN.tt == konoha.ktoken_t.TK_SYMBOL || tkMN.tt == konoha.ktoken_t.TK_USYMBOL) {
+		konoha.kToken_setmn(tkMN, tkMN.text.text, konoha.MNTYPE_method);
+	}
 	if(tkMN.tt == konoha.ktoken_t.TK_MN) {
 		mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, this_cid, tkMN.mn);
 		if(mtd == null) {
@@ -447,6 +450,18 @@ konoha.ExprTyCheckFunc = function(_ctx, fo, stmt, expr, gma, reqty)
 	var ret = fo(_ctx, stmt, expr, gma, reqty)
 //	DBG_ASSERT(IS_Expr(lsfp[0].o));
 	return ret;
+}
+
+konoha.ExprTyCheck_Text = function(_ctx, stmt, expr, gma, reqty)
+{
+	var tk = expr.tk;
+	return konoha.Expr_setConstValue(_ctx, expr, konoha.TY_String, tk.text);
+}
+
+konoha.ExprTyCheck_Type = function(_ctx, stmt, expr, gma, reqty)
+{
+//	konoha.assert(konoha.TK_isType(expr->tk));
+	return konoha.Expr_setVariable(_ctx, expr, null, expr.tk.ty, 0, gma);
 }
 
 konoha.ExprTyCheck_Symbol = function(_ctx, stmt, expr, gma, reqty)

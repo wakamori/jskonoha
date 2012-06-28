@@ -241,16 +241,15 @@ konoha.Expr_setConstValue = function(_ctx, expr, ty, o)
 //		expr = new_(Expr, 0);
 //		PUSH_GCSTACK(expr);
 	}
-	var Wexpr = expr;
-	Wexpr.ty = ty;
-	if(konoha.TY_isUnbox(ty)) {
-		Wexpr.build = konoha.TEXPR_NCONST;
-		Wexpr.ndata = konoha.N_toint(o);
-		Wexpr.data = null;
+	if(true /*TODO!! konoha.TY_isUnbox(ty)*/) {
+		expr.build = konoha.TEXPR_NCONST;
+//TODO		expr.ndata = konoha.N_toint(o);
+		expr.ndata = o;
+		expr.data = null;
 	}
 	else {
-		Wexpr.build = konoha.TEXPR_CONST;
-		Wexpr.data = o;
+		expr.build = konoha.TEXPR_CONST;
+		expr.data = o;
 	}
 //	WASSERT(expr);
 	return expr;
@@ -267,7 +266,7 @@ konoha.Expr_add = function(_ctx, expr, e)
 }
 
 //#define kExpr_setVariable(E, B, T, I, G)  Expr_setVariable(_ctx, E, TEXPR_##B, T, I, G)
-konoha.Expr_setVariable = function(_ctx, expr, build, ty, index/*gma*/)
+konoha.Expr_setVariable = function(_ctx, expr, build, ty, index, gma)
 {
 	if(expr == null) {
 		expr = new konoha.kExpr();
@@ -309,4 +308,13 @@ konoha.Stmt_block = function(_ctx, stmt, kw, def)
 		if(konoha.IS_Block(_ctx, bk)) return bk;
 	}
 	return def;
+}
+
+konoha.KonohaSpace_getCT = function(_ctx, ks, thisct/*NULL*/, name, len, def)
+{
+	var ct = null;
+	if(name != null) {
+		ct = konoha.ct[name];
+	}
+	return (ct != null) ? ct : ((def >= 0) ? null : konoha.CT_(def));
 }
