@@ -22,10 +22,19 @@
 // * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ***************************************************************************/
 
-
-var main = function() {
+konoha.eval = function(script) {
 	var _konoha = konoha.konoha_open();
-	konoha.konoha_load(_konoha);
+	konoha.konoha_load(_konoha, script);
+	return konoha.result;
 }
 
-main();
+//konoha.eval("1+
+//konoha.eval("if(1 < 3) { return 1;}");
+//	var script = "123+456+789;";
+//	var script = 'p("hello");';
+//	var script = 'if (true) {123+456;}';
+//	var script = 'if (false) {12+34;} else {56+78;}';
+//var script = 'int func(int i) {return 1+i;}';
+var script = 'int func(int i) {return i+1;}';
+//var script = "int fib(int n) {if (n < 3) {return 1;}}";
+konoha.eval(script);

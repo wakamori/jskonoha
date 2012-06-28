@@ -270,15 +270,16 @@ konoha.Expr_add = function(_ctx, expr, e)
 konoha.Expr_setVariable = function(_ctx, expr, build, ty, index/*gma*/)
 {
 	if(expr == null) {
-		// expr = new_W(Expr, 0);
-		// PUSH_GCSTACK(expr);
+		expr = new konoha.kExpr();
 	}
-	var kExpr = expr;
-	Wexpr.build = build;
-	Wexpr.ty = ty;
-	Wexpr.index = index;
-	// KSETv(Wexpr.data, K_NULL);  block need unclear
-//	konoha.assert(expr);
+	expr.build = build;
+	expr.ty = ty;
+	expr.index = index;
+	console.log("setvariables", index);
+	// KSETv(Wexpr->data, K_NULL);  block need unclear
+	if(build < konoha.TEXPR_UNTYPED) {
+		gma.genv.lvarlst.push(expr);
+	}
 	return expr;
 }
 

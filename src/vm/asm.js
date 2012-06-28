@@ -93,7 +93,7 @@ konoha.ASM_CALL = function(_ctx, thisidx, espidx, argc, mtd) {
 	konoha.modcode.ASM('var sfp' + (thisidx+konoha.K_RTNIDX) + ' = ');
 //	}
 	var mtdName = mtd.mtdname;
-	konoha.modcode.ASM(mtdName + '(');
+	konoha.modcode.ASM(mtdName + '(_ctx, ');
 	konoha.modcode.indentStash();
 	for (var i = 0; i < argc; i++) {
 		konoha.modcode.ASM('sfp' + (thisidx+i));
@@ -205,12 +205,12 @@ konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 
 konoha.ASM_MDEF = function(_ctx, mn, param_name, block, shift, espidx)
 {
-	konoha.modcode.ASM("konoha.ct.Global." + mn + " = function(" + param_name + ")");
+	konoha.modcode.ASM("konoha.ct.Global." + mn + " = function(sfp1)");
 	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("{");
 	konoha.modcode.indentInc();
 	konoha.modcode.ASM_NEWLINE();
-	konoha.BLOCK_asm(_ctx, block, shift, espidx);
+	konoha.BLOCK_asm(_ctx, block, shift, espidx + 1);
 	konoha.modcode.indentDec();
 	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("}");
@@ -231,9 +231,11 @@ konoha.MethodDefStmt_asm = function(_ctx, stmt, shift, espidx)
 		this.l = new Array();
 	})();
 	konoha.Gamma_initParam(_ctx, newgma, params); //TODO!! multiple arguments
-	var gma = new konoha.kGamma(newgma);
+	var gma = new konoha.kGamma();
+	konoha.Gamma_push(_ctx, gma, newgma);
 
 	konoha.Block_tyCheckAll(_ctx, block, gma);
+	konoha.Gamma_shiftBlockIndex(_ctx, newgma);
 	konoha.ASM_MDEF(_ctx, mn, param_name, block, shift, espidx);
 }
 

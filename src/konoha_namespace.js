@@ -1,4 +1,5 @@
 konoha = {};
+
 konoha.DBG_P = function(msg) {
 	console.log(msg);
 }
