@@ -325,6 +325,7 @@ konoha.Block_eval = function(_ctx, bk)
 	}
 //	return result;
 //	var result = konoha.Stmt_checkReturnType(_ctx, bk.blocks.data[0]);
+	konoha.MODCODE_init.prototype.output = "";
 	var result = konoha.MODCODE_init.prototype.BLOCK_asm(_ctx, bk, 0);
 	return result;
 }
@@ -333,10 +334,11 @@ konoha.Expr_typedWithMethod = function(_ctx, expr, mtd, reqty) {
 	var expr1 = konoha.kExpr_at(expr, 1);
 	expr.cons.data[0] = mtd;
 	if(expr1.build == konoha.TEXPR_NEW) {
-		konoha.kExpr_typed(expr, CALL, expr1.ty);
+		konoha.Expr_typed(expr, konoha.TEXPR_CALL, expr1.ty);
 	}
 	else {
-		konoha.kExpr_typed(expr, CALL, konoha.kMethod_isSmartReturn(mtd) ? reqty : ktype_var(_ctx, konoha.kMethod_rtype(mtd), konoha.CT_(expr1.ty)));
+//TODO!!typing		konoha.Expr_typed(expr, konoha.TEXPR_CALL, konoha.kMethod_isSmartReturn(mtd) ? reqty : ktype_var(_ctx, konoha.kMethod_rtype(mtd), konoha.CT_(expr1.ty)));
+		konoha.Expr_typed(expr, konoha.TEXPR_CALL, reqty);
 	}
 	return expr;
 }
@@ -380,7 +382,7 @@ konoha.Expr_tyCheckCallParams = function(_ctx, stmt, expr, mtd, reqty)
 // 		}
 // 		if(!konoha.Expr_isCONST(expr)) isConst = 0;
 // 	}
-// 	expr = konoha.Expr_typedWithMethod(_ctx, expr, mtd, reqty);
+ 	expr = konoha.Expr_typedWithMethod(_ctx, expr, mtd, reqty);
 // 	if(konoha.isConst && konoha.kMethod_isConst(mtd)) {
 // 		var rtype = konoha.ktype_var(_ctx, pa.rtype, this_ct);
 // 		return konoha.ExprCall_toConstValue(_ctx, expr, cons, rtype);
