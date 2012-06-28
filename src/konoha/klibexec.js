@@ -30,7 +30,7 @@ konoha.KVPROTO_INIT = 8
 konoha.KVPROTO_DELTA = 7
 
 konoha.hidden = {};
-konoha.hidden.pnull = new konoha.karray_t();
+konoha.hidden.pnull = new Array();
 
 konoha.kvproto_null = function() // for proto_get safe null
 {
@@ -46,23 +46,21 @@ konoha.KObject_setObject = function(_ctx, o, key, ty, val)
 {
 	var Wo = o;
 	var _checko;
-	konoha.kvproto_set(_ctx, Wo.h.kvproto, key, ty, val);
+	konoha.kvproto_set(_ctx, Wo.h, key, ty, val);
 //	WASSERT(V);
 }
 
-konoha.kvproto_set = function(_ctx, pval, key, ty, uval)
+konoha.kvproto_set = function(_ctx, h, key, ty, uval)
 {
-	var p = pval;
-	if (p.data == null) {
-		p.data = new Array();
+	if (h.kvproto == konoha.kvproto_null()) {
+		h.kvproto = new Array();
 	}
-	var psize = p.data.length;
-	p.data[key] = uval;
+	h.kvproto[key] = uval;
 }
 
 konoha.kvproto_get = function(p, key)
 {
 //	console.log(key);
 //	console.log(p.data[key]);
-	return p.data[key];
+	return p[key];
 }

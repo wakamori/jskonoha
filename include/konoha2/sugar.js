@@ -82,7 +82,7 @@ konoha.ktoken_t = new konoha.Enum(
 );
 //
 konoha.kToken = function() {
-	this.h = new konoha.kObjectHeader;				//kObjectHeader
+	this.h = new konoha.kObjectHeader(konoha.TY_Token);				//kObjectHeader
 	this.tt = null;			//kushort_t
 	this.kw = null;			//ksymbol_t
 	//	union {
@@ -131,7 +131,7 @@ konoha.TEXPR_STACKTOP   =  13;
 konoha.TEXPR_MAX        =  14;
 
 konoha.kExpr = function(syn) {
-	this.h = new konoha.kObjectHeader();				//kObjectHeader
+	this.h = new konoha.kObjectHeader(konoha.TY_Expr);				//kObjectHeader
 	this.ty = konoha.TY_var;			//ktype_t
 	this.build = null;			//kexpr_t
 	this.tk = null;			//kToken
@@ -160,6 +160,7 @@ konoha.TSTMT_RETURN       = 4;
 konoha.TSTMT_IF           = 5;
 konoha.TSTMT_LOOP         = 6;
 konoha.TSTMT_JUMP         = 7;
+konoha.TSTMT_MTDDEF       = 8; //special constant for jskonoha
 
 konoha.kStmt = function() {
 	this.h = new konoha.kObjectHeader();				//	kObjectHeader;
@@ -171,7 +172,7 @@ konoha.kStmt = function() {
 };
 
 konoha.kBlock = function(_ctx, conf) {
-	this.h = new konoha.kObjectHeader();				//kObjectHeader
+	this.h = new konoha.kObjectHeader(konoha.TY_Block);				//kObjectHeader
 	if (conf != null) {			//kKonohaSpace *
 		this.ks = conf;
 	}
@@ -212,7 +213,7 @@ konoha.KW_Brace       = 10;
 
 konoha.KW_Block  = 11;
 konoha.KW_Params = 12;
-konoha.KW_ExprMethodCall = "$params";/*FIXME*/
+konoha.KW_ExprMethodCall = konoha.KW_Params;
 konoha.KW_Toks   = 13;
 
 konoha.KW_DOT    = 14;
@@ -320,8 +321,16 @@ konoha.kToken_setmn = function(tk, mn, mn_type)
 	tk.mn_type = mn_type;
 }
 
+konoha.IS_Block = function(_ctx, block) {
+	return block.h.ct.cid == konoha.TY_Block;
+}
+
+konoha.IS_Token = function(_ctx, token) {
+	return token.h.ct.cid == konoha.TY_Token;
+}
+
 konoha.IS_Expr = function(_ctx, expr) {
-	return (expr.h.ct == _ctx.kmodsugar.cExpr);
+	return expr.h.ct.cid == konoha.TY_Expr;
 }
 
 konoha.TK_isType = function(TK) {
@@ -350,10 +359,6 @@ konoha.kStmt_done = function(STMT) {
 konoha.Stmt_setsyn = function(_ctx, stmt, syn)
 {
 	stmt.syn = syn;
-}
-
-konoha.kStmt_typed = function(STMT, T) {
-	return konoha.Stmt_typed(STMT, T);
 }
 
 konoha.Stmt_typed = function(stmt,  build)

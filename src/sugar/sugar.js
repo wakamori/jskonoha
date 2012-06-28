@@ -90,24 +90,15 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
 	console.log("################### ast ####################");
 //	console.log(bk);
-
- 	// console.log(bk.blocks.data[0].h.kvproto.data["$expr"]);
- 	// console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[1]);
- 	// console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[2]);
- 	console.log("==========bk.blocks.data[0].h.kvproto.data[$expr].cons.data[0].text.text========");
- 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[0].text.text);
- 	console.log("==========bk.blocks.data[0].h.kvproto.data[$expr].cons.data[1].tk.text.text========");
- 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[1].tk.text.text);
- 	console.log("==========bk.blocks.data[0].h.kvproto.data[$expr].cons.data[2].tk.text.text========");
- 	console.log(bk.blocks.data[0].h.kvproto.data["$expr"].cons.data[2].tk.text.text);
-
+//  	console.log(bk.blocks.data[0].h.kvproto["$expr"]);
+//  	console.log(bk.blocks.data[0].h.kvproto["$expr"].cons.data[1]);
+//  	console.log(bk.blocks.data[0].h.kvproto["$expr"].cons.data[2]);
 	console.log("############################################");
 	tls = tls.slice(0, pos - 1);
 	var result = konoha.Block_eval(_ctx, bk);
 	console.log("################### eval ####################");
-//	console.log(bk);
+	console.log(konoha.modcode.output);
 // 	console.log(bk.blocks.data[0]);
-	console.log(konoha.MODCODE_init.prototype.output);
 	console.log("############################################");
 	return result;
 }
@@ -165,9 +156,9 @@ konoha.MODSUGAR_eval = function(_ctx, script)
 konoha.KonohaSpace_loadstream = function(_ctx, ks)
 {
 //	var script = "123+456;";
-	var script = 'System.p("hello");';
-//	var script = 'if (true) {1+1;}';
-//	var script = 'int func(int i) { return i+1;}';
+//	var script = 'p("hello");';
+//	var script = 'if (true) {123+456;}';
+	var script = 'int func(int i) {return 1+1;}';
  	konoha.DBG_P("##############script#########################");
  	konoha.DBG_P(script);
  	konoha.DBG_P("#############################################");
