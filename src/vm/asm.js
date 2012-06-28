@@ -222,7 +222,17 @@ konoha.MethodDefStmt_asm = function(_ctx, stmt, shift, espidx)
 	var params = (konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Params, null)).blocks.data[0];
 	var param_name = (konoha.KObject_getObjectNULL(_ctx, params, konoha.kw.Expr, null)).tk.text.text;
 	var block = konoha.Stmt_block(_ctx, stmt, konoha.kw.Block);
-	var gma = {flag : null};//TODO
+
+	var newgma = new (function() {
+//		this.mtd = mtd;
+//		this.ks = ks;
+//		this.this_cid = mtd.cid;
+		this.f = new Array();
+		this.l = new Array();
+	})();
+	konoha.Gamma_initParam(_ctx, newgma, params); //TODO!! multiple arguments
+	var gma = new konoha.kGamma(newgma);
+
 	konoha.Block_tyCheckAll(_ctx, block, gma);
 	konoha.ASM_MDEF(_ctx, mn, param_name, block, shift, espidx);
 }
