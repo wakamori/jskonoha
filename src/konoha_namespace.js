@@ -72,6 +72,8 @@ konoha.kw.Brace       = '{}';
 konoha.kw.Block       = '$block';
 konoha.kw.Params      = '$params';
 konoha.kw.Toks        = '$toks';
+konoha.kw.New         = '$new';
+
 konoha.kw.array = [
 	konoha.kw.Err,
 	konoha.kw.Expr,
@@ -88,6 +90,7 @@ konoha.kw.array = [
 	konoha.kw.Params,
 	konoha.kw.ExprMethodCall,
 	konoha.kw.Toks,
+	konoha.kw.New
 ];
 
 konoha.kw.DOT         = '.';

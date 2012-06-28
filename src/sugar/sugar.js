@@ -65,6 +65,10 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 		{name: 'if', rule: '\"if\" \"(\" $expr \")\" $block [\"else\" else: $block]', TopStmtTyCheck: konoha.StmtTyCheck_if, StmtTyCheck: konoha.StmtTyCheck_if, },
 		{name: 'else', rule: '\"else\" $block', TopStmtTyCheck: konoha.StmtTyCheck_else, StmtTyCheck: konoha.StmtTyCheck_else, },
 		{name: 'return', rule: '\"return\" [$expr]', flag: konoha.SYNFLAG_StmtBreakExec, StmtTyCheck: konoha.StmtTyCheck_return, },
+
+		{name: 'new', ParseExpr: konoha.ParseExpr_new, },
+		{name: 'class', rule: "\"class\" $USYMBOL [ \"extends\" $type ] $block", StmtTyCheck: konoha.StmtTyCheck_class, },
+//		{name: '.', ExprTyCheck: ExprTyCheck_Getter, },
 		{name: null}, ];
  	konoha.KonohaSpace_defineSyntax(_ctx, ks, SYNTAX);
  	syn = konoha.KonohaSpace_syntax(_ctx, ks, "void"/*IS THIS OK?*/, 0);
