@@ -246,6 +246,7 @@ konoha.Expr_setConstValue = function(_ctx, expr, ty, o)
 	return expr;
 }
 
+
 konoha.Expr_add = function(_ctx, expr, e)
 {
 //	konoha.assert(konoha.IS_Array(expr.cons));
@@ -255,3 +256,20 @@ konoha.Expr_add = function(_ctx, expr, e)
 	}
 	return null;
 }
+
+//#define kExpr_setVariable(E, B, T, I, G)  Expr_setVariable(_ctx, E, TEXPR_##B, T, I, G)
+konoha.Expr_setVariable = function(_ctx, expr, build, ty, index/*gma*/)
+{
+	if(expr == null) {
+		// expr = new_W(Expr, 0);
+		// PUSH_GCSTACK(expr);
+	}
+	var kExpr = expr;
+	Wexpr.build = build;
+	Wexpr.ty = ty;
+	Wexpr.index = index;
+	// KSETv(Wexpr.data, K_NULL);  block need unclear
+//	konoha.assert(expr);
+	return expr;
+}
+

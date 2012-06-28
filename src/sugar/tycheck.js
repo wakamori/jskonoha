@@ -464,3 +464,106 @@ konoha.ExprTyCheck = function(_ctx, stmt, expr, /*gma,*/ reqty) {
 //	}
 	return texpr;
 }
+
+konoha.Expr_tyCheckVariable2 = function(_ctx, expr, /*gma,*/ reqty)
+{
+	//DBG_ASSERT(expr.ty == TY_var);
+	var tk = expr.tk;
+	var fn = konoha.ksymbol(tk.text.text, tk.text.text.length, konoha.FN_NONAME, konoha.SYMPOL_NAME);
+	var i;
+	for(i = genv.l.varsize - 1; i >= 0; i--) {
+		if(genv.l.vars[i].fn == fn) {
+			return konoha.kExpr_setVariable(_ctx, expr, konoha.TEXPR_LOCAL_, genv.l.vars[i].ty, i);
+		}
+	}
+	for(i = genv.f.varsize - 1; i >= 0; i--) {
+		if(genv.f.vars[i].fn == fn) {
+			return konoha.kExpr_setVariable(expr, LOCAL, genv.f.vars[i].ty, i, gma);
+		}
+	}
+	if(genv.f.vars[0].ty != konoha.TY_void) {
+		var ct = CT_(genv.this_cid);
+		for(i = ct.fsize; i >= 0; i--) {
+			if(ct.fields[i].fn == fn && ct.fields[i].ty != TY_void) {
+				return konoha.kExpr_setVariable(expr, FIELD, ct.fields[i].ty, longid(i, 0), gma);
+			}
+		}
+		var mtd = konoha.KS_getGetterMethodNULL(_ctx, genv.ks, genv.this_cid, fn);
+		if(mtd != null) {
+			return konoha.new_GetterExpr(_ctx, tk, mtd, new_Variable(LOCAL, genv.this_cid, 0, gma));
+		}
+	}
+	if(genv.ks.scrNUL != null) {
+		var cid = O_cid(genv.ks.scrNUL);
+		var mtd = KS_getGetterMethodNULL(_ctx, genv.ks, cid, fn);
+		if(mtd != null) {
+			return konoha.new_GetterExpr(_ctx, tk, mtd, new_ConstValue(cid, genv.ks.scrNUL));
+		}
+
+	}
+	//konoha.assert("reqty=%s", T_ty(reqty));
+	return konoha.kToken_p(tk, konoha.ERR_, "undefined name: " + konoha.kToken_s(tk));
+}
+
+konoha.ExprTyCheck_Usymbol = function(_ctx)
+{
+	konoha.assert("USYMBOL...");
+	var tk = expr.tk;
+	var ukey = konoha.kuname(tk.text.text, tk.text.text.length, 0, konoha.FN_NONAME);
+	if(ukey != konoha.FN_NONAME) {
+		var kv = konoha.KonohaSpace_getConstNULL(_ctx, gma.genv.ks, ukey);
+		if(kv != null) {
+			if(konoha.FN_isBOXED(kv.key)) {
+				konoha.kExpr_setConstValue(expr, kv.ty, kv.oval);
+			}
+			else {
+				konoha.kExpr_setNConstValue(expr, kv.ty, kv.uval);
+			}
+			return expr;
+		}
+	}
+	var v = konoha.KonohaSpace_getSymbolValueNULL(_ctx, gma.genv.ks, tk.text.text, tk.text.text.length);
+	var texpr = (v == null) ?
+			konoha.kToken_p(tk, ERR_, "undefined name: " + konoha.kToken_s(tk)) : konoha.kExpr_setConstValue(expr, O_cid(v), v);
+	return texpr;
+}
+
+konoha.StmtTyCheck_ConstDecl = function(_ctx)
+{
+	var r = false;
+	var tk = konoha.kStmt_token(stmt, konoha.kw.Usymbol, null);
+	var ukey = konoha.ksymbolA(tk.text.text, tk.text.text.length, konoha.FN_NEWID);
+	var kv = konoha.KonohaSpace_getConstNULL(_ctx, ks, ukey);
+	if(kv != null) {
+		konoha.sugar_p(konoha.ERR_, stmt.uline, -1, "already defined name: " + konoha.kToken_s(tk));
+	}
+	else {
+		r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, /*gma*/konoha.TY_var, konoha.TPOL_CONST);
+		if(r) {
+			var expr = konoha.kStmt_expr(stmt, konoha.kw.Expr, null);
+			var kv = ukey;
+			if(expr.build == konoha.TEXPR_NULL) {
+				kv.ty = konoha.TY_TYPE;
+				kv.uval = (uintptr_t)(CT_(expr.ty));
+				expr = null;
+			}
+			else if(expr.build == konoha.TEXPR_CONST) {
+				kv.key = ukey;
+				kv.oval = expr.data;
+				expr = null;
+			}
+			else if(expr.build == konoha.TEXPR_NCONST) {
+				kv.uval = expr.ndata;
+				expr = null;
+			}
+			if(expr == null) {
+				konoha.KonohaSpace_mergeConstData(_ctx, ks, kv, 1, stmt.uline);
+			}
+			else {
+				konoha.sugar_p(konoha.ERR_, stmt.uline, -1, "constant value is expected");
+			}
+			konoha.kStmt_done(stmt);
+		}
+	}
+	return r;
+}
