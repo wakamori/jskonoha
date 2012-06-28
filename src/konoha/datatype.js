@@ -23,199 +23,199 @@
 // ***************************************************************************/
 
 konoha.loadInitStructMethodData = function(_ctx) {
-	konoha.ct.Object.toString = function(_ctx){
-		return this.data;
+	konoha.ct.Object.toString = function(_ctx, string){
+		return string;
 	}
 
-	konoha.ct.Int.opMINUS = function(_ctx, i){
-		return this.data - i.data;
+	konoha.ct.Int.opMINUS = function(_ctx, a){
+		return -a;
 	}
 
 	konoha.ct.Float.opMINUS = function(_ctx, f){
-		return this.data  -f.data;
+		return -f;
 	}
 
-	konoha.ct.Int.opADD = function(_ctx, i) {
-		return this.data + i.data;
+	konoha.ct.Int.opADD = function(_ctx, a, b) {
+		return a + b;
 	}
 
-	konoha.ct.Float.opADD = function(_ctx, i) {
-		return this.data + i.data;
+	konoha.ct.Float.opADD = function(_ctx, a, b) {
+		return a + b;
 	}
 
-	konoha.ct.Int.opSUB = function(_ctx, i) {
-		return this.data - i.data;
+	konoha.ct.Int.opSUB = function(_ctx, a, b) {
+		return a - b;
 	}
 
-	konoha.ct.Float.opSUB = function(_ctx, i) {
-		return this.data - i.data;
+	konoha.ct.Float.opSUB = function(_ctx, a, b) {
+		return a - b;
 	}
 
-	konoha.ct.Int.opMUL = function(_ctx, i) {
-		return this.data * i.data;
+	konoha.ct.Int.opMUL = function(_ctx, a, b) {
+		return a * b;
 	}
 
-	konoha.ct.Float.opMUL = function(_ctx, i) {
-		return this.data * i.data;
+	konoha.ct.Float.opMUL = function(_ctx, a, b) {
+		return a * b;
 	}
 
-	konoha.ct.Int.opDIV = function(_ctx, i) {
-		return this.data / i.data;
+	konoha.ct.Int.opDIV = function(_ctx, a, b) {
+		return a / b;
 	}
 
-	konoha.ct.Float.opDIV = function(_ctx, i) {
-		return this.data / i.data;
+	konoha.ct.Float.opDIV = function(_ctx, a, b) {
+		return a / b;
 	}
 
-	konoha.ct.Int.opMOD = function(_ctx, i) {
-		return this.data % i.data;
+	konoha.ct.Int.opMOD = function(_ctx, a ,b) {
+		return a % b;
 	}
 
-	konoha.ct.Float.opMOD = function(_ctx, i) {
-		return this.data % i.data;
+	konoha.ct.Float.opMOD = function(_ctx, a, b) {
+		return a % b;
 	}
 
-	konoha.ct.Int.opEQ = function(_ctx, i) {
-		return (this.data == i.data);
+	konoha.ct.Int.opEQ = function(_ctx, a, b) {
+		return (a == b);
 	}
 
-	konoha.ct.Float.opEQ = function(_ctx, i) {
-		return (this.data == i.data);
+	konoha.ct.Float.opEQ = function(_ctx, a, b) {
+		return (a == b);
 	}
 
-	konoha.ct.String.opEQ = function(_ctx, s) {
-		return (this.data == s.data);
+	konoha.ct.String.opEQ = function(_ctx, str1, str2) {
+		return (str1 == str2);
 	}
 
-	konoha.ct.Int.opNEQ = function(_ctx, i) {
-		return (this.data != i.data);
+	konoha.ct.Int.opNEQ = function(_ctx, a ,b) {
+		return (a != b);
 	}
 
-	konoha.ct.Float.opNEQ = function(_ctx, i) {
-		return (this.data != i.data);
+	konoha.ct.Float.opNEQ = function(_ctx, a, b) {
+		return (a != b);
 	}
 
-	konoha.ct.String.opNEQ = function(_ctx, s) {
-		return (this.data != s.data);
+	konoha.ct.String.opNEQ = function(_ctx, str1, str2) {
+		return (str1 != str2);
 	}
 
-	konoha.ct.Int.opLT = function(_ctx, i) {
-		return (this.data < i.data);
+	konoha.ct.Int.opLT = function(_ctx, a, b) {
+		return (a < b);
 	}
 
-	konoha.ct.Float.opLT = function(_ctx, i) {
-		return (this.data < i.data);
+	konoha.ct.Float.opLT = function(_ctx, a, b) {
+		return (a < b);
 	}
 
-	konoha.ct.Int.opLTE = function(_ctx, i) {
-		return (this.data <= i.data);
+	konoha.ct.Int.opLTE = function(_ctx, a, b) {
+		return (a <= b);
 	}
 
-	konoha.ct.Float.opLTE = function(_ctx, i) {
-		return (this.data <= i.data);
+	konoha.ct.Float.opLTE = function(_ctx, a, b) {
+		return (a <= b);
 	}
 
-	konoha.ct.Int.opGT = function(_ctx, i) {
-		return (this.data > i.data);
+	konoha.ct.Int.opGT = function(_ctx, a, b) {
+		return (a > b);
 	}
 
-	konoha.ct.Float.opGT = function(_ctx, i) {
-		return (this.data > i.data);
+	konoha.ct.Float.opGT = function(_ctx, a, b) {
+		return (a > b);
 	}
 
-	konoha.ct.Int.opGTE = function(_ctx, i) {
-		return (this.data >= i.data);
+	konoha.ct.Int.opGTE = function(_ctx, a, b) {
+		return (a >= b);
 	}
 
-	konoha.ct.Float.opGTE = function(_ctx, i) {
-		return (this.data >= i.data);
+	konoha.ct.Float.opGTE = function(_ctx, a, b) {
+		return (a >= b);
 	}
 
-	konoha.ct.String.toInt = function(_ctx) {
-		return parseInt(this.data);
+	konoha.ct.String.toInt = function(_ctx, str) {
+		return parseInt(str);
 	}
 
-	konoha.ct.String.toFloat = function(_ctx) {
-		return parseFloat(this.data);
+	konoha.ct.String.toFloat = function(_ctx, str) {
+		return parseFloat(str);
 	}
 
-	konoha.ct.String.opADD = function(_ctx, s) {
-		return (this.data + s.data);
+	konoha.ct.String.opADD = function(_ctx, str1, str2) {
+		return (str1 + str2);
 	}
 
-	konoha.ct.Boolean.opNOT = function(_ctx) {
-		return !this.data;
+	konoha.ct.Boolean.opNOT = function(_ctx, expr) {
+		return !expr;
 	}
 
-	konoha.ct.String.opHAS = function(_ctx, s) {
-		if(this.data == s.data) {
+	konoha.ct.String.opHAS = function(_ctx, str) {
+		if(this.data == str) {
 			return true;
 		}else{
 			return false;
 		}
 	}
-	konoha.ct.String.trim = function(_ctx) {
-		return this.data.replace(/^[\s　]+|[\s　]+$/g, '');
+	konoha.ct.String.trim = function(_ctx, str) {
+		return str.replace(/^[\s　]+|[\s　]+$/g, '');
 	}
 
 	konoha.ct.String.get = function(_ctx ,i) {
 		return this.data.substr(i, 1);
 	}
 
-	konoha.ct.String.startsWith = function(_ctx ,s) {
-		if(this.data[0] == s.data[0]) {
+	konoha.ct.String.startsWith = function(_ctx ,str) {
+		if(this.data[0] == str.data[0]) {
 			return true;
 		}else{
 			return false;
 		}
 	}
 
-	konoha.ct.String.endsWith = function(_ctx ,s) {
-		if(this.data.substr(-1,1) == s.data.substr(-1,1)) {
+	konoha.ct.String.endsWith = function(_ctx ,str) {
+		if(this.data.substr(-1,1) == str.data.substr(-1,1)) {
 			return true;
 		}else{
 			return false;
 		}
 	}
 
-	konoha.ct.String.getSize = function(_ctx) {
-		return this.data.length;
+	konoha.ct.String.getSize = function(_ctx, str) {
+		return str.length;
 	}
 
-	konoha.ct.String.indexOf = function(_ctx, s) {
-		return this.data.indexOf(s.data);
+	konoha.ct.String.indexOf = function(_ctx, str) {
+		return this.data.indexOf(str);
 	}
 
-	konoha.ct.String.lastindexOf = function(_ctx, s) {
-		return this.data.lastindexOf(s.data);
+	konoha.ct.String.lastindexOf = function(_ctx, str) {
+		return this.data.lastindexOf(str.data);
 	}
 
-	konoha.ct.String.toUpper = function(_ctx) {
-		return this.data.toUpperCase();
+	konoha.ct.String.toUpper = function(_ctx, str) {
+		return str.toUpperCase();
 	}
 
-	konoha.ct.String.toLower = function(_ctx) {
-		return this.data.toLowerCase();
+	konoha.ct.String.toLower = function(_ctx, str) {
+		return str.toLowerCase();
 	}
 
-	konoha.ct.String.substring = function(_ctx, offset, length) {
-		return this.data.substr(offset.data, length.data);
+	konoha.ct.String.substring = function(_ctx, str, offset, length) {
+		return str.substr(offset, length);
 	}
 
-	konoha.ct.Array.get = function(_ctx, index) {
-		return this.data[index.data];
+	konoha.ct.Array.get = function(_ctx, array, index) {
+		return array[index];
 	}
 
-	konoha.ct.Array.set = function(_ctx, index, value) {
-		this.data[index.data] = value.data;
+	konoha.ct.Array.set = function(_ctx, array, index, value) {
+		array[index] = value;
 	}
 
 	konoha.ct.Array.newArray = function(_ctx, size) {
-		return new Array(size.data);
+		return new Array(size);
 	}
 
-	konoha.ct.Array.add = function(_ctx, value) {
-		return this.data.push(value.data);
+	konoha.ct.Array.add = function(_ctx, array, value) {
+		return array.push(value);
 	}
 
 	konoha.ct.System.p = function(_ctx, val) {
