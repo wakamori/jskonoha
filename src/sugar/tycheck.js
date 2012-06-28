@@ -326,7 +326,9 @@ konoha.Block_eval = function(_ctx, bk)
 	var i;
 	for(i = 0; i < bk.blocks.data.length; i++) {
 		bk1.blocks.data[0] = bk.blocks.data[i];
-		bk1.ks = bk.ks;  // FIXME
+		bk1.ks = bk.ks;
+		console.log("singleblock_eval");
+		bk1.blocks.data.slice(0, 1);
 		result = konoha.SingleBlock_eval(_ctx, bk1, mtd, bk.ks);
 		if(result == konoha.kstatus_t.K_FAILED) break;
 	}

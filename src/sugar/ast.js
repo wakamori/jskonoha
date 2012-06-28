@@ -30,12 +30,13 @@ konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 	}
 	var i = s, indent = 0, atop = tls.length;
 	while(i < e) {
+		console.log("tok", tls.length);
 		var tkERR = null;
 		i =  konoha.selectStmtLine(_ctx, ks, indent, tls, i, e, delim, tls, tkERR);
 		var asize = tls.length;
 		if(asize > atop) {
 			konoha.Block_addStmtLine(_ctx, bk, tls, atop, asize, tkERR);
-			tls.length = 0;
+			tls = tls.slice(0, atop);
 		}
 	}
 	return bk;
@@ -204,8 +205,10 @@ konoha.makeTree = function(_ctx, ks, tt, tls, s, e, closech, tlsdst, tkERRRef) {
 }
 
 konoha.selectStmtLine = function(_ctx, ks, indent, tls /* Native array */, s, e, delim, tlsdst /* Native array */, tkERRRef) {
+	console.log("s",s);
 	var i = s;
 	for(; i < e - 1; i++) {
+		console.log("tls.length",tls.length);
 		var tk = tls[i];
 		var tk1 = tls[i+1];
 		if(tk.kw > 0) break;

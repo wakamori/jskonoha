@@ -107,6 +107,7 @@ konoha.ASM_CALL = function(_ctx, thisidx, espidx, argc, mtd) {
 		}
 	}
 	konoha.modcode.ASM(');');
+	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.indentPop();
 }
 

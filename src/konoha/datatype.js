@@ -253,6 +253,7 @@ konoha.loadInitStructData = function(_ctx)
 	konoha.addClassDef(_ctx, "Stmt");
 	konoha.addClassDef(_ctx, "Block");
 	konoha.addClassDef(_ctx, "Expr");
+	konoha.addClassDef(_ctx, "Global");//for global function. FIX ME!!
 	konoha.loadInitStructMethodData(_ctx);
 }
 
