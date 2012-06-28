@@ -273,3 +273,11 @@ konoha.Expr_setVariable = function(_ctx, expr, build, ty, index/*gma*/)
 	return expr;
 }
 
+konoha.new_TypedConsExpr = function(_ctx,build, ty, n)
+{
+	var expr = new konoha.kExpr();
+	expr = konoha.Expr_vadd(_ctx, expr, n /*ap*/);
+	expr.build = build;
+	expr.ty = ty;
+	return expr;
+}

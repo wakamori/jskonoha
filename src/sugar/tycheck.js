@@ -465,6 +465,22 @@ konoha.ExprTyCheck = function(_ctx, stmt, expr, /*gma,*/ reqty) {
 	return texpr;
 }
 
+konoha.KS_getGetterMethodNULL = function(_ctx, ks, cid, fn)
+{
+	var mtd = konoha.kKonohaSpace_getMethodNULL(ks, cid, konoha.MN_toGETTER(fn));
+	if(mtd == null) {
+		mtd = konoha.kKonohaSpace_getMethodNULL(ks, cid, konoha.MN_toISBOOL(fn));
+	}
+	return mtd;
+}
+
+konoha.new_GetterExpr = function(_ctx, tkU, mtd, expr)
+{
+	var expr1 = konoha.new_TypedConsExpr(_ctx, konoha.TEXPR_CALL, konoha.kMethod_rtype(mtd), 2, mtd, expr);
+	expr1.tk = tkU; // for uline
+	return expr1;
+}
+
 konoha.Expr_tyCheckVariable2 = function(_ctx, expr, /*gma,*/ reqty)
 {
 	//DBG_ASSERT(expr.ty == TY_var);
@@ -473,29 +489,29 @@ konoha.Expr_tyCheckVariable2 = function(_ctx, expr, /*gma,*/ reqty)
 	var i;
 	for(i = genv.l.varsize - 1; i >= 0; i--) {
 		if(genv.l.vars[i].fn == fn) {
-			return konoha.kExpr_setVariable(_ctx, expr, konoha.TEXPR_LOCAL_, genv.l.vars[i].ty, i);
+			return konoha.Expr_setVariable(_ctx, expr, konoha.TEXPR_LOCAL_, genv.l.vars[i].ty, i);
 		}
 	}
 	for(i = genv.f.varsize - 1; i >= 0; i--) {
 		if(genv.f.vars[i].fn == fn) {
-			return konoha.kExpr_setVariable(expr, LOCAL, genv.f.vars[i].ty, i, gma);
+			return konoha.Expr_setVariable(_ctx, expr, konoha.TEXPR_LOCAL, genv.f.vars[i].ty, i);
 		}
 	}
 	if(genv.f.vars[0].ty != konoha.TY_void) {
 		var ct = CT_(genv.this_cid);
 		for(i = ct.fsize; i >= 0; i--) {
 			if(ct.fields[i].fn == fn && ct.fields[i].ty != TY_void) {
-				return konoha.kExpr_setVariable(expr, FIELD, ct.fields[i].ty, longid(i, 0), gma);
+				return konoha.Expr_setVariable(_ctx, expr, konoha.TEXPR_FIELD, ct.fields[i].ty, longid(i, 0));
 			}
 		}
 		var mtd = konoha.KS_getGetterMethodNULL(_ctx, genv.ks, genv.this_cid, fn);
 		if(mtd != null) {
-			return konoha.new_GetterExpr(_ctx, tk, mtd, new_Variable(LOCAL, genv.this_cid, 0, gma));
+			return konoha.new_GetterExpr(_ctx, tk, mtd, konoha.new_Variable(LOCAL, genv.this_cid, 0, gma));
 		}
 	}
 	if(genv.ks.scrNUL != null) {
 		var cid = O_cid(genv.ks.scrNUL);
-		var mtd = KS_getGetterMethodNULL(_ctx, genv.ks, cid, fn);
+		var mtd = konoha.KS_getGetterMethodNULL(_ctx, genv.ks, cid, fn);
 		if(mtd != null) {
 			return konoha.new_GetterExpr(_ctx, tk, mtd, new_ConstValue(cid, genv.ks.scrNUL));
 		}
