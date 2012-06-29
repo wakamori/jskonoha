@@ -130,6 +130,17 @@ konoha.TEXPR_LET        =  12;
 konoha.TEXPR_STACKTOP   =  13;
 konoha.TEXPR_MAX        =  14;
 
+
+konoha.Expr_isTerm = function(exprP) {
+    return konoha.TFLAG_is(exprP.h.magicflag, konoha.kObject_Local1);
+}
+
+konoha.Expr_setTerm = function(expr, num) {
+	return konoha.TFLAG_set(expr.h.magicflag, konoha.kObject_Local1, num)
+}
+
+
+
 konoha.kExpr = function(syn) {
 	this.h = new konoha.kObjectHeader(konoha.TY_Expr);				//kObjectHeader
 	this.ty = konoha.TY_var;			//ktype_t
