@@ -166,6 +166,9 @@ konoha.StmtTyCheck_MethodDecl = function(_ctx, stmt, gma)
 // 		}
 // 	}
 // 	return r;
+	var tk = konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Symbol, null);
+	var mn = tk.text.text;
+	konoha.ct.Global[mn] = {}/*not null*/;
 	konoha.Stmt_typed(stmt, konoha.TSTMT_MTDDEF);
 	return 1;
 }
@@ -304,12 +307,17 @@ konoha.Gamma_pop = function(_ctx, gma, oldone, checksum)
 konoha.Gamma_initParam = function(_ctx, genv, params)
 {
 //FIX ME!! multiple arguments
-	genv.f.push({});
-	var p = {};
-	p.fn = (konoha.KObject_getObjectNULL(_ctx, params, konoha.kw.Expr, null)).tk.text.text;
-	p.ty = (konoha.KObject_getObjectNULL(_ctx, params, konoha.kw.Type, null)).ty;
-	genv.f.push(p);
-	console.log(genv.f, p.ty);
+	genv.f.push({fn: "", ty:0});
+	if(!konoha.kMethod_isStatic(genv.mtd)) {
+		genv.f[0].fn = konoha.FN_this;
+		genv.f[0].ty = genv.this_cid;
+	}
+	if (params != null) {
+		var p = {};
+		p.fn = (konoha.KObject_getObjectNULL(_ctx, params, konoha.kw.Expr, null)).tk.text.text;
+		p.ty = (konoha.KObject_getObjectNULL(_ctx, params, konoha.kw.Type, null)).ty;
+		genv.f.push(p);
+	}
 }
 
 konoha.Gamma_shiftBlockIndex = function(_ctx, genv)
@@ -339,7 +347,7 @@ konoha.SingleBlock_eval = function(_ctx, bk, mtd, ks)
 		this.f = new Array();
 		this.l = new Array();
 	})();
-//	konoha.Gamma_initParam(_ctx, newgma, null/*FIX ME!!*/);
+	konoha.Gamma_initParam(_ctx, newgma, null/*FIX ME!!*/);
 	var oldbuf_ = konoha.Gamma_push(_ctx, gma, newgma);
 	konoha.Block_tyCheckAll(_ctx, bk, gma);
 	konoha.Gamma_shiftBlockIndex(_ctx, newgma);
@@ -492,11 +500,11 @@ konoha.Expr_lookUpFuncOrMethod = function(_ctx, exprN, gma, reqty)
 			return null;
 		}
 	}
-	if(genv.f.vars[0].ty != konoha.TY_void) {
-		konoha.assert(genv.this_cid == genv.f.vars[0].ty, "konoha.Expr_lookUpFuncOrMethod: ty error");
+	if(genv.f[0].ty != konoha.TY_void) {
+		konoha.assert(genv.this_cid == genv.f[0].ty, "konoha.Expr_lookUpFuncOrMethod: ty error");
 		var mtd = konoha.KonohaSpace_getMethodNULL(_ctx, genv.ks, genv.this_cid, fn);
 		if(mtd != null) {
-			exprN.cons.exprs[1] = konoha.new_Variable(_ctx, TEXPR_LOCAL, gma.genv.this_cid, 0, gma);
+			exprN.cons.data[1] = konoha.Expr_setVariable(_ctx, null, konoha.TEXPR_LOCAL, gma.genv.this_cid, 0, gma);
 			return mtd;
 		}
 		var ct = konoha.CT_(genv.this_cid);

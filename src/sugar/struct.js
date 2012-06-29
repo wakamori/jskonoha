@@ -202,15 +202,21 @@ konoha.CT_findMethodNULL = function(_ctx, ct, mn)
 
 konoha.KonohaSpace_getMethodNULL = function(_ctx, ks, cid, mn)
 {
-	while(ks != null) {
-		var i;
-		var mtd = ks.methods[mn];
-		if (mtd != null) {
-			return mtd;
-		}
-		else {
-			ks = ks.parentNULL;
-		}
+// 	while(ks != null) {
+// 		var i;
+// 		var mtd = ks.methods[mn];
+// 		if (mtd != null) {
+// 			return mtd;
+// 		}
+// 		else {
+// 			ks = ks.parentNULL;
+// 		}
+// 	}
+	var mtd = konoha.ct.Global[mn];
+	if (mtd != null) {
+		mtd.mtdname = "konoha.ct.Global." + mn;
+		mtd.static_flag = true;
+		return mtd;
 	}
 	return konoha.CT_findMethodNULL(_ctx, konoha.CT_(_ctx, cid), mn);
 }

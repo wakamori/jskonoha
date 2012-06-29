@@ -211,7 +211,7 @@ konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 
 konoha.ASM_MTDDEF = function(_ctx, mn, param_name, block, shift, espidx)
 {
-	konoha.modcode.ASM("konoha.ct.Global." + mn + " = function(sfp1)");
+	konoha.modcode.ASM("konoha.ct.Global." + mn + " = function(_ctx, sfp1)");
 	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("{");
 	konoha.modcode.indentInc();
@@ -219,6 +219,7 @@ konoha.ASM_MTDDEF = function(_ctx, mn, param_name, block, shift, espidx)
 	konoha.BLOCK_asm(_ctx, block, shift, espidx + 1/*argsize*/ + 1);
 	konoha.modcode.indentDec();
 	konoha.modcode.ASM("}");
+	konoha.modcode.ASM_NEWLINE();
 }
 
 konoha.MethodDefStmt_asm = function(_ctx, stmt, shift, espidx)
@@ -229,14 +230,14 @@ konoha.MethodDefStmt_asm = function(_ctx, stmt, shift, espidx)
 	var block = konoha.Stmt_block(_ctx, stmt, konoha.kw.Block);
 
 	var newgma = new (function() {
-//		this.mtd = mtd;
+		this.mtd = konoha.ct.Global[mn];
 //		this.ks = ks;
 //		this.this_cid = mtd.cid;
 		this.f = new Array();
 		this.l = new Array();
 	})();
 	konoha.Gamma_initParam(_ctx, newgma, params); //TODO!! multiple arguments
-	var gma = _ctx.sugar.gma;
+	var gma = _ctx.ctxsugar.gma;
 	var oldbuf_ = konoha.Gamma_push(_ctx, gma, newgma);
 	konoha.Block_tyCheckAll(_ctx, block, gma);
 	konoha.Gamma_shiftBlockIndex(_ctx, newgma);
