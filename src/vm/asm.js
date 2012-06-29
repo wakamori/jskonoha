@@ -236,11 +236,11 @@ konoha.MethodDefStmt_asm = function(_ctx, stmt, shift, espidx)
 		this.l = new Array();
 	})();
 	konoha.Gamma_initParam(_ctx, newgma, params); //TODO!! multiple arguments
-	var gma = new konoha.kGamma();
-	konoha.Gamma_push(_ctx, gma, newgma);
-
+	var gma = _ctx.sugar.gma;
+	var oldbuf_ = konoha.Gamma_push(_ctx, gma, newgma);
 	konoha.Block_tyCheckAll(_ctx, block, gma);
 	konoha.Gamma_shiftBlockIndex(_ctx, newgma);
+	konoha.Gamma_pop(_ctx, gma, oldbuf_, newgma);
 	konoha.ASM_MTDDEF(_ctx, mn, param_name, block, shift, espidx);
 }
 

@@ -211,7 +211,7 @@ konoha.Stmt_TyCheckFunc = function(_ctx, fo, stmt, gma)
 
 konoha.Stmt_TyCheck = function(_ctx, syn, stmt, gma)
 {
-	var fo = gma.flag ? syn.TopStmtTyCheck : syn.StmtTyCheck;
+	var fo = ((gma.genv.flag == konoha.kGamma_TOPLEVEL) ? syn.TopStmtTyCheck : syn.StmtTyCheck);
 	var result;
 // 	if(IS_Array(fo)) { // @Future
 // 		int i;
@@ -286,6 +286,21 @@ konoha.Gamma_push = function(_ctx, gma, newone)
 	return oldone;
 }
 
+konoha.Gamma_pop = function(_ctx, gma, oldone, checksum)
+{
+	var newone = gma.genv;
+	konoha.assert(checksum == newone);
+	gma.genv = oldone;
+	newone.lvarlst = newone.lvarlst.slice(0,newone.lvarlst_top);
+// 	if(newone.l.allocsize > 0) {
+// 		KFREE(newone->l.vars, newone->l.allocsize);
+// 	}
+// 	if(newone->f.allocsize > 0) {
+// 		KFREE(newone->f.vars, newone->f.allocsize);
+// 	}
+	return newone;
+}
+
 konoha.Gamma_initParam = function(_ctx, genv, params)
 {
 //FIX ME!! multiple arguments
@@ -313,8 +328,22 @@ konoha.Gamma_shiftBlockIndex = function(_ctx, genv)
 
 konoha.SingleBlock_eval = function(_ctx, bk, mtd, ks)
 {
-	var gma = {flag : konoha.kGamma_TOPLEVEL};//TODO
+	var gma = _ctx.ctxsugar.gma;
+	var fvars = new Array();
+	var lvars = new Array();
+	var newgma = new (function() {
+		this.flag = konoha.kGamma_TOPLEVEL;
+		this.mtd = mtd;
+		this.ks = ks;
+		this.this_cid = mtd.cid;
+		this.f = new Array();
+		this.l = new Array();
+	})();
+//	konoha.Gamma_initParam(_ctx, newgma, null/*FIX ME!!*/);
+	var oldbuf_ = konoha.Gamma_push(_ctx, gma, newgma);
 	konoha.Block_tyCheckAll(_ctx, bk, gma);
+	konoha.Gamma_shiftBlockIndex(_ctx, newgma);
+	konoha.Gamma_pop(_ctx, gma, oldbuf_, newgma);
 //	return  konoha.Gamma_evalMethod(_ctx, gma, bk, mtd);
 }
 
@@ -438,6 +467,97 @@ konoha.Expr_lookupMethod = function(_ctx, stmt, expr, this_cid, gma, reqty)
 	return null;
 }
 
+konoha.Expr_isSymbol = function(expr)
+{
+//TODO!!
+	return (/*Expr_isTerm(expr) &&*/ (expr.tk.tt == konoha.ktoken_t.TK_SYMBOL || expr.tk.tt == konoha.ktoken_t.TK_USYMBOL));
+}
+
+konoha.Expr_lookUpFuncOrMethod = function(_ctx, exprN, gma, reqty)
+{
+	var expr = konoha.kExpr_at(exprN, 0);
+	var tk = expr.tk;
+	var fn = tk.text.text;
+	var i;
+	var genv = gma.genv;
+	for(var i = genv.l.length - 1; i >= 0; i--) {
+		if (genv.l[i].fn == fn && konoha.TY_isFunc(genv.l[i].ty)) {
+			konoha.Expr_setVariable(_ctx, expr, konoha.TEXPR_LOCAL_, genv.l[i].ty, i, gma);
+			return null;
+		}
+	}
+	for(var i = genv.f.length - 1; i >= 0; i--) {
+		if (genv.f[i].fn == fn && konoha.TY_isFunc(genv.l[i].ty)) {
+			konoha.Expr_setVariable(_ctx, expr, konoha.TEXPR_LOCAL, genv.f[i].ty, i, gma);
+			return null;
+		}
+	}
+	if(genv.f.vars[0].ty != konoha.TY_void) {
+		konoha.assert(genv.this_cid == genv.f.vars[0].ty, "konoha.Expr_lookUpFuncOrMethod: ty error");
+		var mtd = konoha.KonohaSpace_getMethodNULL(_ctx, genv.ks, genv.this_cid, fn);
+		if(mtd != null) {
+			exprN.cons.exprs[1] = konoha.new_Variable(_ctx, TEXPR_LOCAL, gma.genv.this_cid, 0, gma);
+			return mtd;
+		}
+		var ct = konoha.CT_(genv.this_cid);
+		if (ct.fsize) {
+			for(i = ct.fsize; i >= 0; i--) {
+				if(ct.fields[i].fn == fn && konoha.TY_isFunc(ct.fields[i].ty)) {
+					konoha.Expr_setVariable(_ctx, expr, TEXPR_FIELD, ct.fields[i].ty, i, gma);
+					return null;
+				}
+			}
+		}
+		mtd = konoha.KS_getGetterMethodNULL(_ctx, genv.ks, genv.this_cid, fn);
+		if(mtd != null && konoha.TY_isFunc(konoha.kMethod_rtype(mtd))) {
+			exprN.cons.exprs[0] = konoha.new_GetterExpr(_ctx, tk, mtd, konoha.new_Variable(TEXPR_LOCAL, genv.this_cid, 0, gma));
+			return null;
+		}
+	}
+	{
+		var cid = konoha.O_cid(genv.ks.scrobj);
+		var mtd = konoha.KonohaSpace_getMethodNULL(_ctx, genv.ks, cid, fn);
+		if(mtd != null) {
+			exprN.cons.exprs[1] = konoha.new_ConstValue(cid, genv.ks.scrobj);
+			return mtd;
+		}
+		mtd = konoha.KS_getGetterMethodNULL(_ctx, genv.ks, cid, fn);
+		if (mtd != null && konoha.TY_isFunc(konoha.kMethod_rtype(mtd))) {
+			exprN.cons.exprs[0] = konoha.new_GetterExpr(_ctx, tk, mtd, konoha.new_ConstValue(cid, genv.ks.scrobj));
+			return null;
+		}
+		mtd = konoha.KonohaSpace_getMethodNULL(_ctx, genv.ks, konoha.TY_System, fn);
+		if(mtd != null) {
+			exprN.cons.exprs[1] = konoha.new_Variable(null, konoha.TY_System, 0, gma);
+		}
+		return mtd;
+	}
+}
+
+konoha.ExprTyCheck_FuncStyleCall = function(_ctx, stmt, expr, gma, reqty)
+{
+//	DBG_ASSERT(IS_Expr(kExpr_at(expr, 0)));
+//	DBG_ASSERT(expr.cons.list[1] == K_NULL);
+	if(konoha.Expr_isSymbol(konoha.kExpr_at(expr, 0))) {
+		var mtd = konoha.Expr_lookUpFuncOrMethod(_ctx, expr, gma, reqty);
+		if(mtd != null) {
+			return konoha.Expr_tyCheckCallParams(_ctx, stmt, expr, mtd, gma, reqty);
+		}
+		if(!konoha.TY_isFunc(konoha.kExpr_at(expr, 0).ty)) {
+			var tk = konoha.kExpr_at(expr, 0).tk;
+			konoha.kToken_p(stmt, tk, ERR_, "undefined function: %s", kToken_s(tk));
+		}
+	}
+	else {
+		if(konoha.Expr_tyCheckAt(_ctx, stmt, expr, 0, gma, konoha.TY_var, 0) != null) {
+			if(!konoha.TY_isFunc(expr.cons.exprs[0].ty)) {
+				konoha.kExpr_p(stmt, expr, ERR_, "function is expected");
+			}
+		}
+	}
+	konoha.Expr_tyCheckFuncParams(_ctx, stmt, expr, konoha.CT_(konoha.kExpr_at(expr, 0).ty), gma);
+}
+
 konoha.ExprTyCheck_MethodCall = function(_ctx, stmt, expr, gma, reqty)
 {
 	var texpr = konoha.Expr_tyCheckAt(_ctx, stmt, expr, 1, gma, konoha.TY_var, 0);
@@ -462,7 +582,7 @@ konoha.ExprTyCheck_Text = function(_ctx, stmt, expr, gma, reqty)
 
 konoha.ExprTyCheck_Type = function(_ctx, stmt, expr, gma, reqty)
 {
-//	konoha.assert(konoha.TK_isType(expr->tk));
+//	konoha.assert(konoha.TK_isType(expr.tk));
 	return konoha.Expr_setVariable(_ctx, expr, null, expr.tk.ty, 0, gma);
 }
 
@@ -542,7 +662,7 @@ konoha.Expr_tyCheckVariable2 = function(_ctx, stmt, expr, gma, reqty)
 // 	}
 	for(var i = genv.f.length - 1; i >= 0; i--) {
 		if(genv.f[i].fn == fn) {
-			return konoha.Expr_setVariable(_ctx, expr, konoha.TEXPR_LOCAL, genv.f[i].ty, i);
+			return konoha.Expr_setVariable(_ctx, expr, konoha.TEXPR_LOCAL, genv.f[i].ty, i, gma);
 		}
 	}
 //TODO!!
@@ -632,3 +752,4 @@ konoha.StmtTyCheck_ConstDecl = function(_ctx)
 	}
 	return r;
 }
+

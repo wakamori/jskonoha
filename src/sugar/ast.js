@@ -631,7 +631,8 @@ konoha.ParseExpr_Parenthesis = function(_ctx, stmt, syn, tls, s, c, e) {
 		}
 		else if(lexpr.syn.kw != konoha.kw.ExprMethodCall) {
 			syn = konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), konoha.kw.Parenthesis, 0);
-			lexpr  = konoha.new_ConsExpr(_ctx, syn, 2, lexpr, K_NULL);
+			var empty_expr = new konoha.kExpr();//FIX ME!!
+			lexpr  = konoha.new_ConsExpr(_ctx, syn, 2, lexpr, empty_expr);
 		}
 		lexpr = konoha.Stmt_addExprParams(_ctx, stmt, lexpr, tk.sub, 0, tk.sub.length, 1/*allowEmpty*/);
 		return konoha.Expr_rightJoin(_ctx, lexpr, stmt, tls, s+1, c+1, e);
