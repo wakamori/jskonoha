@@ -129,6 +129,7 @@ konoha.CALL_asm = function(_ctx, a, expr, shift, espidx)
 konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 {
 	/* a: number, expr: kExpr, shift: number, espidx: number */
+	console.log(expr);
 	switch (expr.build) {
 	case konoha.TEXPR_CONST : {
 		var v = expr.tk.text.text;
@@ -209,8 +210,8 @@ konoha.ASM_MTDDEF = function(_ctx, mn, param_name, block, shift, espidx)
 	konoha.modcode.ASM("konoha.ct.Global." + mn + " = function(_ctx, sfp1)");
 	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("{");
-	konoha.modcode.indentInc();
 	konoha.modcode.ASM_NEWLINE();
+	konoha.modcode.indentInc();
 	konoha.BLOCK_asm(_ctx, block, shift, espidx + 1/*argsize*/ + 1);
 	konoha.modcode.indentDec();
 	konoha.modcode.ASM("}");
@@ -220,6 +221,7 @@ konoha.ASM_MTDDEF = function(_ctx, mn, param_name, block, shift, espidx)
 konoha.MethodDefStmt_asm = function(_ctx, stmt, shift, espidx)
 {
 	var mn = (konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Symbol, null)).text.text;
+	console.log("mn is ", mn);
 	var params = (konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Params, null)).blocks.data[0];
 	var param_name = (konoha.KObject_getObjectNULL(_ctx, params, konoha.kw.Expr, null)).tk.text.text;
 	var block = konoha.Stmt_block(_ctx, stmt, konoha.kw.Block);
@@ -335,6 +337,11 @@ konoha.LoopStmt_asm = function(_ctx, stmt, shift, espidx)
 	konoha.modcode.indentDec();
 	konoha.modcode.ASM('}');
 	konoha.modcode.ASM_NEWLINE();
+}
+
+konoha.UndefinedStmt_asm = function(_ctx, stmt, shift, espidx)
+{
+	konoha.abort("undefined asm syntax kw='" + stmt.syn.kw + "'");
 }
 
 konoha.BLOCK_asm = function(_ctx, bk, shift, espidx)

@@ -28,6 +28,7 @@ konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 	if(prt != null) {
 		bk.parentNULL = prt;
 	}
+	konoha.dumpTLS(_ctx, tls, s, e, 0);
 	var i = s, indent = 0, atop = tls.length;
 	while(i < e) {
 		var tkERR = null;
@@ -40,6 +41,49 @@ konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 	}
 	return bk;
 }
+
+konoha.dumpTLS = function(_ctx, tls, s, e, indent) {
+	if (indent == 0) {
+		console.log('#########################################');
+		console.log('#                 dump                  #');
+		console.log('#########################################');
+	}
+	//var size = tls.lenght;
+	var tmp = s;
+	while (tmp < e) {
+		var token = tls[tmp];
+		if (token.tt == 1) {
+			tmp++;
+			continue;
+		}
+		if (token.text) {
+			for (i = 0; i < indent; i++) {
+				console.log("\t");
+			}
+			console.log(token.text.text);
+		}
+		else {
+			konoha.dumpTls(_ctx, token.sub.data, 0, tls.length, indent+1);
+		}
+		tmp++;
+	}
+	if (indent == 0) {
+		console.log('#########################################');
+	}
+}
+
+//konoha.dumpAst = function(_ctx, bk) {
+//	console.log('#########################################');
+//	console.log('#                 dump                  #');
+//	console.log('#########################################');
+//	var len = bk.blocks.data.length;
+//	for (i = 0; i < len; i++) {
+//		var data = bk.blocks.data[i];
+//		console.log(data.h.kvproto.$type.kw);
+//	}
+//	console.log('#########################################');
+//	console.log('');
+//}
 
 konoha.Token_resolved = function(_ctx, ks, tk) {//
 	var kw =  tk.text.text;

@@ -167,10 +167,11 @@ konoha.StmtTyCheck_return = function(_ctx, stmt, gma)
 
 konoha.StmtTyCheck_TypeDecl = function(_ctx, stmt, gma)
 {
-	var tk  = konoha.kStmt_token(stmt, konoha.kw.Type, null);
-	var expr = konoha.kStmt_expr(stmt, konoha.kw.Expr, null);
+	console.log("enter typedecl");
+	//konoha.Stmt_typed(stmt, konoha.TSTMT_EXPR);
+	var tk  = konoha.Stmt_token(_ctx, stmt, konoha.kw.Type, null);
+	var expr = konoha.Stmt_expr(_ctx, stmt, konoha.kw.Expr, null);
 	if(tk == null || !konoha.TK_isType(_ctx, tk) || expr == null) {
-		konoha.ERR_SyntaxError(stmt.uline);
 		return false;
 	}
 	konoha.kStmt_done(stmt);
@@ -246,7 +247,6 @@ konoha.Stmt_TyCheck = function(_ctx, syn, stmt, gma)
 {
 	var fo = ((gma.genv.flag == konoha.kGamma_TOPLEVEL) ? syn.TopStmtTyCheck : syn.StmtTyCheck);
 	var result;
-	console.log("fo is " + fo);
 // 	if(IS_Array(fo)) { // @Future
 // 		int i;
 // 		kArray *a = (kArray*)fo;

@@ -102,7 +102,7 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 	console.log("################### ast ####################");
 	//console.log(bk);
 	//console.log(bk.blocks.data[0].h.kvproto["$expr"]);
-	// console.log("=====bk.blocks.data[0].h.kvproto[$expr].cons.data[1]====");
+	//console.log("=====bk.blocks.data[0].h.kvproto[$expr].cons.data[1]====");
 	// console.log(bk.blocks.data[0].h.kvproto["$expr"].cons.data[1]);
 	// console.log("=====bk.blocks.data[0].h.kvproto[$expr].cons.data[2]====");
  	// console.log(bk.blocks.data[0].h.kvproto["$expr"].cons.data[2]);
