@@ -287,11 +287,22 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.System.p.static_flag = true;
 }
 
-konoha.addClassDef = function(_ctx, classname) {
-	konoha.ct[classname] = {};
-	konoha.ct[classname].DBG_NAME = classname;
-	konoha.ct[classname].cid = _ctx.share.ca.length;
+konoha.new_CT = function(_ctx, bct, classname, bcid, supcid)
+{
+	konoha.ct[classname] = {
+		DBG_NAME: classname,
+		cid: _ctx.share.ca.length,
+		bcid: (bcid == 0) ? _ctx.share.ca.length : bcid,
+		supcid: (supcid == 0) ? konoha.CLASS_Object : supcid,
+		superclass: (_ctx.share.ca.length > CLASS_Object) ? _ctx.share.ca[supcid] : null,
+	};
 	_ctx.share.ca.push(konoha.ct[classname]);
+}
+
+
+konoha.addClassDef = function(_ctx, classname)
+{
+	konoha.new_CT(_ctx, null, classname, 0, 0);
 //	_ctx.share.lcnameMapNN[classname] = konoha.ct[classname];
 }
 
