@@ -69,6 +69,12 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 		{name: 'new', ParseExpr: konoha.ParseExpr_new, },
 		{name: 'class', rule: "\"class\" $USYMBOL [ \"extends\" $type ] $block", StmtTyCheck: konoha.StmtTyCheck_class, },
 //		{name: '.', ExprTyCheck: ExprTyCheck_Getter, },
+
+/* ---------------------------------------------------------------- */
+/* Added by Yoan */
+		{name: '=', ExprTyCheck: konoha.ExprTyCheck_true, TopStmtTyCheck: konoha.TopStmtTyCheck_dummy, StmtTyCheck: konoha.StmtTyCheck_dummy, },
+/* ---------------------------------------------------------------- */
+
 		{name: null}, ];
  	konoha.KonohaSpace_defineSyntax(_ctx, ks, SYNTAX);
  	syn = konoha.KonohaSpace_syntax(_ctx, ks, "void"/*IS THIS OK?*/, 0);

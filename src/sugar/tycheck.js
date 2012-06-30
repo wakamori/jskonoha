@@ -87,6 +87,20 @@ konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, gma, reqty, pol)
 	return 0;
 }
 
+konoha.TopStmtTyCheck_dummy = function(_ctx, stmt, gma)
+{
+	var r = 1;
+	console.log("enter StmtTyCheck_none");
+	return r;
+}
+
+konoha.StmtTyCheck_dummy = function(_ctx, stmt, gma)
+{
+	var r = 1;
+	console.log("enter StmtTyCheck_none");
+	return r;
+}
+
 konoha.StmtTyCheck_if = function(_ctx, stmt, gma)
 {
 	var r = 1;
@@ -118,6 +132,7 @@ konoha.StmtTyCheck_else = function(_ctx, stmt, gma)
 	}
 	return r;
 }
+
 
 konoha.StmtTyCheck_return = function(_ctx, stmt, gma)
 {
