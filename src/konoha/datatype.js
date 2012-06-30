@@ -294,7 +294,7 @@ konoha.new_CT = function(_ctx, bct, classname, bcid, supcid)
 		cid: _ctx.share.ca.length,
 		bcid: (bcid == 0) ? _ctx.share.ca.length : bcid,
 		supcid: (supcid == 0) ? konoha.CLASS_Object : supcid,
-		superclass: (_ctx.share.ca.length > CLASS_Object) ? _ctx.share.ca[supcid] : null,
+		superclass: (_ctx.share.ca.length > konoha.CLASS_Object) ? _ctx.share.ca[supcid] : null,
 	};
 	_ctx.share.ca.push(konoha.ct[classname]);
 }
