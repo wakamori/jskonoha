@@ -38,6 +38,8 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.Int.opADD = function(_ctx, a, b) {
 		return a + b;
 	}
+	konoha.ct.Int.opADD.ty = [konoha.TY_Int];
+	konoha.ct.Int.opADD.rtype = konoha.TY_Int;
 
 	konoha.ct.Float.opADD = function(_ctx, a, b) {
 		return a + b;
@@ -46,6 +48,8 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.Int.opSUB = function(_ctx, a, b) {
 		return a - b;
 	}
+	konoha.ct.Int.opSUB.ty = [konoha.TY_Int];
+	konoha.ct.Int.opSUB.rtype = konoha.TY_Int;
 
 	konoha.ct.Float.opSUB = function(_ctx, a, b) {
 		return a - b;
@@ -102,6 +106,8 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.Int.opLT = function(_ctx, a, b) {
 		return (a < b);
 	}
+	konoha.ct.Int.opLT.ty = [konoha.TY_Int];
+	konoha.ct.Int.opLT.rtype = konoha.TY_Boolean;
 
 	konoha.ct.Float.opLT = function(_ctx, a, b) {
 		return (a < b);

@@ -30,7 +30,6 @@ konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 	}
 	var i = s, indent = 0, atop = tls.length;
 	while(i < e) {
-		console.log("tok", tls.length);
 		var tkERR = null;
 		i =  konoha.selectStmtLine(_ctx, ks, indent, tls, i, e, delim, tls, tkERR);
 		var asize = tls.length;
@@ -162,7 +161,6 @@ konoha.Token_toBRACE = function(_ctx, tk, ks) {
 }
 
 konoha.makeTree = function(_ctx, ks, tt, tls, s, e, closech, tlsdst, tkERRRef) {
-//	console.log("maketree start");
 	var i, probablyCloseBefore = e - 1;
 	var tk = tls[s];
 	var tkP = new konoha.kToken();
@@ -177,7 +175,6 @@ konoha.makeTree = function(_ctx, ks, tt, tls, s, e, closech, tlsdst, tkERRRef) {
 		tk = tls[i];
 		if(tk.tt == konoha.ktoken_t.TK_ERR) break;
 		if(tk.topch == '(') {
-//			console.log("maketree'('");
 			i = konoha.makeTree(_ctx, ks, konoha.ktoken_t.AST_PARENTHESIS, tls, i, e, ')', tkP.sub, tkERRRef);
 			continue;
 		}
@@ -205,10 +202,8 @@ konoha.makeTree = function(_ctx, ks, tt, tls, s, e, closech, tlsdst, tkERRRef) {
 }
 
 konoha.selectStmtLine = function(_ctx, ks, indent, tls /* Native array */, s, e, delim, tlsdst /* Native array */, tkERRRef) {
-	console.log("s",s);
 	var i = s;
 	for(; i < e - 1; i++) {
-		console.log("tls.length",tls.length);
 		var tk = tls[i];
 		var tk1 = tls[i+1];
 		if(tk.kw > 0) break;
@@ -500,7 +495,7 @@ konoha.Stmt_findBinaryOp = function(_ctx, stmt, tls, s, e, synRef) {
 				synRef.syn = syn;
 			}
 //			if(!FLAG_is(syn.flag, SYNFLAG_ExprPostfixOp2)) {
-			if(syn.flag == konoha.SYNFLAG_ExprPostfixOp2) {
+			if(!(syn.flag == konoha.SYNFLAG_ExprPostfixOp2)) {
 				i = konoha.Stmt_skipUnaryOp(_ctx, stmt, tls, i+1, e) - 1;
 			}
 		}
@@ -526,17 +521,14 @@ konoha.Stmt_addExprParams = function(_ctx, stmt, expr, tls, s, e, allowEmpty) {
 
 konoha.ParseExpr = function(_ctx, syn, stmt, tls, s, idx, e) {
 	if (syn == null || syn.ParseExpr == null) {
-//		console.log("parseExpr_a");
 		return _ctx.kmodsugar.UndefinedParseExpr(_ctx, stmt, syn, tls, s, idx, e);
 	}
 	else {
-//		console.log("parseExpr_b");
 		return syn.ParseExpr(_ctx, stmt, syn, tls, s, idx, e);
 	}
 }
 
 konoha.Stmt_newExpr2 = function(_ctx, stmt, tls, s,  e) {
-//	console.log("stmt_newexpr2");
 	if(s < e) {
 		var synref = {};
 		var idx = konoha.Stmt_findBinaryOp(_ctx, stmt, tls, s, e, synref);
@@ -615,7 +607,6 @@ konoha.ParseExpr_DOT = function(_ctx, stmt, syn, tls, s, c, e,_rix) {
 }
 
 konoha.ParseExpr_Parenthesis = function(_ctx, stmt, syn, tls, s, c, e) {
-//	console.log("parenthesis");
 	var tk = tls[c];
 	if(s == c) {
 		var expr = konoha.Stmt_newExpr2(_ctx, stmt, tk.sub, 0, tk.sub.length);
@@ -663,7 +654,6 @@ konoha.ParseExpr_DOLLAR = function(_ctx, stmt, syn, tls, s, c, e,_rix) {
 }
 
 konoha.ParseStmt_Expr = function(_ctx, stmt, syn, name, tls, s, e) {
-//	console.log("parsestmt_expr");
 	var r = -1;
 //TODO	konoha.dumpTokenArray(_ctx, 0, tls, s, e);
 	var expr = konoha.Stmt_newExpr2(_ctx, stmt, tls, s, e);

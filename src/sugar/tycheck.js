@@ -167,8 +167,10 @@ konoha.StmtTyCheck_MethodDecl = function(_ctx, stmt, gma)
 // 	}
 // 	return r;
 	var tk = konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Symbol, null);
+	var params = (konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Params, null)).blocks.data[0];
+	var ty = (konoha.KObject_getObjectNULL(_ctx, params, konoha.kw.Type, null)).ty;
 	var mn = tk.text.text;
-	konoha.ct.Global[mn] = {}/*not null*/;
+	konoha.ct.Global[mn] = {ty:[ty], rtype:konoha.TY_Int}/*not null*/;
 	konoha.Stmt_typed(stmt, konoha.TSTMT_MTDDEF);
 	return 1;
 }
@@ -361,10 +363,9 @@ konoha.Block_eval = function(_ctx, bk)
 	var mtd = {};//konoha.new_Method(_ctx, konoha.kMethod_Static, 0, 0, _ctx.share.defParam, null);
 	var result = konoha.kstatus_t.K_CONTINUE;
 	var i;
-	for(i = 0; i < bk.blocks.data.length; i++) {
+	for (i = 0; i < bk.blocks.data.length; i++) {
 		bk1.blocks.data[0] = bk.blocks.data[i];
 		bk1.ks = bk.ks;
-		console.log("singleblock_eval");
 		bk1.blocks.data.slice(0, 1);
 		result = konoha.SingleBlock_eval(_ctx, bk1, mtd, bk.ks);
 		if(result == konoha.kstatus_t.K_FAILED) break;
@@ -389,8 +390,9 @@ konoha.Expr_typedWithMethod = function(_ctx, expr, mtd, reqty) {
 		konoha.Expr_typed(expr, konoha.TEXPR_CALL, expr1.ty);
 	}
 	else {
-//TODO!!typing		konoha.Expr_typed(expr, konoha.TEXPR_CALL, konoha.kMethod_isSmartReturn(mtd) ? reqty : ktype_var(_ctx, konoha.kMethod_rtype(mtd), konoha.CT_(expr1.ty)));
-		konoha.Expr_typed(expr, konoha.TEXPR_CALL, reqty);
+// 		konoha.Expr_typed(expr, konoha.TEXPR_CALL, konoha.kMethod_isSmartReturn(mtd) ? reqty : ktype_var(_ctx, konoha.kMethod_rtype(mtd), konoha.CT_(expr1.ty)));
+ 		konoha.Expr_typed(expr, konoha.TEXPR_CALL, mtd.rtype);
+
 	}
 	return expr;
 }
@@ -407,7 +409,7 @@ konoha.Expr_tyCheckCallParams = function(_ctx, stmt, expr, mtd, gma, reqty)
 // 		expr1 = konoha.new_BoxingExpr(_ctx, cons.data[1], this_ct.cid);
 // 		cons.exprs[1] = expr1;
 // 	}
-//	var isConst = (konoha.Expr_isCONST(expr1)) ? 1 : 0;
+	var isConst = (konoha.Expr_isCONST(expr1)) ? 1 : 0;
 	//	if(rtype == TY_var && gma.genv.mtd == mtd) {
 	//		return ERROR_Unsupported(_ctx, "type inference of recursive calls", TY_unknown, null);
 	//	}
@@ -417,23 +419,25 @@ konoha.Expr_tyCheckCallParams = function(_ctx, stmt, expr, mtd, gma, reqty)
 			return texpr;
 		}
 	}
-// //	mtd = kExpr_lookUpOverloadMethod(_ctx, expr, mtd, gma, this_ct);
+//	mtd = kExpr_lookUpOverloadMethod(_ctx, expr, mtd, gma, this_ct);
 // 	var pa = konoha.kMethod_param(mtd);
+	var pa = mtd.ty;
+	console.log(mtd);
 // 	if(pa.psize + 2 != size) {
 // //		return konoha.kExpr_p(stmt, expr, ERR_, "%s.%s%s takes %d parameter(s), but given %d parameter(s)", CT_t(this_ct), T_mn(mtd.mn), (int)pa.psize, (int)size-2);
 // 		return null;//TODO!!
 // 	}
-// 	for(i = 0; i < pa.psize; i++) {
-// 		var n = i + 2;
-// 		var ptype = konoha.ktype_var(_ctx, pa.p[i].ty, this_ct);
-// 		var pol = konoha.param_policy(pa.p[i].fn);
-// 		var texpr = konoha.kExpr_tyCheckAt(_ctx, stmt, expr, n, ptype, pol);
-// 		if(texpr == null) {
-// //			return konoha.kExpr_p(stmt, expr, ERR_, "%s.%s%s accepts %s at the parameter %d", CT_t(this_ct), T_mn(mtd.mn), TY_t(ptype), (int)i+1);
-// 			return null;//TODO!!
-// 		}
-// 		if(!konoha.Expr_isCONST(expr)) isConst = 0;
-// 	}
+	for(i = 0; i < pa.length; i++) {
+		var n = i + 2;
+		var ptype = pa[i];
+		var pol = 0;//konoha.param_policy(pa.p[i].fn);
+		var texpr = konoha.Expr_tyCheckAt(_ctx, stmt, expr, n, ptype, pol);
+		if(texpr == null) {
+//			return konoha.kExpr_p(stmt, expr, ERR_, "%s.%s%s accepts %s at the parameter %d", CT_t(this_ct), T_mn(mtd.mn), TY_t(ptype), (int)i+1);
+			return null;//TODO!!
+		}
+		if(!konoha.Expr_isCONST(expr)) isConst = 0;
+	}
  	expr = konoha.Expr_typedWithMethod(_ctx, expr, mtd, reqty);
 // 	if(konoha.isConst && konoha.kMethod_isConst(mtd)) {
 // 		var rtype = konoha.ktype_var(_ctx, pa.rtype, this_ct);

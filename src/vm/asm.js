@@ -117,9 +117,6 @@ konoha.CALL_asm = function(_ctx, a, expr, shift, espidx)
 //	console.log(expr.cons.data[0]);
 	var s = konoha.kMethod_isStatic(mtd) ? 2 : 1;
 	var thisidx = espidx + konoha.K_CALLDELTA;
-	console.log("-----expr.cons.data.length----------");
-	console.log(expr.cons.data.length);
-	console.log("-----expr.cons.data.length----------");
 	for (var i = s; i < expr.cons.data.length; i++) {
 		var exprN = expr.cons.data[i];
 		konoha.EXPR_asm(_ctx, thisidx + i - s, exprN, shift, thisidx + i - s);
@@ -132,8 +129,6 @@ konoha.CALL_asm = function(_ctx, a, expr, shift, espidx)
 konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 {
 	/* a: number, expr: kExpr, shift: number, espidx: number */
-	console.log("EXPR_asm start");
-	console.log(expr.build);
 	switch (expr.build) {
 	case konoha.TEXPR_CONST : {
 		var v = expr.tk.text.text;
@@ -286,11 +281,8 @@ konoha.IfStmt_asm = function(_ctx, stmt, shift, espidx)
 	konoha.modcode.ASM("if (sfp" + espidx + ") {");
 	konoha.modcode.indentInc();
 	konoha.modcode.ASM_NEWLINE();
-	console.log("indent", konoha.modcode.indent_i);
 	konoha.BLOCK_asm(_ctx, konoha.Stmt_block(_ctx, stmt, konoha.kw.Block), shift, espidx + 1);
-	console.log("indent", konoha.modcode.indent_i);
 	konoha.modcode.indentDec();
-	console.log("indent", konoha.modcode.indent_i);
 	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("}");
 	konoha.modcode.ASM_NEWLINE();
@@ -322,7 +314,6 @@ konoha.IfStmt_asm = function(_ctx, stmt, shift, espidx)
 konoha.ReturnStmt_asm = function(_ctx, stmt, shift, espidx)
 {
 	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Expr, null);
-	console.log("expr = ", expr.build);
 //	expr.build = konoha.TEXPR_CALL;
 	if(expr != null && konoha.IS_Expr(_ctx, expr) && expr.ty != konoha.TY_void) {
 		konoha.EXPR_asm(_ctx, espidx, expr, shift, espidx+1);
@@ -352,9 +343,6 @@ konoha.BLOCK_asm = function(_ctx, bk, shift, espidx)
 	console.log("knoha.BLOCK_asm");
 	console.log("shift = " + shift + ", espidx = " + espidx + ", build = " + bk.esp.build);
 	/* TODO Is blocks' type Array? */
-	console.log("------bk.blocks.data.length----");
-	console.log(bk.blocks.data.length);
-	console.log("------bk.blocks.data.length----");
 	for (var i = 0; i < bk.blocks.data.length; i++) {
 		var stmt = bk.blocks.data[i];
 		if (stmt.syn == null) continue;

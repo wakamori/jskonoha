@@ -130,6 +130,10 @@ konoha.TEXPR_LET        =  12;
 konoha.TEXPR_STACKTOP   =  13;
 konoha.TEXPR_MAX        =  14;
 
+konoha.Expr_isCONST = function(o) {
+	return konoha.TEXPR_CONST <= o.build && o.build <= konoha.TEXPR_NCONST;
+}
+
 konoha.kExpr = function(syn) {
 	this.h = new konoha.kObjectHeader(konoha.TY_Expr);				//kObjectHeader
 	this.ty = konoha.TY_var;			//ktype_t
