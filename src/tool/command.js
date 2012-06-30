@@ -40,6 +40,7 @@ konoha.eval = function(script) {
 //var script = "int func(int n) {if (n < 3) {return 1;} else {return 2;}}";
 //var script = "int fib(int n) {if (n < 3) {return 1;} else {return fib(n - 1) + fib(n - 2);}}";
 //var script = "int fib(int n) {if (n < 3) {return 1;} else {return fib(n - 1) + fib(n - 2);}}\nfib(10);";
-var script = 'while (false) {1+1;}';
+//var script = 'while (false) {1+1;}';
+var script = 'class A {int x;}';
 konoha.eval(script);
 

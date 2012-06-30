@@ -345,5 +345,5 @@ konoha.KonohaSpace_getCT = function(_ctx, ks, thisct/*NULL*/, name, len, def)
 	if(name != null) {
 		ct = konoha.ct[name];
 	}
-	return (ct != null) ? ct : ((def >= 0) ? null : konoha.CT_(def));
+	return (ct != null) ? ct : ((def >= 0) ? null : konoha.CT_(_ctx, def));
 }

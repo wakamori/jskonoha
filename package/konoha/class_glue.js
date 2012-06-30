@@ -7,12 +7,12 @@ konoha.ParseExpr_new = function(_ctx, tls, stmt)
 		var tk2 = tls.data[s+2];
 		if(konoha.TK_isType(_ctx, tk1) && tk2.tt == konoha.ktoken_t.AST_PARENTHESIS) {  // new C (...)
 			var syn = konoha.SYN_(kStmt_ks(_ctx,stmt), konoha.kw.ExprMethodCall);
-			var expr = konoha.new_ConsExpr(_ctx, syn, 2, tkNEW, NewExpr(_ctx, syn, tk1, TK_type(tk1), 0));
+			var expr = konoha.new_ConsExpr(_ctx, syn, 2, tkNEW, NewExpr(_ctx, syn, tk1, konoha.TK_type(tk1), 0));
 			return expr;
 		}
 		if(konoha.TK_isType(_ctx, tk1) && tk2.tt == konoha.ktoken_t.AST_BRANCET) {     // new C [...]
 			var syn = SYN_(kStmt_ks(stmt), konoha.kw.New);
-			var ct = CT_p0(_ctx, CT_Array, TK_type(tk1));
+			var ct = CT_p0(_ctx, CT_Array, konoha.TK_type(tk1));
 			kToken_setmn(tkNEW, MN_("newArray"), MNTYPE_method);
 			var expr = konoha.new_ConsExpr(_ctx, syn, 2, tkNEW, NewExpr(_ctx, syn, tk1, ct.cid, 0));
 			return expr;
@@ -22,14 +22,19 @@ konoha.ParseExpr_new = function(_ctx, tls, stmt)
 }
 
 
-konoha.StmtTyCheck_class = function(_ctx, stmt)
+konoha.StmtTyCheck_class = function(_ctx, stmt, gma)
 {
-	var tkC = kStmt_token(stmt, konoha.kw.Usymbol, null);
-	var tkE = kStmt_token(stmt, konoha.kw.Type,  null);
+	var tkC = konoha.Stmt_token(_ctx, stmt, konoha.kw.Usymbol, null);
+	var tkE = konoha.Stmt_token(_ctx, stmt, konoha.kw.Type,  null);
 	var  cflag = 0;
-	var supct = CT_Object;
+	var supcid = konoha.CLASS_Object;
+	var supct = _ctx.share.ca[supcid];
 	if(tkE != null) {
+<<<<<<< Updated upstream
 		supct = konoha.CT_(_ctx, TK_type(tkE));
+=======
+		supct = konoha.CT_(_ctx, konoha.TK_type(tkE));
+>>>>>>> Stashed changes
 		if(CT_isFinal(supct)) {
 			konoha.sugar_p(_ctx, konoha.ERR_, stmt.uline, -1, T_CT(supct) + " is final");
 			return false;
