@@ -644,7 +644,11 @@ konoha.ParseExpr_DOLLAR = function(_ctx, stmt, syn, tls, s, c, e,_rix) {
 		}
 		if(tk.tt == konoha.ktoken_t.AST_BRACE) {
 			var expr = new konoha.kBlock();
+<<<<<<< HEAD
 			konoha.Expr_setTerm(expr, true);
+=======
+//			konoha.Expr_setTerm(expr, 1);
+>>>>>>> 1c3a5657cf8346d176ae0c558c73eda840e5c483
 			expr.tk = tk;
 			expr.block = konoha.new_Block(_ctx, konoha.Stmt_ks(_ctx, stmt), stmt, tk.sub, 0, tk.sub.length, ';');
 			return expr;

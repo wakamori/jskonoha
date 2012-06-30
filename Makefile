@@ -21,6 +21,7 @@ BASE_FILES = \
 	${SRC_DIR}/konoha/klibexec.js\
 	${PACKAGE_DIR}/konoha/while_glue.js\
 	${PACKAGE_DIR}/konoha/class_glue.js\
+	${PACKAGE_DIR}/konoha/float_glue.js\
 	${SRC_DIR}/sugar/tycheck.js\
 	${SRC_DIR}/sugar/sugar.js\
 	${SRC_DIR}/sugar/token.js\
