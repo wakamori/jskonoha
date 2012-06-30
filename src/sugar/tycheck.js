@@ -96,7 +96,7 @@ konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, gma, reqty, pol)
 konoha.TopStmtTyCheck_dummy = function(_ctx, stmt, gma)
 {
 	var r = 1;
-	console.log("enter StmtTyCheck_none");
+	console.log("enter TOPStmtTyCheck_none");
 	return r;
 }
 
