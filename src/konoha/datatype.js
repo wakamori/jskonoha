@@ -27,14 +27,20 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.Object.toString = function(_ctx, string){
 		return string;
 	}
+	konoha.ct.Object.toString.ty = [konoha.TY_Object];
+	konoha.ct.Object.toString.rtype = konoha.TY_String;
 
 	konoha.ct.Int.opMINUS = function(_ctx, a){
 		return -a;
 	}
+	konoha.ct.Int.opMINUS.ty = [konoha.TY_Int];
+	konoha.ct.Int.opMINUS.rtype = konoha.TY_Int;
 
 	konoha.ct.Float.opMINUS = function(_ctx, f){
 		return -f;
 	}
+	konoha.ct.Float.opMINUS.ty = [konoha.TY_Float];
+	konoha.ct.Float.opMINUS.rtype = konoha.TY_Float;
 
 	konoha.ct.Int.opADD = function(_ctx, a, b) {
 		return a + b;
@@ -45,6 +51,8 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.Float.opADD = function(_ctx, a, b) {
 		return a + b;
 	}
+	konoha.ct.Float.opADD.ty = [konoha.TY_Float];
+	konoha.ct.Float.opADD.rtype = konoha.TY_Float;
 
 	konoha.ct.Int.opSUB = function(_ctx, a, b) {
 		return a - b;
@@ -55,54 +63,80 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.Float.opSUB = function(_ctx, a, b) {
 		return a - b;
 	}
+	konoha.ct.Float.opSUB.ty = [konoha.TY_Float];
+	konoha.ct.Float.opSUB.rtype = konoha.TY_Float;
 
 	konoha.ct.Int.opMUL = function(_ctx, a, b) {
 		return a * b;
 	}
+	konoha.ct.Int.opMUL.ty = [konoha.TY_Int];
+	konoha.ct.Int.opMUL.rtype = konoha.TY_Int;
 
 	konoha.ct.Float.opMUL = function(_ctx, a, b) {
 		return a * b;
 	}
+	konoha.ct.Float.opMUL.ty = [konoha.TY_Float];
+	konoha.ct.Float.opMUL.rtype = konoha.TY_Float;
 
 	konoha.ct.Int.opDIV = function(_ctx, a, b) {
 		return a / b;
 	}
+	konoha.ct.Int.opDIV.ty = [konoha.TY_Int];
+	konoha.ct.Int.opDIV.rtype = konoha.TY_Int;
 
 	konoha.ct.Float.opDIV = function(_ctx, a, b) {
 		return a / b;
 	}
+	konoha.ct.Float.opDIV.ty = [konoha.TY_Float];
+	konoha.ct.Float.opDIV.rtype = konoha.TY_Float;
 
 	konoha.ct.Int.opMOD = function(_ctx, a ,b) {
 		return a % b;
 	}
+	konoha.ct.Int.opMOD.ty = [konoha.TY_Int];
+	konoha.ct.Int.opMOD.rtype = konoha.TY_Int;
 
 	konoha.ct.Float.opMOD = function(_ctx, a, b) {
 		return a % b;
 	}
+	konoha.ct.Float.opMOD.ty = [konoha.TY_Float];
+	konoha.ct.Float.opMOD.rtype = konoha.TY_Float;
 
 	konoha.ct.Int.opEQ = function(_ctx, a, b) {
 		return (a == b);
 	}
+	konoha.ct.Int.opEQ.ty = [konoha.TY_Int];
+	konoha.ct.Int.opEQ.rtype = konoha.TY_Boolean;
 
 	konoha.ct.Float.opEQ = function(_ctx, a, b) {
 		return (a == b);
 	}
+	konoha.ct.Float.opEQ.ty = [konoha.TY_Float];
+	konoha.ct.Float.opEQ.rtype = konoha.TY_Boolean;
 
 	konoha.ct.String.opEQ = function(_ctx, str1, str2) {
 		return (str1 == str2);
 	}
+	konoha.ct.String.opEQ.ty = [konoha.TY_String];
+	konoha.ct.String.opEQ.rtype = konoha.TY_Boolean;
 
 	konoha.ct.Int.opNEQ = function(_ctx, a ,b) {
 		return (a != b);
 	}
+	konoha.ct.Int.opNEQ.ty = [konoha.TY_Int];
+	konoha.ct.Int.opNEQ.rtype = konoha.TY_Boolean;
 
 	konoha.ct.Float.opNEQ = function(_ctx, a, b) {
 		return (a != b);
 	}
+	konoha.ct.Float.opNEQ.ty = [konoha.TY_Float];
+	konoha.ct.Float.opNEQ.rtype = konoha.TY_Boolean;
 
 	konoha.ct.String.opNEQ = function(_ctx, str1, str2) {
 		return (str1 != str2);
 	}
+	konoha.ct.String.opNEQ.ty = [konoha.TY_String];
+	konoha.ct.String.opNEQ.rtype = konoha.TY_Boolean;
 
 	konoha.ct.Int.opLT = function(_ctx, a, b) {
 		return (a < b);
@@ -113,42 +147,62 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.Float.opLT = function(_ctx, a, b) {
 		return (a < b);
 	}
+	konoha.ct.Float.opLT.ty = [konoha.TY_Float];
+	konoha.ct.Float.opLT.rtype = konoha.TY_Boolean;
 
 	konoha.ct.Int.opLTE = function(_ctx, a, b) {
 		return (a <= b);
 	}
+	konoha.ct.Int.opLTE.ty = [konoha.TY_Int];
+	konoha.ct.Int.opLTE.rtype = konoha.TY_Boolean;
 
 	konoha.ct.Float.opLTE = function(_ctx, a, b) {
 		return (a <= b);
 	}
+	konoha.ct.Float.opLTE.ty = [konoha.TY_Float];
+	konoha.ct.Float.opLTE.rtype = konoha.TY_Boolean;
 
 	konoha.ct.Int.opGT = function(_ctx, a, b) {
 		return (a > b);
 	}
+	konoha.ct.Int.opGT.ty = [konoha.TY_Int];
+	konoha.ct.Int.opGT.rtype = konoha.TY_Boolean;
 
 	konoha.ct.Float.opGT = function(_ctx, a, b) {
 		return (a > b);
 	}
+	konoha.ct.Float.opGT.ty = [konoha.TY_Float];
+	konoha.ct.Float.opGT.rtype = konoha.TY_Boolean;
 
 	konoha.ct.Int.opGTE = function(_ctx, a, b) {
 		return (a >= b);
 	}
+	konoha.ct.Int.opGTE.ty = [konoha.TY_Int];
+	konoha.ct.Int.opGTE.rtype = konoha.TY_Boolean;
 
 	konoha.ct.Float.opGTE = function(_ctx, a, b) {
 		return (a >= b);
 	}
+	konoha.ct.Float.opGTE.ty = [konoha.TY_Float];
+	konoha.ct.Float.opGTE.rtype = konoha.TY_Boolean;
 
 	konoha.ct.String.toInt = function(_ctx, str) {
 		return parseInt(str);
 	}
+	konoha.ct.String.toInt.ty = [konoha.TY_String];
+	konoha.ct.String.toInt.rtype = konoha.TY_Int;
 
 	konoha.ct.String.toFloat = function(_ctx, str) {
 		return parseFloat(str);
 	}
+	konoha.ct.String.toFloat.ty = [konoha.TY_String];
+	konoha.ct.String.toFloat.rtype = konoha.TY_Float;
 
 	konoha.ct.String.opADD = function(_ctx, str1, str2) {
 		return (str1 + str2);
 	}
+	konoha.ct.String.opADD.ty = [konoha.TY_String];
+	konoha.ct.String.opADD.rtype = konoha.TY_String;
 
 	konoha.ct.Boolean.opNOT = function(_ctx, expr) {
 		return !expr;
@@ -228,6 +282,8 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.System.p = function(_ctx, val) {
 		console.log(val);
 	}
+	konoha.ct.System.p.ty = [konoha.TY_Object];
+	konoha.ct.System.p.rtype = konoha.TY_void;
 	konoha.ct.System.p.static_flag = true;
 }
 
