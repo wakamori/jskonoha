@@ -74,7 +74,9 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 		{name: 'break', rule: "\"break\" [ $USYMBOL ]", StmtTyCheck: konoha.StmtTyCheck_break, },
 		{name: 'continue', rule: "\"continue\" [ $USYMBOL ]", StmtTyCheck:  konoha.StmtTyCheck_continue, },
 		{name: 'for', rule: "\"for\" \"(\" var: $block \";\" $expr \";\" each: $block \")\" $block", StmtTyCheck: konoha.StmtTyCheck_for, },
-
+		{name: 'float', type: konoha.TY_Float, },
+		{name: 'double', type: konoha.TY_Float, },
+		{name: '$FLOAT', ExprTyCheck: konoha.ExprTyCheck_Float, },
 		{name: null}, ];
  	konoha.KonohaSpace_defineSyntax(_ctx, ks, SYNTAX);
  	syn = konoha.KonohaSpace_syntax(_ctx, ks, "void"/*IS THIS OK?*/, 0);

@@ -12,8 +12,18 @@ konoha.DBG_P = function(msg) {
 }
 
 konoha.Enum = function() {
-	for (var i in arguments) {
-		this[arguments[i]] = parseInt(i);
+	if (arguments[0] == null) {
+	}
+	else if (typeof(arguments[0]) == "string") {
+		for (var i in arguments) {
+			this[arguments[i]] = parseInt(i);
+		}
+	}
+	else if (typeof(arguments[0] == "object")) {
+		var args = arguments[0];
+		for (var i in args) {
+			this[args[i]] = parseInt(i);
+		}
 	}
 };
 
@@ -72,7 +82,7 @@ konoha.kw.Symbol         = "$SYMBOL";
 konoha.kw.Usymbol        = "$USYMBOL";
 konoha.kw.Text           = "$TEXT";
 konoha.kw.Int            = "$INT";
-konoha.kw.Float          = "$Float";
+konoha.kw.Float          = "$FLOAT";
 konoha.kw.Type           = "$type";
 konoha.kw.Parenthesis    = '()';
 konoha.kw.Brancet        = '[]';

@@ -308,25 +308,9 @@ konoha.addClassDef = function(_ctx, classname)
 
 konoha.loadInitStructData = function(_ctx)
 {
-	konoha.addClassDef(_ctx, "void");
-	konoha.addClassDef(_ctx, "Tvar");
-	konoha.addClassDef(_ctx, "Object");
-	konoha.addClassDef(_ctx, "Boolean");
-	konoha.addClassDef(_ctx, "Int");
-	konoha.addClassDef(_ctx, "String");
-	konoha.addClassDef(_ctx, "Array");
-	konoha.addClassDef(_ctx, "Param");
-	konoha.addClassDef(_ctx, "Method");
-	konoha.addClassDef(_ctx, "Func");
-	konoha.addClassDef(_ctx, "System");
-	konoha.addClassDef(_ctx, "T0");
-	konoha.addClassDef(_ctx, "Float");
-//TODO should there be defined here?
-	konoha.addClassDef(_ctx, "KonohaSpace");
-	konoha.addClassDef(_ctx, "Token");
-	konoha.addClassDef(_ctx, "Stmt");
-	konoha.addClassDef(_ctx, "Block");
-	konoha.addClassDef(_ctx, "Expr");
+	for (var i in konoha.init_class_list) {
+		konoha.addClassDef(_ctx, konoha.init_class_list[i]);
+	}
 	konoha.addClassDef(_ctx, "Global");//for global function. FIX ME!!
 	konoha.loadInitStructMethodData(_ctx);
 }
