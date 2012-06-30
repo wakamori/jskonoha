@@ -564,7 +564,7 @@ konoha.Expr_rightJoin = function(_ctx, expr, stmt, tls, s, c, e) {
 konoha.ParseExpr_Term = function(_ctx, stmt, syn, tls, s, c, e) {
 	var tk = tls[c];
 	var expr = new konoha.kExpr(konoha.KonohaSpace_syntax(_ctx, konoha.Stmt_ks(_ctx, stmt), tk.kw, 0));
-	konoha.Expr_setTerm(expr, 1);
+	konoha.Expr_setTerm(expr, true);
 	expr.tk = tk;
 	return konoha.Expr_rightJoin(_ctx, expr, stmt, tls, s+1, c+1, e);
 }
@@ -644,7 +644,7 @@ konoha.ParseExpr_DOLLAR = function(_ctx, stmt, syn, tls, s, c, e,_rix) {
 		}
 		if(tk.tt == konoha.ktoken_t.AST_BRACE) {
 			var expr = new konoha.kBlock();
-			konoha.Expr_setTerm(expr, 1);
+			konoha.Expr_setTerm(expr, true);
 			expr.tk = tk;
 			expr.block = konoha.new_Block(_ctx, konoha.Stmt_ks(_ctx, stmt), stmt, tk.sub, 0, tk.sub.length, ';');
 			return expr;

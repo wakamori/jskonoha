@@ -309,8 +309,15 @@ konoha.TFLAG_set0 = function(f, op) {
 }
 
 konoha.kmagicflag_t = function() {
-	this.term_flag = 0;
+	this.term_flag = false;
 }
+
+konoha.kObject_Local6 = 1 << 10;
+konoha.kObject_Local5 = 1 << 11;
+konoha.kObject_Local4 = 1 << 12;
+konoha.kObject_Local3 = 1 << 13;
+konoha.kObject_Local2 = 1 << 14;
+konoha.kObject_Local1 = 1 << 15;
 
 konoha.KFLAG_H = function(n) {
 	return ((8*8)-n);

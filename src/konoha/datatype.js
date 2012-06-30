@@ -297,12 +297,13 @@ konoha.new_CT = function(_ctx, bct, classname, bcid, supcid)
 		superclass: (_ctx.share.ca.length > konoha.CLASS_Object) ? _ctx.share.ca[supcid] : null,
 	};
 	_ctx.share.ca.push(konoha.ct[classname]);
+	return konoha.ct[classname];
 }
 
 
 konoha.addClassDef = function(_ctx, classname)
 {
-	konoha.new_CT(_ctx, null, classname, 0, 0);
+	return konoha.new_CT(_ctx, null, classname, 0, 0);
 //	_ctx.share.lcnameMapNN[classname] = konoha.ct[classname];
 }
 

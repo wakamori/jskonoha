@@ -80,12 +80,12 @@ konoha.Expr_tyCheckAt = function(_ctx, stmt, exprP, pos, gma, reqty, pol)
 
 konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, gma, reqty, pol)
 {
-	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, nameid, null);
+	var expr = konoha.kObject_getObjectNULL(_ctx, stmt, nameid, null);
 	if(expr != null/* && konoha.IS_Expr(expr)*/) {
 		var texpr = konoha.Expr_tyCheck(_ctx, stmt, expr, gma, reqty, pol);
 		if(texpr != null/*_ctx.kmodsugar.cExpr.nulvalNUL*/) {
 			if(texpr != expr) {
-				konoha.KObject_setObject(_ctx, stmt, nameid, texpr);
+				konoha.kObject_setObject(_ctx, stmt, nameid, texpr);
 			}
 			return 1;
 		}
@@ -133,7 +133,7 @@ konoha.StmtTyCheck_return = function(_ctx, stmt, gma)
 	if(rtype != konoha.TY_void) {
 		r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, gma, rtype, 0);
 	} else {
-		var expr = konoha.KObject_getObjectNULL(_ctx, stmt, 1, null);
+		var expr = konoha.kObject_getObjectNULL(_ctx, stmt, 1, null);
 		if (expr != null) {
 //			SUGAR_P(WARN_, stmt->uline, -1, "ignored return value");
 			r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, gma, konoha.TY_var, 0);
