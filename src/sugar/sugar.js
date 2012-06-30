@@ -72,7 +72,7 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 
 /* ---------------------------------------------------------------- */
 /* Added by Yoan */
-		{name: '=', ExprTyCheck: konoha.ExprTyCheck_true, TopStmtTyCheck: konoha.TopStmtTyCheck_dummy, StmtTyCheck: konoha.StmtTyCheck_dummy, },
+		{name: '=', ExprTyCheck: konoha.ExprTyCheck_dummy, TopStmtTyCheck: konoha.TopStmtTyCheck_dummy, StmtTyCheck: konoha.StmtTyCheck_dummy, },
 /* ---------------------------------------------------------------- */
 
 		{name: 'while', rule: "\"while\" \"(\" $expr \")\" $block", StmtTyCheck: konoha.StmtTyCheck_while , },

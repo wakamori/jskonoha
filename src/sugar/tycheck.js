@@ -107,6 +107,13 @@ konoha.StmtTyCheck_dummy = function(_ctx, stmt, gma)
 	return r;
 }
 
+konoha.ExprTyCheck_dummy = function(_ctx, stmt, gma)
+{
+	var r = 1;
+	console.log("enter ExprTyCheck_none");
+	return r;
+}
+
 konoha.StmtTyCheck_if = function(_ctx, stmt, gma)
 {
 	var r = 1;
@@ -239,6 +246,7 @@ konoha.Stmt_TyCheck = function(_ctx, syn, stmt, gma)
 {
 	var fo = ((gma.genv.flag == konoha.kGamma_TOPLEVEL) ? syn.TopStmtTyCheck : syn.StmtTyCheck);
 	var result;
+	console.log("fo is " + fo);
 // 	if(IS_Array(fo)) { // @Future
 // 		int i;
 // 		kArray *a = (kArray*)fo;
