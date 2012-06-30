@@ -30,4 +30,4 @@ konoha.eval = function(script) {
 
 //konoha.eval("1+1");
 //konoha.eval("if(1 < 3) { return 1;}");
-konoha.eval("1+2+3");
+konoha.eval("while(1 < 2) { 1+2;}");

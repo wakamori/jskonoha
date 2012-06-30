@@ -172,6 +172,7 @@ konoha.TSTMT_IF           = 5;
 konoha.TSTMT_LOOP         = 6;
 konoha.TSTMT_JUMP         = 7;
 konoha.TSTMT_MTDDEF       = 8; //special constant for jskonoha
+konoha.TSTMT_WHILE        = 9;
 
 konoha.kStmt = function() {
 	this.h = new konoha.kObjectHeader();				//	kObjectHeader;

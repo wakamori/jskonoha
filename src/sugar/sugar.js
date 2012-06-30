@@ -63,6 +63,7 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 		{name: 'true', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_true, },
 		{name: 'false', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_false, },
 		{name: 'if', rule: '\"if\" \"(\" $expr \")\" $block [\"else\" else: $block]', TopStmtTyCheck: konoha.StmtTyCheck_if, StmtTyCheck: konoha.StmtTyCheck_if, },
+		{name: 'while', rule: '\"while\" \"(\" $expr \")\" $block [$block]', TopStmtTyCheck: konoha.StmtTyCheck_while, StmtTyCheck: konoha.StmtTyCheck_while, },
 		{name: 'else', rule: '\"else\" $block', TopStmtTyCheck: konoha.StmtTyCheck_else, StmtTyCheck: konoha.StmtTyCheck_else, },
 		{name: 'return', rule: '\"return\" [$expr]', flag: konoha.SYNFLAG_StmtBreakExec, StmtTyCheck: konoha.StmtTyCheck_return, },
 
