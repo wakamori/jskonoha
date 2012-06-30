@@ -63,10 +63,16 @@ konoha.Expr_tyCheck = function(_ctx, stmt, expr, gma, reqty, pol)
 
 konoha.Expr_tyCheckAt = function(_ctx, stmt, exprP, pos, gma, reqty, pol)
 {
-	if(/*!konoha.Expr_isTerm(exprP) &&*/ pos < exprP.cons.data.length) {
+	if(!konoha.Expr_isTerm(exprP) && pos < exprP.cons.data.length) {
 		var expr = exprP.cons.data[pos];
 		expr = konoha.Expr_tyCheck(_ctx, stmt, expr, gma, reqty, pol);
 		exprP.cons.data[pos] =  expr;
+//		console.log("@@@@@@@Expr_tyCheckAt@@@@@@@");
+//		console.log(expr.ty);
+		if (expr.ty == 1) {
+//			console.log(expr);
+		}
+//		console.log("@@@@@@@Expr_tyCheckAt@@@@@@@");
 		return expr;
 	}
 	return null;
@@ -112,6 +118,17 @@ konoha.StmtTyCheck_if = function(_ctx, stmt, gma)
 			r = r & konoha.Block_tyCheckAll(_ctx, bkElse, gma);
 		}
 		konoha.Stmt_typed(stmt, konoha.TSTMT_IF);
+	}
+	return r;
+}
+
+konoha.StmtTyCheck_while = function(_ctx, stmt, gma)
+{
+	var r = 1;
+	if((r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, gma, konoha.TY_Boolean, 0))) {
+		var bkThen = konoha.Stmt_block(_ctx, stmt, konoha.kw.Block, null);
+		r = konoha.Block_tyCheckAll(_ctx, bkThen, gma);
+		konoha.Stmt_typed(stmt, konoha.TSTMT_WHILE);
 	}
 	return r;
 }
@@ -466,14 +483,19 @@ konoha.Expr_lookupMethod = function(_ctx, stmt, expr, this_cid, gma, reqty)
 	var mtd = null;
 //	var ks = gma.genv.ks;
 	var tkMN = expr.cons.data[0];
+	// console.log("this_cid");
+	// console.log(this_cid);
+	// console.log("this_cid");
 //	DBG_ASSERT(IS_Token(tkMN));
 	if(tkMN.tt == konoha.ktoken_t.TK_SYMBOL || tkMN.tt == konoha.ktoken_t.TK_USYMBOL) {
 		konoha.kToken_setmn(tkMN, tkMN.text.text, konoha.MNTYPE_method);
 	}
 	if(tkMN.tt == konoha.ktoken_t.TK_MN) {
+//		console.log("----expr_lookupmethod_a----");
 		mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, this_cid, tkMN.mn);
 		if(mtd == null) {
 			if(tkMN.text != konoha.TS_EMPTY) {
+//				console.log("----expr_lookupmethod_b----");
 				mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, this_cid, 0);
 				if(mtd != null) {
 					return konoha.Expr_tyCheckDynamicCallParams(_ctx, stmt, expr, mtd, tkMN.text, tkMN.mn, reqty);
@@ -590,6 +612,9 @@ konoha.ExprTyCheck_MethodCall = function(_ctx, stmt, expr, gma, reqty)
 	var texpr = konoha.Expr_tyCheckAt(_ctx, stmt, expr, 1, gma, konoha.TY_var, 0);
 	if(texpr != null) {
 		var this_cid = texpr.ty;
+		// console.log("ExprTyCheck_MethodCall");
+		// console.log(texpr.ty);
+		// console.log("ExprTyCheck_MethodCall");
 		return konoha.Expr_lookupMethod(_ctx, stmt, expr, this_cid, gma, reqty);
 	}
 }
@@ -632,6 +657,10 @@ konoha.ExprTyCheck_Int = function(_ctx, stmt, expr, gma, reqty)
 {
 	var tk = expr.tk;
 	var n = Number(tk.text.text);
+	// console.log("=======ExprTycheck_Int==========");
+	// console.log(n);
+	// console.log(konoha.TY_Int);
+	// console.log("=======ExprTycheck_Int==========");
 	return konoha.Expr_setNConstValue(_ctx, expr, konoha.TY_Int, n);
 }
 
@@ -661,16 +690,20 @@ konoha.ExprTyCheck = function(_ctx, stmt, expr, gma, reqty) {
 
 konoha.KS_getGetterMethodNULL = function(_ctx, ks, cid, fn)
 {
-	var mtd = konoha.kKonohaSpace_getMethodNULL(ks, cid, konoha.MN_toGETTER(fn));
+	var mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, cid, konoha.MN_toGETTER(fn));
+//		console.log("----ks_getgettermethodnull----");
 	if(mtd == null) {
-		mtd = konoha.kKonohaSpace_getMethodNULL(ks, cid, konoha.MN_toISBOOL(fn));
+//		console.log("----ks_getgettermethodnull----");
+		mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, cid, konoha.MN_toISBOOL(fn));
 	}
 	return mtd;
 }
 
 konoha.new_GetterExpr = function(_ctx, tkU, mtd, expr)
 {
+//	console.log("hogeget");
 	var expr1 = konoha.new_TypedConsExpr(_ctx, konoha.TEXPR_CALL, konoha.kMethod_rtype(mtd), 2, mtd, expr);
+//	console.log("hogeget");
 	expr1.tk = tkU; // for uline
 	return expr1;
 }
@@ -726,10 +759,10 @@ konoha.ExprTyCheck_Usymbol = function(_ctx)
 		var kv = konoha.KonohaSpace_getConstNULL(_ctx, gma.genv.ks, ukey);
 		if(kv != null) {
 			if(konoha.FN_isBOXED(kv.key)) {
-				konoha.kExpr_setConstValue(expr, kv.ty, kv.oval);
+				konoha.Expr_setConstValue(_ctx, expr, kv.ty, kv.oval);
 			}
 			else {
-				konoha.kExpr_setNConstValue(expr, kv.ty, kv.uval);
+				konoha.Expr_setNConstValue(_ctx, expr, kv.ty, kv.uval);
 			}
 			return expr;
 		}

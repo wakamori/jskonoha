@@ -311,6 +311,7 @@ konoha.IfStmt_asm = function(_ctx, stmt, shift, espidx)
 // 	konoha.ASM_LABEL(_ctx, lbEND);
 }
 
+
 konoha.ReturnStmt_asm = function(_ctx, stmt, shift, espidx)
 {
 	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Expr, null);
@@ -330,7 +331,7 @@ konoha.LoopStmt_asm = function(_ctx, stmt, shift, espidx)
 	konoha.modcode.ASM(') {');
 	konoha.modcode.indentInc();
 	konoha.modcode.ASM_NEWLINE();
-	BLOCK_asm(_ctx, kStmt_block(stmt, konoha.KW_Block), shift);
+	BLOCK_asm(_ctx, kStmt_block(stmt, konoha.kw.Block), shift);
 	konoha.modcode.indentDec();
 	konoha.modcode.ASM('}');
 	konoha.modcode.ASM_NEWLINE();

@@ -63,6 +63,7 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 		{name: 'true', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_true, },
 		{name: 'false', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_false, },
 		{name: 'if', rule: '\"if\" \"(\" $expr \")\" $block [\"else\" else: $block]', TopStmtTyCheck: konoha.StmtTyCheck_if, StmtTyCheck: konoha.StmtTyCheck_if, },
+
 		{name: 'else', rule: '\"else\" $block', TopStmtTyCheck: konoha.StmtTyCheck_else, StmtTyCheck: konoha.StmtTyCheck_else, },
 		{name: 'return', rule: '\"return\" [$expr]', flag: konoha.SYNFLAG_StmtBreakExec, StmtTyCheck: konoha.StmtTyCheck_return, },
 
@@ -95,10 +96,13 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 //	konoha.DBG_P("############################################");
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
 	console.log("################### ast ####################");
-//	console.log(bk);
-//  	console.log(bk.blocks.data[0].h.kvproto["$expr"]);
-//  	console.log(bk.blocks.data[0].h.kvproto["$expr"].cons.data[1]);
-//  	console.log(bk.blocks.data[0].h.kvproto["$expr"].cons.data[2]);
+	//console.log(bk);
+	//console.log(bk.blocks.data[0].h.kvproto["$expr"]);
+	// console.log("=====bk.blocks.data[0].h.kvproto[$expr].cons.data[1]====");
+	// console.log(bk.blocks.data[0].h.kvproto["$expr"].cons.data[1]);
+	// console.log("=====bk.blocks.data[0].h.kvproto[$expr].cons.data[2]====");
+ 	// console.log(bk.blocks.data[0].h.kvproto["$expr"].cons.data[2]);
+
 	console.log("############################################");
 	tls = tls.slice(0, pos - 1);
 	var result = konoha.Block_eval(_ctx, bk); //result is result of evaluating generated code
