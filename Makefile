@@ -2,6 +2,7 @@ SRC_DIR = src
 INCLUDE_DIR = include/konoha2
 TEST_DIR = test
 BUILD_DIR = build
+PACKAGE_DIR = package
 
 PREFIX = .
 ##DIST_DIR = ${PREFIX}/dist
@@ -18,6 +19,7 @@ BASE_FILES = \
 	${SRC_DIR}/konoha/datatype.js\
 	${SRC_DIR}/konoha/konoha2.js\
 	${SRC_DIR}/konoha/klibexec.js\
+	${PACKAGE_DIR}/konoha/while_glue.js\
 	${SRC_DIR}/sugar/tycheck.js\
 	${SRC_DIR}/sugar/sugar.js\
 	${SRC_DIR}/sugar/token.js\

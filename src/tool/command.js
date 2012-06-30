@@ -40,6 +40,6 @@ konoha.eval = function(script) {
 //var script = "int func(int n) {if (n < 3) {return 1;} else {return 2;}}";
 //var script = "int fib(int n) {if (n < 3) {return 1;} else {return fib(n - 1) + fib(n - 2);}}";
 //var script = "int fib(int n) {if (n < 3) {return 1;} else {return fib(n - 1) + fib(n - 2);}}\nfib(10);";
-konoha.eval("while(1 < 2) { 1+2;}");
+var script = 'n=0;\n while (n < 10) {n=n+1;}';
 konoha.eval(script);
 
