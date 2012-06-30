@@ -24,6 +24,15 @@
 
 // konoha.KonohaSpace_init goes include/konoha/konoha2.js
 
+konoha.Stmt_token = function(_ctx, stmt, kw, def)
+{
+	var tk = konoha.KObject_getObjectNULL(_ctx, stmt, kw);
+	if(tk != null && konoha.IS_Token(tk)) {
+		return tk;
+	}
+	return def;
+}
+
 konoha.Stmt_expr = function(_ctx, stmt, kw, def)
 {
 	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, kw);
