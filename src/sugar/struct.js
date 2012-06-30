@@ -187,15 +187,9 @@ konoha.new_ConsExpr = function(_ctx, syn, n)
 
 konoha.CT_findMethodNULL = function(_ctx, ct, mn)
 {
-	console.log("===============CT_findMethodNULL_a============");
 	while(ct != null) {
 		var ret = ct[mn];
-		console.log("---------------CT_findMethodNULL_method-------");
-		console.log(mn);
-		console.log(ret);
-		console.log(ct);
 		if (ret != null) {
-			console.log("===============CT_findMethodNULL_b============");
 			ret.mtdname = "konoha.ct." + ct.DBG_NAME + "." + mn;
 			return ret;
 		}
@@ -224,9 +218,6 @@ konoha.KonohaSpace_getMethodNULL = function(_ctx, ks, cid, mn)
 		mtd.static_flag = true;
 		return mtd;
 	}
-	console.log("@@@@@@@@cid@@@@@@@@@");
-	console.log(cid);
-	console.log("@@@@@@@@cid@@@@@@@@@");
 	return konoha.CT_findMethodNULL(_ctx, konoha.CT_(_ctx, cid), mn);
 }
 
@@ -248,11 +239,6 @@ konoha.Expr_setNConstValue = function(_ctx, expr, ty, ndata)
 	expr.ndata = ndata;
 	expr.data = konoha.K_NULL;
 	expr.ty = ty;
-	console.log("                   ");
-	console.log("====Expr_setNConstValue====");
-	console.log(expr.ty);
-	console.log("====Expr_setNConstValue====");
-	console.log("                   ");
 	return expr;
 }
 konoha.Expr_setConstValue = function(_ctx, expr, ty, o)

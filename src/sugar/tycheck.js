@@ -428,7 +428,7 @@ konoha.Expr_tyCheckCallParams = function(_ctx, stmt, expr, mtd, gma, reqty)
 //	mtd = kExpr_lookUpOverloadMethod(_ctx, expr, mtd, gma, this_ct);
 // 	var pa = konoha.kMethod_param(mtd);
 	var pa = mtd.ty;
-	console.log(mtd);
+//	console.log(mtd);
 // 	if(pa.psize + 2 != size) {
 // //		return konoha.kExpr_p(stmt, expr, ERR_, "%s.%s%s takes %d parameter(s), but given %d parameter(s)", CT_t(this_ct), T_mn(mtd.mn), (int)pa.psize, (int)size-2);
 // 		return null;//TODO!!
