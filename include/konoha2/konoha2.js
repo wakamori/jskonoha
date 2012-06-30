@@ -165,7 +165,7 @@ konoha.setNullObject = function(obj) {
 	this.isNullObject = true;
 }
 konoha.kObjectHeader = function(cid) {
-	this.magicflag = null;				//kmagicflag_t
+	this.magicflag = new konoha.kmagicflag_t();				//kmagicflag_t
 	this.ct = new konoha.kclass_t();					//kclass_t
 	this.ct.cid = cid;
 	//	union {
@@ -290,6 +290,26 @@ konoha.kMethod_isStatic = function(mtd) {
 
 konoha.TFLAG_is = function(f, op) {
 	return ( (f & op) == op);
+}
+
+konoha.TFLAG_set = function(f, op, b) {
+	if(b) {
+		konoha.TFLAG_set1(f, op);
+	} else {
+		konoha.TFLAG_set0(f, op);
+	}
+}
+
+konoha.TFLAG_set1 = function(f, op) {
+    f = (f | op);
+}
+
+konoha.TFLAG_set0 = function(f, op) {
+    f = (f & (~op));
+}
+
+konoha.kmagicflag_t = function() {
+	this.term_flag = 0;
 }
 
 konoha.KFLAG_H = function(n) {

@@ -134,6 +134,15 @@ konoha.Expr_isCONST = function(o) {
 	return konoha.TEXPR_CONST <= o.build && o.build <= konoha.TEXPR_NCONST;
 }
 
+
+konoha.Expr_isTerm = function(exprP) {
+    return konoha.TFLAG_is(exprP.h.magicflag, konoha.kObject_Local1);
+}
+
+konoha.Expr_setTerm = function(expr, num) {
+	return konoha.TFLAG_set(expr.h.magicflag, konoha.kObject_Local1, num)
+}
+
 konoha.kExpr = function(syn) {
 	this.h = new konoha.kObjectHeader(konoha.TY_Expr);				//kObjectHeader
 	this.ty = konoha.TY_var;			//ktype_t
@@ -165,6 +174,7 @@ konoha.TSTMT_IF           = 5;
 konoha.TSTMT_LOOP         = 6;
 konoha.TSTMT_JUMP         = 7;
 konoha.TSTMT_MTDDEF       = 8; //special constant for jskonoha
+konoha.TSTMT_WHILE        = 9;
 
 konoha.kStmt = function() {
 	this.h = new konoha.kObjectHeader();				//	kObjectHeader;
