@@ -108,17 +108,6 @@ konoha.StmtTyCheck_if = function(_ctx, stmt, gma)
 	return r;
 }
 
-konoha.StmtTyCheck_while = function(_ctx, stmt, gma)
-{
-	var r = 1;
-	if((r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, gma, konoha.TY_Boolean, 0))) {
-		var bkThen = konoha.Stmt_block(_ctx, stmt, konoha.kw.Block, null);
-		r = konoha.Block_tyCheckAll(_ctx, bkThen, gma);
-		konoha.Stmt_typed(stmt, konoha.TSTMT_WHILE);
-	}
-	return r;
-}
-
 konoha.StmtTyCheck_else = function(_ctx, stmt, gma)
 {
 	var r = 1;
