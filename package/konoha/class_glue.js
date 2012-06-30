@@ -30,11 +30,7 @@ konoha.StmtTyCheck_class = function(_ctx, stmt, gma)
 	var supcid = konoha.CLASS_Object;
 	var supct = _ctx.share.ca[supcid];
 	if(tkE != null) {
-<<<<<<< Updated upstream
-		supct = konoha.CT_(_ctx, TK_type(tkE));
-=======
 		supct = konoha.CT_(_ctx, konoha.TK_type(tkE));
->>>>>>> Stashed changes
 		if(CT_isFinal(supct)) {
 			konoha.sugar_p(_ctx, konoha.ERR_, stmt.uline, -1, T_CT(supct) + " is final");
 			return false;

@@ -40,8 +40,10 @@ konoha.Expr_tyCheck = function(_ctx, stmt, expr, gma, reqty, pol)
 	}
 	if(texpr != null/*_ctx.kmodsugar.cExpr.nulvalNUL*/) {
 		if(texpr.ty == konoha.TY_void) {
-			return konoha.TFLAG_is(pol, konoha.TPOL_ALLOWVOID);
-//				texpr: kExpr_p(expr, ERR_, "void is not acceptable");
+			if (!konoha.TFLAG_is(pol, konoha.TPOL_ALLOWVOID)) {
+				texpr = konoha.Expr_p(_ctx, stmt, expr, ERR_, "void is not acceptable");
+			}
+			return texpr;
 		}
 		if(reqty == konoha.TY_var || texpr.ty == reqty || konoha.TFLAG_is(pol, konoha.TPOL_NOCHECK)) {
 			return texpr;
@@ -63,16 +65,10 @@ konoha.Expr_tyCheck = function(_ctx, stmt, expr, gma, reqty, pol)
 
 konoha.Expr_tyCheckAt = function(_ctx, stmt, exprP, pos, gma, reqty, pol)
 {
-	if(!konoha.Expr_isTerm(exprP) && pos < exprP.cons.data.length) {
+	if(/*!konoha.Expr_isTerm(exprP) &&*/ pos < exprP.cons.data.length) {
 		var expr = exprP.cons.data[pos];
 		expr = konoha.Expr_tyCheck(_ctx, stmt, expr, gma, reqty, pol);
 		exprP.cons.data[pos] =  expr;
-//		console.log("@@@@@@@Expr_tyCheckAt@@@@@@@");
-//		console.log(expr.ty);
-		if (expr.ty == 1) {
-//			console.log(expr);
-		}
-//		console.log("@@@@@@@Expr_tyCheckAt@@@@@@@");
 		return expr;
 	}
 	return null;
