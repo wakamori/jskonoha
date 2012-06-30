@@ -42,5 +42,6 @@ var script = 'int func(int i) {int a = 1;return 1;}';
 //var script = "int fib(int n) {if (n < 3) {return 1;} else {return fib(n - 1) + fib(n - 2);}}";
 //var script = "int fib(int n) {if (n < 3) {return 1;} else {return fib(n - 1) + fib(n - 2);}}\nfib(10);";
 //var script = 'n=0;\n while (n < 10) {n=n+1;}';
+var script = 'while (false) {1+1;}';
 konoha.eval(script);
 
