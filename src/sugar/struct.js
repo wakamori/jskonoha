@@ -24,10 +24,19 @@
 
 // konoha.KonohaSpace_init goes include/konoha/konoha2.js
 
+konoha.Stmt_token = function(_ctx, stmt, kw, def)
+{
+	var tk = konoha.KObject_getObjectNULL(_ctx, stmt, kw);
+	if(tk != null && konoha.IS_Token(_ctx, tk)) {
+		return tk;
+	}
+	return def;
+}
+
 konoha.Stmt_expr = function(_ctx, stmt, kw, def)
 {
 	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, kw);
-	if(expr != null && konoha.IS_Expr(expr)) {
+	if(expr != null && konoha.IS_Expr(_ctx, expr)) {
 		return expr;
 	}
 	return def;
@@ -322,5 +331,5 @@ konoha.KonohaSpace_getCT = function(_ctx, ks, thisct/*NULL*/, name, len, def)
 	if(name != null) {
 		ct = konoha.ct[name];
 	}
-	return (ct != null) ? ct : ((def >= 0) ? null : konoha.CT_(def));
+	return (ct != null) ? ct : ((def >= 0) ? null : konoha.CT_(_ctx, def));
 }

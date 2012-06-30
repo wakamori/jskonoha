@@ -68,7 +68,7 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 		{name: 'return', rule: '\"return\" [$expr]', flag: konoha.SYNFLAG_StmtBreakExec, StmtTyCheck: konoha.StmtTyCheck_return, },
 
 		{name: 'new', ParseExpr: konoha.ParseExpr_new, },
-		{name: 'class', rule: "\"class\" $USYMBOL [ \"extends\" $type ] $block", StmtTyCheck: konoha.StmtTyCheck_class, },
+		{name: 'class', rule: "\"class\" $USYMBOL [ \"extends\" $type ] $block", TopStmtTyCheck: konoha.StmtTyCheck_class, },
 
 		{name: 'while', rule: "\"while\" \"(\" $expr \")\" $block", TopStmtTyCheck: konoha.StmtTyCheck_while, StmtTyCheck: konoha.StmtTyCheck_while , },
 		{name: 'break', rule: "\"break\" [ $USYMBOL ]",  StmtTyCheck: konoha.StmtTyCheck_break, },

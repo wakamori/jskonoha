@@ -295,7 +295,7 @@ konoha.kmodsugar_t = function() {
 	this.Expr_setNConstValue = null;
 	this.Expr_setVariable = null;
 
-	this.Stmt_token = null;
+	this.Stmt_token = konoha.Stmt_token;
 	this.Stmt_expr = null;
 	this.Stmt_text = null;
 	this.Stmt_block = null;
