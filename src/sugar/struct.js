@@ -27,7 +27,7 @@
 konoha.Stmt_token = function(_ctx, stmt, kw, def)
 {
 	var tk = konoha.KObject_getObjectNULL(_ctx, stmt, kw);
-	if(tk != null && konoha.IS_Token(tk)) {
+	if(tk != null && konoha.IS_Token(_ctx, tk)) {
 		return tk;
 	}
 	return def;
@@ -36,7 +36,7 @@ konoha.Stmt_token = function(_ctx, stmt, kw, def)
 konoha.Stmt_expr = function(_ctx, stmt, kw, def)
 {
 	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, kw);
-	if(expr != null && konoha.IS_Expr(expr)) {
+	if(expr != null && konoha.IS_Expr(_ctx, expr)) {
 		return expr;
 	}
 	return def;
