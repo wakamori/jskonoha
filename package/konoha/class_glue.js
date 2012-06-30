@@ -29,7 +29,7 @@ konoha.StmtTyCheck_class = function(_ctx, stmt)
 	var  cflag = 0;
 	var supct = CT_Object;
 	if(tkE != null) {
-		supct = CT_(TK_type(tkE));
+		supct = konoha.CT_(_ctx, TK_type(tkE));
 		if(CT_isFinal(supct)) {
 			konoha.sugar_p(_ctx, konoha.ERR_, stmt.uline, -1, T_CT(supct) + " is final");
 			return false;

@@ -475,7 +475,7 @@ konoha.Expr_lookupMethod = function(_ctx, stmt, expr, this_cid, gma, reqty)
 					return konoha.Expr_tyCheckDynamicCallParams(_ctx, stmt, expr, mtd, tkMN.text, tkMN.mn, reqty);
 				}
 			}
-			if(tkMN.mn == konoha.MN_new && expr.cons.data.length == 2 && konoha.CT_(konoha.kExpr_at(expr, 1).ty).bcid == konoha.TY_Object) {
+			if(tkMN.mn == konoha.MN_new && expr.cons.data.length == 2 && konoha.CT_(_ctx, konoha.kExpr_at(expr, 1).ty).bcid == konoha.TY_Object) {
 				//DBG_P("bcid=%s", TY_t(CT_(kExpr_at(expr, 1).ty).bcid));
 //				DBG_ASSERT(kExpr_at(expr, 1).ty != TY_var);
 				return konoha.kExpr_at(expr, 1);  // new Person(); // default constructor
@@ -522,7 +522,7 @@ konoha.Expr_lookUpFuncOrMethod = function(_ctx, exprN, gma, reqty)
 			exprN.cons.data[1] = konoha.Expr_setVariable(_ctx, null, konoha.TEXPR_LOCAL, gma.genv.this_cid, 0, gma);
 			return mtd;
 		}
-		var ct = konoha.CT_(genv.this_cid);
+		var ct = konoha.CT_(_ctx, genv.this_cid);
 		if (ct.fsize) {
 			for(i = ct.fsize; i >= 0; i--) {
 				if(ct.fields[i].fn == fn && konoha.TY_isFunc(ct.fields[i].ty)) {
@@ -763,7 +763,7 @@ konoha.StmtTyCheck_ConstDecl = function(_ctx)
 			var kv = ukey;
 			if(expr.build == konoha.TEXPR_NULL) {
 				kv.ty = konoha.TY_TYPE;
-				kv.uval = (uintptr_t)(CT_(expr.ty));
+				kv.uval = (uintptr_t)(konoha.CT_(_ctx, expr.ty));
 				expr = null;
 			}
 			else if(expr.build == konoha.TEXPR_CONST) {
