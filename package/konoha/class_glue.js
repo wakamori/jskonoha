@@ -79,6 +79,27 @@ konoha.checkFieldSize = function(_ctx, bk)
 	return c;
 }
 
+konoha.ObjectField_init = function(_ctx, o, conf)
+{
+
+}
+
+konoha.setField = function(_ctx, ct, supct, fctsize)
+{
+	var fsize = supct.fsize + fctsize;
+	ct.fsize = fsize;
+}
+
+konoha.CT_initField = function(_ctx, ct, supct, fctsize)
+{
+	var fsize = supct.fsize + fctsize;
+	if (fsize > 0) {
+		ct.fnull(_ctx, ct);
+		ct.init = konoha.ObjectField_init;
+		konoha.setField(_ctx, ct, supct, fctsize);
+	}
+}
+
 konoha.StmtTyCheck_class = function(_ctx, stmt, gma)
 {
 	var tkC = konoha.Stmt_token(_ctx, stmt, konoha.kw.Usymbol, null);
@@ -107,9 +128,9 @@ konoha.StmtTyCheck_class = function(_ctx, stmt, gma)
 	konoha.Stmt_parseClassBlock(_ctx, stmt, tkC);
 	var bk = konoha.Stmt_block(_ctx, stmt, konoha.kw.Block, null);
 	if (ct.nulvalNUL == null) {
-		konoha.CT_initField()
+		konoha.CT_initField(_ctx, ct, supct, konoha.checkFieldSize(_ctx, bk));
 	} else {
-		var fsize = checkFieldSize(_ctx, bk);
+		var fsize = konoha.checkFieldSize(_ctx, bk);
 		konoha.CT_setField(_ctx, ct, supct, fsize);
 	}
 	//CT_setField(_ctx, ct, supct, konoha.checkFieldSize(_ctx, bk));

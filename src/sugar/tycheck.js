@@ -76,7 +76,7 @@ konoha.Expr_tyCheckAt = function(_ctx, stmt, exprP, pos, gma, reqty, pol)
 
 konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, gma, reqty, pol)
 {
-	var expr = konoha.kObject_getObjectNULL(_ctx, stmt, nameid, null);
+	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, nameid, null);
 	if(expr != null/* && konoha.IS_Expr(expr)*/) {
 		var texpr = konoha.Expr_tyCheck(_ctx, stmt, expr, gma, reqty, pol);
 		if(texpr != null/*_ctx.kmodsugar.cExpr.nulvalNUL*/) {

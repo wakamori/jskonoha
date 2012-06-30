@@ -60,24 +60,24 @@ konoha.karray_t =  function() {
 };
 
 konoha.init_class_list = [
-	"void",
-	"var",
-	"Object",
-	"Boolean",
-	"Int",
-	"String",
-	"Param",
-	"Method",
-	"Func",
-	"Array",
-	"System",
-	"T0",
-	"KonohaSpace",
-	"Token",
-	"Stmt",
-	"Block",
-	"Expr",
-	"Float"
+	{classname: "void"},
+	{classname: "var"},
+	{classname: "Object"},
+	{classname: "Boolean"},
+	{classname: "Int"},
+	{classname: "String"},
+	{classname: "Param"},
+	{classname: "Method"},
+	{classname: "Func"},
+	{classname: "Array"},
+	{classname: "System"},
+	{classname: "T0"},
+	{classname: "KonohaSpace"},
+	{classname: "Token"},
+	{classname: "Stmt"},
+	{classname: "Block"},
+	{classname: "Expr"},
+	{classname: "Float"},
 ];
 
 ///* kcid_t */
@@ -328,6 +328,7 @@ konoha.TFLAG_set0 = function(f, op) {
 
 konoha.kmagicflag_t = function() {
 	this.term_flag = false;
+	this.null_flag = false;
 }
 
 konoha.kObject_Local6 = 1 << 10;

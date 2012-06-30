@@ -287,32 +287,53 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.System.p.static_flag = true;
 }
 
-konoha.new_CT = function(_ctx, bct, classname, bcid, supcid)
+konoha.DEFAULT_fnull = function(_ctx, ct)
 {
-	konoha.ct[classname] = {
-		DBG_NAME: classname,
+	return ct.nulvalNUL;
+}
+
+konoha.DEFAULT_fnullinit = function(_ctx, ct)
+{
+	var obj = konoha.new_kObject(ct, 0);
+	ct.nulvaNUL = obj;
+	obj.h.magicflag.null_flag = true;
+	ct.fnull = DEFAULT_fnull;
+	return ct.nulvalNUL;
+}
+
+konoha.new_CT = function(_ctx, bct, cdef)
+{
+	if (bct != null) {
+		throw ('Generics');
+	}
+	konoha.ct[cdef.classname] = {
+		DBG_NAME: cdef.classname,
 		cid: _ctx.share.ca.length,
-		bcid: (bcid == 0) ? _ctx.share.ca.length : bcid,
-		supcid: (supcid == 0) ? konoha.CLASS_Object : supcid,
-		superclass: (_ctx.share.ca.length > konoha.CLASS_Object) ? _ctx.share.ca[supcid] : null,
+		bcid: (cdef.bcid == 0) ? _ctx.share.ca.length : cdef.bcid,
+		supcid: (cdef.supcid == 0) ? konoha.CLASS_Object : cdef.supcid,
+		superclass: (_ctx.share.ca.length > konoha.CLASS_Object) ? _ctx.share.ca[cdef.supcid] : null,
+		fnull: konoha.DEFAULT_fnullinit,
+		fsize: cdef.fsize,
 	};
-	_ctx.share.ca.push(konoha.ct[classname]);
-	return konoha.ct[classname];
+	_ctx.share.ca.push(konoha.ct[cdef.classname]);
+	return konoha.ct[cdef.classname];
 }
 
 
-konoha.addClassDef = function(_ctx, classname)
+konoha.addClassDef = function(_ctx, classname, cdef)
 {
-	return konoha.new_CT(_ctx, null, classname, 0, 0);
+	cdef.classname = classname;
+	return konoha.new_CT(_ctx, null, cdef);
 //	_ctx.share.lcnameMapNN[classname] = konoha.ct[classname];
 }
 
 konoha.loadInitStructData = function(_ctx)
 {
 	for (var i in konoha.init_class_list) {
-		konoha.addClassDef(_ctx, konoha.init_class_list[i]);
+		var l = konoha.init_class_list[i];
+		konoha.addClassDef(_ctx, l.classname, l);
 	}
-	konoha.addClassDef(_ctx, "Global");//for global function. FIX ME!!
+	konoha.addClassDef(_ctx, "Global", {});//for global function. FIX ME!!
 	konoha.loadInitStructMethodData(_ctx);
 }
 

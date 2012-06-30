@@ -338,6 +338,11 @@ konoha.LoopStmt_asm = function(_ctx, stmt, shift, espidx)
 	konoha.modcode.ASM_NEWLINE();
 }
 
+konoha.UndefinedStmt_asm = function(_ctx, stmt, shift, espidx)
+{
+	//throw('undefined');
+}
+
 konoha.BLOCK_asm = function(_ctx, bk, shift, espidx)
 {
 	/* bk: kBlock, shift: int */
