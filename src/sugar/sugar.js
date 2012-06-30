@@ -63,20 +63,18 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 		{name: 'true', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_true, },
 		{name: 'false', flag: konoha.SYNFLAG_ExprTerm, ExprTyCheck: konoha.ExprTyCheck_false, },
 		{name: 'if', rule: '\"if\" \"(\" $expr \")\" $block [\"else\" else: $block]', TopStmtTyCheck: konoha.StmtTyCheck_if, StmtTyCheck: konoha.StmtTyCheck_if, },
-
 		{name: 'else', rule: '\"else\" $block', TopStmtTyCheck: konoha.StmtTyCheck_else, StmtTyCheck: konoha.StmtTyCheck_else, },
 		{name: 'return', rule: '\"return\" [$expr]', flag: konoha.SYNFLAG_StmtBreakExec, StmtTyCheck: konoha.StmtTyCheck_return, },
 
 		{name: 'new', ParseExpr: konoha.ParseExpr_new, },
 		{name: 'class', rule: "\"class\" $USYMBOL [ \"extends\" $type ] $block", TopStmtTyCheck: konoha.StmtTyCheck_class, },
-
-		{name: 'while', rule: "\"while\" \"(\" $expr \")\" $block", StmtTyCheck: konoha.StmtTyCheck_while , },
-		{name: 'break', rule: "\"break\" [ $USYMBOL ]", StmtTyCheck: konoha.StmtTyCheck_break, },
-		{name: 'continue', rule: "\"continue\" [ $USYMBOL ]", StmtTyCheck:  konoha.StmtTyCheck_continue, },
-		{name: 'for', rule: "\"for\" \"(\" var: $block \";\" $expr \";\" each: $block \")\" $block", StmtTyCheck: konoha.StmtTyCheck_for, },
 		{name: 'float', type: konoha.TY_Float, },
 		{name: 'double', type: konoha.TY_Float, },
 		{name: '$FLOAT', ExprTyCheck: konoha.ExprTyCheck_Float, },
+		{name: 'while', rule: "\"while\" \"(\" $expr \")\" $block", TopStmtTyCheck: konoha.StmtTyCheck_while, StmtTyCheck: konoha.StmtTyCheck_while , },
+		{name: 'break', rule: "\"break\" [ $USYMBOL ]",  StmtTyCheck: konoha.StmtTyCheck_break, },
+		{name: 'continue', rule: "\"continue\" [ $USYMBOL ]",  StmtTyCheck:  konoha.StmtTyCheck_continue, },
+		{name: 'for', rule: "\"for\" \"(\" var: $block \";\" $expr \";\" each: $block \")\" $block", TopStmtTyCheck: konoha.StmtTyCheck_for, StmtTyCheck: konoha.StmtTyCheck_for, },
 		{name: null}, ];
  	konoha.KonohaSpace_defineSyntax(_ctx, ks, SYNTAX);
  	syn = konoha.KonohaSpace_syntax(_ctx, ks, "void"/*IS THIS OK?*/, 0);

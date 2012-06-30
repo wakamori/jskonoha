@@ -92,7 +92,6 @@ konoha.TY_unknown     = -2;      //  ((kcid_t)-2)
 	tmp_enum = new konoha.Enum(tmp_array);
 	for (var s in tmp_enum) {
 		konoha[s] = tmp_enum[s];
-		console.log(s);
 	}
 })();
 

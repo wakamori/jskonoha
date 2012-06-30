@@ -139,5 +139,11 @@ konoha.kw._false      = 'false';
 konoha.kw._if         = 'if';
 konoha.kw._else       = 'else';
 konoha.kw._return     = 'return';
+
+konoha.kw._while     = 'while';
+konoha.kw._break     = 'break';
+konoha.kw._continue     = 'continue';
+konoha.kw._for     = 'for';
+
 konoha.kw.KW_StmtMethodDecl = konoha.kw._void;
 konoha.kw.KW_StmtTypeDecl =  konoha.kw.Type;
