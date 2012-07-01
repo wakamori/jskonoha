@@ -96,22 +96,25 @@ konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, gma, reqty, pol)
 konoha.TopStmtTyCheck_dummy = function(_ctx, stmt, gma)
 {
 	var r = 1;
-	console.log("enter TOPStmtTyCheck_none");
-	return r;
+	var e = "enter TOPStmtTyCheck_none";
+	throw e;
+	//return r;
 }
 
 konoha.StmtTyCheck_dummy = function(_ctx, stmt, gma)
 {
 	var r = 1;
-	console.log("enter StmtTyCheck_none");
-	return r;
+	var e = "enter StmtTyCheck_none";
+	throw e;
+	//return r;
 }
 
 konoha.ExprTyCheck_dummy = function(_ctx, stmt, gma)
 {
 	var r = 1;
-	console.log("enter ExprTyCheck_none");
-	return r;
+	var e = "enter ExprTyCheck_none";
+	throw e;
+	//return r;
 }
 
 konoha.StmtTyCheck_if = function(_ctx, stmt, gma)
@@ -235,6 +238,7 @@ konoha.StmtTyCheck_ParamsDecl = function(_ctx, stmt, gma)
 konoha.StmtTyCheck_Expr = function(_ctx, stmt, gma)  // $expr
 {
 	var r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, gma, konoha.TY_var, konoha.TPOL_ALLOWVOID);
+	var expr;
 	konoha.Stmt_typed(stmt, konoha.TSTMT_EXPR);
 }
 

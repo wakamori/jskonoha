@@ -221,7 +221,6 @@ konoha.ASM_MTDDEF = function(_ctx, mn, param_name, block, shift, espidx)
 konoha.MethodDefStmt_asm = function(_ctx, stmt, shift, espidx)
 {
 	var mn = (konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Symbol, null)).text.text;
-	console.log("mn is ", mn);
 	var params = (konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Params, null)).blocks.data[0];
 	var param_name = (konoha.KObject_getObjectNULL(_ctx, params, konoha.kw.Expr, null)).tk.text.text;
 	var block = konoha.Stmt_block(_ctx, stmt, konoha.kw.Block);
@@ -246,9 +245,8 @@ konoha.ExprStmt_asm = function(_ctx, stmt, shift, espidx)
 {
 //var expr = stmt[1];
 	var expr = konoha.KObject_getObjectNULL(_ctx, stmt, "$expr", null);
-//	if (expr.isExpr()) {
+	//expr.build = konoha.TEXPR_LOCAL;
 	konoha.EXPR_asm(_ctx, espidx, expr, shift, espidx);
-//	}
 }
 
 konoha.BlockStmt_asm = function(_ctx, stmt, shift, espidx)
@@ -353,13 +351,17 @@ konoha.BLOCK_asm = function(_ctx, bk, shift, espidx)
 	/* TODO Is blocks' type Array? */
 	for (var i = 0; i < bk.blocks.data.length; i++) {
 		var stmt = bk.blocks.data[i];
-		if (stmt.syn == null) continue;
-//		_ctx.ctxsugar[konoha.MOD_code].uline = stmt.uline;
+		//if (stmt.text != null) {
+		//	console.log("stmt: ", stmt.text.text);
+		//}
+		if (stmt.syn == null || stmt.build == null) continue;
+		//_ctx.ctxsugar[konoha.MOD_code].uline = stmt.uline;
 		console.log("stmt.build", stmt.build);
 		switch(stmt.build) {
 			case konoha.TSTMT_ERR:
 				konoha.ErrStmt_asm(_ctx, stmt, shift, espidx); return;
 			case konoha.TSTMT_EXPR:
+				console.log(stmt);
 				konoha.ExprStmt_asm(_ctx, stmt, shift, espidx); break;
 			case konoha.TSTMT_BLOCK:
 				konoha.BlockStmt_asm(_ctx, stmt, shift, espidx); break;

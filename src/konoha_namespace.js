@@ -58,7 +58,7 @@ konoha.assert = function(cond, msg) {
 
 konoha.abort = function(msg) {
 	if (msg != null) {
-		console.log(e);
+		console.log(msg);
 	}
 	var e = "Abort!! " + msg;
 	throw e;
