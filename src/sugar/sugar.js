@@ -102,18 +102,12 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
 	console.log("################### ast ####################");
 	var stmts = bk.blocks.data;
-	for (var i = 0; i < stmts.length; i++) {
-		console.log(stmts[i].h.kvproto);
-	}
+	// for (var i = 0; i < stmts.length; i++) {
+	// 	console.log(stmts[i].h.kvproto);
+	// }
 	console.log("############################################");
 	tls = tls.slice(0, pos - 1);
 	var result = konoha.Block_eval(_ctx, bk); //result is result of evaluating generated code
-	console.log("################### ast ####################");
-	var stmts = bk.blocks.data;
-	for (var i = 0; i < stmts.length; i++) {
-		console.log(stmts[i].h.kvproto);
-	}
-	console.log("############################################");
 	konoha.result = result;
 	console.log("################### eval ####################");
 	console.log(result);
