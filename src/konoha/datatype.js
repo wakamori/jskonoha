@@ -287,47 +287,53 @@ konoha.loadInitStructMethodData = function(_ctx) {
 	konoha.ct.System.p.static_flag = true;
 }
 
-konoha.new_CT = function(_ctx, bct, classname, bcid, supcid)
+konoha.DEFAULT_fnull = function(_ctx, ct)
 {
-	konoha.ct[classname] = {
-		DBG_NAME: classname,
+	return ct.nulvalNUL;
+}
+
+konoha.DEFAULT_fnullinit = function(_ctx, ct)
+{
+	var obj = konoha.new_kObject(ct, 0);
+	ct.nulvaNUL = obj;
+	obj.h.magicflag.null_flag = true;
+	ct.fnull = DEFAULT_fnull;
+	return ct.nulvalNUL;
+}
+
+konoha.new_CT = function(_ctx, bct, cdef)
+{
+	if (bct != null) {
+		throw ('Generics');
+	}
+	konoha.ct[cdef.classname] = {
+		DBG_NAME: cdef.classname,
 		cid: _ctx.share.ca.length,
-		bcid: (bcid == 0) ? _ctx.share.ca.length : bcid,
-		supcid: (supcid == 0) ? konoha.CLASS_Object : supcid,
-		superclass: (_ctx.share.ca.length > konoha.CLASS_Object) ? _ctx.share.ca[supcid] : null,
+		bcid: (cdef.bcid == 0) ? _ctx.share.ca.length : cdef.bcid,
+		supcid: (cdef.supcid == 0) ? konoha.CLASS_Object : cdef.supcid,
+		superclass: (_ctx.share.ca.length > konoha.CLASS_Object) ? _ctx.share.ca[cdef.supcid] : null,
+		fnull: konoha.DEFAULT_fnullinit,
+		fsize: cdef.fsize,
 	};
-	_ctx.share.ca.push(konoha.ct[classname]);
+	_ctx.share.ca.push(konoha.ct[cdef.classname]);
+	return konoha.ct[cdef.classname];
 }
 
 
-konoha.addClassDef = function(_ctx, classname)
+konoha.addClassDef = function(_ctx, classname, cdef)
 {
-	konoha.new_CT(_ctx, null, classname, 0, 0);
+	cdef.classname = classname;
+	return konoha.new_CT(_ctx, null, cdef);
 //	_ctx.share.lcnameMapNN[classname] = konoha.ct[classname];
 }
 
 konoha.loadInitStructData = function(_ctx)
 {
-	konoha.addClassDef(_ctx, "void");
-	konoha.addClassDef(_ctx, "Tvar");
-	konoha.addClassDef(_ctx, "Object");
-	konoha.addClassDef(_ctx, "Boolean");
-	konoha.addClassDef(_ctx, "Int");
-	konoha.addClassDef(_ctx, "String");
-	konoha.addClassDef(_ctx, "Array");
-	konoha.addClassDef(_ctx, "Param");
-	konoha.addClassDef(_ctx, "Method");
-	konoha.addClassDef(_ctx, "Func");
-	konoha.addClassDef(_ctx, "System");
-	konoha.addClassDef(_ctx, "T0");
-	konoha.addClassDef(_ctx, "Float");
-//TODO should there be defined here?
-	konoha.addClassDef(_ctx, "KonohaSpace");
-	konoha.addClassDef(_ctx, "Token");
-	konoha.addClassDef(_ctx, "Stmt");
-	konoha.addClassDef(_ctx, "Block");
-	konoha.addClassDef(_ctx, "Expr");
-	konoha.addClassDef(_ctx, "Global");//for global function. FIX ME!!
+	for (var i in konoha.init_class_list) {
+		var l = konoha.init_class_list[i];
+		konoha.addClassDef(_ctx, l.classname, l);
+	}
+	konoha.addClassDef(_ctx, "Global", {});//for global function. FIX ME!!
 	konoha.loadInitStructMethodData(_ctx);
 }
 

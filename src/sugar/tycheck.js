@@ -40,8 +40,10 @@ konoha.Expr_tyCheck = function(_ctx, stmt, expr, gma, reqty, pol)
 	}
 	if(texpr != null/*_ctx.kmodsugar.cExpr.nulvalNUL*/) {
 		if(texpr.ty == konoha.TY_void) {
-			return konoha.TFLAG_is(pol, konoha.TPOL_ALLOWVOID);
-//				texpr: kExpr_p(expr, ERR_, "void is not acceptable");
+			if (!konoha.TFLAG_is(pol, konoha.TPOL_ALLOWVOID)) {
+				texpr = konoha.Expr_p(_ctx, stmt, expr, ERR_, "void is not acceptable");
+			}
+			return texpr;
 		}
 		if(reqty == konoha.TY_var || texpr.ty == reqty || konoha.TFLAG_is(pol, konoha.TPOL_NOCHECK)) {
 			return texpr;
@@ -63,16 +65,10 @@ konoha.Expr_tyCheck = function(_ctx, stmt, expr, gma, reqty, pol)
 
 konoha.Expr_tyCheckAt = function(_ctx, stmt, exprP, pos, gma, reqty, pol)
 {
-	if(!konoha.Expr_isTerm(exprP) && pos < exprP.cons.data.length) {
+	if(/*!konoha.Expr_isTerm(exprP) &&*/ pos < exprP.cons.data.length) {
 		var expr = exprP.cons.data[pos];
 		expr = konoha.Expr_tyCheck(_ctx, stmt, expr, gma, reqty, pol);
 		exprP.cons.data[pos] =  expr;
-//		console.log("@@@@@@@Expr_tyCheckAt@@@@@@@");
-//		console.log(expr.ty);
-		if (expr.ty == 1) {
-//			console.log(expr);
-		}
-//		console.log("@@@@@@@Expr_tyCheckAt@@@@@@@");
 		return expr;
 	}
 	return null;
@@ -85,7 +81,7 @@ konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, gma, reqty, pol)
 		var texpr = konoha.Expr_tyCheck(_ctx, stmt, expr, gma, reqty, pol);
 		if(texpr != null/*_ctx.kmodsugar.cExpr.nulvalNUL*/) {
 			if(texpr != expr) {
-				konoha.KObject_setObject(_ctx, stmt, nameid, texpr);
+				konoha.kObject_setObject(_ctx, stmt, nameid, texpr);
 			}
 			return 1;
 		}
@@ -158,7 +154,7 @@ konoha.StmtTyCheck_return = function(_ctx, stmt, gma)
 	if(rtype != konoha.TY_void) {
 		r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, gma, rtype, 0);
 	} else {
-		var expr = konoha.KObject_getObjectNULL(_ctx, stmt, 1, null);
+		var expr = konoha.kObject_getObjectNULL(_ctx, stmt, 1, null);
 		if (expr != null) {
 //			SUGAR_P(WARN_, stmt->uline, -1, "ignored return value");
 			r = konoha.Stmt_tyCheckExpr(_ctx, stmt, konoha.kw.Expr, gma, konoha.TY_var, 0);
@@ -455,7 +451,6 @@ konoha.Expr_tyCheckCallParams = function(_ctx, stmt, expr, mtd, gma, reqty)
 //	mtd = kExpr_lookUpOverloadMethod(_ctx, expr, mtd, gma, this_ct);
 // 	var pa = konoha.kMethod_param(mtd);
 	var pa = mtd.ty;
-	console.log(mtd);
 // 	if(pa.psize + 2 != size) {
 // //		return konoha.kExpr_p(stmt, expr, ERR_, "%s.%s%s takes %d parameter(s), but given %d parameter(s)", CT_t(this_ct), T_mn(mtd.mn), (int)pa.psize, (int)size-2);
 // 		return null;//TODO!!
@@ -484,25 +479,20 @@ konoha.Expr_lookupMethod = function(_ctx, stmt, expr, this_cid, gma, reqty)
 	var mtd = null;
 //	var ks = gma.genv.ks;
 	var tkMN = expr.cons.data[0];
-	// console.log("this_cid");
-	// console.log(this_cid);
-	// console.log("this_cid");
 //	DBG_ASSERT(IS_Token(tkMN));
 	if(tkMN.tt == konoha.ktoken_t.TK_SYMBOL || tkMN.tt == konoha.ktoken_t.TK_USYMBOL) {
 		konoha.kToken_setmn(tkMN, tkMN.text.text, konoha.MNTYPE_method);
 	}
 	if(tkMN.tt == konoha.ktoken_t.TK_MN) {
-//		console.log("----expr_lookupmethod_a----");
 		mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, this_cid, tkMN.mn);
 		if(mtd == null) {
 			if(tkMN.text != konoha.TS_EMPTY) {
-//				console.log("----expr_lookupmethod_b----");
 				mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, this_cid, 0);
 				if(mtd != null) {
 					return konoha.Expr_tyCheckDynamicCallParams(_ctx, stmt, expr, mtd, tkMN.text, tkMN.mn, reqty);
 				}
 			}
-			if(tkMN.mn == konoha.MN_new && expr.cons.data.length == 2 && konoha.CT_(konoha.kExpr_at(expr, 1).ty).bcid == konoha.TY_Object) {
+			if(tkMN.mn == konoha.MN_new && expr.cons.data.length == 2 && konoha.CT_(_ctx, konoha.kExpr_at(expr, 1).ty).bcid == konoha.TY_Object) {
 				//DBG_P("bcid=%s", TY_t(CT_(kExpr_at(expr, 1).ty).bcid));
 //				DBG_ASSERT(kExpr_at(expr, 1).ty != TY_var);
 				return konoha.kExpr_at(expr, 1);  // new Person(); // default constructor
@@ -549,7 +539,7 @@ konoha.Expr_lookUpFuncOrMethod = function(_ctx, exprN, gma, reqty)
 			exprN.cons.data[1] = konoha.Expr_setVariable(_ctx, null, konoha.TEXPR_LOCAL, gma.genv.this_cid, 0, gma);
 			return mtd;
 		}
-		var ct = konoha.CT_(genv.this_cid);
+		var ct = konoha.CT_(_ctx, genv.this_cid);
 		if (ct.fsize) {
 			for(i = ct.fsize; i >= 0; i--) {
 				if(ct.fields[i].fn == fn && konoha.TY_isFunc(ct.fields[i].ty)) {
@@ -613,9 +603,6 @@ konoha.ExprTyCheck_MethodCall = function(_ctx, stmt, expr, gma, reqty)
 	var texpr = konoha.Expr_tyCheckAt(_ctx, stmt, expr, 1, gma, konoha.TY_var, 0);
 	if(texpr != null) {
 		var this_cid = texpr.ty;
-		// console.log("ExprTyCheck_MethodCall");
-		// console.log(texpr.ty);
-		// console.log("ExprTyCheck_MethodCall");
 		return konoha.Expr_lookupMethod(_ctx, stmt, expr, this_cid, gma, reqty);
 	}
 }
@@ -658,10 +645,6 @@ konoha.ExprTyCheck_Int = function(_ctx, stmt, expr, gma, reqty)
 {
 	var tk = expr.tk;
 	var n = Number(tk.text.text);
-	// console.log("=======ExprTycheck_Int==========");
-	// console.log(n);
-	// console.log(konoha.TY_Int);
-	// console.log("=======ExprTycheck_Int==========");
 	return konoha.Expr_setNConstValue(_ctx, expr, konoha.TY_Int, n);
 }
 
@@ -692,9 +675,7 @@ konoha.ExprTyCheck = function(_ctx, stmt, expr, gma, reqty) {
 konoha.KS_getGetterMethodNULL = function(_ctx, ks, cid, fn)
 {
 	var mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, cid, konoha.MN_toGETTER(fn));
-//		console.log("----ks_getgettermethodnull----");
 	if(mtd == null) {
-//		console.log("----ks_getgettermethodnull----");
 		mtd = konoha.KonohaSpace_getMethodNULL(_ctx, ks, cid, konoha.MN_toISBOOL(fn));
 	}
 	return mtd;
@@ -702,9 +683,7 @@ konoha.KS_getGetterMethodNULL = function(_ctx, ks, cid, fn)
 
 konoha.new_GetterExpr = function(_ctx, tkU, mtd, expr)
 {
-//	console.log("hogeget");
 	var expr1 = konoha.new_TypedConsExpr(_ctx, konoha.TEXPR_CALL, konoha.kMethod_rtype(mtd), 2, mtd, expr);
-//	console.log("hogeget");
 	expr1.tk = tkU; // for uline
 	return expr1;
 }
@@ -790,7 +769,7 @@ konoha.StmtTyCheck_ConstDecl = function(_ctx)
 			var kv = ukey;
 			if(expr.build == konoha.TEXPR_NULL) {
 				kv.ty = konoha.TY_TYPE;
-				kv.uval = (uintptr_t)(CT_(expr.ty));
+				kv.uval = (uintptr_t)(konoha.CT_(_ctx, expr.ty));
 				expr = null;
 			}
 			else if(expr.build == konoha.TEXPR_CONST) {

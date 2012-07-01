@@ -136,11 +136,12 @@ konoha.Expr_isCONST = function(o) {
 
 
 konoha.Expr_isTerm = function(exprP) {
-    return konoha.TFLAG_is(exprP.h.magicflag, konoha.kObject_Local1);
+	return exprP.h.magicflag.term_flag;
+    //return konoha.TFLAG_is(exprP.h.magicflag, konoha.kObject_Local1);
 }
 
-konoha.Expr_setTerm = function(expr, num) {
-	return konoha.TFLAG_set(expr.h.magicflag, konoha.kObject_Local1, num)
+konoha.Expr_setTerm = function(expr, flag) {
+	expr.h.magicflag.term_flag = flag;
 }
 
 konoha.kExpr = function(syn) {
@@ -354,9 +355,9 @@ konoha.TK_type = function(TK) {
 	return TK.ty;
 }
 
-// konoha.kStmt_ks = function(STMT) {
-// 	return   konoha.Stmt_ks(_ctx, STMT);
-// }
+konoha.kStmt_ks = function(STMT) {
+	return   konoha.Stmt_ks(null, STMT);
+}
 konoha.Stmt_ks = function(_ctx, stmt)
 {
 	return stmt.parentNULL.ks;
