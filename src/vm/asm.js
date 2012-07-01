@@ -315,11 +315,13 @@ konoha.ReturnStmt_asm = function(_ctx, stmt, shift, espidx)
 konoha.JumpStmt_asm = function(_ctx, stmt, shift, espidx)
 {
 	var syn = stmt.syn;
-	konoha.EXPR_asm(_ctx, espidx, konoha.KObject_getObject(_ctx, stmt, konoha.kw.Expr, null), shift, espidx);
-	konoha.modcode.ASM_NEWLINE();
-	konoha.modcode.ASM('break;');
-	konoha.modcode.indentInc();
-	konoha.modcode.ASM_NEWLINE();
+	console.log(syn.kw);
+	konoha.EXPR_asm(_ctx, espidx, konoha.KObject_getObjectNULL(_ctx, stmt, syn.kw, null), shift, espidx);
+	if(syn.kw == 'break') {
+		konoha.modcode.ASM('break;');
+	}else{
+		konoha.modcode.ASM('continue;');
+	}
 }
 
 

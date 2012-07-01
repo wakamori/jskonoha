@@ -31,8 +31,8 @@ konoha.StmtTyCheck_break = function(_ctx, stmt)
 {
 	var p = stmt;
 	while((p = konoha.kStmt_getParentNULL(p)) != null) {
-		if(konoha.FLAG_is(p.syn.flag, konoha.SYNFLAG_StmtJumpSkip)) {
-			konoha.KObject_setObject(_ctx, stmt, syn.kw, p);
+		if(!p.syn.flag) {
+			konoha.KObject_setObject(_ctx, stmt, syn.kw, p, syn.kw);
 			konoha.Stmt_typed(stmt, konoha.TSTMT_JUMP);
 			return true;
 		}
@@ -46,10 +46,10 @@ konoha.StmtTyCheck_continue = function(_ctx, stmt)
 //	konoha.assert("continue statement .. ");
 	var p = stmt;
 	while((p = konoha.kStmt_getParentNULL(p)) != null) {
-		if(konoha.FLAG_is(p.syn.flag, konoha.SYNFLAG_StmtJumpAhead)) {
-			konoha.KObject_setObject(_ctx, stmt, syn.kw, p);
+		if(!p.syn.flag) {
+			konoha.KObject_setObject(_ctx, stmt, syn.kw, p, syn.kw);
 			konoha.Stmt_typed(stmt, konoha.TSTMT_JUMP);
-			return ture;
+			return true;
 		}
 	}
 //	konoha.sugar_p(_ctx, konoha.ERR_, stmt.uline, -1, "continue statement not within a loop");
