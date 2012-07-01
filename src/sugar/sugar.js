@@ -67,6 +67,12 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 		{name: 'return', rule: '\"return\" [$expr]', flag: konoha.SYNFLAG_StmtBreakExec, StmtTyCheck: konoha.StmtTyCheck_return, },
 
 		{name: 'new', ParseExpr: konoha.ParseExpr_new, },
+
+/* ---------------------------------------------------------------- */
+/* Added by Yoan */
+		{name: '=', flag: konoha.SYNFLAG_ExprOp, ExprTyCheck: konoha.ExprTyCheck_dummy, TopStmtTyCheck: konoha.TopStmtTyCheck_dummy, StmtTyCheck: konoha.StmtTyCheck_dummy, },
+/* ---------------------------------------------------------------- */
+
 		{name: 'class', rule: "\"class\" $USYMBOL [ \"extends\" extends: $USYMBOL] [$block]", TopStmtTyCheck: konoha.StmtTyCheck_class, },
 		{name: 'float', type: konoha.TY_Float, },
 		{name: 'double', type: konoha.TY_Float, },
