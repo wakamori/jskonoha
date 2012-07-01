@@ -70,7 +70,7 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 
 /* ---------------------------------------------------------------- */
 /* Added by Yoan */
-		{name: '=', ExprTyCheck: konoha.ExprTyCheck_dummy, TopStmtTyCheck: konoha.TopStmtTyCheck_dummy, StmtTyCheck: konoha.StmtTyCheck_dummy, },
+		{name: '=', flag: konoha.SYNFLAG_ExprOp, ExprTyCheck: konoha.ExprTyCheck_dummy, TopStmtTyCheck: konoha.TopStmtTyCheck_dummy, StmtTyCheck: konoha.StmtTyCheck_dummy, },
 /* ---------------------------------------------------------------- */
 
 		{name: 'class', rule: "\"class\" $USYMBOL [ \"extends\" extends: $USYMBOL] [$block]", TopStmtTyCheck: konoha.StmtTyCheck_class, },

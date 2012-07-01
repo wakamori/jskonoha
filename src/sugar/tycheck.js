@@ -83,6 +83,7 @@ konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, gma, reqty, pol)
 			if(texpr != expr) {
 				konoha.kObject_setObject(_ctx, stmt, nameid, texpr);
 			}
+			konoha.Stmt_typed(stmt, konoha.TSTMT_EXPR);
 			return 1;
 		}
 	}
@@ -168,6 +169,7 @@ konoha.StmtTyCheck_TypeDecl = function(_ctx, stmt, gma)
 {
 	console.log("enter typedecl");
 	//konoha.Stmt_typed(stmt, konoha.TSTMT_EXPR);
+	konoha.Stmt_typed(stmt, konoha.TSTMT_EXPR);
 	var tk  = konoha.Stmt_token(_ctx, stmt, konoha.kw.Type, null);
 	var expr = konoha.Stmt_expr(_ctx, stmt, konoha.kw.Expr, null);
 	if(tk == null || !konoha.TK_isType(_ctx, tk) || expr == null) {

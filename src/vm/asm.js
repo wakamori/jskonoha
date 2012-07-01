@@ -114,7 +114,7 @@ konoha.ASM_CALL = function(_ctx, thisidx, espidx, argc, mtd) {
 konoha.CALL_asm = function(_ctx, a, expr, shift, espidx)
 {
 	var mtd = expr.cons.data[0]; // TODO unuse methods field, is it OK?
-//	console.log(expr.cons.data[0]);
+	console.log(expr.cons.data[0]);
 	var s = konoha.kMethod_isStatic(mtd) ? 2 : 1;
 	var thisidx = espidx + konoha.K_CALLDELTA;
 	for (var i = s; i < expr.cons.data.length; i++) {
@@ -129,7 +129,7 @@ konoha.CALL_asm = function(_ctx, a, expr, shift, espidx)
 konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 {
 	/* a: number, expr: kExpr, shift: number, espidx: number */
-	console.log(expr);
+	console.log("expr.build: " + expr.build);
 	switch (expr.build) {
 	case konoha.TEXPR_CONST : {
 		var v = expr.tk.text.text;
@@ -354,14 +354,17 @@ konoha.BLOCK_asm = function(_ctx, bk, shift, espidx)
 		//if (stmt.text != null) {
 		//	console.log("stmt: ", stmt.text.text);
 		//}
-		if (stmt.syn == null || stmt.build == null) continue;
+		if (stmt.syn == null) continue;
+		if (stmt.build == null) {
+			konoha.abort("stmt.build is null");
+		};
 		//_ctx.ctxsugar[konoha.MOD_code].uline = stmt.uline;
 		console.log("stmt.build", stmt.build);
 		switch(stmt.build) {
 			case konoha.TSTMT_ERR:
 				konoha.ErrStmt_asm(_ctx, stmt, shift, espidx); return;
 			case konoha.TSTMT_EXPR:
-				console.log(stmt);
+				//console.log(stmt);
 				konoha.ExprStmt_asm(_ctx, stmt, shift, espidx); break;
 			case konoha.TSTMT_BLOCK:
 				konoha.BlockStmt_asm(_ctx, stmt, shift, espidx); break;
@@ -375,6 +378,8 @@ konoha.BLOCK_asm = function(_ctx, bk, shift, espidx)
 				konoha.JumpStmt_asm(_ctx, stmt, shift, espidx); break;
 			case konoha.TSTMT_MTDDEF:
 				konoha.MethodDefStmt_asm(_ctx, stmt, shift, espidx); break;
+			case konoha.TSTMT_NOP: // Is it need?
+				continue;
 			default:
 				konoha.UndefinedStmt_asm(_ctx, stmt, shift, espidx); break;
 		}
