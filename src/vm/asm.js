@@ -226,7 +226,7 @@ konoha.MethodDefStmt_asm = function(_ctx, stmt, shift, espidx)
 
 	var newgma = new (function() {
 		this.mtd = konoha.ct.Script[mn];
-//		this.ks = ks;
+		this.ks = _ctx.kmodsugar.rootks;
 //		this.this_cid = mtd.cid;
 		this.f = new Array();
 		this.l = new Array();

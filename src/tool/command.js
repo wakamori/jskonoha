@@ -42,13 +42,13 @@ konoha.eval = function(script) {
 //var script = 'int func(int i) {return i+1;}\nfunc(1) + func(2);';
 //var script = "int func(int i) {1+1; return 1;}";
 //var script = "int func(int n) {if (n < 3) {return 1;} else {return 2;}}";
-var script = "int fib(int n) {if (n < 3) {return 1;} else {return fib(n - 1) + fib(n - 2);}}";
-//var script = "int fib(int n) {if (n < 3) {return 1;} else {return fib(n - 1) + fib(n - 2);}}\nfib(10);";
+//var script = "int fib(int n) {if (n < 3) {return 1;} else {return fib(n - 1) + fib(n - 2);}}";
+var script = "int fib(int n) {if (n < 3) {return 1;} else {return fib(n - 1) + fib(n - 2);}}\n\nSystem.p(fib(10));";
 //var script = 'int f() {\n int i;\n while(i < 10) {\n i = i + 1;\n} \n return i;\n}\nf();';
 //var script = 'int f() {\n int i;\n  i = i + 1;\n return i;\n}\n f();';
 //var script = 'int f () {\n int i; \n while (i < 100) {\n i = i + 1;\n if (i == 10) {\n break;\n }\n}\n return i;\n}';
 //var script = 'int f () {\n int i = 0;\n int sum = 0;\n while (i < 10) {\n i = i + 1;\n if (i == 5) {\n continue;\n } else {\n sum = sum + i;\n }\n }\n return sum;\n}\n'
-var script = 'while(ture) {\n 1+2;\n break;\n}';
+//var script = 'while(ture) {\n 1+2;\n break;\n}';
 //var script = "return f(int i) { while(false){1+1;} return 1;}";
 //var script = 'class A {int x;}';
 //var script = "for(1;1;1) {1+1;}";

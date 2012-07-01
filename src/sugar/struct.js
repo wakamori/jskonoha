@@ -253,7 +253,7 @@ konoha.Expr_setNConstValue = function(_ctx, expr, ty, ndata)
 konoha.Expr_setConstValue = function(_ctx, expr, ty, o)
 {
 	if(expr == null) {
-//		expr = new_(Expr, 0);
+		expr = new konoha.kExpr();
 //		PUSH_GCSTACK(expr);
 	}
 	if(true /*TODO!! konoha.TY_isUnbox(ty)*/) {

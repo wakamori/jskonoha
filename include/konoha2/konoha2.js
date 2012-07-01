@@ -78,6 +78,7 @@ konoha.init_class_list = [
 	{classname: "Block"},
 	{classname: "Expr"},
 	{classname: "Float"},
+	{classname: "Script"}
 ];
 
 ///* kcid_t */

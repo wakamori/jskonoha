@@ -522,25 +522,26 @@ konoha.Expr_lookUpFuncOrMethod = function(_ctx, exprN, gma, reqty)
 		}
 		mtd = konoha.KS_getGetterMethodNULL(_ctx, genv.ks, genv.this_cid, fn);
 		if(mtd != null && konoha.TY_isFunc(konoha.kMethod_rtype(mtd))) {
-			exprN.cons.exprs[0] = konoha.new_GetterExpr(_ctx, tk, mtd, konoha.new_Variable(TEXPR_LOCAL, genv.this_cid, 0, gma));
+			exprN.cons.data[0] = konoha.new_GetterExpr(_ctx, tk, mtd, konoha.new_Variable(TEXPR_LOCAL, genv.this_cid, 0, gma));
 			return null;
 		}
 	}
 	{
-		var cid = konoha.O_cid(genv.ks.scrobj);
+//FIX ME!!		var cid = konoha.O_cid(genv.ks.scrobj);
+		var cid = konoha.TY_Script;
 		var mtd = konoha.KonohaSpace_getMethodNULL(_ctx, genv.ks, cid, fn);
 		if(mtd != null) {
-			exprN.cons.exprs[1] = konoha.new_ConstValue(cid, genv.ks.scrobj);
+			exprN.cons.data[1] = konoha.Expr_setConstValue(_ctx, null, cid, genv.ks.scrobj);
 			return mtd;
 		}
 		mtd = konoha.KS_getGetterMethodNULL(_ctx, genv.ks, cid, fn);
 		if (mtd != null && konoha.TY_isFunc(konoha.kMethod_rtype(mtd))) {
-			exprN.cons.exprs[0] = konoha.new_GetterExpr(_ctx, tk, mtd, konoha.new_ConstValue(cid, genv.ks.scrobj));
+			exprN.cons.data[0] = konoha.new_GetterExpr(_ctx, tk, mtd, konoha.new_ConstValue(cid, genv.ks.scrobj));
 			return null;
 		}
 		mtd = konoha.KonohaSpace_getMethodNULL(_ctx, genv.ks, konoha.TY_System, fn);
 		if(mtd != null) {
-			exprN.cons.exprs[1] = konoha.new_Variable(null, konoha.TY_System, 0, gma);
+			exprN.cons.data[1] = konoha.new_Variable(null, konoha.TY_System, 0, gma);
 		}
 		return mtd;
 	}
