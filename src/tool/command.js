@@ -28,8 +28,8 @@ konoha.eval = function(script) {
 	return konoha.result;
 }
 
-var script = "1.2+3.4;";
-//var script = "12+34;"
+//var script = "1.2+3.4;";
+var script = "12+34;"
 //var script = "1.2+3.4";
 //var script = "12+34; 56+78;";
 //var script = "123+456+789;";

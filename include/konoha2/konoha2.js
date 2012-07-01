@@ -87,7 +87,7 @@ konoha.TY_unknown     = -2;      //  ((kcid_t)-2)
 	var tmp_array = [];
 	var tmp_enum;
 	for (var i in konoha.init_class_list) {
-		tmp_array.push("TY_" + konoha.init_class_list[i]);
+		tmp_array.push("TY_" + konoha.init_class_list[i].classname);
 	}
 	tmp_enum = new konoha.Enum(tmp_array);
 	for (var s in tmp_enum) {
