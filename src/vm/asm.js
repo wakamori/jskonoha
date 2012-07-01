@@ -129,6 +129,7 @@ konoha.CALL_asm = function(_ctx, a, expr, shift, espidx)
 konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 {
 	/* a: number, expr: kExpr, shift: number, espidx: number */
+	console.log("EXPR_asm build=", expr.build);
 	switch (expr.build) {
 	case konoha.TEXPR_CONST : {
 		var v = expr.tk.text.text;
@@ -148,7 +149,12 @@ konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 		break;
 	}
 	case konoha.TEXPR_NCONST : {
-		konoha.ASM_NSET(a, expr.tk.text.text);
+		if (expr.tk.kw == "$TEXT") {
+			konoha.ASM_NSET(a, "\"" + expr.tk.text.text + "\"");
+		}
+		else {
+			konoha.ASM_NSET(a, expr.tk.text.text);
+		}
 		break;
 	}
 	case konoha.TEXPR_LOCAL : {
