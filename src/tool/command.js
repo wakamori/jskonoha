@@ -30,7 +30,7 @@ konoha.eval = function(script) {
 
 //var script = "1.2+3.4;";
 //var script = "12+34;"
-var script = "12+34;"
+//var script = "12+34;"
 //var script = "1.2+3.4";
 //var script = "12+34; 56+78;";
 //var script = "123+456+789;";
@@ -39,7 +39,7 @@ var script = "12+34;"
 //var script = 'if (true) {123+456;}';
 //var script = 'if (false) {12+34;} else {56+78;}';
 //var script = 'int func(int i) {return 1;}\nfunc(1);';
-//var script = 'int f(int i) {int a = 1;\nreturn 1;}\nf(1);';
+var script = 'int f(int i) {int a = 1;\nreturn 1;}\nf(1);';
 //var script = 'int func(int i) {return 1;}';
 //var script = 'int func(int i) {return 1+i;}';
 //var script = 'int func(int i) {return 1+i;}\nfunc(2);';
@@ -55,4 +55,5 @@ var script = "12+34;"
 //var script = "return f(int i) { while(false){1+1;} return 1;}";
 //var script = 'class A {int x;}';
 //var script = "for(1;1;1) {1+1;}";
+//var script = "class A{int x;};"
 konoha.eval(script);
