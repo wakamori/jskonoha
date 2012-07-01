@@ -297,18 +297,6 @@ konoha.IfStmt_asm = function(_ctx, stmt, shift, espidx)
 		konoha.modcode.ASM("}");
 		konoha.modcode.ASM_NEWLINE();
 	}
-// 	var lbELSE = konoha.new_BasicBlockLABEL(_ctx);
-// 	var lbEND  = konoha.new_BasicBlockLABEL(_ctx);
-// 	/* if */
-// 	lbELSE = EXPR_asmJMPIF(_ctx, espidx, konoha.Stmt_expr(_ctx, stmt, 1, null), 0/*FALSE*/, lbELSE, espidx);
-// 	/* then */
-// 	BLOCK_asm(_ctx, konoha.Stmt_block(_ctx, stmt, KW_Block, null));
-// 	konoha.ASM_JMP(_ctx, lbEND);
-// 	/* else */
-// 	konoha.ASM_LABEL(_ctx, lbELSE);
-// 	BLOCK_asm(_ctx, kStmt_block(stmt, KW_else, K_NULLBLOCK));
-// 	/* endif */
-// 	konoha.ASM_LABEL(_ctx, lbEND);
 }
 
 
@@ -323,6 +311,17 @@ konoha.ReturnStmt_asm = function(_ctx, stmt, shift, espidx)
 	konoha.modcode.ASM_NEWLINE();
 //	konoha.ASM_JMP(_ctx, ctxcode.lbEND);  // RET
 }
+
+konoha.JumpStmt_asm = function(_ctx, stmt, shift, espidx)
+{
+	var syn = stmt.syn;
+	konoha.EXPR_asm(_ctx, espidx, konoha.KObject_getObject(_ctx, stmt, konoha.kw.Expr, null), shift, espidx);
+	konoha.modcode.ASM_NEWLINE();
+	konoha.modcode.ASM('break;');
+	konoha.modcode.indentInc();
+	konoha.modcode.ASM_NEWLINE();
+}
+
 
 konoha.LoopStmt_asm = function(_ctx, stmt, shift, espidx)
 {
