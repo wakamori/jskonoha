@@ -36,7 +36,7 @@ konoha.eval = function(script) {
 //var script = 'System.p(123);';
 //var script = 'System.p("hello");';
 //var script = 'if (true) {123+456;}';
-//var script = 'if (false) {12+34;} else {56+78;}';
+var script = 'if (false) {12+34;} else {56+78;}';
 //var script = 'int func(int i) {return 1+i;}';
 //var script = 'int func(int i) {return 1+i;}\nfunc(2);';
 //var script = 'int func(int i) {return i+1;}\nfunc(1) + func(2);';
@@ -49,7 +49,7 @@ konoha.eval = function(script) {
 //var script = 'int f () {\n int i; \n while (i < 100) {\n i = i + 1;\n if (i == 10) {\n break;\n }\n}\n return i;\n}';
 //var script = 'int f () {\n int i = 0;\n int sum = 0;\n while (i < 10) {\n i = i + 1;\n if (i == 5) {\n continue;\n } else {\n sum = sum + i;\n }\n }\n return sum;\n}\n';
 //var script = "return f(int i) { while(false){1+1;} return 1;}";
-var script = 'class A {int x;}';
+//var script = 'class A {int x;}';
 //var script = "for(1;1;1) {1+1;}";
 //var script = "class A{int x;};"
 konoha.eval(script);
