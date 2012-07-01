@@ -221,9 +221,9 @@ konoha.KonohaSpace_getMethodNULL = function(_ctx, ks, cid, mn)
 // 			ks = ks.parentNULL;
 // 		}
 // 	}
-	var mtd = konoha.ct.Global[mn];
+	var mtd = konoha.ct.Script[mn];
 	if (mtd != null) {
-		mtd.mtdname = "konoha.ct.Global." + mn;
+		mtd.mtdname = "konoha.ct.Script." + mn;
 		mtd.static_flag = true;
 		return mtd;
 	}

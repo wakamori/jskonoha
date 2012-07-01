@@ -172,7 +172,7 @@ konoha.StmtTyCheck_MethodDecl = function(_ctx, stmt, gma)
 	var params = (konoha.KObject_getObjectNULL(_ctx, stmt, konoha.kw.Params, null)).blocks.data[0];
 	var ty = (konoha.KObject_getObjectNULL(_ctx, params, konoha.kw.Type, null)).ty;
 	var mn = tk.text.text;
-	konoha.ct.Global[mn] = {ty:[ty], rtype:konoha.TY_Int}/*not null*/;
+	konoha.ct.Script[mn] = {ty:[ty], rtype:konoha.TY_Int}/*not null*/;
 	konoha.Stmt_typed(stmt, konoha.TSTMT_MTDDEF);
 	return 1;
 }

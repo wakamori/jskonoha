@@ -333,7 +333,7 @@ konoha.loadInitStructData = function(_ctx)
 		var l = konoha.init_class_list[i];
 		konoha.addClassDef(_ctx, l.classname, l);
 	}
-	konoha.addClassDef(_ctx, "Global", {});//for global function. FIX ME!!
+	konoha.addClassDef(_ctx, "Script", {});//for global function. FIX ME!!
 	konoha.loadInitStructMethodData(_ctx);
 }
 
