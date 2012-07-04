@@ -28,7 +28,7 @@ konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 	if(prt != null) {
 		bk.parentNULL = prt;
 	}
-	konoha.dumpTLS(_ctx, tls, s, e);
+//	konoha.dumpTLS(_ctx, tls, s, e);
 	var i = s, indent = 0, atop = tls.length;
 	while(i < e) {
 		var tkERR = null;
@@ -43,9 +43,9 @@ konoha.new_Block = function(_ctx, ks, prt, tls, s, e, delim) {
 }
 
 konoha.dumpTLS = function(_ctx, tls, s, e) {
-	console.log('#########################################');
-	console.log('#                 dump                  #');
-	console.log('#########################################');
+	// console.log('#########################################');
+	// console.log('#                 dump                  #');
+	// console.log('#########################################');
 	var tmp = s;
 	while (tmp < e) {
 		var token = tls[tmp];
@@ -61,7 +61,7 @@ konoha.dumpTLS = function(_ctx, tls, s, e) {
 		}
 		tmp++;
 	}
-	console.log('#########################################');
+//	console.log('#########################################');
 }
 
 konoha.Token_resolved = function(_ctx, ks, tk) {//
