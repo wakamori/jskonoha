@@ -221,9 +221,9 @@ konoha.KonohaSpace_getMethodNULL = function(_ctx, ks, cid, mn)
 // 			ks = ks.parentNULL;
 // 		}
 // 	}
-	var mtd = konoha.ct.Global[mn];
+	var mtd = konoha.ct.Script[mn];
 	if (mtd != null) {
-		mtd.mtdname = "konoha.ct.Global." + mn;
+		mtd.mtdname = "konoha.ct.Script." + mn;
 		mtd.static_flag = true;
 		return mtd;
 	}
@@ -253,7 +253,7 @@ konoha.Expr_setNConstValue = function(_ctx, expr, ty, ndata)
 konoha.Expr_setConstValue = function(_ctx, expr, ty, o)
 {
 	if(expr == null) {
-//		expr = new_(Expr, 0);
+		expr = new konoha.kExpr();
 //		PUSH_GCSTACK(expr);
 	}
 	if(true /*TODO!! konoha.TY_isUnbox(ty)*/) {

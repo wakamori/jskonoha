@@ -207,7 +207,7 @@ konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 
 konoha.ASM_MTDDEF = function(_ctx, mn, param_name, block, shift, espidx)
 {
-	konoha.modcode.ASM("konoha.ct.Global." + mn + " = function(_ctx, sfp1)");
+	konoha.modcode.ASM("konoha.ct.Script." + mn + " = function(_ctx, sfp1)");
 	konoha.modcode.ASM_NEWLINE();
 	konoha.modcode.ASM("{");
 	konoha.modcode.ASM_NEWLINE();
@@ -226,8 +226,8 @@ konoha.MethodDefStmt_asm = function(_ctx, stmt, shift, espidx)
 	var block = konoha.Stmt_block(_ctx, stmt, konoha.kw.Block);
 
 	var newgma = new (function() {
-		this.mtd = konoha.ct.Global[mn];
-//		this.ks = ks;
+		this.mtd = konoha.ct.Script[mn];
+		this.ks = _ctx.kmodsugar.rootks;
 //		this.this_cid = mtd.cid;
 		this.f = new Array();
 		this.l = new Array();
