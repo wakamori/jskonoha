@@ -3,10 +3,13 @@ jskonoha
 
 based by konoha:r619
 
-to make:
+make:
     make
 
-to run:
+Library install:
+	sudo npm install opts
+
+run:
     node build/jskonoha.js
  or
     ${BROWSER} sample.html
