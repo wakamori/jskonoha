@@ -1,0 +1,27 @@
+konoha.ct.Script.fib = function(_ctx, sfp1)
+{
+	var sfp6 = sfp1;
+	var sfp7 = 3;
+	var sfp2 = konoha.ct.Int.opLT(_ctx, sfp6, sfp7);
+
+	if (sfp2) {
+		var sfp3 = 1;
+		return sfp3;
+
+	}
+	else {
+		var sfp16 = sfp1;
+		var sfp17 = 1;
+		var sfp12 = konoha.ct.Int.opSUB(_ctx, sfp16, sfp17);
+		var sfp8 = konoha.ct.Script.fib(_ctx, sfp12);
+		var sfp17 = sfp1;
+		var sfp18 = 2;
+		var sfp13 = konoha.ct.Int.opSUB(_ctx, sfp17, sfp18);
+		var sfp9 = konoha.ct.Script.fib(_ctx, sfp13);
+		var sfp4 = konoha.ct.Int.opADD(_ctx, sfp8, sfp9);
+
+		var sfp3 = sfp4;
+		return sfp3;
+
+	}
+}

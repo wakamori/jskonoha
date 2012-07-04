@@ -94,18 +94,18 @@ konoha.KonohaSpace_eval = function(_ctx, ks, script)
 //	konoha.DBG_P(tls);
 //	konoha.DBG_P("############################################");
 	var bk = konoha.new_Block(_ctx, ks, null, tls, pos, tls.length, ';');
-	console.log("################### ast ####################");
+	konoha.DBG_P("################### ast ####################");
 	var stmts = bk.blocks.data;
 	// for (var i = 0; i < stmts.length; i++) {
-	// 	console.log(stmts[i].h.kvproto);
+	// 	konoha.DBG_P(stmts[i].h.kvproto);
 	// }
-	console.log("############################################");
+	konoha.DBG_P("############################################");
 	tls = tls.slice(0, pos - 1);
 	var result = konoha.Block_eval(_ctx, bk); //result is result of evaluating generated code
 	konoha.result = result;
-	console.log("################### eval ####################");
-	console.log(result);
-	console.log("############################################");
+	konoha.DBG_P("################### eval ####################");
+	konoha.DBG_P(result);
+	konoha.DBG_P("############################################");
 	return result;
 }
 
@@ -115,12 +115,9 @@ konoha.MODSUGAR_eval = function(_ctx, script)
 }
 
 //for node
-konoha.KonohaSpace_loadstream = function(_ctx, ks)
+konoha.KonohaSpace_loadstream = function(_ctx, ks, script)
 {
-	//	var script = 'p("hello");'; // TODO load script
-	var readline = require('readline'),
-	rl = readline.createInterface(process.stdin, process.stdout),
-	prefix = '>>> ';
+	var _status = 0;
 	var opts = require("opts");
 	opts.parse([
 		{
@@ -131,11 +128,23 @@ konoha.KonohaSpace_loadstream = function(_ctx, ks)
 			'required': false
 		},
 	]);
-	var script = opts.get("script");
-	if (script != null) {
-		var _status = konoha.MODSUGAR_eval(_ctx, script);
+	script = "";
+	script = opts.get("script");
+	if (script != null && script != "") {
+		var fs = require('fs');
+		var read = fs.createReadStream(script);
+		read.on("data", function(data) {
+			script = data.toString();
+ 			konoha.DBG_P("##############script#########################");
+			konoha.DBG_P(script);
+ 			konoha.DBG_P("#############################################");
+			_status = konoha.MODSUGAR_eval(_ctx, script);
+		});
 	}
 	else {
+		var readline = require('readline'),
+		rl = readline.createInterface(process.stdin, process.stdout),
+		prefix = '>>> ';
 		rl.on('line', function(line) {
 			switch(line.trim()) {
 			case 'quit':
@@ -145,7 +154,10 @@ konoha.KonohaSpace_loadstream = function(_ctx, ks)
 				break;
 			default:
 				var script = line.trim();
-				var _status = konoha.MODSUGAR_eval(_ctx, script);
+ 				konoha.DBG_P("##############script#########################");
+				konoha.DBG_P(script);
+ 				konoha.DBG_P("#############################################");
+				_status = konoha.MODSUGAR_eval(_ctx, script);
 				break;
 			}
 			rl.setPrompt(prefix, prefix.length);
@@ -156,16 +168,9 @@ konoha.KonohaSpace_loadstream = function(_ctx, ks)
 		rl.setPrompt(prefix, prefix.length);
 		rl.prompt();
 	}
+	return _status;
 }
 
-// //for DEBUG
-// konoha.KonohaSpace_loadstream = function(_ctx, ks, script)
-// {
-//  	konoha.DBG_P("##############script#########################");
-// 	konoha.DBG_P(script);
-//  	konoha.DBG_P("#############################################");
-// 	var _status = konoha.MODSUGAR_eval(_ctx, script);
-// }
 
 konoha.KonohaSpace_loadscript = function(_ctx, ks, script)
 {

@@ -1,0 +1,14 @@
+var sfp0 = false;
+
+if (sfp0) {
+	var sfp5 = 12;
+	var sfp6 = 34;
+	var sfp1 = konoha.ct.Int.opADD(_ctx, sfp5, sfp6);
+
+}
+else {
+	var sfp5 = 56;
+	var sfp6 = 78;
+	var sfp1 = konoha.ct.Int.opADD(_ctx, sfp5, sfp6);
+
+}

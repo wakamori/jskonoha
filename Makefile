@@ -1,8 +1,14 @@
-SRC_DIR = src
-INCLUDE_DIR = include/konoha2
-TEST_DIR = test
-BUILD_DIR = build
-PACKAGE_DIR = package
+######## options ##########
+#WITH_NODE    = 0
+DEBUG        = 0
+EXEC         = 1
+##########################
+
+SRC_DIR      = src
+INCLUDE_DIR  = include/konoha2
+TEST_DIR     = test
+BUILD_DIR    = build
+PACKAGE_DIR  = package
 
 PREFIX = .
 ##DIST_DIR = ${PREFIX}/dist
@@ -30,23 +36,30 @@ BASE_FILES = \
 	${SRC_DIR}/vm/asm.js\
 	${SRC_DIR}/tool/command.js
 
-
-
 JSKONOHA = ${BUILD_DIR}/jskonoha.js
 JSKONOHA_VER = $(shell cat version.txt)
 VER = sed "s/@VERSION/${JQ_VER}/"
 DATE=$(shell git log -1 --pretty=format:%ad)
 
-all: $(JSKONOHA)
+all: release
+release: $(JSKONOHA)
 
 $(JSKONOHA): $(BASE_FILES)
 	@@echo "Building" ${JSKONOHA}
 	@@if [ ! -d ${BUILD_DIR} ]; then \
 		mkdir -p ${BUILD_DIR};       \
 	fi
+#	@@if [ ${WITH_NODE} == 0 ]; then \
+		WITH_NODE = ${WITH_NODE} + ${BUILD_DIR}/node_extension.js; \
+	fi
 	@@cat ${BASE_FILES} | \
 		${VER} > ${JSKONOHA};
-
+	@@if [ ${DEBUG} == 0 ]; then \
+		echo "konoha.DBG_P = function(){};" >> ${JSKONOHA}; \
+	fi
+	@@if [ ${EXEC} == 1 ]; then \
+		echo "konoha.eval();" >> ${JSKONOHA}; \
+	fi
 clean:
 	@@echo "Removing" ${JSKONOHA}
 	@@rm -rf ${JSKONOHA}
@@ -69,4 +82,4 @@ test-xml:
 	@@files="test/Debug/js_token_test/*.js"
 	@@for utest in test/Debug/js_ast_test/*.js; do (gjstest --js_files=${JSKONOHA},$$utest --xml_output_file=$$utest.xml); done;
 
-.PHONY: all clean test test-html test-xml
+.PHONY: all release debug clean test test-html test-xml

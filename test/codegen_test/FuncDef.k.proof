@@ -1,0 +1,9 @@
+konoha.ct.Script.func = function(_ctx, sfp1)
+{
+	var sfp7 = 1;
+	var sfp8 = sfp1;
+	var sfp3 = konoha.ct.Int.opADD(_ctx, sfp7, sfp8);
+
+	var sfp2 = sfp3;
+	return sfp2;
+}

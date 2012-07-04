@@ -1,0 +1,8 @@
+var sfp0 = true;
+
+if (sfp0) {
+	var sfp5 = 123;
+	var sfp6 = 456;
+	var sfp1 = konoha.ct.Int.opADD(_ctx, sfp5, sfp6);
+
+}

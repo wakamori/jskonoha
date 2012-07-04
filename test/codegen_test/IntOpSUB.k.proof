@@ -1,0 +1,3 @@
+var sfp4 = 12;
+var sfp5 = 32;
+var sfp0 = konoha.ct.Int.opSUB(_ctx, sfp4, sfp5);

@@ -1,5 +1,0 @@
- - (warning) (float_operator.k:7) ignored tokens: f1000000
- - (warning) (float_operator.k:8) ignored tokens: f2000000
- - (error) (float_operator.k:7) undefined operator type checker: =
- - (error) (float_operator.k:7) undefined operator type checker: =
-Q.E.D.

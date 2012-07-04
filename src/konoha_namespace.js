@@ -1,11 +1,8 @@
 konoha = {};
 
-// console = {};
-// console.log = function() {
-// // for(var i in arguments.length) {
-// 	// 	return arguments[i];
-// 	// }
-// };
+String.prototype.trim = function() {
+	return this.replace(/^[\s\n ]+|[\s\n ]+$/g, "");
+}
 
 konoha.DBG_P = function(msg) {
 	console.log(msg);

@@ -89,7 +89,7 @@ konoha.ASM_NSET = function(a, data)
 
 konoha.ASM_OSET = function(a, data)
 {
-	console.log('TODO asm_oset');
+	konoha.DBG_P('TODO asm_oset');
 }
 
 konoha.ASM_CALL = function(_ctx, thisidx, espidx, argc, mtd) {
@@ -114,7 +114,6 @@ konoha.ASM_CALL = function(_ctx, thisidx, espidx, argc, mtd) {
 konoha.CALL_asm = function(_ctx, a, expr, shift, espidx)
 {
 	var mtd = expr.cons.data[0]; // TODO unuse methods field, is it OK?
-//	console.log(expr.cons.data[0]);
 	var s = konoha.kMethod_isStatic(mtd) ? 2 : 1;
 	var thisidx = espidx + konoha.K_CALLDELTA;
 	for (var i = s; i < expr.cons.data.length; i++) {
@@ -129,7 +128,7 @@ konoha.CALL_asm = function(_ctx, a, expr, shift, espidx)
 konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 {
 	/* a: number, expr: kExpr, shift: number, espidx: number */
-	console.log("EXPR_asm build=", expr.build);
+	konoha.DBG_P("EXPR_asm build=", expr.build);
 	switch (expr.build) {
 	case konoha.TEXPR_CONST : {
 		var v = expr.tk.text.text;
@@ -141,11 +140,11 @@ konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 		break;
 	}
 	case konoha.TEXPR_NEW : {
-		console.log('TODO new');
+		konoha.DBG_P('TODO new');
 		break;
 	}
 	case konoha.TEXPR_NULL : {
-		console.log('TODO null');
+		konoha.DBG_P('TODO null');
 		break;
 	}
 	case konoha.TEXPR_NCONST : {
@@ -167,15 +166,15 @@ konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 		break;
 	}
 	case konoha.TEXPR_FIELD : {
-		console.log('TODO field');
+		konoha.DBG_P('TODO field');
 		break;
 	}
 	case konoha.TEXPR_BOX : {
-		console.log('TODO box');
+		konoha.DBG_P('TODO box');
 		break;
 	}
 	case konoha.TEXPR_UNBOX : {
-		console.log('TODO unbox');
+		konoha.DBG_P('TODO unbox');
 		break;
 	}
 	case konoha.TEXPR_CALL : {
@@ -195,7 +194,7 @@ konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 		break;
 	}
 	case konoha.TEXPR_LET : {
-		console.log('TODO let');
+		konoha.DBG_P('TODO let');
 		break;
 	}
 	case konoha.TEXPR_STACKTOP : {
@@ -203,7 +202,7 @@ konoha.EXPR_asm = function(_ctx, a, expr, shift, espidx)
 		break;
 	}
 	default:
-		console.log('unknown expr=' + expr.build);
+		konoha.DBG_P('unknown expr=' + expr.build);
 		if (a != espidx) {
 			konoha.NMOV_asm(_ctx, a, expr.ty, espidx);
 		}
@@ -352,14 +351,14 @@ konoha.BLOCK_asm = function(_ctx, bk, shift, espidx)
 {
 	/* bk: kBlock, shift: int */
 //TODO!!	var espidx = (bk.esp.build == konoha.TEXPR_STACKTOP) ? shift + bk.esp.index : bk.esp.index;
-	console.log("knoha.BLOCK_asm");
-	console.log("shift = " + shift + ", espidx = " + espidx + ", build = " + bk.esp.build);
+	konoha.DBG_P("knoha.BLOCK_asm");
+	konoha.DBG_P("shift = " + shift + ", espidx = " + espidx + ", build = " + bk.esp.build);
 	/* TODO Is blocks' type Array? */
 	for (var i = 0; i < bk.blocks.data.length; i++) {
 		var stmt = bk.blocks.data[i];
 		if (stmt.syn == null) continue;
 //		_ctx.ctxsugar[konoha.MOD_code].uline = stmt.uline;
-		console.log("stmt.build", stmt.build);
+		konoha.DBG_P("stmt.build", stmt.build);
 		switch(stmt.build) {
 			case konoha.TSTMT_ERR:
 				konoha.ErrStmt_asm(_ctx, stmt, shift, espidx); return;

@@ -1,0 +1,6 @@
+var sfp4 = 12;
+var sfp5 = 34;
+var sfp0 = konoha.ct.Int.opADD(_ctx, sfp4, sfp5);
+var sfp4 = 56;
+var sfp5 = 78;
+var sfp0 = konoha.ct.Int.opADD(_ctx, sfp4, sfp5);

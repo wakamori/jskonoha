@@ -375,10 +375,9 @@ konoha.Block_eval = function(_ctx, bk)
 //	return result;
 //	var result = konoha.Stmt_checkReturnType(_ctx, bk.blocks.data[0]);
 	konoha.BLOCK_asm(_ctx, bk, 0, 0);
-	console.log("################### code ####################");
-	console.log(konoha.modcode.output);
-// 	console.log(bk.blocks.data[0]);
-	console.log("############################################");
+	konoha.DBG_P("################### code ####################");
+	console.log(konoha.modcode.output.trim().replace(/ \t+/g, " "));
+	konoha.DBG_P("############################################");
 	var result = eval(konoha.modcode.output);
 
 	return result;

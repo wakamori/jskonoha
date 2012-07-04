@@ -1,0 +1,4 @@
+var sfp4 = 123;
+var sfp0 = konoha.ct.System.p(_ctx, sfp4);
+var sfp4 = "hello";
+var sfp0 = konoha.ct.System.p(_ctx, sfp4);
