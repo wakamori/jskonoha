@@ -72,8 +72,8 @@ konoha.defineDefaultSyntax = function(_ctx, ks)
 		{name: 'double', type: konoha.TY_Float, },
 		{name: '$FLOAT', ExprTyCheck: konoha.ExprTyCheck_Float, },
 		{name: 'while', rule: "\"while\" \"(\" $expr \")\" $block", TopStmtTyCheck: konoha.StmtTyCheck_while, StmtTyCheck: konoha.StmtTyCheck_while , },
-		{name: 'break', rule: "\"break\" [ $USYMBOL ]",  StmtTyCheck: konoha.StmtTyCheck_break, },
-		{name: 'continue', rule: "\"continue\" [ $USYMBOL ]",  StmtTyCheck:  konoha.StmtTyCheck_continue, },
+		{name: 'break', rule: "\"break\" [ $USYMBOL ]", TopStmtTyCheck: konoha.StmtTyCheck_break, StmtTyCheck: konoha.StmtTyCheck_break, },
+		{name: 'continue', rule: "\"continue\" [ $USYMBOL ]", TopStmtTyCheck: konoha.StmtTyCheck_continue, StmtTyCheck: konoha.StmtTyCheck_continue, },
 		{name: 'for', rule: "\"for\" \"(\" var: $block \";\" $expr \";\" each: $block \")\" $block", TopStmtTyCheck: konoha.StmtTyCheck_for, StmtTyCheck: konoha.StmtTyCheck_for, },
 		{name: null}, ];
  	konoha.KonohaSpace_defineSyntax(_ctx, ks, SYNTAX);
@@ -119,17 +119,22 @@ konoha.KonohaSpace_loadstream = function(_ctx, ks, script)
 {
 	var _status = 0;
 	var opts = require("opts");
-	opts.parse([
-		{
-			'short': 's',
-			'long': 'script',
-			'description': 'konoha script',
-			'value': true,
-			'required': false
-		},
-	]);
-	script = "";
-	script = opts.get("script");
+	if (opts == null) {
+		return script;
+	}
+	else {
+		opts.parse([
+			{
+				'short': 's',
+				'long': 'script',
+				'description': 'konoha script',
+				'value': true,
+				'required': false
+			},
+		]);
+		script = "";
+		script = opts.get("script");
+	}
 	if (script != null && script != "") {
 		var fs = require('fs');
 		var read = fs.createReadStream(script);

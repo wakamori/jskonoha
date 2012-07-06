@@ -81,7 +81,7 @@ konoha.Stmt_tyCheckExpr = function(_ctx, stmt, nameid, gma, reqty, pol)
 		var texpr = konoha.Expr_tyCheck(_ctx, stmt, expr, gma, reqty, pol);
 		if(texpr != null/*_ctx.kmodsugar.cExpr.nulvalNUL*/) {
 			if(texpr != expr) {
-				konoha.kObject_setObject(_ctx, stmt, nameid, texpr);
+				konoha.KObject_setObject(_ctx, stmt, nameid, texpr, nameid);
 			}
 			return 1;
 		}

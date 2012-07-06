@@ -27,3 +27,4 @@ konoha.eval = function(script) {
 	konoha.konoha_load(_konoha, script);
 	return konoha.result;
 }
+

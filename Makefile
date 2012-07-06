@@ -1,8 +1,6 @@
-######## options ##########
-#WITH_NODE    = 0
 DEBUG        = 0
 EXEC         = 1
-##########################
+#WITH_NODE    = 0
 
 SRC_DIR      = src
 INCLUDE_DIR  = include/konoha2
@@ -54,12 +52,14 @@ $(JSKONOHA): $(BASE_FILES)
 	fi
 	@@cat ${BASE_FILES} | \
 		${VER} > ${JSKONOHA};
-	@@if [ ${DEBUG} == 0 ]; then \
+#	@@if [ ${DEBUG} == 0 ]; then \
 		echo "konoha.DBG_P = function(){};" >> ${JSKONOHA}; \
 	fi
-	@@if [ ${EXEC} == 1 ]; then \
+	echo "konoha.DBG_P = function(){};" >> ${JSKONOHA};
+#	@@if [ ${EXEC} == 1 ]; then \
 		echo "konoha.eval();" >> ${JSKONOHA}; \
 	fi
+	echo "konoha.eval();" >> ${JSKONOHA};
 clean:
 	@@echo "Removing" ${JSKONOHA}
 	@@rm -rf ${JSKONOHA}

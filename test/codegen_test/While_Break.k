@@ -1,5 +1,5 @@
-void f() {
-	while (false) {
+int f(int n) {
+	while (true) {
 		break;
 	}
 }
